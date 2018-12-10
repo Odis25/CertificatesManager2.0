@@ -5,7 +5,7 @@ VisualStudioVersion = 15.0.27703.2042
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CertificatesModel", "CertificatesModel\CertificatesModel.csproj", "{FF6775C1-284F-46C1-A8CC-DC5C671F3B2D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CertificatesDesktop", "CertificatesView\CertificatesDesktop.csproj", "{37AF0C3B-BD6A-4CFE-BC03-F614146F5CCC}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CertificatesDesktop", "CertificatesDesktop\CertificatesDesktop.csproj", "{37AF0C3B-BD6A-4CFE-BC03-F614146F5CCC}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CertificatesViews", "CertificatesViews\CertificatesViews.csproj", "{1575861A-F178-4F72-BC6C-46963EBA1E76}"
 EndProject
