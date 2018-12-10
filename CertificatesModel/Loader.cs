@@ -9,9 +9,10 @@ namespace CertificatesModel
 {
     public class Loader : ILoader
     {       
-
+        
         public Certificates Load()
         {
+            
             throw new NotImplementedException();
         }
     }

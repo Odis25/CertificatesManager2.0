@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using CertificatesModel.Repositories;
 
 namespace CertificatesView.Factories
 {
@@ -13,6 +14,7 @@ namespace CertificatesView.Factories
         public ModelFactory()
         {
             Register<ILoader, Loader>();
+            Register<IRepository, Repository>();
         }
     }
 }

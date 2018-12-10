@@ -5,25 +5,28 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Data.SqlServerCe;
 using System.Data;
+using CertificatesModel.Interfaces;
 
 namespace CertificatesModel.Repositories
 {
-    public class DB
+    public class Repository : IRepository
     {
         Certificates _certificates;
         string _connectionString;
 
-        public DB()
+        public Repository()
         {
             _connectionString = "DataSource = D:\\test.sdf";
         }
 
-        public Certificates LoadDataFromDB()
+        // Получаем все свидетельства из БД
+        public Certificates GetAllCertificatesFromDB()
         {
             using (SqlCeConnection connection = new SqlCeConnection(_connectionString))
             {
                 SqlCeCommand cmd = new SqlCeCommand();
                 cmd.CommandText = "SELECT * FROM METROLOGY";
+                connection.Open();
                 _certificates = new Certificates();
                 using (SqlCeDataReader reader = cmd.ExecuteReader(CommandBehavior.CloseConnection))
                 {
