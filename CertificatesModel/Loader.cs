@@ -1,4 +1,5 @@
 ﻿using CertificatesModel.Interfaces;
+using CertificatesModel.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,7 +13,9 @@ namespace CertificatesModel
         
         public Certificates Load()
         {
-            
+            //IRepository repository = new Repository();
+
+            Certificates result = Repository.GetAllCertificatesFromDB();
             throw new NotImplementedException();
         }
     }

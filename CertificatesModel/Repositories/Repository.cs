@@ -9,25 +9,25 @@ using CertificatesModel.Interfaces;
 
 namespace CertificatesModel.Repositories
 {
-    public class Repository : IRepository
+    public static class Repository
     {
-        Certificates _certificates;
-        string _connectionString;
+        //Certificates _certificates;
+        static string _connectionString;
 
-        public Repository()
+        static Repository()
         {
             _connectionString = "DataSource = D:\\test.sdf";
         }
 
         // Получаем все свидетельства из БД
-        public Certificates GetAllCertificatesFromDB()
+        public static Certificates GetAllCertificatesFromDB()
         {
             using (SqlCeConnection connection = new SqlCeConnection(_connectionString))
             {
                 SqlCeCommand cmd = new SqlCeCommand();
                 cmd.CommandText = "SELECT * FROM METROLOGY";
                 connection.Open();
-                _certificates = new Certificates();
+                Certificates _certificates = new Certificates();
                 using (SqlCeDataReader reader = cmd.ExecuteReader(CommandBehavior.CloseConnection))
                 {
                     while (reader.Read())
@@ -52,9 +52,7 @@ namespace CertificatesModel.Repositories
 
                     return _certificates;
                 }
-            }
-                
-            
+            }                          
         }
 
     }
