@@ -6,11 +6,8 @@ using System.Threading.Tasks;
 
 namespace CertificatesModel
 {
-    public class Contracts : List<Certificate>
+    public class Contract : List<Certificate>
     {
-        public Contracts()
-        {
-            
-        }
+        public string ContractNumber { get; set; }
     }
 }

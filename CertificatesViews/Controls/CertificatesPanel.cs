@@ -7,10 +7,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using CertificatesView.Interfaces;
+using CertificatesViews.Interfaces;
 using CertificatesModel;
 
-namespace CertificatesView.Controls
+namespace CertificatesViews.Controls
 {
     public partial class CertificatesPanel : UserControl, IView<Certificates>
     {
@@ -25,8 +25,11 @@ namespace CertificatesView.Controls
 
         public void Build(Certificates certificates)
         {
-            _certificates = certificates; 
-            throw new NotImplementedException();
+            _certificates = certificates;
+
+            tvCertificates.AddCertificates(_certificates);
+            tvCertificates.Update();
+            //throw new NotImplementedException();
         }
     }
 }

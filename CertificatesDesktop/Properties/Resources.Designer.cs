@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace CertificatesView.Properties
+namespace CertificatesViews.Properties
 {
 
 

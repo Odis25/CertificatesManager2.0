@@ -1,11 +1,13 @@
-﻿using CertificatesView.Factories;
+﻿using CertificatesModel.Factories;
+using CertificatesViews.Factories;
+using CertificatesViews;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace CertificatesView
+namespace CertificatesDesktop
 {
     static class Program
     {

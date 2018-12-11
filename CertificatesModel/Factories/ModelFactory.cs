@@ -7,14 +7,14 @@ using System.Text;
 using System.Threading.Tasks;
 using CertificatesModel.Repositories;
 
-namespace CertificatesView.Factories
+namespace CertificatesModel.Factories
 {
     public class ModelFactory: BaseFactory
     {
         public ModelFactory()
         {
             Register<ILoader, Loader>();
-            Register<IRepository, Repository>();
+            //Register<IRepository, Repository>();
         }
     }
 }

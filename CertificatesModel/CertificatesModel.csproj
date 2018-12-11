@@ -52,8 +52,8 @@
   <ItemGroup>
     <Compile Include="Domain\Certificate.cs" />
     <Compile Include="Domain\Certificates.cs" />
-    <Compile Include="Domain\Contracts.cs" />
-    <Compile Include="Domain\Years.cs" />
+    <Compile Include="Domain\Contract.cs" />
+    <Compile Include="Domain\Year.cs" />
     <Compile Include="Factories\BaseFactory.cs" />
     <Compile Include="Factories\ModelFactory.cs" />
     <Compile Include="Interfaces\ILoader.cs" />

@@ -9,14 +9,13 @@ using System.Threading.Tasks;
 namespace CertificatesModel
 {
     public class Loader : ILoader
-    {       
-        
+    {
         public Certificates Load()
         {
             //IRepository repository = new Repository();
 
             Certificates result = Repository.GetAllCertificatesFromDB();
-            throw new NotImplementedException();
+            return result;
         }
     }
 }

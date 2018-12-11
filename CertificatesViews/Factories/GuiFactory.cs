@@ -1,13 +1,14 @@
 ﻿using CertificatesModel;
-using CertificatesView.Controls;
-using CertificatesView.Interfaces;
+using CertificatesModel.Factories;
+using CertificatesViews.Controls;
+using CertificatesViews.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CertificatesView.Factories
+namespace CertificatesViews.Factories
 {
     public class GuiFactory: BaseFactory
     {

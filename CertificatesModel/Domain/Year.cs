@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace CertificatesModel
 {
-    public class Years: List<Contracts>
+    public class Year: List<Contract>
     {
-        
+        public int YearOfCreationCertificate { get; set; }
     }
 }

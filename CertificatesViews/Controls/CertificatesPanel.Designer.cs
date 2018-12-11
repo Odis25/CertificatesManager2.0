@@ -1,4 +1,4 @@
-﻿namespace CertificatesView.Controls
+﻿namespace CertificatesViews.Controls
 {
     partial class CertificatesPanel
     {
@@ -28,18 +28,30 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.tvCertificates = new CertificatesViews.TreeViewModified();
             this.SuspendLayout();
+            // 
+            // tvCertificates
+            // 
+            this.tvCertificates.Dock = System.Windows.Forms.DockStyle.Left;
+            this.tvCertificates.Location = new System.Drawing.Point(0, 0);
+            this.tvCertificates.Name = "tvCertificates";
+            this.tvCertificates.Size = new System.Drawing.Size(291, 363);
+            this.tvCertificates.TabIndex = 0;
             // 
             // CertificatesPanel
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.tvCertificates);
             this.Name = "CertificatesPanel";
-            this.Size = new System.Drawing.Size(419, 311);
+            this.Size = new System.Drawing.Size(339, 363);
             this.ResumeLayout(false);
 
         }
 
         #endregion
+
+        private TreeViewModified tvCertificates;
     }
 }

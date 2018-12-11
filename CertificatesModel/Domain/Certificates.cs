@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace CertificatesModel
 {
-    public class Certificates: List<Years>
+    public class Certificates: List<Year>
     {
     }
 }
