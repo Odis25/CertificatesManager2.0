@@ -42,8 +42,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Components\ListViewModified.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Components\TreeViewModified.cs">
       <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controls\CertificatePropertiesPanel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\CertificatePropertiesPanel.Designer.cs">
+      <DependentUpon>CertificatePropertiesPanel.cs</DependentUpon>
     </Compile>
     <Compile Include="Controls\CertificatesPanel.cs">
       <SubType>UserControl</SubType>
@@ -61,13 +70,25 @@
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Controls\CertificatePropertiesPanel.resx">
+      <DependentUpon>CertificatePropertiesPanel.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Controls\CertificatesPanel.resx">
       <DependentUpon>CertificatesPanel.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
@@ -75,6 +96,57 @@
       <Project>{ff6775c1-284f-46c1-a8cc-dc5c671f3b2d}</Project>
       <Name>CertificatesModel</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\add+_16x16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\check.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\cross.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\folder.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\green-button_16x16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\red-button_16x16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\cog.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\user_edit.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\group_edit.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\key.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Folder_3r.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Folder_r.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Folder_2r.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Folder_.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Folder_2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Folder_3.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\zoom.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

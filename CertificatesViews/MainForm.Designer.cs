@@ -28,52 +28,99 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
-            this.toolStrip1 = new System.Windows.Forms.ToolStrip();
+            this.tsMain = new System.Windows.Forms.ToolStrip();
             this.btAdd = new System.Windows.Forms.ToolStripButton();
             this.btRemove = new System.Windows.Forms.ToolStripButton();
-            this.toolStrip1.SuspendLayout();
+            this.btSettings = new System.Windows.Forms.ToolStripButton();
+            this.btChangeUser = new System.Windows.Forms.ToolStripButton();
+            this.btUsersEdit = new System.Windows.Forms.ToolStripButton();
+            this.statusStrip1 = new System.Windows.Forms.StatusStrip();
+            this.tsMain.SuspendLayout();
             this.SuspendLayout();
             // 
-            // toolStrip1
+            // tsMain
             // 
-            this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.tsMain.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.btAdd,
-            this.btRemove});
-            this.toolStrip1.Location = new System.Drawing.Point(0, 0);
-            this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(800, 25);
-            this.toolStrip1.TabIndex = 0;
-            this.toolStrip1.Text = "toolStrip1";
+            this.btRemove,
+            this.btSettings,
+            this.btChangeUser,
+            this.btUsersEdit});
+            this.tsMain.Location = new System.Drawing.Point(0, 0);
+            this.tsMain.Name = "tsMain";
+            this.tsMain.Size = new System.Drawing.Size(869, 25);
+            this.tsMain.TabIndex = 0;
+            this.tsMain.Text = "tsMain";
             // 
             // btAdd
             // 
             this.btAdd.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btAdd.Image = ((System.Drawing.Image)(resources.GetObject("btAdd.Image")));
+            this.btAdd.Image = global::CertificatesViews.Properties.Resources.add;
             this.btAdd.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btAdd.Name = "btAdd";
             this.btAdd.Size = new System.Drawing.Size(23, 22);
             this.btAdd.Text = "toolStripButton1";
+            this.btAdd.ToolTipText = "Добавить новое свидетельство";
             // 
             // btRemove
             // 
             this.btRemove.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btRemove.Image = ((System.Drawing.Image)(resources.GetObject("btRemove.Image")));
+            this.btRemove.Image = global::CertificatesViews.Properties.Resources.cross;
             this.btRemove.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btRemove.Name = "btRemove";
             this.btRemove.Size = new System.Drawing.Size(23, 22);
             this.btRemove.Text = "toolStripButton2";
+            this.btRemove.ToolTipText = "Удалить выбранные свидетельства";
+            // 
+            // btSettings
+            // 
+            this.btSettings.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btSettings.Image = global::CertificatesViews.Properties.Resources.cog;
+            this.btSettings.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btSettings.Name = "btSettings";
+            this.btSettings.Size = new System.Drawing.Size(23, 22);
+            this.btSettings.Text = "toolStripButton1";
+            this.btSettings.ToolTipText = "Настройки приложения";
+            // 
+            // btChangeUser
+            // 
+            this.btChangeUser.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btChangeUser.Image = global::CertificatesViews.Properties.Resources.key;
+            this.btChangeUser.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btChangeUser.Name = "btChangeUser";
+            this.btChangeUser.Size = new System.Drawing.Size(23, 22);
+            this.btChangeUser.Text = "toolStripButton1";
+            this.btChangeUser.ToolTipText = "Смена пользователя";
+            // 
+            // btUsersEdit
+            // 
+            this.btUsersEdit.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btUsersEdit.Image = global::CertificatesViews.Properties.Resources.group_edit;
+            this.btUsersEdit.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btUsersEdit.Name = "btUsersEdit";
+            this.btUsersEdit.Size = new System.Drawing.Size(23, 22);
+            this.btUsersEdit.Text = "toolStripButton2";
+            this.btUsersEdit.ToolTipText = "Управление правами доступа пользователей";
+            // 
+            // statusStrip1
+            // 
+            this.statusStrip1.Location = new System.Drawing.Point(0, 521);
+            this.statusStrip1.Name = "statusStrip1";
+            this.statusStrip1.Size = new System.Drawing.Size(869, 22);
+            this.statusStrip1.TabIndex = 1;
+            this.statusStrip1.Text = "statusStrip1";
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Controls.Add(this.toolStrip1);
+            this.ClientSize = new System.Drawing.Size(869, 543);
+            this.Controls.Add(this.statusStrip1);
+            this.Controls.Add(this.tsMain);
             this.Name = "MainForm";
             this.Text = "Certificates Manager 2.0";
-            this.toolStrip1.ResumeLayout(false);
-            this.toolStrip1.PerformLayout();
+            this.tsMain.ResumeLayout(false);
+            this.tsMain.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -81,9 +128,13 @@
 
         #endregion
 
-        private System.Windows.Forms.ToolStrip toolStrip1;
+        private System.Windows.Forms.ToolStrip tsMain;
         private System.Windows.Forms.ToolStripButton btAdd;
         private System.Windows.Forms.ToolStripButton btRemove;
+        private System.Windows.Forms.ToolStripButton btSettings;
+        private System.Windows.Forms.ToolStripButton btChangeUser;
+        private System.Windows.Forms.ToolStripButton btUsersEdit;
+        private System.Windows.Forms.StatusStrip statusStrip1;
     }
 }
 

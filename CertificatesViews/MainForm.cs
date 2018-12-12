@@ -17,6 +17,7 @@ namespace CertificatesViews
     public partial class MainForm : Form
     {
         Certificates _certificates;
+
         Control _currentControl;
 
         private Control CurrentControl
@@ -37,10 +38,11 @@ namespace CertificatesViews
         {
             InitializeComponent();
 
-            CreateNewCertificates();
+            BuildTreeView();
         }
 
-        private void CreateNewCertificates()
+        // Дерево свидетельств
+        private void BuildTreeView()
         {
             var loader = AppLocator.ModelFactory.Create<ILoader>();
             _certificates = loader.Load();
