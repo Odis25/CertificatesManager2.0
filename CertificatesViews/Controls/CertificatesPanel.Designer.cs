@@ -97,6 +97,7 @@
             this.tvCertificates.Name = "tvCertificates";
             this.tvCertificates.Size = new System.Drawing.Size(228, 298);
             this.tvCertificates.TabIndex = 0;
+            this.tvCertificates.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.tvCertificates_AfterSelect);
             // 
             // lvCertificatesDetails
             // 
@@ -125,22 +126,27 @@
             this.lvCertificatesDetails.TabIndex = 0;
             this.lvCertificatesDetails.UseCompatibleStateImageBehavior = false;
             this.lvCertificatesDetails.View = System.Windows.Forms.View.Details;
+            this.lvCertificatesDetails.ItemSelectionChanged += new System.Windows.Forms.ListViewItemSelectionChangedEventHandler(this.lvCertificatesDetails_ItemSelectionChanged);
             // 
             // headerId
             // 
             this.headerId.Text = "Id";
+            this.headerId.Width = 49;
             // 
             // headerContractNumber
             // 
             this.headerContractNumber.Text = "Номер договора";
+            this.headerContractNumber.Width = 103;
             // 
             // headerCertificateNumber
             // 
             this.headerCertificateNumber.Text = "Номер свидетельства";
+            this.headerCertificateNumber.Width = 131;
             // 
             // headerRegisterNumber
             // 
             this.headerRegisterNumber.Text = "Номер в гос. реестре";
+            this.headerRegisterNumber.Width = 127;
             // 
             // headerVerificationMethod
             // 

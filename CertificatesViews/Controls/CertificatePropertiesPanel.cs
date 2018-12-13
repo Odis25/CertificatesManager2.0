@@ -38,10 +38,17 @@ namespace CertificatesViews.Controls
             InitializeComponent();
         }
 
+
         public void Build(Certificate certificate)
         {
-            _certificate = certificate ?? new Certificate();
-            FillTextBoxes();
+            if (_certificate != certificate)
+            {
+                _certificate = certificate;
+
+                if (_certificate != null)
+                    FillTextBoxes();
+            }
+
         }
 
         // Заполняем форму данными
@@ -58,8 +65,17 @@ namespace CertificatesViews.Controls
             tbDeviceType.Text = _certificate.DeviceType;
             tbDeviceName.Text = _certificate.DeviceName;
             tbSerialNumber.Text = _certificate.SerialNumber;
-           // dpCalibrationDate.Value = _certificate.CalibrationDate;
-           // dpCalibrationExpireDate.Value = _certificate.CalibrationExpireDate;
+            try
+            {
+                dpCalibrationDate.Value = _certificate.CalibrationDate;
+                dpCalibrationExpireDate.Value = _certificate.CalibrationExpireDate;
+            }
+            catch
+            {
+                dpCalibrationDate.Value = dpCalibrationDate.MinDate;
+                dpCalibrationExpireDate.Value = dpCalibrationExpireDate.MinDate;
+            }
+            
         }
     }
 }

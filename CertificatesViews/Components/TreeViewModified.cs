@@ -25,6 +25,7 @@ namespace CertificatesViews
             {
                 TreeNode node = new TreeNode();
                 node.Name = year.YearOfCreationCertificate.ToString();
+                node.Tag = year;
                 node.Text = year.YearOfCreationCertificate.ToString();
                 node.ImageKey = "UnselectedFolder";
                 node.SelectedImageKey = "SelectedFolder";           
@@ -33,6 +34,7 @@ namespace CertificatesViews
                 {
                     TreeNode subNode = new TreeNode();
                     subNode.Name = contract.ContractNumber;
+                    subNode.Tag = contract;
                     subNode.Text = contract.ContractNumber;
                     subNode.ImageKey = "Certificate";
                     subNode.SelectedImageKey = "Certificate";
@@ -41,6 +43,7 @@ namespace CertificatesViews
                     {
                         TreeNode subSubNode = new TreeNode();
                         subSubNode.Name = certificate.CertificatePath;
+                        subSubNode.Tag = certificate;
                         subSubNode.Text = certificate.CertificatePath;
 
                         subNode.Nodes.Add(subSubNode);

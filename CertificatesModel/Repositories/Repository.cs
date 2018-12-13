@@ -11,7 +11,6 @@ namespace CertificatesModel.Repositories
 {
     public static class Repository
     {
-        //Certificates _certificates;
         static string _connectionString;
 
         static Repository()
@@ -30,10 +29,10 @@ namespace CertificatesModel.Repositories
                 connection.Open();
                 using (SqlCeDataReader reader = cmd.ExecuteReader(CommandBehavior.CloseConnection))
                 {
-                    List<Certificate> tempCertificateList = new List<Certificate>();
+                    List<Certificate> certificates = new List<Certificate>();
                     while (reader.Read())
                     {
-                        tempCertificateList.Add(new Certificate()
+                        certificates.Add(new Certificate()
                         {
                             ID = reader.GetInt32(0),
                             Year = reader.GetInt32(1),
@@ -51,38 +50,16 @@ namespace CertificatesModel.Repositories
                             VerificationMethod = reader.GetValue(13).ToString()
                         });
                     }
-                    return ConstructDomainModel(tempCertificateList);                    
-                }
 
+                    return ConstructDomainModel(certificates);
+                }
             }
         }
 
-        private static Certificates ConstructDomainModel(List<Certificate> tempCertificateList)
-        {
-                      
+        private static Certificates ConstructDomainModel(List<Certificate> listOfCertificates)
+        {                
             Certificates certificates = new Certificates();
-
-            // Создаем и заполняем список годов
-            var sortedYearsList = tempCertificateList.Select(x => x.Year).Distinct().ToList();
-            sortedYearsList.Sort();
-            sortedYearsList.ForEach((y) => { certificates.Add(new Year() { YearOfCreationCertificate = y }); });
-
-            // Создаем и заполняем список номеров договора для каждого года
-            foreach (Year year in certificates)
-            {
-                // Список Номеров договора конкретного года
-                var contractsOfCurrentYear = tempCertificateList.Where(x => x.Year == year.YearOfCreationCertificate).Select(x => x.ContractNumber).Distinct().ToList();
-                contractsOfCurrentYear.Sort();
-                foreach (var contract in contractsOfCurrentYear)
-                {
-                    year.Add(new Contract() { ContractNumber = contract });
-                }
-                foreach (Contract contract in year)
-                {
-                    contract.AddRange(tempCertificateList.Where(x => x.Year == year.YearOfCreationCertificate && x.ContractNumber == contract.ContractNumber));
-                }
-                   
-            }
+            certificates.AddRange(listOfCertificates);
 
             return certificates; 
         }
