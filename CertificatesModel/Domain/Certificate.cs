@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace CertificatesModel
 {
 
-    public class Certificate
+    public class Certificate: IComparable<Certificate>
     {
 
         /// <summary>
@@ -68,5 +68,14 @@ namespace CertificatesModel
         /// </summary>
         public string CertificatePath { get; set; }
 
+        /// <summary>
+        /// Сортировка по ID
+        /// </summary>
+        /// <param name="other"></param>
+        /// <returns></returns>
+        public int CompareTo(Certificate other)
+        {
+            return this.ID.CompareTo(other.ID);
+        }
     }
 }

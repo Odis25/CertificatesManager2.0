@@ -17,6 +17,9 @@ namespace CertificatesDesktop
         [STAThread]
         static void Main()
         {
+            // Обработка исключений
+            ExceptionHandler.Init();
+
             // Создаем фабрики
             AppLocator.GuiFactory = new GuiFactory();
             AppLocator.ModelFactory = new ModelFactory();

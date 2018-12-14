@@ -11,6 +11,7 @@ using CertificatesViews.Interfaces;
 using CertificatesModel;
 using CertificatesViews.Factories;
 using System.IO;
+using System.Threading;
 
 namespace CertificatesViews.Controls
 {
@@ -18,6 +19,7 @@ namespace CertificatesViews.Controls
     {
         Control _currentControl;
         Certificates _certificates;
+        CancellationTokenSource _cancelationTokenSource;
 
         public Control CurrentControl
         {
@@ -31,7 +33,7 @@ namespace CertificatesViews.Controls
                 {
                     value.Dock = DockStyle.Left;
                     scMainSpliter.SplitterDistance = value.Height;
-                    value.Parent = scSecondarySpliter.Panel2;
+                    value.Parent = scSecondarySpliter.Panel2;                   
                     value.BringToFront();
                 }
             }
@@ -59,7 +61,6 @@ namespace CertificatesViews.Controls
             Certificate certificate = new Certificate();
             CurrentControl = (Control)AppLocator.GuiFactory.Create<IView<Certificate>>();
             (CurrentControl as IView<Certificate>).Build(certificate);
-
         }
 
         // Выбираем узел в TreeView
@@ -79,29 +80,54 @@ namespace CertificatesViews.Controls
 
         }
 
-        // Заполнение ListView результатами выборки
-        private void FillListView(List<Certificate> certificates)
+        // Асинхронное заполнение ListView результатами выборки
+        async private void FillListView(List<Certificate> certificates)
         {
-            // Очищаем ListView перед заполнением результатом выборки
-            lvCertificatesDetails.Items.Clear();            
+            // Отменяем исполняемую задачу, если таковая имелась
+            if (_cancelationTokenSource != null)
+                _cancelationTokenSource.Cancel();
 
-            // Заполняем ListView
+            // Создаем CancellationTokenSource для текущего метода, и передаем его в переменную класса
+            var cts = new CancellationTokenSource();
+            _cancelationTokenSource = cts;
+
+            // Получаем токен отмены
+            var token = _cancelationTokenSource.Token;
+
+            // Очищаем ListView перед заполнением результатом выборки
+            lvCertificatesDetails.Items.Clear();
+
+            // Асинхронно заполняем ListView результатами выборки
             foreach (var cert in certificates)
             {
-                FileInfo fileInfo = new FileInfo(cert.CertificatePath);
-                string fileSize, fileCreationDate;
-                try
-                {
-                    fileSize = fileInfo.Length.ToString();
-                    fileCreationDate = fileInfo.CreationTime.ToString();
-                }
-                catch
-                {
-                    fileSize = "---";
-                    fileCreationDate = "---";
-                }
-                lvCertificatesDetails.Items.Add(
-                    new ListViewItem(new string[]
+                var item = await Task<ListViewItem>.Factory.StartNew(() => GetCertificateDetails(cert, token), token);
+                if (item != null)
+                    lvCertificatesDetails.Items.Add(item);
+            }
+
+            // Убираем CancellationTokenSource текущего метода из переменной класса
+            if (_cancelationTokenSource == cts)
+                _cancelationTokenSource = null;
+        }
+
+        // Получение ListViewItem с детализированной информацией о свидетельстве 
+        private ListViewItem GetCertificateDetails(Certificate cert, CancellationToken token)
+        {
+            string fileSize, fileCreationDate;
+            FileInfo fileInfo = new FileInfo(cert.CertificatePath);
+
+            try
+            {
+                fileSize = fileInfo.Length.ToString();
+                fileCreationDate = fileInfo.CreationTime.ToString();
+            }
+            catch
+            {
+                fileSize = "---";
+                fileCreationDate = "---";
+            }
+
+            var item = new ListViewItem(new string[]
                     {
                     cert.ID.ToString(),
                     cert.ContractNumber,
@@ -118,10 +144,12 @@ namespace CertificatesViews.Controls
                     cert.CertificatePath,
                     fileSize,
                     fileCreationDate
-                    // TODO: добавить размер файла
-                    // TODO: добавить дату создания файла
-                    }));
-            }
+                    });
+
+            if (token.IsCancellationRequested)
+                return null;
+
+            return item;
         }
 
         // Выбор свидетельства в ListView

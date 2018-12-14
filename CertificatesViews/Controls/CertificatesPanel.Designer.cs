@@ -71,7 +71,7 @@
             // scMainSpliter.Panel2
             // 
             this.scMainSpliter.Panel2.Controls.Add(this.lvCertificatesDetails);
-            this.scMainSpliter.Size = new System.Drawing.Size(686, 543);
+            this.scMainSpliter.Size = new System.Drawing.Size(686, 517);
             this.scMainSpliter.SplitterDistance = 298;
             this.scMainSpliter.TabIndex = 1;
             // 
@@ -122,7 +122,7 @@
             this.lvCertificatesDetails.GridLines = true;
             this.lvCertificatesDetails.Location = new System.Drawing.Point(0, 0);
             this.lvCertificatesDetails.Name = "lvCertificatesDetails";
-            this.lvCertificatesDetails.Size = new System.Drawing.Size(686, 241);
+            this.lvCertificatesDetails.Size = new System.Drawing.Size(686, 215);
             this.lvCertificatesDetails.TabIndex = 0;
             this.lvCertificatesDetails.UseCompatibleStateImageBehavior = false;
             this.lvCertificatesDetails.View = System.Windows.Forms.View.Details;
@@ -198,7 +198,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.scMainSpliter);
             this.Name = "CertificatesPanel";
-            this.Size = new System.Drawing.Size(686, 543);
+            this.Size = new System.Drawing.Size(686, 517);
             this.scMainSpliter.Panel1.ResumeLayout(false);
             this.scMainSpliter.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.scMainSpliter)).EndInit();

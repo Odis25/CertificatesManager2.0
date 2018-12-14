@@ -19,6 +19,7 @@ namespace CertificatesModel
         public void AddRange(IEnumerable<Certificate> certificates)
         {
             _certificates = certificates.ToList();
+            _certificates.Sort();
             _contracts = new List<Contract>();
 
             // Создаем и заполняем список годов
