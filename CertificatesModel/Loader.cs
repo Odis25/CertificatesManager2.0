@@ -14,7 +14,8 @@ namespace CertificatesModel
         {
             //IRepository repository = new Repository();
 
-            Certificates result = Repository.GetAllCertificatesFromDB();
+            //Certificates result = Repository.GetAllCertificatesFromDB();
+            Certificates result = new Certificates();
             return result;
         }
     }

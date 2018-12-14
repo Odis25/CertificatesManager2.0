@@ -1,6 +1,8 @@
 ﻿using CertificatesModel;
+using CertificatesViews.Components;
 using CertificatesViews.Properties;
 using System.Windows.Forms;
+using static System.Windows.Forms.ListView;
 
 namespace CertificatesViews
 {

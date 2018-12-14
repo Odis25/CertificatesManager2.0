@@ -21,7 +21,6 @@ namespace CertificatesViews.Components
         IntPtr headerHandle;
         //This is used use to hook into the message loop of the Column Headers
         HeaderProc headerProc;
-        ContextMenuStrip _headerContextMenu;
 
         //Save the column indices which are hidden
         List<int> hiddenColumnIndices = new List<int>();
@@ -84,7 +83,15 @@ namespace CertificatesViews.Components
             if (m.Msg == 0x7b)
             {  //wm_contextmenu
                 if (m.WParam != this.Handle)
+                {
+                    if (HeaderContextMenu == null)
+                    {
+                        HeaderContextMenu = new ContextMenuStrip();
+                        BuildStripMenu();
+                    }
                     HeaderContextMenu.Show(Control.MousePosition);
+                }
+                    
             }
         }
 
@@ -97,7 +104,14 @@ namespace CertificatesViews.Components
             }
             base.OnColumnWidthChanging(e);
         }
-     
+
+        //We need to update columnPipeLefts whenever the width of any column changes
+        protected override void OnColumnWidthChanged(ColumnWidthChangedEventArgs e)
+        {
+            base.OnColumnWidthChanged(e);
+            UpdateColumnPipeLefts(Columns[e.ColumnIndex].DisplayIndex + 1);
+        }
+
         protected override void OnColumnReordered(ColumnReorderedEventArgs e)
         {
             int i = Math.Min(e.NewDisplayIndex, e.OldDisplayIndex);
@@ -204,33 +218,39 @@ namespace CertificatesViews.Components
             }
         }
 
-        // Правый Клик на заголовках ListView
-        //private void CmListViewHeaders_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
-        //{
-        //    ToolStripMenuItem item = (ToolStripMenuItem)e.ClickedItem;
-        //    int i = Convert.ToInt32(item.Tag);
-
-        //    if (lvDetails.Columns[i].Width != 0)
-        //    {
-        //        lvDetails.HideColumn(i);
-        //        item.Checked = false;
-        //    }
-        //    else
-        //    {
-        //        lvDetails.ShowColumn(i);
-        //        item.Checked = true;
-        //    }
-
-        //}
-
+        // Создаем ToolStripMenu для скрытия/отображения заголовков ListView
         private void BuildStripMenu()
         {
-            HeaderContextMenu = new ContextMenuStrip();
-
             foreach (ColumnHeader column in Columns)
             {
-                HeaderContextMenu.Items.Add(column.Text);
+                ToolStripMenuItem item = new ToolStripMenuItem();
+                item.Text = column.Text;
+                item.Tag = column.Index;
+                item.Checked = true;
+                item.Click += ToolStripMenuItem_Click;
+                HeaderContextMenu.Items.Add(item);
+            }
+        }
+
+        // Правый Клик на заголовках ListView
+        private void ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ToolStripMenuItem item = sender as ToolStripMenuItem;
+            int num = Convert.ToInt32(item.Tag);
+
+            if (Columns[num].Width != 0)
+            {
+                HideColumn(num);
+                item.Checked = false;
+            }
+            else
+            {
+                ShowColumn(num);
+                item.Checked = true;
             }
         }
     }
+
+    
+
 }
