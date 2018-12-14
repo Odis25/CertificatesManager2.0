@@ -52,7 +52,7 @@ namespace CertificatesModel
         {
             get
             {
-                return _contracts;
+                return _contracts ?? new List<Contract>();
             }
         }
         
@@ -63,7 +63,7 @@ namespace CertificatesModel
         {
             get
             {
-                return _certificates;
+                return _certificates ?? new List<Certificate>();
             }
         }
     }

@@ -156,6 +156,8 @@ namespace CertificatesViews.Controls
         private void lvCertificatesDetails_ItemSelectionChanged(object sender, ListViewItemSelectionChangedEventArgs e)
         {
             var id = e.Item.SubItems[0].Text;
+            if (_certificates == null || _certificates.ListOfCertificates.Count == 0)
+                return;
             var certificate = _certificates.ListOfCertificates.Where(x => x.ID == int.Parse(id)).ToList()[0];
             if (CurrentControl is CertificatePropertiesPanel)
                 (CurrentControl as CertificatePropertiesPanel).Build(certificate);

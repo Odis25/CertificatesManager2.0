@@ -48,8 +48,6 @@
             this.headerCertificatePath = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.headerFileSize = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.headerFileCreationDate = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.testToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.scMainSpliter)).BeginInit();
             this.scMainSpliter.Panel1.SuspendLayout();
             this.scMainSpliter.Panel2.SuspendLayout();
@@ -57,7 +55,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.scSecondarySpliter)).BeginInit();
             this.scSecondarySpliter.Panel1.SuspendLayout();
             this.scSecondarySpliter.SuspendLayout();
-            this.contextMenuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // scMainSpliter
@@ -197,19 +194,6 @@
             // 
             this.headerFileCreationDate.Text = "Дата создания файла";
             // 
-            // contextMenuStrip1
-            // 
-            this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.testToolStripMenuItem});
-            this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(181, 48);
-            // 
-            // testToolStripMenuItem
-            // 
-            this.testToolStripMenuItem.Name = "testToolStripMenuItem";
-            this.testToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.testToolStripMenuItem.Text = "test";
-            // 
             // CertificatesPanel
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -224,7 +208,6 @@
             this.scSecondarySpliter.Panel1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.scSecondarySpliter)).EndInit();
             this.scSecondarySpliter.ResumeLayout(false);
-            this.contextMenuStrip1.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -250,7 +233,5 @@
         private System.Windows.Forms.ColumnHeader headerCertificatePath;
         private System.Windows.Forms.ColumnHeader headerFileSize;
         private System.Windows.Forms.ColumnHeader headerFileCreationDate;
-        private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
-        private System.Windows.Forms.ToolStripMenuItem testToolStripMenuItem;
     }
 }

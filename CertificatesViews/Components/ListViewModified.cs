@@ -31,14 +31,39 @@ namespace CertificatesViews.Components
 
         public ContextMenuStrip HeaderContextMenu { get; set; }
 
+        ContextMenuStrip _itemsContextMenu;
+        /// <summary>
+        /// Контекстное меню, вызываемое щелчком правой кнопки мыши по элементам ListViewItem
+        /// </summary>
+        public ContextMenuStrip ItemsContextMenu
+        {
+            get
+            {
+                return _itemsContextMenu ?? new ContextMenuStrip();
+            }
+            set { _itemsContextMenu = value; }
+        }
+
         // Конструктор класса
         public ListViewModified() : base()
         {
             BuildStripMenu();
 
             VisibleChanged += ListViewModified_VisibleChanged;
+            MouseClick += ListViewModified_MouseClick;
             columnPipeLefts[0] = 0;
             this.DoubleBuffered = true;
+        }
+
+        private void ListViewModified_MouseClick(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Right)
+            {
+                if (FocusedItem.Bounds.Contains(e.Location) == true)
+                {
+                    ItemsContextMenu.Show(MousePosition);
+                }
+            }
         }
 
         private bool EnumChild(IntPtr childHwnd, object lParam)
