@@ -29,12 +29,12 @@
         private void InitializeComponent()
         {
             this.tsMain = new System.Windows.Forms.ToolStrip();
+            this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.btAdd = new System.Windows.Forms.ToolStripButton();
             this.btRemove = new System.Windows.Forms.ToolStripButton();
             this.btSettings = new System.Windows.Forms.ToolStripButton();
             this.btChangeUser = new System.Windows.Forms.ToolStripButton();
             this.btUsersEdit = new System.Windows.Forms.ToolStripButton();
-            this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.tsMain.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -52,6 +52,14 @@
             this.tsMain.TabIndex = 0;
             this.tsMain.Text = "tsMain";
             // 
+            // statusStrip1
+            // 
+            this.statusStrip1.Location = new System.Drawing.Point(0, 600);
+            this.statusStrip1.Name = "statusStrip1";
+            this.statusStrip1.Size = new System.Drawing.Size(869, 22);
+            this.statusStrip1.TabIndex = 1;
+            this.statusStrip1.Text = "statusStrip1";
+            // 
             // btAdd
             // 
             this.btAdd.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
@@ -61,6 +69,7 @@
             this.btAdd.Size = new System.Drawing.Size(23, 22);
             this.btAdd.Text = "toolStripButton1";
             this.btAdd.ToolTipText = "Добавить новое свидетельство";
+            this.btAdd.Click += new System.EventHandler(this.btAdd_Click);
             // 
             // btRemove
             // 
@@ -71,6 +80,7 @@
             this.btRemove.Size = new System.Drawing.Size(23, 22);
             this.btRemove.Text = "toolStripButton2";
             this.btRemove.ToolTipText = "Удалить выбранные свидетельства";
+            this.btRemove.Click += new System.EventHandler(this.btRemove_Click);
             // 
             // btSettings
             // 
@@ -81,6 +91,7 @@
             this.btSettings.Size = new System.Drawing.Size(23, 22);
             this.btSettings.Text = "toolStripButton1";
             this.btSettings.ToolTipText = "Настройки приложения";
+            this.btSettings.Click += new System.EventHandler(this.btSettings_Click);
             // 
             // btChangeUser
             // 
@@ -91,6 +102,7 @@
             this.btChangeUser.Size = new System.Drawing.Size(23, 22);
             this.btChangeUser.Text = "toolStripButton1";
             this.btChangeUser.ToolTipText = "Смена пользователя";
+            this.btChangeUser.Click += new System.EventHandler(this.btChangeUser_Click);
             // 
             // btUsersEdit
             // 
@@ -101,14 +113,7 @@
             this.btUsersEdit.Size = new System.Drawing.Size(23, 22);
             this.btUsersEdit.Text = "toolStripButton2";
             this.btUsersEdit.ToolTipText = "Управление правами доступа пользователей";
-            // 
-            // statusStrip1
-            // 
-            this.statusStrip1.Location = new System.Drawing.Point(0, 600);
-            this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(869, 22);
-            this.statusStrip1.TabIndex = 1;
-            this.statusStrip1.Text = "statusStrip1";
+            this.btUsersEdit.Click += new System.EventHandler(this.btUsersEdit_Click);
             // 
             // MainForm
             // 
@@ -118,6 +123,7 @@
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.tsMain);
             this.Name = "MainForm";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Certificates Manager 2.0";
             this.tsMain.ResumeLayout(false);
             this.tsMain.PerformLayout();

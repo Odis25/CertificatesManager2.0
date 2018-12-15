@@ -1,5 +1,6 @@
 ﻿using CertificatesModel;
 using CertificatesModel.Interfaces;
+using CertificatesViews.Controls;
 using CertificatesViews.Factories;
 using CertificatesViews.Interfaces;
 using System;
@@ -49,5 +50,59 @@ namespace CertificatesViews
             CurrentControl = (Control)AppLocator.GuiFactory.Create<IView<Certificates>>();
             (CurrentControl as IView<Certificates>).Build(_certificates);
         }
+
+        private void btAdd_Click(object sender, EventArgs e)
+        {
+            OpenAddingNewCertificateForm();
+        }
+
+        private void btRemove_Click(object sender, EventArgs e)
+        {
+            RemoveCertificateFromDataBase();
+        }
+
+        private void btSettings_Click(object sender, EventArgs e)
+        {
+            OpenSettingsForm();
+        }
+
+        private void btChangeUser_Click(object sender, EventArgs e)
+        {
+            OpenUserChangingForm();
+        }
+
+        private void btUsersEdit_Click(object sender, EventArgs e)
+        {
+            OpenUserAccountsEditForm();
+        }
+
+        #region Add, Remove, Settings, UserChanging, AccountsEdit
+        private void OpenAddingNewCertificateForm()
+        {
+
+        }
+
+        private void RemoveCertificateFromDataBase()
+        {
+
+        }
+
+        private void OpenSettingsForm()
+        {
+            var form = new SettingsForm();
+            form.ShowDialog();
+        }
+
+        private void OpenUserChangingForm()
+        {
+
+        }
+
+        private void OpenUserAccountsEditForm()
+        {
+
+        }
+
+        #endregion
     }
 }

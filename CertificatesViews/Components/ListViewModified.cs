@@ -53,6 +53,7 @@ namespace CertificatesViews.Components
             MouseClick += ListViewModified_MouseClick;
             columnPipeLefts[0] = 0;
             this.DoubleBuffered = true;
+            AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
         }
 
         private void ListViewModified_MouseClick(object sender, MouseEventArgs e)

@@ -42,6 +42,8 @@ namespace CertificatesViews.Controls
         public CertificatesPanel()
         {
             InitializeComponent();
+
+            lvCertificatesDetails.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
         }
 
         public event EventHandler Changed;
