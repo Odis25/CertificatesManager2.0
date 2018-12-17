@@ -12,6 +12,7 @@ using CertificatesModel;
 using CertificatesViews.Factories;
 using System.IO;
 using System.Threading;
+using CertificatesModel.Interfaces;
 
 namespace CertificatesViews.Controls
 {
@@ -163,6 +164,10 @@ namespace CertificatesViews.Controls
             var certificate = _certificates.ListOfCertificates.Where(x => x.ID == int.Parse(id)).ToList()[0];
             if (CurrentControl is CertificatePropertiesPanel)
                 (CurrentControl as CertificatePropertiesPanel).Build(certificate);
+
+            var previewer = AppLocator.ModelFactory.Create<IPreview>();
+
+            var pages = previewer.Load(certificate.CertificatePath);
         }
     }
 }

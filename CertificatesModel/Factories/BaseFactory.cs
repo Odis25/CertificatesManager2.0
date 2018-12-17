@@ -20,7 +20,7 @@ namespace CertificatesModel.Factories
             if (interfaceToClass.ContainsKey(typeof(TInterface)))
                 return (TInterface)Activator.CreateInstance(interfaceToClass[typeof(TInterface)], arguments);
             else
-                return (TInterface)Activator.CreateInstance(typeof(TInterface));
+                return (TInterface)Activator.CreateInstance(typeof(TInterface), arguments);
         }
     }
 
