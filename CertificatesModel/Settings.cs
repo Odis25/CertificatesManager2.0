@@ -12,7 +12,9 @@ namespace CertificatesModel
     public class Settings
     {
         private static Settings _instance;
-
+        /// <summary>
+        /// Экземпляр класса настроек
+        /// </summary>
         public static Settings Instance
         {
             get
@@ -33,12 +35,15 @@ namespace CertificatesModel
                     _instance = (Settings)serializer.Deserialize(stream);
                 }
             }
-            catch (Exception e)
+            catch
             {
                 _instance = new Settings();
             }
         }
 
+        /// <summary>
+        /// Сохранить настройки в файл settings.xml
+        /// </summary>
         public static void Serialize()
         {
             XmlSerializer serializer = new XmlSerializer(typeof(Settings));
