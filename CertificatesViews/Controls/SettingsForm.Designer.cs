@@ -78,6 +78,7 @@
             this.btChangeCertificatesZipFolderPath.TabIndex = 2;
             this.btChangeCertificatesZipFolderPath.Text = "...";
             this.btChangeCertificatesZipFolderPath.UseVisualStyleBackColor = true;
+            this.btChangeCertificatesZipFolderPath.Click += new System.EventHandler(this.btChangeCertificatesZipFolderPath_Click);
             // 
             // button3
             // 
@@ -98,6 +99,7 @@
             this.btChangeCertificatesFolderPath.TabIndex = 2;
             this.btChangeCertificatesFolderPath.Text = "...";
             this.btChangeCertificatesFolderPath.UseVisualStyleBackColor = true;
+            this.btChangeCertificatesFolderPath.Click += new System.EventHandler(this.btChangeCertificatesFolderPath_Click);
             // 
             // button2
             // 
@@ -118,6 +120,7 @@
             this.btChangeDataBasePath.TabIndex = 2;
             this.btChangeDataBasePath.Text = "...";
             this.btChangeDataBasePath.UseVisualStyleBackColor = true;
+            this.btChangeDataBasePath.Click += new System.EventHandler(this.btChangeDataBasePath_Click);
             // 
             // tbCertificatesZipFolderPath
             // 
@@ -125,6 +128,7 @@
             this.tbCertificatesZipFolderPath.Name = "tbCertificatesZipFolderPath";
             this.tbCertificatesZipFolderPath.Size = new System.Drawing.Size(287, 20);
             this.tbCertificatesZipFolderPath.TabIndex = 1;
+            this.tbCertificatesZipFolderPath.TextChanged += new System.EventHandler(this.Changed);
             // 
             // tbCertificatesFolderPath
             // 
@@ -132,6 +136,7 @@
             this.tbCertificatesFolderPath.Name = "tbCertificatesFolderPath";
             this.tbCertificatesFolderPath.Size = new System.Drawing.Size(287, 20);
             this.tbCertificatesFolderPath.TabIndex = 1;
+            this.tbCertificatesFolderPath.TextChanged += new System.EventHandler(this.Changed);
             // 
             // tbDataBasePath
             // 
@@ -139,6 +144,7 @@
             this.tbDataBasePath.Name = "tbDataBasePath";
             this.tbDataBasePath.Size = new System.Drawing.Size(287, 20);
             this.tbDataBasePath.TabIndex = 1;
+            this.tbDataBasePath.TextChanged += new System.EventHandler(this.Changed);
             // 
             // label3
             // 
@@ -210,6 +216,7 @@
             this.chbAutoPreviewEnabled.TabIndex = 1;
             this.chbAutoPreviewEnabled.Text = "Автоматический предпросмотр свидетельств:";
             this.chbAutoPreviewEnabled.UseVisualStyleBackColor = true;
+            this.chbAutoPreviewEnabled.CheckedChanged += new System.EventHandler(this.Changed);
             // 
             // SettingsForm
             // 

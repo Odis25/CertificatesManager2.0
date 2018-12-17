@@ -15,7 +15,7 @@ namespace CertificatesModel.Repositories
 
         static Repository()
         {
-            _connectionString = "DataSource = D:\\test.sdf";
+            _connectionString = $"DataSource = {Settings.Instance.DataBasePath}";
         }
 
         // Получаем все свидетельства из БД

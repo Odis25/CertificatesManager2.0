@@ -25,10 +25,17 @@ namespace CertificatesModel
 
         static Settings()
         {
-            XmlSerializer serializer = new XmlSerializer(typeof(Settings));
-            using (FileStream stream = new FileStream("settings.xml", FileMode.OpenOrCreate))
+            try
+            {               
+                using (FileStream stream = new FileStream("settings.xml", FileMode.OpenOrCreate))
+                {
+                    XmlSerializer serializer = new XmlSerializer(typeof(Settings));
+                    _instance = (Settings)serializer.Deserialize(stream);
+                }
+            }
+            catch (Exception e)
             {
-                _instance = (Settings)serializer.Deserialize(stream);
+                _instance = new Settings();
             }
         }
 
