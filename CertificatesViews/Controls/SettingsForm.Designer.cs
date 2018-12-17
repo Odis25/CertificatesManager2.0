@@ -29,17 +29,17 @@
         private void InitializeComponent()
         {
             this.gbPaths = new System.Windows.Forms.GroupBox();
-            this.label1 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
-            this.tbCertificatesFolderPath = new System.Windows.Forms.TextBox();
-            this.tbDataBasePath = new System.Windows.Forms.TextBox();
-            this.tbCertificatesZipFolderPath = new System.Windows.Forms.TextBox();
-            this.btChangeDataBasePath = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
+            this.btChangeCertificatesZipFolderPath = new System.Windows.Forms.Button();
             this.button3 = new System.Windows.Forms.Button();
             this.btChangeCertificatesFolderPath = new System.Windows.Forms.Button();
-            this.btChangeCertificatesZipFolderPath = new System.Windows.Forms.Button();
+            this.button2 = new System.Windows.Forms.Button();
+            this.btChangeDataBasePath = new System.Windows.Forms.Button();
+            this.tbCertificatesZipFolderPath = new System.Windows.Forms.TextBox();
+            this.tbCertificatesFolderPath = new System.Windows.Forms.TextBox();
+            this.tbDataBasePath = new System.Windows.Forms.TextBox();
+            this.label3 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
             this.btSaveChanges = new System.Windows.Forms.Button();
             this.btCancel = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
@@ -69,73 +69,15 @@
             this.gbPaths.TabStop = false;
             this.gbPaths.Text = "Пути";
             // 
-            // label1
+            // btChangeCertificatesZipFolderPath
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(13, 37);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(75, 13);
-            this.label1.TabIndex = 0;
-            this.label1.Text = "База данных:";
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(13, 65);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(174, 13);
-            this.label2.TabIndex = 0;
-            this.label2.Text = "Каталог хранения свидетельств:";
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(13, 93);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(236, 13);
-            this.label3.TabIndex = 0;
-            this.label3.Text = "Каталог резервного хранения свидетельств:";
-            // 
-            // tbCertificatesFolderPath
-            // 
-            this.tbCertificatesFolderPath.Location = new System.Drawing.Point(252, 61);
-            this.tbCertificatesFolderPath.Name = "tbCertificatesFolderPath";
-            this.tbCertificatesFolderPath.Size = new System.Drawing.Size(287, 20);
-            this.tbCertificatesFolderPath.TabIndex = 1;
-            // 
-            // tbDataBasePath
-            // 
-            this.tbDataBasePath.Location = new System.Drawing.Point(252, 33);
-            this.tbDataBasePath.Name = "tbDataBasePath";
-            this.tbDataBasePath.Size = new System.Drawing.Size(287, 20);
-            this.tbDataBasePath.TabIndex = 1;
-            // 
-            // tbCertificatesZipFolderPath
-            // 
-            this.tbCertificatesZipFolderPath.Location = new System.Drawing.Point(252, 89);
-            this.tbCertificatesZipFolderPath.Name = "tbCertificatesZipFolderPath";
-            this.tbCertificatesZipFolderPath.Size = new System.Drawing.Size(287, 20);
-            this.tbCertificatesZipFolderPath.TabIndex = 1;
-            // 
-            // btChangeDataBasePath
-            // 
-            this.btChangeDataBasePath.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.btChangeDataBasePath.Location = new System.Drawing.Point(537, 32);
-            this.btChangeDataBasePath.Name = "btChangeDataBasePath";
-            this.btChangeDataBasePath.Size = new System.Drawing.Size(33, 23);
-            this.btChangeDataBasePath.TabIndex = 2;
-            this.btChangeDataBasePath.Text = "...";
-            this.btChangeDataBasePath.UseVisualStyleBackColor = true;
-            // 
-            // button2
-            // 
-            this.button2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.button2.Location = new System.Drawing.Point(537, 59);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(33, 23);
-            this.button2.TabIndex = 2;
-            this.button2.Text = "...";
-            this.button2.UseVisualStyleBackColor = true;
+            this.btChangeCertificatesZipFolderPath.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.btChangeCertificatesZipFolderPath.Location = new System.Drawing.Point(537, 88);
+            this.btChangeCertificatesZipFolderPath.Name = "btChangeCertificatesZipFolderPath";
+            this.btChangeCertificatesZipFolderPath.Size = new System.Drawing.Size(33, 23);
+            this.btChangeCertificatesZipFolderPath.TabIndex = 2;
+            this.btChangeCertificatesZipFolderPath.Text = "...";
+            this.btChangeCertificatesZipFolderPath.UseVisualStyleBackColor = true;
             // 
             // button3
             // 
@@ -157,15 +99,73 @@
             this.btChangeCertificatesFolderPath.Text = "...";
             this.btChangeCertificatesFolderPath.UseVisualStyleBackColor = true;
             // 
-            // btChangeCertificatesZipFolderPath
+            // button2
             // 
-            this.btChangeCertificatesZipFolderPath.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.btChangeCertificatesZipFolderPath.Location = new System.Drawing.Point(537, 88);
-            this.btChangeCertificatesZipFolderPath.Name = "btChangeCertificatesZipFolderPath";
-            this.btChangeCertificatesZipFolderPath.Size = new System.Drawing.Size(33, 23);
-            this.btChangeCertificatesZipFolderPath.TabIndex = 2;
-            this.btChangeCertificatesZipFolderPath.Text = "...";
-            this.btChangeCertificatesZipFolderPath.UseVisualStyleBackColor = true;
+            this.button2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.button2.Location = new System.Drawing.Point(537, 59);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(33, 23);
+            this.button2.TabIndex = 2;
+            this.button2.Text = "...";
+            this.button2.UseVisualStyleBackColor = true;
+            // 
+            // btChangeDataBasePath
+            // 
+            this.btChangeDataBasePath.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.btChangeDataBasePath.Location = new System.Drawing.Point(537, 32);
+            this.btChangeDataBasePath.Name = "btChangeDataBasePath";
+            this.btChangeDataBasePath.Size = new System.Drawing.Size(33, 23);
+            this.btChangeDataBasePath.TabIndex = 2;
+            this.btChangeDataBasePath.Text = "...";
+            this.btChangeDataBasePath.UseVisualStyleBackColor = true;
+            // 
+            // tbCertificatesZipFolderPath
+            // 
+            this.tbCertificatesZipFolderPath.Location = new System.Drawing.Point(252, 89);
+            this.tbCertificatesZipFolderPath.Name = "tbCertificatesZipFolderPath";
+            this.tbCertificatesZipFolderPath.Size = new System.Drawing.Size(287, 20);
+            this.tbCertificatesZipFolderPath.TabIndex = 1;
+            // 
+            // tbCertificatesFolderPath
+            // 
+            this.tbCertificatesFolderPath.Location = new System.Drawing.Point(252, 61);
+            this.tbCertificatesFolderPath.Name = "tbCertificatesFolderPath";
+            this.tbCertificatesFolderPath.Size = new System.Drawing.Size(287, 20);
+            this.tbCertificatesFolderPath.TabIndex = 1;
+            // 
+            // tbDataBasePath
+            // 
+            this.tbDataBasePath.Location = new System.Drawing.Point(252, 33);
+            this.tbDataBasePath.Name = "tbDataBasePath";
+            this.tbDataBasePath.Size = new System.Drawing.Size(287, 20);
+            this.tbDataBasePath.TabIndex = 1;
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(13, 93);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(236, 13);
+            this.label3.TabIndex = 0;
+            this.label3.Text = "Каталог резервного хранения свидетельств:";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(13, 65);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(174, 13);
+            this.label2.TabIndex = 0;
+            this.label2.Text = "Каталог хранения свидетельств:";
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(13, 37);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(75, 13);
+            this.label1.TabIndex = 0;
+            this.label1.Text = "База данных:";
             // 
             // btSaveChanges
             // 
@@ -175,6 +175,7 @@
             this.btSaveChanges.TabIndex = 1;
             this.btSaveChanges.Text = "Сохранить";
             this.btSaveChanges.UseVisualStyleBackColor = true;
+            this.btSaveChanges.Click += new System.EventHandler(this.btSaveChanges_Click);
             // 
             // btCancel
             // 
