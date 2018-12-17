@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace CertificatesModel
 {
-    public class Loader : ILoader
+    public class CertificatesLoader : ILoader
     {
         public Certificates Load()
         {

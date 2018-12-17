@@ -1,11 +1,4 @@
 ﻿using CertificatesModel.Interfaces;
-using CertificatesModel;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using CertificatesModel.Repositories;
 
 namespace CertificatesModel.Factories
 {
@@ -13,8 +6,8 @@ namespace CertificatesModel.Factories
     {
         public ModelFactory()
         {
-            Register<ILoader, Loader>();
-            //Register<IRepository, Repository>();
+            Register<ILoader, CertificatesLoader>();
+            Register<IPreview, PreviewLoader>();
         }
     }
 }
