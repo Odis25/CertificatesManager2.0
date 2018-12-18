@@ -16,6 +16,7 @@ namespace CertificatesViews.Factories
         {
             Register<IView<Certificates>, CertificatesPanel>();
             Register<IView<Certificate>, CertificatePropertiesPanel>();
+            Register<IView<Pages>, PreviewPanel>();
         }
     }
 }

@@ -25,7 +25,7 @@ namespace CertificatesModel
             }
         }
 
-        static Settings()
+        static Settings() 
         {
             try
             {               
@@ -38,6 +38,7 @@ namespace CertificatesModel
             catch
             {
                 _instance = new Settings();
+                _instance.DataBasePath = "D:\\Test.sdf";
             }
         }
 
@@ -47,7 +48,7 @@ namespace CertificatesModel
         public static void Serialize()
         {
             XmlSerializer serializer = new XmlSerializer(typeof(Settings));
-            using (FileStream stream = new FileStream("settings.xml", FileMode.OpenOrCreate))
+            using (FileStream stream = new FileStream("settings.xml", FileMode.Create))
             {
                 serializer.Serialize(stream, Instance);
             }

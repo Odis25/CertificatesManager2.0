@@ -48,6 +48,9 @@
             this.headerCertificatePath = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.headerFileSize = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.headerFileCreationDate = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.panMain = new System.Windows.Forms.Panel();
+            this.panPreview = new System.Windows.Forms.Panel();
+            this.scPreviewSplitter = new System.Windows.Forms.SplitContainer();
             ((System.ComponentModel.ISupportInitialize)(this.scMainSpliter)).BeginInit();
             this.scMainSpliter.Panel1.SuspendLayout();
             this.scMainSpliter.Panel2.SuspendLayout();
@@ -55,6 +58,11 @@
             ((System.ComponentModel.ISupportInitialize)(this.scSecondarySpliter)).BeginInit();
             this.scSecondarySpliter.Panel1.SuspendLayout();
             this.scSecondarySpliter.SuspendLayout();
+            this.panMain.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.scPreviewSplitter)).BeginInit();
+            this.scPreviewSplitter.Panel1.SuspendLayout();
+            this.scPreviewSplitter.Panel2.SuspendLayout();
+            this.scPreviewSplitter.SuspendLayout();
             this.SuspendLayout();
             // 
             // scMainSpliter
@@ -72,22 +80,23 @@
             // scMainSpliter.Panel2
             // 
             this.scMainSpliter.Panel2.Controls.Add(this.lvCertificatesDetails);
-            this.scMainSpliter.Size = new System.Drawing.Size(686, 517);
+            this.scMainSpliter.Size = new System.Drawing.Size(666, 517);
             this.scMainSpliter.SplitterDistance = 298;
-            this.scMainSpliter.TabIndex = 1;
+            this.scMainSpliter.TabIndex = 2;
             // 
             // scSecondarySpliter
             // 
             this.scSecondarySpliter.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.scSecondarySpliter.FixedPanel = System.Windows.Forms.FixedPanel.Panel1;
+            this.scSecondarySpliter.FixedPanel = System.Windows.Forms.FixedPanel.Panel2;
             this.scSecondarySpliter.Location = new System.Drawing.Point(0, 0);
             this.scSecondarySpliter.Name = "scSecondarySpliter";
             // 
             // scSecondarySpliter.Panel1
             // 
             this.scSecondarySpliter.Panel1.Controls.Add(this.tvCertificates);
-            this.scSecondarySpliter.Size = new System.Drawing.Size(686, 298);
-            this.scSecondarySpliter.SplitterDistance = 228;
+            this.scSecondarySpliter.Panel2MinSize = 441;
+            this.scSecondarySpliter.Size = new System.Drawing.Size(666, 298);
+            this.scSecondarySpliter.SplitterDistance = 221;
             this.scSecondarySpliter.TabIndex = 0;
             // 
             // tvCertificates
@@ -96,7 +105,7 @@
             this.tvCertificates.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tvCertificates.Location = new System.Drawing.Point(0, 0);
             this.tvCertificates.Name = "tvCertificates";
-            this.tvCertificates.Size = new System.Drawing.Size(228, 298);
+            this.tvCertificates.Size = new System.Drawing.Size(221, 298);
             this.tvCertificates.TabIndex = 0;
             this.tvCertificates.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.tvCertificates_AfterSelect);
             // 
@@ -124,7 +133,7 @@
             this.lvCertificatesDetails.HeaderContextMenu = null;
             this.lvCertificatesDetails.Location = new System.Drawing.Point(0, 0);
             this.lvCertificatesDetails.Name = "lvCertificatesDetails";
-            this.lvCertificatesDetails.Size = new System.Drawing.Size(686, 215);
+            this.lvCertificatesDetails.Size = new System.Drawing.Size(666, 215);
             this.lvCertificatesDetails.TabIndex = 0;
             this.lvCertificatesDetails.UseCompatibleStateImageBehavior = false;
             this.lvCertificatesDetails.View = System.Windows.Forms.View.Details;
@@ -194,13 +203,50 @@
             // 
             this.headerFileCreationDate.Text = "Дата создания файла";
             // 
+            // panMain
+            // 
+            this.panMain.Controls.Add(this.scMainSpliter);
+            this.panMain.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panMain.Location = new System.Drawing.Point(0, 0);
+            this.panMain.Name = "panMain";
+            this.panMain.Size = new System.Drawing.Size(666, 517);
+            this.panMain.TabIndex = 1;
+            // 
+            // panPreview
+            // 
+            this.panPreview.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.panPreview.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panPreview.Location = new System.Drawing.Point(0, 0);
+            this.panPreview.Name = "panPreview";
+            this.panPreview.Size = new System.Drawing.Size(435, 517);
+            this.panPreview.TabIndex = 2;
+            // 
+            // scPreviewSplitter
+            // 
+            this.scPreviewSplitter.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.scPreviewSplitter.Location = new System.Drawing.Point(0, 0);
+            this.scPreviewSplitter.Name = "scPreviewSplitter";
+            // 
+            // scPreviewSplitter.Panel1
+            // 
+            this.scPreviewSplitter.Panel1.Controls.Add(this.panMain);
+            // 
+            // scPreviewSplitter.Panel2
+            // 
+            this.scPreviewSplitter.Panel2.Controls.Add(this.panPreview);
+            this.scPreviewSplitter.Panel2MinSize = 423;
+            this.scPreviewSplitter.Size = new System.Drawing.Size(1105, 517);
+            this.scPreviewSplitter.SplitterDistance = 666;
+            this.scPreviewSplitter.TabIndex = 3;
+            // 
             // CertificatesPanel
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(this.scMainSpliter);
+            this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.Controls.Add(this.scPreviewSplitter);
             this.Name = "CertificatesPanel";
-            this.Size = new System.Drawing.Size(686, 517);
+            this.Size = new System.Drawing.Size(1105, 517);
             this.scMainSpliter.Panel1.ResumeLayout(false);
             this.scMainSpliter.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.scMainSpliter)).EndInit();
@@ -208,15 +254,19 @@
             this.scSecondarySpliter.Panel1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.scSecondarySpliter)).EndInit();
             this.scSecondarySpliter.ResumeLayout(false);
+            this.panMain.ResumeLayout(false);
+            this.scPreviewSplitter.Panel1.ResumeLayout(false);
+            this.scPreviewSplitter.Panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.scPreviewSplitter)).EndInit();
+            this.scPreviewSplitter.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
 
         #endregion
-
-        private TreeViewModified tvCertificates;
         private System.Windows.Forms.SplitContainer scMainSpliter;
         private System.Windows.Forms.SplitContainer scSecondarySpliter;
+        private TreeViewModified tvCertificates;
         private Components.ListViewModified lvCertificatesDetails;
         private System.Windows.Forms.ColumnHeader headerId;
         private System.Windows.Forms.ColumnHeader headerContractNumber;
@@ -233,5 +283,8 @@
         private System.Windows.Forms.ColumnHeader headerCertificatePath;
         private System.Windows.Forms.ColumnHeader headerFileSize;
         private System.Windows.Forms.ColumnHeader headerFileCreationDate;
+        private System.Windows.Forms.Panel panMain;
+        private System.Windows.Forms.Panel panPreview;
+        private System.Windows.Forms.SplitContainer scPreviewSplitter;
     }
 }

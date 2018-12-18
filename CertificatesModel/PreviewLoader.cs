@@ -14,22 +14,11 @@ namespace CertificatesModel
     {
         CancellationTokenSource _cts;
 
-        public Pages Load(string path)
+        async public Task<Pages> GetPagesFromPdf(string path, CancellationToken token)
         {
-            var result = (GetPagesFromPdf(path)).Result;
 
-            return result;
-        }
-
-        async private Task<Pages> GetPagesFromPdf(string path)
-        {
-            if (_cts != null)
-                _cts.Cancel();
-
-            var cts = new CancellationTokenSource();
-            var token = cts.Token;
-
-            using (var document = await Task.Run(new Func<PdfDocument>(() => { return PdfDocument.Load(path); }), token))
+            //using (var document = await Task.Run(new Func<PdfDocument>(() => { return PdfDocument.Load(path); }), token))
+            using (var document = PdfDocument.Load(path) )
             {
                 Pages imageList = new Pages();
 
@@ -43,11 +32,13 @@ namespace CertificatesModel
                     data.ct = token;
                     data.isPrinting = false;
 
-                    imageList.Add(await Task<Image>.Factory.StartNew(RenderAsync, data));
-                }
+                    var r = await Task<Image>.Factory.StartNew(RenderAsync, data);
 
-                if (_cts == cts)
-                    _cts = null;
+                    if (token.IsCancellationRequested)
+                        return null;
+
+                    imageList.Add(r);
+                }
 
                 return imageList;
             }
@@ -55,12 +46,20 @@ namespace CertificatesModel
 
         private Image RenderAsync(object obj) // Асинхронная версия метода Render PDF
         {
-            Context data = (Context)obj;
-            CancellationToken token = data.ct;
+            try
+            {
+                Context data = (Context)obj;
+                CancellationToken token = data.ct;
 
-            token.ThrowIfCancellationRequested();
+                token.ThrowIfCancellationRequested();
 
-            return data.document.Render(data.i, data.dpiX, data.dpiY, data.isPrinting);
+                var result = data.document.Render(data.i, data.dpiX, data.dpiY, data.isPrinting);
+                return result;
+            }
+            catch (Exception e)
+            {
+                return null;
+            }                      
         }
 
         struct Context

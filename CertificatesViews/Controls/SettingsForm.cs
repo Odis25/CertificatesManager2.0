@@ -7,6 +7,8 @@ namespace CertificatesViews.Controls
 
     public partial class SettingsForm : Form
     {
+        public event EventHandler Changed = delegate { }; 
+
         public SettingsForm()
         {
             InitializeComponent();
@@ -43,10 +45,12 @@ namespace CertificatesViews.Controls
             // Сериализуем класс настроек
             Settings.Serialize();
             btSaveChanges.Enabled = false;
+
+            Changed(this, EventArgs.Empty); // сработка события на главной форме
         }
 
         // Событие изменения настроек
-        private void Changed(object sender, EventArgs e)
+        private void SettingsChanged(object sender, EventArgs e)
         {
             // включаем кнопку сохранения
             btSaveChanges.Enabled = true;

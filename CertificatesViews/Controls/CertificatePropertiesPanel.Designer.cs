@@ -28,6 +28,20 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.chbCalibrationExpireDate = new System.Windows.Forms.CheckBox();
+            this.chbCalibrationDate = new System.Windows.Forms.CheckBox();
+            this.chbSerialNumber = new System.Windows.Forms.CheckBox();
+            this.chbDeviceName = new System.Windows.Forms.CheckBox();
+            this.chbDeviceType = new System.Windows.Forms.CheckBox();
+            this.chbObjectName = new System.Windows.Forms.CheckBox();
+            this.chbClientName = new System.Windows.Forms.CheckBox();
+            this.chbContractNumber = new System.Windows.Forms.CheckBox();
+            this.chbVerificationMethod = new System.Windows.Forms.CheckBox();
+            this.chbRegisterNumber = new System.Windows.Forms.CheckBox();
+            this.chbCertificateNumber = new System.Windows.Forms.CheckBox();
+            this.chbYear = new System.Windows.Forms.CheckBox();
+            this.chbId = new System.Windows.Forms.CheckBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.btSearch = new System.Windows.Forms.Button();
             this.dpCalibrationExpireDate = new System.Windows.Forms.DateTimePicker();
@@ -56,25 +70,190 @@
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
-            this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.chbCalibrationExpireDate = new System.Windows.Forms.CheckBox();
-            this.chbCalibrationDate = new System.Windows.Forms.CheckBox();
-            this.chbSerialNumber = new System.Windows.Forms.CheckBox();
-            this.chbDeviceName = new System.Windows.Forms.CheckBox();
-            this.chbDeviceType = new System.Windows.Forms.CheckBox();
-            this.chbObjectName = new System.Windows.Forms.CheckBox();
-            this.chbClientName = new System.Windows.Forms.CheckBox();
-            this.chbContractNumber = new System.Windows.Forms.CheckBox();
-            this.chbVerificationMethod = new System.Windows.Forms.CheckBox();
-            this.chbRegisterNumber = new System.Windows.Forms.CheckBox();
-            this.chbCertificateNumber = new System.Windows.Forms.CheckBox();
-            this.chbYear = new System.Windows.Forms.CheckBox();
-            this.chbId = new System.Windows.Forms.CheckBox();
+            this.groupBox2.SuspendLayout();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numYear)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numId)).BeginInit();
-            this.groupBox2.SuspendLayout();
             this.SuspendLayout();
+            // 
+            // groupBox2
+            // 
+            this.groupBox2.Controls.Add(this.chbCalibrationExpireDate);
+            this.groupBox2.Controls.Add(this.chbCalibrationDate);
+            this.groupBox2.Controls.Add(this.chbSerialNumber);
+            this.groupBox2.Controls.Add(this.chbDeviceName);
+            this.groupBox2.Controls.Add(this.chbDeviceType);
+            this.groupBox2.Controls.Add(this.chbObjectName);
+            this.groupBox2.Controls.Add(this.chbClientName);
+            this.groupBox2.Controls.Add(this.chbContractNumber);
+            this.groupBox2.Controls.Add(this.chbVerificationMethod);
+            this.groupBox2.Controls.Add(this.chbRegisterNumber);
+            this.groupBox2.Controls.Add(this.chbCertificateNumber);
+            this.groupBox2.Controls.Add(this.chbYear);
+            this.groupBox2.Controls.Add(this.chbId);
+            this.groupBox2.Dock = System.Windows.Forms.DockStyle.Right;
+            this.groupBox2.Location = new System.Drawing.Point(386, 0);
+            this.groupBox2.Name = "groupBox2";
+            this.groupBox2.Size = new System.Drawing.Size(55, 410);
+            this.groupBox2.TabIndex = 1;
+            this.groupBox2.TabStop = false;
+            this.groupBox2.Text = "Поиск";
+            // 
+            // chbCalibrationExpireDate
+            // 
+            this.chbCalibrationExpireDate.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.chbCalibrationExpireDate.AutoSize = true;
+            this.chbCalibrationExpireDate.Location = new System.Drawing.Point(20, 342);
+            this.chbCalibrationExpireDate.Name = "chbCalibrationExpireDate";
+            this.chbCalibrationExpireDate.Size = new System.Drawing.Size(15, 14);
+            this.chbCalibrationExpireDate.TabIndex = 0;
+            this.chbCalibrationExpireDate.UseVisualStyleBackColor = true;
+            // 
+            // chbCalibrationDate
+            // 
+            this.chbCalibrationDate.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.chbCalibrationDate.AutoSize = true;
+            this.chbCalibrationDate.Location = new System.Drawing.Point(20, 316);
+            this.chbCalibrationDate.Name = "chbCalibrationDate";
+            this.chbCalibrationDate.Size = new System.Drawing.Size(15, 14);
+            this.chbCalibrationDate.TabIndex = 0;
+            this.chbCalibrationDate.UseVisualStyleBackColor = true;
+            // 
+            // chbSerialNumber
+            // 
+            this.chbSerialNumber.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.chbSerialNumber.AutoSize = true;
+            this.chbSerialNumber.Location = new System.Drawing.Point(20, 290);
+            this.chbSerialNumber.Name = "chbSerialNumber";
+            this.chbSerialNumber.Size = new System.Drawing.Size(15, 14);
+            this.chbSerialNumber.TabIndex = 0;
+            this.chbSerialNumber.UseVisualStyleBackColor = true;
+            // 
+            // chbDeviceName
+            // 
+            this.chbDeviceName.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.chbDeviceName.AutoSize = true;
+            this.chbDeviceName.Location = new System.Drawing.Point(20, 264);
+            this.chbDeviceName.Name = "chbDeviceName";
+            this.chbDeviceName.Size = new System.Drawing.Size(15, 14);
+            this.chbDeviceName.TabIndex = 0;
+            this.chbDeviceName.UseVisualStyleBackColor = true;
+            // 
+            // chbDeviceType
+            // 
+            this.chbDeviceType.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.chbDeviceType.AutoSize = true;
+            this.chbDeviceType.Location = new System.Drawing.Point(20, 238);
+            this.chbDeviceType.Name = "chbDeviceType";
+            this.chbDeviceType.Size = new System.Drawing.Size(15, 14);
+            this.chbDeviceType.TabIndex = 0;
+            this.chbDeviceType.UseVisualStyleBackColor = true;
+            // 
+            // chbObjectName
+            // 
+            this.chbObjectName.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.chbObjectName.AutoSize = true;
+            this.chbObjectName.Location = new System.Drawing.Point(20, 212);
+            this.chbObjectName.Name = "chbObjectName";
+            this.chbObjectName.Size = new System.Drawing.Size(15, 14);
+            this.chbObjectName.TabIndex = 0;
+            this.chbObjectName.UseVisualStyleBackColor = true;
+            // 
+            // chbClientName
+            // 
+            this.chbClientName.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.chbClientName.AutoSize = true;
+            this.chbClientName.Location = new System.Drawing.Point(20, 186);
+            this.chbClientName.Name = "chbClientName";
+            this.chbClientName.Size = new System.Drawing.Size(15, 14);
+            this.chbClientName.TabIndex = 0;
+            this.chbClientName.UseVisualStyleBackColor = true;
+            // 
+            // chbContractNumber
+            // 
+            this.chbContractNumber.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.chbContractNumber.AutoSize = true;
+            this.chbContractNumber.Location = new System.Drawing.Point(20, 160);
+            this.chbContractNumber.Name = "chbContractNumber";
+            this.chbContractNumber.Size = new System.Drawing.Size(15, 14);
+            this.chbContractNumber.TabIndex = 0;
+            this.chbContractNumber.UseVisualStyleBackColor = true;
+            // 
+            // chbVerificationMethod
+            // 
+            this.chbVerificationMethod.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.chbVerificationMethod.AutoSize = true;
+            this.chbVerificationMethod.Location = new System.Drawing.Point(20, 133);
+            this.chbVerificationMethod.Name = "chbVerificationMethod";
+            this.chbVerificationMethod.Size = new System.Drawing.Size(15, 14);
+            this.chbVerificationMethod.TabIndex = 0;
+            this.chbVerificationMethod.UseVisualStyleBackColor = true;
+            // 
+            // chbRegisterNumber
+            // 
+            this.chbRegisterNumber.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.chbRegisterNumber.AutoSize = true;
+            this.chbRegisterNumber.Location = new System.Drawing.Point(20, 108);
+            this.chbRegisterNumber.Name = "chbRegisterNumber";
+            this.chbRegisterNumber.Size = new System.Drawing.Size(15, 14);
+            this.chbRegisterNumber.TabIndex = 0;
+            this.chbRegisterNumber.UseVisualStyleBackColor = true;
+            // 
+            // chbCertificateNumber
+            // 
+            this.chbCertificateNumber.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.chbCertificateNumber.AutoSize = true;
+            this.chbCertificateNumber.Location = new System.Drawing.Point(20, 82);
+            this.chbCertificateNumber.Name = "chbCertificateNumber";
+            this.chbCertificateNumber.Size = new System.Drawing.Size(15, 14);
+            this.chbCertificateNumber.TabIndex = 0;
+            this.chbCertificateNumber.UseVisualStyleBackColor = true;
+            // 
+            // chbYear
+            // 
+            this.chbYear.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.chbYear.AutoSize = true;
+            this.chbYear.Location = new System.Drawing.Point(20, 53);
+            this.chbYear.Name = "chbYear";
+            this.chbYear.Size = new System.Drawing.Size(15, 14);
+            this.chbYear.TabIndex = 0;
+            this.chbYear.UseVisualStyleBackColor = true;
+            // 
+            // chbId
+            // 
+            this.chbId.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.chbId.AutoSize = true;
+            this.chbId.Location = new System.Drawing.Point(20, 24);
+            this.chbId.Name = "chbId";
+            this.chbId.Size = new System.Drawing.Size(15, 14);
+            this.chbId.TabIndex = 0;
+            this.chbId.UseVisualStyleBackColor = true;
             // 
             // groupBox1
             // 
@@ -105,11 +284,11 @@
             this.groupBox1.Controls.Add(this.label3);
             this.groupBox1.Controls.Add(this.label2);
             this.groupBox1.Controls.Add(this.label1);
-            this.groupBox1.Dock = System.Windows.Forms.DockStyle.Left;
+            this.groupBox1.Dock = System.Windows.Forms.DockStyle.Right;
             this.groupBox1.Location = new System.Drawing.Point(0, 0);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(386, 410);
-            this.groupBox1.TabIndex = 0;
+            this.groupBox1.TabIndex = 2;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Инфо";
             // 
@@ -350,209 +529,42 @@
             this.label1.TabIndex = 0;
             this.label1.Text = "ID";
             // 
-            // groupBox2
-            // 
-            this.groupBox2.Controls.Add(this.chbCalibrationExpireDate);
-            this.groupBox2.Controls.Add(this.chbCalibrationDate);
-            this.groupBox2.Controls.Add(this.chbSerialNumber);
-            this.groupBox2.Controls.Add(this.chbDeviceName);
-            this.groupBox2.Controls.Add(this.chbDeviceType);
-            this.groupBox2.Controls.Add(this.chbObjectName);
-            this.groupBox2.Controls.Add(this.chbClientName);
-            this.groupBox2.Controls.Add(this.chbContractNumber);
-            this.groupBox2.Controls.Add(this.chbVerificationMethod);
-            this.groupBox2.Controls.Add(this.chbRegisterNumber);
-            this.groupBox2.Controls.Add(this.chbCertificateNumber);
-            this.groupBox2.Controls.Add(this.chbYear);
-            this.groupBox2.Controls.Add(this.chbId);
-            this.groupBox2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.groupBox2.Location = new System.Drawing.Point(386, 0);
-            this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(55, 410);
-            this.groupBox2.TabIndex = 1;
-            this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "Поиск";
-            // 
-            // chbCalibrationExpireDate
-            // 
-            this.chbCalibrationExpireDate.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.chbCalibrationExpireDate.AutoSize = true;
-            this.chbCalibrationExpireDate.Location = new System.Drawing.Point(20, 342);
-            this.chbCalibrationExpireDate.Name = "chbCalibrationExpireDate";
-            this.chbCalibrationExpireDate.Size = new System.Drawing.Size(15, 14);
-            this.chbCalibrationExpireDate.TabIndex = 0;
-            this.chbCalibrationExpireDate.UseVisualStyleBackColor = true;
-            // 
-            // chbCalibrationDate
-            // 
-            this.chbCalibrationDate.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.chbCalibrationDate.AutoSize = true;
-            this.chbCalibrationDate.Location = new System.Drawing.Point(20, 316);
-            this.chbCalibrationDate.Name = "chbCalibrationDate";
-            this.chbCalibrationDate.Size = new System.Drawing.Size(15, 14);
-            this.chbCalibrationDate.TabIndex = 0;
-            this.chbCalibrationDate.UseVisualStyleBackColor = true;
-            // 
-            // chbSerialNumber
-            // 
-            this.chbSerialNumber.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.chbSerialNumber.AutoSize = true;
-            this.chbSerialNumber.Location = new System.Drawing.Point(20, 290);
-            this.chbSerialNumber.Name = "chbSerialNumber";
-            this.chbSerialNumber.Size = new System.Drawing.Size(15, 14);
-            this.chbSerialNumber.TabIndex = 0;
-            this.chbSerialNumber.UseVisualStyleBackColor = true;
-            // 
-            // chbDeviceName
-            // 
-            this.chbDeviceName.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.chbDeviceName.AutoSize = true;
-            this.chbDeviceName.Location = new System.Drawing.Point(20, 264);
-            this.chbDeviceName.Name = "chbDeviceName";
-            this.chbDeviceName.Size = new System.Drawing.Size(15, 14);
-            this.chbDeviceName.TabIndex = 0;
-            this.chbDeviceName.UseVisualStyleBackColor = true;
-            // 
-            // chbDeviceType
-            // 
-            this.chbDeviceType.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.chbDeviceType.AutoSize = true;
-            this.chbDeviceType.Location = new System.Drawing.Point(20, 238);
-            this.chbDeviceType.Name = "chbDeviceType";
-            this.chbDeviceType.Size = new System.Drawing.Size(15, 14);
-            this.chbDeviceType.TabIndex = 0;
-            this.chbDeviceType.UseVisualStyleBackColor = true;
-            // 
-            // chbObjectName
-            // 
-            this.chbObjectName.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.chbObjectName.AutoSize = true;
-            this.chbObjectName.Location = new System.Drawing.Point(20, 212);
-            this.chbObjectName.Name = "chbObjectName";
-            this.chbObjectName.Size = new System.Drawing.Size(15, 14);
-            this.chbObjectName.TabIndex = 0;
-            this.chbObjectName.UseVisualStyleBackColor = true;
-            // 
-            // chbClientName
-            // 
-            this.chbClientName.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.chbClientName.AutoSize = true;
-            this.chbClientName.Location = new System.Drawing.Point(20, 186);
-            this.chbClientName.Name = "chbClientName";
-            this.chbClientName.Size = new System.Drawing.Size(15, 14);
-            this.chbClientName.TabIndex = 0;
-            this.chbClientName.UseVisualStyleBackColor = true;
-            // 
-            // chbContractNumber
-            // 
-            this.chbContractNumber.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.chbContractNumber.AutoSize = true;
-            this.chbContractNumber.Location = new System.Drawing.Point(20, 160);
-            this.chbContractNumber.Name = "chbContractNumber";
-            this.chbContractNumber.Size = new System.Drawing.Size(15, 14);
-            this.chbContractNumber.TabIndex = 0;
-            this.chbContractNumber.UseVisualStyleBackColor = true;
-            // 
-            // chbVerificationMethod
-            // 
-            this.chbVerificationMethod.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.chbVerificationMethod.AutoSize = true;
-            this.chbVerificationMethod.Location = new System.Drawing.Point(20, 133);
-            this.chbVerificationMethod.Name = "chbVerificationMethod";
-            this.chbVerificationMethod.Size = new System.Drawing.Size(15, 14);
-            this.chbVerificationMethod.TabIndex = 0;
-            this.chbVerificationMethod.UseVisualStyleBackColor = true;
-            // 
-            // chbRegisterNumber
-            // 
-            this.chbRegisterNumber.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.chbRegisterNumber.AutoSize = true;
-            this.chbRegisterNumber.Location = new System.Drawing.Point(20, 108);
-            this.chbRegisterNumber.Name = "chbRegisterNumber";
-            this.chbRegisterNumber.Size = new System.Drawing.Size(15, 14);
-            this.chbRegisterNumber.TabIndex = 0;
-            this.chbRegisterNumber.UseVisualStyleBackColor = true;
-            // 
-            // chbCertificateNumber
-            // 
-            this.chbCertificateNumber.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.chbCertificateNumber.AutoSize = true;
-            this.chbCertificateNumber.Location = new System.Drawing.Point(20, 82);
-            this.chbCertificateNumber.Name = "chbCertificateNumber";
-            this.chbCertificateNumber.Size = new System.Drawing.Size(15, 14);
-            this.chbCertificateNumber.TabIndex = 0;
-            this.chbCertificateNumber.UseVisualStyleBackColor = true;
-            // 
-            // chbYear
-            // 
-            this.chbYear.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.chbYear.AutoSize = true;
-            this.chbYear.Location = new System.Drawing.Point(20, 53);
-            this.chbYear.Name = "chbYear";
-            this.chbYear.Size = new System.Drawing.Size(15, 14);
-            this.chbYear.TabIndex = 0;
-            this.chbYear.UseVisualStyleBackColor = true;
-            // 
-            // chbId
-            // 
-            this.chbId.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.chbId.AutoSize = true;
-            this.chbId.Location = new System.Drawing.Point(20, 24);
-            this.chbId.Name = "chbId";
-            this.chbId.Size = new System.Drawing.Size(15, 14);
-            this.chbId.TabIndex = 0;
-            this.chbId.UseVisualStyleBackColor = true;
-            // 
             // CertificatePropertiesPanel
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
+            this.Controls.Add(this.groupBox2);
+            this.MaximumSize = new System.Drawing.Size(441, 410);
+            this.MinimumSize = new System.Drawing.Size(441, 410);
             this.Name = "CertificatePropertiesPanel";
             this.Size = new System.Drawing.Size(441, 410);
+            this.groupBox2.ResumeLayout(false);
+            this.groupBox2.PerformLayout();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numYear)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numId)).EndInit();
-            this.groupBox2.ResumeLayout(false);
-            this.groupBox2.PerformLayout();
             this.ResumeLayout(false);
 
         }
 
         #endregion
-
-        private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.NumericUpDown numId;
-        private System.Windows.Forms.Label label1;
         private System.Windows.Forms.GroupBox groupBox2;
+        private System.Windows.Forms.CheckBox chbCalibrationExpireDate;
+        private System.Windows.Forms.CheckBox chbCalibrationDate;
+        private System.Windows.Forms.CheckBox chbSerialNumber;
+        private System.Windows.Forms.CheckBox chbDeviceName;
+        private System.Windows.Forms.CheckBox chbDeviceType;
+        private System.Windows.Forms.CheckBox chbObjectName;
+        private System.Windows.Forms.CheckBox chbClientName;
+        private System.Windows.Forms.CheckBox chbContractNumber;
+        private System.Windows.Forms.CheckBox chbVerificationMethod;
+        private System.Windows.Forms.CheckBox chbRegisterNumber;
+        private System.Windows.Forms.CheckBox chbCertificateNumber;
+        private System.Windows.Forms.CheckBox chbYear;
+        private System.Windows.Forms.CheckBox chbId;
+        private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.Button btSearch;
         private System.Windows.Forms.DateTimePicker dpCalibrationExpireDate;
         private System.Windows.Forms.DateTimePicker dpCalibrationDate;
@@ -576,20 +588,9 @@
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.NumericUpDown numYear;
         private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.NumericUpDown numId;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.CheckBox chbCalibrationExpireDate;
-        private System.Windows.Forms.CheckBox chbCalibrationDate;
-        private System.Windows.Forms.CheckBox chbSerialNumber;
-        private System.Windows.Forms.CheckBox chbDeviceName;
-        private System.Windows.Forms.CheckBox chbDeviceType;
-        private System.Windows.Forms.CheckBox chbObjectName;
-        private System.Windows.Forms.CheckBox chbClientName;
-        private System.Windows.Forms.CheckBox chbContractNumber;
-        private System.Windows.Forms.CheckBox chbVerificationMethod;
-        private System.Windows.Forms.CheckBox chbRegisterNumber;
-        private System.Windows.Forms.CheckBox chbCertificateNumber;
-        private System.Windows.Forms.CheckBox chbYear;
-        private System.Windows.Forms.CheckBox chbId;
+        private System.Windows.Forms.Label label1;
     }
 }

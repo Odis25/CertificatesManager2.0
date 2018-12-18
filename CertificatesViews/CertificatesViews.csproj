@@ -67,6 +67,12 @@
     <Compile Include="Controls\ContainerForm.Designer.cs">
       <DependentUpon>ContainerForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Controls\PreviewPanel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\PreviewPanel.Designer.cs">
+      <DependentUpon>PreviewPanel.cs</DependentUpon>
+    </Compile>
     <Compile Include="Controls\SettingsForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -95,6 +101,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\CertificatesPanel.resx">
       <DependentUpon>CertificatesPanel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\PreviewPanel.resx">
+      <DependentUpon>PreviewPanel.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\SettingsForm.resx">
       <DependentUpon>SettingsForm.cs</DependentUpon>

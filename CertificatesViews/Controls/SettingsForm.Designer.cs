@@ -128,7 +128,7 @@
             this.tbCertificatesZipFolderPath.Name = "tbCertificatesZipFolderPath";
             this.tbCertificatesZipFolderPath.Size = new System.Drawing.Size(287, 20);
             this.tbCertificatesZipFolderPath.TabIndex = 1;
-            this.tbCertificatesZipFolderPath.TextChanged += new System.EventHandler(this.Changed);
+            this.tbCertificatesZipFolderPath.TextChanged += new System.EventHandler(this.SettingsChanged);
             // 
             // tbCertificatesFolderPath
             // 
@@ -136,7 +136,7 @@
             this.tbCertificatesFolderPath.Name = "tbCertificatesFolderPath";
             this.tbCertificatesFolderPath.Size = new System.Drawing.Size(287, 20);
             this.tbCertificatesFolderPath.TabIndex = 1;
-            this.tbCertificatesFolderPath.TextChanged += new System.EventHandler(this.Changed);
+            this.tbCertificatesFolderPath.TextChanged += new System.EventHandler(this.SettingsChanged);
             // 
             // tbDataBasePath
             // 
@@ -144,7 +144,7 @@
             this.tbDataBasePath.Name = "tbDataBasePath";
             this.tbDataBasePath.Size = new System.Drawing.Size(287, 20);
             this.tbDataBasePath.TabIndex = 1;
-            this.tbDataBasePath.TextChanged += new System.EventHandler(this.Changed);
+            this.tbDataBasePath.TextChanged += new System.EventHandler(this.SettingsChanged);
             // 
             // label3
             // 
@@ -216,7 +216,7 @@
             this.chbAutoPreviewEnabled.TabIndex = 1;
             this.chbAutoPreviewEnabled.Text = "Автоматический предпросмотр свидетельств:";
             this.chbAutoPreviewEnabled.UseVisualStyleBackColor = true;
-            this.chbAutoPreviewEnabled.CheckedChanged += new System.EventHandler(this.Changed);
+            this.chbAutoPreviewEnabled.CheckedChanged += new System.EventHandler(this.SettingsChanged);
             // 
             // SettingsForm
             // 

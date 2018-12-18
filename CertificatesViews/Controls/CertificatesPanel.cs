@@ -19,8 +19,27 @@ namespace CertificatesViews.Controls
     public partial class CertificatesPanel : UserControl, IView<Certificates>
     {
         Control _currentControl;
+        Control _previewControl;
         Certificates _certificates;
-        CancellationTokenSource _cancelationTokenSource;
+        IPreview _previewer;
+        CancellationTokenSource _cancelationTokenSource, _cts;
+
+        public Control PreviewControl
+        {
+            get { return _previewControl; }
+            set
+            {
+                if (_previewControl != null)
+                    _previewControl.Dispose();
+                _previewControl = value;
+                if (_previewControl != null)
+                {
+                    value.Dock = DockStyle.Fill;
+                    value.Parent = panPreview;
+                    value.BringToFront();
+                }
+            }
+        }
 
         public Control CurrentControl
         {
@@ -32,9 +51,10 @@ namespace CertificatesViews.Controls
                 _currentControl = value;
                 if (_currentControl != null)
                 {
-                    value.Dock = DockStyle.Left;
-                    scMainSpliter.SplitterDistance = value.Height;
-                    value.Parent = scSecondarySpliter.Panel2;                   
+                    value.Dock = DockStyle.Fill;
+                    scMainSpliter.SplitterDistance = value.Height;                    
+
+                    value.Parent = scSecondarySpliter.Panel2;
                     value.BringToFront();
                 }
             }
@@ -43,11 +63,12 @@ namespace CertificatesViews.Controls
         public CertificatesPanel()
         {
             InitializeComponent();
-
+            
+            _previewer = AppLocator.ModelFactory.Create<IPreview>();
             lvCertificatesDetails.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
         }
 
-        public event EventHandler Changed;
+        public event EventHandler Changed = delegate { };
 
         public void Build(Certificates certificates)
         {
@@ -56,7 +77,7 @@ namespace CertificatesViews.Controls
             tvCertificates.AddCertificates(_certificates);
             tvCertificates.Update();
 
-            BuildProperty();
+            BuildProperty();            
         }
 
         private void BuildProperty()
@@ -64,6 +85,22 @@ namespace CertificatesViews.Controls
             Certificate certificate = new Certificate();
             CurrentControl = (Control)AppLocator.GuiFactory.Create<IView<Certificate>>();
             (CurrentControl as IView<Certificate>).Build(certificate);
+
+            ShowOrHidePreviewPanel();                
+        }      
+
+        public void ShowOrHidePreviewPanel()
+        {
+            if (Settings.Instance.AutoPreviewEnabled)
+            {
+                scPreviewSplitter.Panel2Collapsed = false;
+                
+                PreviewControl = (Control)AppLocator.GuiFactory.Create<IView<Pages>>();
+            }
+            else
+            {
+                scPreviewSplitter.Panel2Collapsed = true;
+            }
         }
 
         // Выбираем узел в TreeView
@@ -156,18 +193,38 @@ namespace CertificatesViews.Controls
         }
 
         // Выбор свидетельства в ListView
-        private void lvCertificatesDetails_ItemSelectionChanged(object sender, ListViewItemSelectionChangedEventArgs e)
+        async private void lvCertificatesDetails_ItemSelectionChanged(object sender, ListViewItemSelectionChangedEventArgs e)
         {
             var id = e.Item.SubItems[0].Text;
+
             if (_certificates == null || _certificates.ListOfCertificates.Count == 0)
                 return;
+
             var certificate = _certificates.ListOfCertificates.Where(x => x.ID == int.Parse(id)).ToList()[0];
+
             if (CurrentControl is CertificatePropertiesPanel)
                 (CurrentControl as CertificatePropertiesPanel).Build(certificate);
 
-            var previewer = AppLocator.ModelFactory.Create<IPreview>();
+            // Отменяем исполняемую задачу, если таковая имелась
+            if (_cts != null)
+                _cts.Cancel();
 
-            var pages = previewer.Load(certificate.CertificatePath);
-        }
+            // Создаем CancellationTokenSource для текущего метода, и передаем его в переменную класса
+            var cts = new CancellationTokenSource();
+            _cts = cts;
+
+            // Получаем токен отмены
+            var token = _cts.Token;
+
+            // Страницы документа в виде списка изображений
+            var images = await _previewer.GetPagesFromPdf(certificate.CertificatePath, token);
+
+            PreviewControl = (Control)AppLocator.GuiFactory.Create<IView<Pages>>();
+            (PreviewControl as IView<Pages>).Build(images);
+
+            // Убираем CancellationTokenSource текущего метода из переменной класса
+            if (_cts == cts)
+                _cts = null;
+        }        
     }
 }

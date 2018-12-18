@@ -18,8 +18,9 @@ namespace CertificatesViews
     public partial class MainForm : Form
     {
         Certificates _certificates;
-
         Control _currentControl;
+
+        public event EventHandler Changed = delegate { };
 
         private Control CurrentControl
         {
@@ -90,7 +91,13 @@ namespace CertificatesViews
         private void OpenSettingsForm()
         {
             var form = new SettingsForm();
+            form.Changed += MainForm_Changed;
             form.ShowDialog();
+        }
+
+        private void MainForm_Changed(object sender, EventArgs e)
+        {
+            (CurrentControl as CertificatesPanel).ShowOrHidePreviewPanel();
         }
 
         private void OpenUserChangingForm()
