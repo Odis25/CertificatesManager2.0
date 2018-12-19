@@ -18,12 +18,14 @@ namespace CertificatesViews.Controls
 {
     public partial class CertificatesPanel : UserControl, IView<Certificates>
     {
-        Control _currentControl;
+        Control _propertyControl;
         Control _previewControl;
         Certificates _certificates;
-        IPreview _previewer;
-        CancellationTokenSource _cancelationTokenSource, _cts;
+        CancellationTokenSource _cancelationTokenSource;
 
+        /// <summary>
+        /// Панель предпросмотра 
+        /// </summary>
         public Control PreviewControl
         {
             get { return _previewControl; }
@@ -41,15 +43,18 @@ namespace CertificatesViews.Controls
             }
         }
 
-        public Control CurrentControl
+        /// <summary>
+        /// Панель детализированной информации о свидетельстве
+        /// </summary>
+        public Control PropertyControl
         {
-            get { return _currentControl; }
+            get { return _propertyControl; }
             set
             {
-                if (_currentControl != null)
-                    _currentControl.Dispose();
-                _currentControl = value;
-                if (_currentControl != null)
+                if (_propertyControl != null)
+                    _propertyControl.Dispose();
+                _propertyControl = value;
+                if (_propertyControl != null)
                 {
                     value.Dock = DockStyle.Fill;
                     scMainSpliter.SplitterDistance = value.Height;                    
@@ -60,16 +65,19 @@ namespace CertificatesViews.Controls
             }
         }
 
+        // Конструктор
         public CertificatesPanel()
         {
             InitializeComponent();
             
-            _previewer = AppLocator.ModelFactory.Create<IPreview>();
             lvCertificatesDetails.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
         }
 
+        // Событие на изменение
         public event EventHandler Changed = delegate { };
 
+
+        // Передача данных в форму
         public void Build(Certificates certificates)
         {
             _certificates = certificates;
@@ -77,25 +85,29 @@ namespace CertificatesViews.Controls
             tvCertificates.AddCertificates(_certificates);
             tvCertificates.Update();
 
+            // Построение панели свойств свидетельства
             BuildProperty();            
         }
 
+        // Построение панели свойств свидетельства
         private void BuildProperty()
         {
             Certificate certificate = new Certificate();
-            CurrentControl = (Control)AppLocator.GuiFactory.Create<IView<Certificate>>();
-            (CurrentControl as IView<Certificate>).Build(certificate);
+            PropertyControl = (Control)AppLocator.GuiFactory.Create<IView<Certificate>>();
+            (PropertyControl as IView<Certificate>).Build(certificate);
 
+            // Показать/скрыть панель предпросмотра
             ShowOrHidePreviewPanel();                
-        }      
+        }
 
+        // Показать/скрыть панель предпросмотра
         public void ShowOrHidePreviewPanel()
         {
             if (Settings.Instance.AutoPreviewEnabled)
             {
                 scPreviewSplitter.Panel2Collapsed = false;
                 
-                PreviewControl = (Control)AppLocator.GuiFactory.Create<IView<Pages>>();
+                PreviewControl = (Control)AppLocator.GuiFactory.Create<IView<string>>();
             }
             else
             {
@@ -158,7 +170,9 @@ namespace CertificatesViews.Controls
 
             try
             {
+                // Размер файла
                 fileSize = fileInfo.Length.ToString();
+                // Датасоздания файла
                 fileCreationDate = fileInfo.CreationTime.ToString();
             }
             catch
@@ -193,7 +207,7 @@ namespace CertificatesViews.Controls
         }
 
         // Выбор свидетельства в ListView
-        async private void lvCertificatesDetails_ItemSelectionChanged(object sender, ListViewItemSelectionChangedEventArgs e)
+        private void lvCertificatesDetails_ItemSelectionChanged(object sender, ListViewItemSelectionChangedEventArgs e)
         {
             var id = e.Item.SubItems[0].Text;
 
@@ -202,29 +216,13 @@ namespace CertificatesViews.Controls
 
             var certificate = _certificates.ListOfCertificates.Where(x => x.ID == int.Parse(id)).ToList()[0];
 
-            if (CurrentControl is CertificatePropertiesPanel)
-                (CurrentControl as CertificatePropertiesPanel).Build(certificate);
+            // Выводим данные о свидетельстве на панель свойств
+            if (PropertyControl is CertificatePropertiesPanel)
+                (PropertyControl as CertificatePropertiesPanel).Build(certificate);
 
-            // Отменяем исполняемую задачу, если таковая имелась
-            if (_cts != null)
-                _cts.Cancel();
-
-            // Создаем CancellationTokenSource для текущего метода, и передаем его в переменную класса
-            var cts = new CancellationTokenSource();
-            _cts = cts;
-
-            // Получаем токен отмены
-            var token = _cts.Token;
-
-            // Страницы документа в виде списка изображений
-            var images = await _previewer.GetPagesFromPdf(certificate.CertificatePath, token);
-
-            PreviewControl = (Control)AppLocator.GuiFactory.Create<IView<Pages>>();
-            (PreviewControl as IView<Pages>).Build(images);
-
-            // Убираем CancellationTokenSource текущего метода из переменной класса
-            if (_cts == cts)
-                _cts = null;
+            // Выводим страницы документа на панель предпросмотра
+            PreviewControl = (Control)AppLocator.GuiFactory.Create<IView<string>>();
+            (PreviewControl as IView<string>).Build(certificate.CertificatePath);
         }        
     }
 }

@@ -9,53 +9,36 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using CertificatesViews.Interfaces;
 using CertificatesModel;
+using PdfiumViewer;
+using System.IO;
 
 namespace CertificatesViews.Controls
 {
-    public partial class PreviewPanel : UserControl, IView<Pages>
+    public partial class PreviewPanel : UserControl, IView<string>
     {
+        PdfViewer _viewer;
+        PdfRenderer _renderer;
+
         public PreviewPanel()
         {
             InitializeComponent();
+
+            _viewer = new PdfViewer();
+            _renderer = new PdfRenderer();
         }
 
         public event EventHandler Changed;
 
-        public void Build(Pages pages)
+        public void Build(string obj)
         {
-            // Очищаем пикбоксы предыдущего запроса 
-            List<PictureBox> removePicBoxes = new List<PictureBox>();
+            //_renderer.Load(PdfDocument.Load(obj));
+            //_renderer.Dock = DockStyle.Fill;
+            //panPages.Controls.Add(_renderer);
 
-            foreach (Control pb in panPages.Controls)
-            {
-                if (pb.Name == "")
-                    removePicBoxes.Add(pb as PictureBox);
-            }
-            foreach (PictureBox pb in removePicBoxes)
-            {
-                panPages.Controls.Remove(pb);
-                pb.Dispose();
-            }
-
-            // Создаем пикбоксы для вывода списка полученных изображений
-            int x = 0, y = 0, panWidth = panPages.Width, panHeight = panPages.Height;
-            if (pages != null) // Если список изображений пуст, то выходим из метода
-            {
-                foreach (Image pic in pages)
-                {
-                    PictureBox pb = new PictureBox()
-                    {
-                        Location = new Point(x, y),
-                        Width = panWidth,
-                        Height = panHeight,
-                        Image = pic,
-                        BorderStyle = BorderStyle.FixedSingle,
-                        SizeMode = PictureBoxSizeMode.Zoom,
-                    };
-                    panPages.Controls.Add(pb);
-                    y += pb.Height;
-                }
-            }
+            _viewer.Document = PdfDocument.Load(obj);
+            _viewer.Dock = DockStyle.Fill;
+            panPages.Controls.Add(_viewer);
         }
+
     }
 }

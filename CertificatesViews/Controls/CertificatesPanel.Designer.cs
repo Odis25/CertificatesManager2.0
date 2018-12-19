@@ -214,7 +214,7 @@
             // 
             // panPreview
             // 
-            this.panPreview.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.panPreview.BackColor = System.Drawing.SystemColors.Control;
             this.panPreview.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panPreview.Location = new System.Drawing.Point(0, 0);
             this.panPreview.Name = "panPreview";
