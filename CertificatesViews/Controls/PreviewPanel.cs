@@ -11,34 +11,57 @@ using CertificatesViews.Interfaces;
 using CertificatesModel;
 using PdfiumViewer;
 using System.IO;
+using System.Threading;
 
 namespace CertificatesViews.Controls
 {
     public partial class PreviewPanel : UserControl, IView<string>
     {
         PdfViewer _viewer;
-        PdfRenderer _renderer;
+        CancellationTokenSource _cts;
+
+        PdfViewer Viewer
+        {
+            get
+            {
+                if (_viewer == null)
+                    _viewer = new PdfViewer();
+                return _viewer;
+            }
+        }
 
         public PreviewPanel()
         {
             InitializeComponent();
-
-            _viewer = new PdfViewer();
-            _renderer = new PdfRenderer();
+            panPages.Controls.Add(Viewer);
+            Viewer.Dock = DockStyle.Fill;
         }
 
         public event EventHandler Changed;
 
-        public void Build(string obj)
+        async public void Build(string obj)
         {
-            //_renderer.Load(PdfDocument.Load(obj));
-            //_renderer.Dock = DockStyle.Fill;
-            //panPages.Controls.Add(_renderer);
+            // Отменяем предыдущий запрос
+            if (_cts != null)
+                _cts.Cancel();
 
-            _viewer.Document = PdfDocument.Load(obj);
-            _viewer.Dock = DockStyle.Fill;
-            panPages.Controls.Add(_viewer);
+            // Создаем CancellationTokenSource для текущего метода, и передаем его в переменную класса
+            var cts = new CancellationTokenSource();
+            _cts = cts;
+
+            // Получаем токен отмены
+            var token = _cts.Token;
+
+            // Если файл доступен, то асинхронно загружаем его в панель предпросмотра
+            if (File.Exists(obj))
+                Viewer.Document = await Task.Run(() => { return PdfDocument.Load(obj); }, token);
+            else
+                //Иначе оставляем панель пустой
+                Viewer.Document = null;
+
+            // Убираем CancellationTokenSource текущего метода из переменной класса
+            if (_cts == cts)
+                _cts = null;
         }
-
     }
 }

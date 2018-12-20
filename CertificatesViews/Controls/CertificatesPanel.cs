@@ -57,7 +57,7 @@ namespace CertificatesViews.Controls
                 if (_propertyControl != null)
                 {
                     value.Dock = DockStyle.Fill;
-                    scMainSpliter.SplitterDistance = value.Height;                    
+                    scMainSpliter.SplitterDistance = value.Height;
 
                     value.Parent = scSecondarySpliter.Panel2;
                     value.BringToFront();
@@ -69,7 +69,8 @@ namespace CertificatesViews.Controls
         public CertificatesPanel()
         {
             InitializeComponent();
-            
+
+            // Подгоняем размер столбцов ListView под размер содержимого заголовков
             lvCertificatesDetails.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
         }
 
@@ -86,18 +87,26 @@ namespace CertificatesViews.Controls
             tvCertificates.Update();
 
             // Построение панели свойств свидетельства
-            BuildProperty();            
+            BuildProperty();
         }
 
         // Построение панели свойств свидетельства
         private void BuildProperty()
         {
             Certificate certificate = new Certificate();
-            PropertyControl = (Control)AppLocator.GuiFactory.Create<IView<Certificate>>();
-            (PropertyControl as IView<Certificate>).Build(certificate);
+            var view = AppLocator.GuiFactory.Create<IView<Certificate>>();
+            view.Build(certificate);
+            view.Changed += CertificatesPanel_Changed;
+
+            PropertyControl = view as Control;
 
             // Показать/скрыть панель предпросмотра
-            ShowOrHidePreviewPanel();                
+            ShowOrHidePreviewPanel();
+        }
+
+        private void CertificatesPanel_Changed(object sender, EventArgs e)
+        {
+            throw new NotImplementedException();
         }
 
         // Показать/скрыть панель предпросмотра
@@ -106,7 +115,6 @@ namespace CertificatesViews.Controls
             if (Settings.Instance.AutoPreviewEnabled)
             {
                 scPreviewSplitter.Panel2Collapsed = false;
-                
                 PreviewControl = (Control)AppLocator.GuiFactory.Create<IView<string>>();
             }
             else
@@ -129,7 +137,6 @@ namespace CertificatesViews.Controls
                 FillListView((content as Year).ListOfCertificates);
             else if (type == typeof(Contract))
                 FillListView(content as Contract);
-
         }
 
         // Асинхронное заполнение ListView результатами выборки
@@ -172,15 +179,17 @@ namespace CertificatesViews.Controls
             {
                 // Размер файла
                 fileSize = fileInfo.Length.ToString();
-                // Датасоздания файла
+                // Дата создания файла
                 fileCreationDate = fileInfo.CreationTime.ToString();
             }
             catch
             {
+                // Если файл не доступен, то заполняем поля заглушками
                 fileSize = "---";
                 fileCreationDate = "---";
             }
 
+            // Формируем ListViewItem и заполняем результатами выборки
             var item = new ListViewItem(new string[]
                     {
                     cert.ID.ToString(),
@@ -200,29 +209,36 @@ namespace CertificatesViews.Controls
                     fileCreationDate
                     });
 
+            // Если пришел запрос отмены выполнения операции, то прекращаем выполнение
             if (token.IsCancellationRequested)
-                return null;
+                token.ThrowIfCancellationRequested();
 
+            // Возвращаем результат
             return item;
         }
 
         // Выбор свидетельства в ListView
         private void lvCertificatesDetails_ItemSelectionChanged(object sender, ListViewItemSelectionChangedEventArgs e)
         {
-            var id = e.Item.SubItems[0].Text;
-
+            // Если список свидетельств пуст, выходим из метода
             if (_certificates == null || _certificates.ListOfCertificates.Count == 0)
                 return;
 
-            var certificate = _certificates.ListOfCertificates.Where(x => x.ID == int.Parse(id)).ToList()[0];
+            // ID выбранного свидетельства
+            var id = int.Parse(e.Item.SubItems[0].Text);
+
+            // Выбираем свидетельство
+            var certificate = _certificates.ListOfCertificates.Where(x => x.ID == id).ToList()[0];
+
+            // Панель свойств
+            var view = PropertyControl as IView<Certificate>;
 
             // Выводим данные о свидетельстве на панель свойств
-            if (PropertyControl is CertificatePropertiesPanel)
-                (PropertyControl as CertificatePropertiesPanel).Build(certificate);
+            view.Build(certificate);
 
             // Выводим страницы документа на панель предпросмотра
-            PreviewControl = (Control)AppLocator.GuiFactory.Create<IView<string>>();
-            (PreviewControl as IView<string>).Build(certificate.CertificatePath);
-        }        
+            if (Settings.Instance.AutoPreviewEnabled)
+                (PreviewControl as IView<string>).Build(certificate.CertificatePath);
+        }
     }
 }

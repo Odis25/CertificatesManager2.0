@@ -1,4 +1,5 @@
-﻿using CertificatesModel.Interfaces;
+﻿using CertificatesModel.Components;
+using CertificatesModel.Interfaces;
 using CertificatesModel.Repositories;
 using System;
 using System.Collections.Generic;
@@ -12,10 +13,13 @@ namespace CertificatesModel
     {
         public Certificates Load()
         {
-            //IRepository repository = new Repository();
-
             Certificates result = Repository.GetAllCertificatesFromDB();
-            //Certificates result = new Certificates();
+            return result;
+        }
+
+        public Certificates GetCertificatesBySearchPattern(CertificateEventArgs pattern)
+        {
+            Certificates result = Repository.GetAllCertificatesFromDB(pattern);
             return result;
         }
     }

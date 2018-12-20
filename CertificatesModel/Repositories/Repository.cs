@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Data.SqlServerCe;
 using System.Data;
 using CertificatesModel.Interfaces;
+using CertificatesModel.Components;
 
 namespace CertificatesModel.Repositories
 {
@@ -54,6 +55,35 @@ namespace CertificatesModel.Repositories
                     return ConstructDomainModel(certificates);
                 }
             }
+        }
+
+        public static Certificates GetAllCertificatesFromDB(CertificateEventArgs pattern)
+        {
+            using (SqlCeConnection connection = new SqlCeConnection(_connectionString))
+            {
+                SqlCeCommand cmd = new SqlCeCommand();
+                cmd.Connection = connection;
+
+                var id = pattern.ID == null ? "" : $"ID = @ID";
+                var year = pattern.Year == null ? "" : $"YEARS = @YEARS";
+                var certificateNumber = pattern.CertificateNumber == null ? "" : $"CERTIFICATE_NUMBER = @CERTIFICATE_NUMBER";
+                var registerNumber = pattern.RegisterNumber == null ? "" : $"REGISTER_NUMBER = @REGISTER_NUMBER";
+                var verificationMethod = pattern.VerificationMethod == null ? "" : $"VERIFICATION_METHOD = @VERIFICATION_METHOD";
+                var contractNumber = pattern.ContractNumber == null ? "" : $"CONTRACT_NUMBER = @CONTRACT_NUMBER";
+                var clientName = pattern.ClientName == null ? "" : $"CLIENT_NAME = @CLIENT_NAME";
+                var objectName = pattern.ObjectName == null ? "" : $"OBJECT_NAME = @OBJECT_NAME";
+                var deviceType = pattern.DeviceType == null ? "" : $"TYPE_DEVICE = @TYPE_DEVICE";
+                var deviceName = pattern.DeviceName == null ? "" : $"NAME_DEVICE = @NAME_DEVICE";
+                var serialNumber = pattern.SerialNumber == null ? "" : $"SERIAL_NUMBER = @SERIAL_NUMBER";
+                var calibDate = pattern.CalibrationDate == null ? "" : $"CALIB_DATE = @CALIB_DATE";
+                var calibExpireDate = pattern.CalibrationExpireDate == null ? "" : $"CALIB_LAST_DATE = @CALIB_LAST_DATE";
+
+
+                cmd.CommandText = $"SELECT * FROM METROLOGY WHERE ({id})";                    
+                connection.Open();
+            }
+
+                return null;
         }
 
         private static Certificates ConstructDomainModel(List<Certificate> listOfCertificates)

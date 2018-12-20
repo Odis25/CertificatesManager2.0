@@ -1,14 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Drawing;
-using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
+﻿using CertificatesModel;
+using CertificatesModel.Components;
 using CertificatesViews.Interfaces;
-using CertificatesModel;
+using System;
+using System.Windows.Forms;
 
 namespace CertificatesViews.Controls
 {
@@ -75,7 +69,32 @@ namespace CertificatesViews.Controls
                 dpCalibrationDate.Value = dpCalibrationDate.MinDate;
                 dpCalibrationExpireDate.Value = dpCalibrationExpireDate.MinDate;
             }
-            
+
+        }
+
+        private void btSearch_Click(object sender, EventArgs e)
+        {      
+            Changed(this, MakeSearchPattern());
+        }
+
+        private CertificateEventArgs MakeSearchPattern()
+        {
+            CertificateEventArgs temp = new CertificateEventArgs();
+            temp.ID = chbId.Checked ? (int?)numId.Value : null;
+            temp.Year = chbYear.Checked ? (int?)numYear.Value : null;
+            temp.CertificateNumber = chbCertificateNumber.Checked ? tbCertificateNumber.Text : null;
+            temp.RegisterNumber = chbRegisterNumber.Checked ? tbRegisterNumber.Text : null;
+            temp.VerificationMethod = chbVerificationMethod.Checked ? cbVerificationMethod.Text : null;
+            temp.ContractNumber = chbContractNumber.Checked ? tbContractNumber.Text : null;
+            temp.ClientName = chbClientName.Checked ? tbClientName.Text : null;
+            temp.ObjectName = chbObjectName.Checked ? tbObjectName.Text : null;
+            temp.DeviceType = chbDeviceType.Checked ? tbDeviceType.Text : null;
+            temp.DeviceName = chbDeviceName.Checked ? tbDeviceName.Text : null;
+            temp.SerialNumber = chbSerialNumber.Checked ? tbSerialNumber.Text : null;
+            temp.CalibrationDate = chbCalibrationDate.Checked ? dpCalibrationDate?.Value : null;
+            temp.CalibrationExpireDate = chbCalibrationExpireDate.Checked ? dpCalibrationExpireDate?.Value : null;
+
+            return temp;
         }
     }
 }

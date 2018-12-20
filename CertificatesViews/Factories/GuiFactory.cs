@@ -2,11 +2,6 @@
 using CertificatesModel.Factories;
 using CertificatesViews.Controls;
 using CertificatesViews.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CertificatesViews.Factories
 {
@@ -16,7 +11,6 @@ namespace CertificatesViews.Factories
         {
             Register<IView<Certificates>, CertificatesPanel>();
             Register<IView<Certificate>, CertificatePropertiesPanel>();
-            //Register<IView<Pages>, PreviewPanel>();
             Register<IView<string>, PreviewPanel>();
         }
     }

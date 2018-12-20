@@ -302,6 +302,7 @@
             this.btSearch.Text = "Найти";
             this.btSearch.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btSearch.UseVisualStyleBackColor = true;
+            this.btSearch.Click += new System.EventHandler(this.btSearch_Click);
             // 
             // dpCalibrationExpireDate
             // 
@@ -494,7 +495,7 @@
             // 
             this.numId.Location = new System.Drawing.Point(178, 22);
             this.numId.Maximum = new decimal(new int[] {
-            99999999,
+            99999,
             0,
             0,
             0});

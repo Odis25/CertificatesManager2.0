@@ -34,6 +34,7 @@
             // panPages
             // 
             this.panPages.AutoScroll = true;
+            this.panPages.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panPages.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panPages.Location = new System.Drawing.Point(0, 0);
             this.panPages.Name = "panPages";
