@@ -23,8 +23,8 @@ namespace CertificatesModel
                 foreach (var contract in this)
                     foreach (var certificate in contract)
                         _certificates.Add(certificate);
-                _certificates.Sort();
-                return _certificates;
+
+                return _certificates.OrderBy(x=> x.ID).ToList();
             }
 
         }

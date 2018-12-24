@@ -1,12 +1,12 @@
-﻿using System;
+﻿using CertificatesModel.Components;
+using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Data.SqlServerCe;
 using System.Data;
-using CertificatesModel.Interfaces;
-using CertificatesModel.Components;
+using System.Data.Entity;
+using System.Data.Linq;
+using System.Data.SqlServerCe;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace CertificatesModel.Repositories
 {
@@ -14,84 +14,87 @@ namespace CertificatesModel.Repositories
     {
         static string _connectionString;
 
+        static Certificates Certificates
+        {
+            get;
+            set;
+        }
+
         static Repository()
         {
-            _connectionString = $"DataSource = {Settings.Instance.DataBasePath}";
+            _connectionString = $"Data Source = {Settings.Instance.DataBasePath}";
         }
 
-        // Получаем все свидетельства из БД
+        // Получаем все свидетельства из БД и сортируем по ID
         public static Certificates GetAllCertificatesFromDB()
-        {
-            using (SqlCeConnection connection = new SqlCeConnection(_connectionString))
-            {
-                SqlCeCommand cmd = new SqlCeCommand();
-                cmd.CommandText = "SELECT * FROM METROLOGY";
-                cmd.Connection = connection;
-                connection.Open();
-                using (SqlCeDataReader reader = cmd.ExecuteReader(CommandBehavior.CloseConnection))
-                {
-                    List<Certificate> certificates = new List<Certificate>();
-                    while (reader.Read())
-                    {
-                        certificates.Add(new Certificate()
-                        {
-                            ID = reader.GetInt32(0),
-                            Year = reader.GetInt32(1),
-                            ContractNumber = reader.GetString(2),
-                            ClientName = reader.GetString(3),
-                            ObjectName = reader.GetString(4),
-                            DeviceType = reader.GetString(5),
-                            DeviceName = reader.GetString(6),
-                            SerialNumber = reader.GetString(7),
-                            CalibrationDate = reader.GetDateTime(8),
-                            CalibrationExpireDate = reader.GetDateTime(9),
-                            CertificatePath = reader.GetString(10),
-                            CertificateNumber = reader.GetValue(11).ToString(),
-                            RegisterNumber = reader.GetValue(12).ToString(),
-                            VerificationMethod = reader.GetValue(13).ToString()
-                        });
-                    }
-
-                    return ConstructDomainModel(certificates);
-                }
-            }
+        {            
+            return GetAllCertificatesFromDB(new CertificateEventArgs());
         }
 
+        // Получаем список свидетельств соответствующих поисковому шаблону
         public static Certificates GetAllCertificatesFromDB(CertificateEventArgs pattern)
         {
-            using (SqlCeConnection connection = new SqlCeConnection(_connectionString))
+            var result = new Certificates();
+
+            using (CertificateDbContext db = new CertificateDbContext())
             {
-                SqlCeCommand cmd = new SqlCeCommand();
-                cmd.Connection = connection;
+                IQueryable<Certificate> querry = db.Certificates.OrderBy(x=>x.ID);
 
-                var id = pattern.ID == null ? "" : $"ID = @ID";
-                var year = pattern.Year == null ? "" : $"YEARS = @YEARS";
-                var certificateNumber = pattern.CertificateNumber == null ? "" : $"CERTIFICATE_NUMBER = @CERTIFICATE_NUMBER";
-                var registerNumber = pattern.RegisterNumber == null ? "" : $"REGISTER_NUMBER = @REGISTER_NUMBER";
-                var verificationMethod = pattern.VerificationMethod == null ? "" : $"VERIFICATION_METHOD = @VERIFICATION_METHOD";
-                var contractNumber = pattern.ContractNumber == null ? "" : $"CONTRACT_NUMBER = @CONTRACT_NUMBER";
-                var clientName = pattern.ClientName == null ? "" : $"CLIENT_NAME = @CLIENT_NAME";
-                var objectName = pattern.ObjectName == null ? "" : $"OBJECT_NAME = @OBJECT_NAME";
-                var deviceType = pattern.DeviceType == null ? "" : $"TYPE_DEVICE = @TYPE_DEVICE";
-                var deviceName = pattern.DeviceName == null ? "" : $"NAME_DEVICE = @NAME_DEVICE";
-                var serialNumber = pattern.SerialNumber == null ? "" : $"SERIAL_NUMBER = @SERIAL_NUMBER";
-                var calibDate = pattern.CalibrationDate == null ? "" : $"CALIB_DATE = @CALIB_DATE";
-                var calibExpireDate = pattern.CalibrationExpireDate == null ? "" : $"CALIB_LAST_DATE = @CALIB_LAST_DATE";
+                if (pattern.ID.HasValue)
+                    querry = querry.Where(x => x.ID == pattern.ID);
+                if (pattern.Year.HasValue)
+                    querry = querry.Where(x => x.Year == pattern.Year);
+                if (!string.IsNullOrEmpty(pattern.CertificateNumber))
+                    querry = querry.Where(x => x.CertificateNumber.Contains(pattern.CertificateNumber));
+                if (!string.IsNullOrEmpty(pattern.RegisterNumber))
+                    querry = querry.Where(x => x.RegisterNumber.Contains(pattern.RegisterNumber));
+                if (!string.IsNullOrEmpty(pattern.VerificationMethod))
+                    querry = querry.Where(x => x.VerificationMethod.Contains(pattern.VerificationMethod));
+                if (!string.IsNullOrEmpty(pattern.ContractNumber))
+                    querry = querry.Where(x => x.ContractNumber.Contains(pattern.ContractNumber));
+                if (!string.IsNullOrEmpty(pattern.ClientName))
+                    querry = querry.Where(x => x.ClientName.Contains(pattern.ClientName));
+                if (!string.IsNullOrEmpty(pattern.ObjectName))
+                    querry = querry.Where(x => x.ObjectName.Contains(pattern.ObjectName));
+                if (!string.IsNullOrEmpty(pattern.DeviceType))
+                    querry = querry.Where(x => x.DeviceType.Contains(pattern.DeviceType));
+                if (!string.IsNullOrEmpty(pattern.DeviceName))
+                    querry = querry.Where(x => x.DeviceName.Contains(pattern.DeviceName));
+                if (!string.IsNullOrEmpty(pattern.SerialNumber))
+                    querry = querry.Where(x => x.SerialNumber.Contains(pattern.SerialNumber));
 
+                if (pattern.CalibrationDate.HasValue)
+                    querry = querry.Where(x => x.CalibrationDate >= pattern.CalibrationDate);
+                if (pattern.CalibrationExpireDate.HasValue)
+                    querry = querry.Where(x => x.CalibrationExpireDate <= pattern.CalibrationExpireDate);
 
-                cmd.CommandText = $"SELECT * FROM METROLOGY WHERE ({id})";                    
-                connection.Open();
+                result = (Certificates)querry.ToList();
             }
 
-                return null;
+            return result;
         }
 
-        private static Certificates ConstructDomainModel(List<Certificate> listOfCertificates)
-        {                
-            Certificates certificates = new Certificates();
-            certificates.AddRange(listOfCertificates);
-
-            return certificates; 
+        // Внесение изменений в свидетельство по шаблону
+        public static void ModifyCertificate(CertificateEventArgs pattern)
+        {
+            using (CertificateDbContext db = new CertificateDbContext())
+            {
+                var certificate = db.Certificates.Where(x => x.ID == pattern.ID).First();
+                certificate.CertificateNumber = pattern.CertificateNumber;
+                certificate.RegisterNumber = pattern.RegisterNumber;
+                certificate.VerificationMethod = pattern.VerificationMethod;
+                certificate.ContractNumber = pattern.ContractNumber;
+                certificate.ClientName = pattern.ClientName;
+                certificate.ObjectName = pattern.ObjectName;
+                certificate.DeviceName = pattern.DeviceName;
+                certificate.DeviceType = pattern.DeviceType;
+                certificate.SerialNumber = pattern.SerialNumber;
+                certificate.CalibrationDate = pattern.CalibrationDate.Value;
+                certificate.CalibrationExpireDate = pattern.CalibrationExpireDate.Value;
+                certificate.CertificatePath = pattern.CertificatePath;
+                // Сохраняем изменения
+                db.SaveChanges();
+            }
         }
     }
 }

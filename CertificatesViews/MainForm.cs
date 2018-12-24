@@ -47,7 +47,7 @@ namespace CertificatesViews
         private void BuildTreeView()
         {
             var loader = AppLocator.ModelFactory.Create<ILoader>();
-            _certificates = loader.Load();
+            _certificates = loader.GetAllCertificates();
             CurrentControl = (Control)AppLocator.GuiFactory.Create<IView<Certificates>>();
             (CurrentControl as IView<Certificates>).Build(_certificates);
         }

@@ -13,6 +13,7 @@ using CertificatesViews.Factories;
 using System.IO;
 using System.Threading;
 using CertificatesModel.Interfaces;
+using CertificatesModel.Components;
 
 namespace CertificatesViews.Controls
 {
@@ -22,6 +23,9 @@ namespace CertificatesViews.Controls
         Control _previewControl;
         Certificates _certificates;
         CancellationTokenSource _cancelationTokenSource;
+        
+        // Событие на изменение
+        public event EventHandler Changed = delegate { };
 
         /// <summary>
         /// Панель предпросмотра 
@@ -74,10 +78,6 @@ namespace CertificatesViews.Controls
             lvCertificatesDetails.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
         }
 
-        // Событие на изменение
-        public event EventHandler Changed = delegate { };
-
-
         // Передача данных в форму
         public void Build(Certificates certificates)
         {
@@ -97,7 +97,6 @@ namespace CertificatesViews.Controls
             var view = AppLocator.GuiFactory.Create<IView<Certificate>>();
             view.Build(certificate);
             view.Changed += CertificatesPanel_Changed;
-
             PropertyControl = view as Control;
 
             // Показать/скрыть панель предпросмотра
@@ -106,7 +105,10 @@ namespace CertificatesViews.Controls
 
         private void CertificatesPanel_Changed(object sender, EventArgs e)
         {
-            throw new NotImplementedException();
+            var model = AppLocator.ModelFactory.Create<ILoader>();
+            var searchPattern = e as CertificateEventArgs;
+            var result = model.GetCertificatesBySearchPattern(searchPattern).ListOfCertificates;
+            FillListView(result);
         }
 
         // Показать/скрыть панель предпросмотра

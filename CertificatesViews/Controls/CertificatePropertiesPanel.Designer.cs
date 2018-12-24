@@ -43,7 +43,6 @@
             this.chbYear = new System.Windows.Forms.CheckBox();
             this.chbId = new System.Windows.Forms.CheckBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.btSearch = new System.Windows.Forms.Button();
             this.dpCalibrationExpireDate = new System.Windows.Forms.DateTimePicker();
             this.dpCalibrationDate = new System.Windows.Forms.DateTimePicker();
             this.cbVerificationMethod = new System.Windows.Forms.ComboBox();
@@ -70,6 +69,8 @@
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
+            this.btEdit = new System.Windows.Forms.Button();
+            this.btSearch = new System.Windows.Forms.Button();
             this.groupBox2.SuspendLayout();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numYear)).BeginInit();
@@ -110,6 +111,7 @@
             this.chbCalibrationExpireDate.Size = new System.Drawing.Size(15, 14);
             this.chbCalibrationExpireDate.TabIndex = 0;
             this.chbCalibrationExpireDate.UseVisualStyleBackColor = true;
+            this.chbCalibrationExpireDate.CheckedChanged += new System.EventHandler(this.CheckBoxes_CheckedChanged);
             // 
             // chbCalibrationDate
             // 
@@ -122,6 +124,7 @@
             this.chbCalibrationDate.Size = new System.Drawing.Size(15, 14);
             this.chbCalibrationDate.TabIndex = 0;
             this.chbCalibrationDate.UseVisualStyleBackColor = true;
+            this.chbCalibrationDate.CheckedChanged += new System.EventHandler(this.CheckBoxes_CheckedChanged);
             // 
             // chbSerialNumber
             // 
@@ -134,6 +137,7 @@
             this.chbSerialNumber.Size = new System.Drawing.Size(15, 14);
             this.chbSerialNumber.TabIndex = 0;
             this.chbSerialNumber.UseVisualStyleBackColor = true;
+            this.chbSerialNumber.CheckedChanged += new System.EventHandler(this.CheckBoxes_CheckedChanged);
             // 
             // chbDeviceName
             // 
@@ -146,6 +150,7 @@
             this.chbDeviceName.Size = new System.Drawing.Size(15, 14);
             this.chbDeviceName.TabIndex = 0;
             this.chbDeviceName.UseVisualStyleBackColor = true;
+            this.chbDeviceName.CheckedChanged += new System.EventHandler(this.CheckBoxes_CheckedChanged);
             // 
             // chbDeviceType
             // 
@@ -158,6 +163,7 @@
             this.chbDeviceType.Size = new System.Drawing.Size(15, 14);
             this.chbDeviceType.TabIndex = 0;
             this.chbDeviceType.UseVisualStyleBackColor = true;
+            this.chbDeviceType.CheckedChanged += new System.EventHandler(this.CheckBoxes_CheckedChanged);
             // 
             // chbObjectName
             // 
@@ -170,6 +176,7 @@
             this.chbObjectName.Size = new System.Drawing.Size(15, 14);
             this.chbObjectName.TabIndex = 0;
             this.chbObjectName.UseVisualStyleBackColor = true;
+            this.chbObjectName.CheckedChanged += new System.EventHandler(this.CheckBoxes_CheckedChanged);
             // 
             // chbClientName
             // 
@@ -182,6 +189,7 @@
             this.chbClientName.Size = new System.Drawing.Size(15, 14);
             this.chbClientName.TabIndex = 0;
             this.chbClientName.UseVisualStyleBackColor = true;
+            this.chbClientName.CheckedChanged += new System.EventHandler(this.CheckBoxes_CheckedChanged);
             // 
             // chbContractNumber
             // 
@@ -194,6 +202,7 @@
             this.chbContractNumber.Size = new System.Drawing.Size(15, 14);
             this.chbContractNumber.TabIndex = 0;
             this.chbContractNumber.UseVisualStyleBackColor = true;
+            this.chbContractNumber.CheckedChanged += new System.EventHandler(this.CheckBoxes_CheckedChanged);
             // 
             // chbVerificationMethod
             // 
@@ -206,6 +215,7 @@
             this.chbVerificationMethod.Size = new System.Drawing.Size(15, 14);
             this.chbVerificationMethod.TabIndex = 0;
             this.chbVerificationMethod.UseVisualStyleBackColor = true;
+            this.chbVerificationMethod.CheckedChanged += new System.EventHandler(this.CheckBoxes_CheckedChanged);
             // 
             // chbRegisterNumber
             // 
@@ -218,6 +228,7 @@
             this.chbRegisterNumber.Size = new System.Drawing.Size(15, 14);
             this.chbRegisterNumber.TabIndex = 0;
             this.chbRegisterNumber.UseVisualStyleBackColor = true;
+            this.chbRegisterNumber.CheckedChanged += new System.EventHandler(this.CheckBoxes_CheckedChanged);
             // 
             // chbCertificateNumber
             // 
@@ -230,6 +241,7 @@
             this.chbCertificateNumber.Size = new System.Drawing.Size(15, 14);
             this.chbCertificateNumber.TabIndex = 0;
             this.chbCertificateNumber.UseVisualStyleBackColor = true;
+            this.chbCertificateNumber.CheckedChanged += new System.EventHandler(this.CheckBoxes_CheckedChanged);
             // 
             // chbYear
             // 
@@ -242,6 +254,7 @@
             this.chbYear.Size = new System.Drawing.Size(15, 14);
             this.chbYear.TabIndex = 0;
             this.chbYear.UseVisualStyleBackColor = true;
+            this.chbYear.CheckedChanged += new System.EventHandler(this.CheckBoxes_CheckedChanged);
             // 
             // chbId
             // 
@@ -254,9 +267,11 @@
             this.chbId.Size = new System.Drawing.Size(15, 14);
             this.chbId.TabIndex = 0;
             this.chbId.UseVisualStyleBackColor = true;
+            this.chbId.CheckedChanged += new System.EventHandler(this.CheckBoxes_CheckedChanged);
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.btEdit);
             this.groupBox1.Controls.Add(this.btSearch);
             this.groupBox1.Controls.Add(this.dpCalibrationExpireDate);
             this.groupBox1.Controls.Add(this.dpCalibrationDate);
@@ -291,18 +306,6 @@
             this.groupBox1.TabIndex = 2;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Инфо";
-            // 
-            // btSearch
-            // 
-            this.btSearch.Image = global::CertificatesViews.Properties.Resources.zoom;
-            this.btSearch.Location = new System.Drawing.Point(148, 367);
-            this.btSearch.Name = "btSearch";
-            this.btSearch.Size = new System.Drawing.Size(75, 29);
-            this.btSearch.TabIndex = 14;
-            this.btSearch.Text = "Найти";
-            this.btSearch.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.btSearch.UseVisualStyleBackColor = true;
-            this.btSearch.Click += new System.EventHandler(this.btSearch_Click);
             // 
             // dpCalibrationExpireDate
             // 
@@ -530,6 +533,30 @@
             this.label1.TabIndex = 0;
             this.label1.Text = "ID";
             // 
+            // btEdit
+            // 
+            this.btEdit.Image = global::CertificatesViews.Properties.Resources.page_edit;
+            this.btEdit.Location = new System.Drawing.Point(111, 371);
+            this.btEdit.Name = "btEdit";
+            this.btEdit.Size = new System.Drawing.Size(84, 29);
+            this.btEdit.TabIndex = 14;
+            this.btEdit.Text = "Изменить";
+            this.btEdit.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.btEdit.UseVisualStyleBackColor = true;
+            this.btEdit.Click += new System.EventHandler(this.btEdit_Click);
+            // 
+            // btSearch
+            // 
+            this.btSearch.Image = global::CertificatesViews.Properties.Resources.zoom;
+            this.btSearch.Location = new System.Drawing.Point(216, 371);
+            this.btSearch.Name = "btSearch";
+            this.btSearch.Size = new System.Drawing.Size(84, 29);
+            this.btSearch.TabIndex = 14;
+            this.btSearch.Text = "Найти";
+            this.btSearch.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.btSearch.UseVisualStyleBackColor = true;
+            this.btSearch.Click += new System.EventHandler(this.btSearch_Click);
+            // 
             // CertificatePropertiesPanel
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -593,5 +620,6 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Button btEdit;
     }
 }

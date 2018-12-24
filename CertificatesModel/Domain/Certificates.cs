@@ -19,20 +19,25 @@ namespace CertificatesModel
         public void AddRange(IEnumerable<Certificate> certificates)
         {
             _certificates = certificates.ToList();
-            _certificates.Sort();
+
             _contracts = new List<Contract>();
 
             // Создаем и заполняем список годов
-            var sortedYearsList = certificates.Select(x => x.Year).Distinct().ToList();
-            sortedYearsList.Sort();
+            var sortedYearsList = certificates.Select(x => x.Year).Distinct().OrderBy(x => x).ToList();
+
             sortedYearsList.ForEach((y) => { this.Add(new Year() { YearOfCreationCertificate = y }); });
 
             // Создаем и заполняем список договоров для каждого года
             foreach (Year year in this)
             {
                 // Список Номеров договора конкретного года
-                var contractsOfCurrentYear = certificates.Where(x => x.Year == year.YearOfCreationCertificate).Select(x => x.ContractNumber).Distinct().ToList();
-                contractsOfCurrentYear.Sort();
+                var contractsOfCurrentYear = certificates
+                    .Where(x => x.Year == year.YearOfCreationCertificate)
+                    .Select(x => x.ContractNumber)
+                    .Distinct()
+                    .OrderBy(x => x)
+                    .ToList();
+
                 contractsOfCurrentYear.ForEach((c) => { year.Add(new Contract() { ContractNumber = c }); });
 
                 // Создаем и заполняем список свидетельств для каждого договора
@@ -44,7 +49,15 @@ namespace CertificatesModel
                 _contracts.AddRange(year);
             }
         }
-        
+
+        // Преобразование List<Certificate> в Certificates
+        public static explicit operator Certificates(List<Certificate> v)
+        {
+            var result = new Certificates();
+            result.AddRange(v);
+            return result;
+        }
+
         /// <summary>
         /// Список договоров
         /// </summary>
@@ -55,7 +68,7 @@ namespace CertificatesModel
                 return _contracts ?? new List<Contract>();
             }
         }
-        
+
         /// <summary>
         /// Список свидетельств
         /// </summary>
