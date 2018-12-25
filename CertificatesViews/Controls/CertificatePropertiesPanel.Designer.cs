@@ -69,6 +69,7 @@
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
+            this.btDelete = new System.Windows.Forms.Button();
             this.btEdit = new System.Windows.Forms.Button();
             this.btSearch = new System.Windows.Forms.Button();
             this.groupBox2.SuspendLayout();
@@ -271,6 +272,7 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.btDelete);
             this.groupBox1.Controls.Add(this.btEdit);
             this.groupBox1.Controls.Add(this.btSearch);
             this.groupBox1.Controls.Add(this.dpCalibrationExpireDate);
@@ -533,10 +535,22 @@
             this.label1.TabIndex = 0;
             this.label1.Text = "ID";
             // 
+            // btDelete
+            // 
+            this.btDelete.Image = global::CertificatesViews.Properties.Resources.cross1;
+            this.btDelete.Location = new System.Drawing.Point(250, 369);
+            this.btDelete.Name = "btDelete";
+            this.btDelete.Size = new System.Drawing.Size(84, 29);
+            this.btDelete.TabIndex = 14;
+            this.btDelete.Text = "Удалить";
+            this.btDelete.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.btDelete.UseVisualStyleBackColor = true;
+            this.btDelete.Click += new System.EventHandler(this.btDelete_Click);
+            // 
             // btEdit
             // 
             this.btEdit.Image = global::CertificatesViews.Properties.Resources.page_edit;
-            this.btEdit.Location = new System.Drawing.Point(111, 371);
+            this.btEdit.Location = new System.Drawing.Point(150, 369);
             this.btEdit.Name = "btEdit";
             this.btEdit.Size = new System.Drawing.Size(84, 29);
             this.btEdit.TabIndex = 14;
@@ -548,7 +562,7 @@
             // btSearch
             // 
             this.btSearch.Image = global::CertificatesViews.Properties.Resources.zoom;
-            this.btSearch.Location = new System.Drawing.Point(216, 371);
+            this.btSearch.Location = new System.Drawing.Point(50, 369);
             this.btSearch.Name = "btSearch";
             this.btSearch.Size = new System.Drawing.Size(84, 29);
             this.btSearch.TabIndex = 14;
@@ -621,5 +635,6 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button btEdit;
+        private System.Windows.Forms.Button btDelete;
     }
 }

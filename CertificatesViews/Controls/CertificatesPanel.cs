@@ -14,6 +14,7 @@ using System.IO;
 using System.Threading;
 using CertificatesModel.Interfaces;
 using CertificatesModel.Components;
+using static CertificatesViews.TreeNodeCollectionExtensions;
 
 namespace CertificatesViews.Controls
 {
@@ -23,7 +24,7 @@ namespace CertificatesViews.Controls
         Control _previewControl;
         Certificates _certificates;
         CancellationTokenSource _cancelationTokenSource;
-        
+
         // Событие на изменение
         public event EventHandler Changed = delegate { };
 
@@ -81,10 +82,22 @@ namespace CertificatesViews.Controls
         // Передача данных в форму
         public void Build(Certificates certificates)
         {
+            // TODO: Допилить загрузку формы
+            TreeNodeList state = new TreeNodeList();
+            if (tvCertificates.Nodes.Count != 0)
+            {
+                state = tvCertificates.Nodes.getNodeCollectionState();
+            }
+
             _certificates = certificates;
 
+            tvCertificates.BeginUpdate();
+
+            tvCertificates.Nodes.Clear();
             tvCertificates.AddCertificates(_certificates);
-            tvCertificates.Update();
+            tvCertificates.DeserializeNodeState();
+
+            tvCertificates.EndUpdate();
 
             // Построение панели свойств свидетельства
             BuildProperty();
@@ -94,35 +107,40 @@ namespace CertificatesViews.Controls
         private void BuildProperty()
         {
             Certificate certificate = new Certificate();
-            var view = AppLocator.GuiFactory.Create<IView<Certificate>>();
+            var view = AppLocator.GuiFactory.Create<IViewAndEdit<Certificate>>();
             view.Build(certificate);
             view.Changed += CertificatesPanel_Changed;
+            view.Deleted += CertificatesPanel_Deleted;
+            view.Edited += CertificatesPanel_Edited;
             PropertyControl = view as Control;
 
             // Показать/скрыть панель предпросмотра
             ShowOrHidePreviewPanel();
         }
 
+        // Внесение изменений в свидетельство
+        private void CertificatesPanel_Edited(object sender, EventArgs e)
+        {
+            var model = AppLocator.ModelFactory.Create<ILoader>();
+            var editPattern = e as CertificateEventArgs;
+            model.EditCertificate(editPattern);
+            Changed(this, EventArgs.Empty);
+            MessageBox.Show("Изменения в свидетельство успешно внесены.", "Внесение изменений", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        // Удаление выбранных свидетельств
+        private void CertificatesPanel_Deleted(object sender, EventArgs e)
+        {
+            throw new NotImplementedException();
+        }
+
+        // Поиск свидетельств по шаблону
         private void CertificatesPanel_Changed(object sender, EventArgs e)
         {
             var model = AppLocator.ModelFactory.Create<ILoader>();
             var searchPattern = e as CertificateEventArgs;
             var result = model.GetCertificatesBySearchPattern(searchPattern).ListOfCertificates;
             FillListView(result);
-        }
-
-        // Показать/скрыть панель предпросмотра
-        public void ShowOrHidePreviewPanel()
-        {
-            if (Settings.Instance.AutoPreviewEnabled)
-            {
-                scPreviewSplitter.Panel2Collapsed = false;
-                PreviewControl = (Control)AppLocator.GuiFactory.Create<IView<string>>();
-            }
-            else
-            {
-                scPreviewSplitter.Panel2Collapsed = true;
-            }
         }
 
         // Выбираем узел в TreeView
@@ -141,8 +159,77 @@ namespace CertificatesViews.Controls
                 FillListView(content as Contract);
         }
 
+        // Выбор свидетельства в ListView
+        private void lvCertificatesDetails_ItemSelectionChanged(object sender, ListViewItemSelectionChangedEventArgs e)
+        {
+            // Если список свидетельств пуст, выходим из метода
+            if (_certificates == null || _certificates.ListOfCertificates.Count == 0)
+                return;
+
+            // ID выбранного свидетельства
+            var id = int.Parse(e.Item.SubItems[0].Text);
+
+            // Выбираем свидетельство
+            var certificate = _certificates.ListOfCertificates.Where(x => x.ID == id).ToList()[0];
+
+            // Панель свойств
+            var view = PropertyControl as IView<Certificate>;
+
+            // Выводим данные о свидетельстве на панель свойств
+            view.Build(certificate);
+
+            // Выводим страницы документа на панель предпросмотра
+            if (Settings.Instance.AutoPreviewEnabled)
+                (PreviewControl as IView<string>).Build(certificate.CertificatePath);
+        }
+
+        // Меняем состояние CheckBox у TreeView
+        private void tvCertificates_AfterCheck(object sender, TreeViewEventArgs e)
+        {
+            // The code only executes if the user caused the checked state to change.
+            if (e.Action != TreeViewAction.Unknown)
+            {
+                if (e.Node.Nodes.Count > 0)
+                {
+                    /* Calls the CheckAllChildNodes method, passing in the current 
+                    Checked value of the TreeNode whose checked state changed. */
+                    this.CheckAllChildNodes(e.Node, e.Node.Checked);
+                }
+                tvCertificates.SerializeNodeState();
+            }
+            
+        }
+
+        // Рекурсивное обновление дочерних узлов
+        private void CheckAllChildNodes(TreeNode treeNode, bool nodeChecked)
+        {
+            foreach (TreeNode node in treeNode.Nodes)
+            {
+                node.Checked = nodeChecked;
+                if (node.Nodes.Count > 0)
+                {
+                    // If the current node has child nodes, call the CheckAllChildsNodes method recursively.
+                    this.CheckAllChildNodes(node, nodeChecked);
+                }
+            }
+        }
+
+        // Показать/скрыть панель предпросмотра
+        public void ShowOrHidePreviewPanel()
+        {
+            if (Settings.Instance.AutoPreviewEnabled)
+            {
+                scPreviewSplitter.Panel2Collapsed = false;
+                PreviewControl = (Control)AppLocator.GuiFactory.Create<IView<string>>();
+            }
+            else
+            {
+                scPreviewSplitter.Panel2Collapsed = true;
+            }
+        }
+
         // Асинхронное заполнение ListView результатами выборки
-        async private void FillListView(List<Certificate> certificates)
+        private async void FillListView(List<Certificate> certificates)
         {
             // Отменяем исполняемую задачу, если таковая имелась
             if (_cancelationTokenSource != null)
@@ -217,30 +304,6 @@ namespace CertificatesViews.Controls
 
             // Возвращаем результат
             return item;
-        }
-
-        // Выбор свидетельства в ListView
-        private void lvCertificatesDetails_ItemSelectionChanged(object sender, ListViewItemSelectionChangedEventArgs e)
-        {
-            // Если список свидетельств пуст, выходим из метода
-            if (_certificates == null || _certificates.ListOfCertificates.Count == 0)
-                return;
-
-            // ID выбранного свидетельства
-            var id = int.Parse(e.Item.SubItems[0].Text);
-
-            // Выбираем свидетельство
-            var certificate = _certificates.ListOfCertificates.Where(x => x.ID == id).ToList()[0];
-
-            // Панель свойств
-            var view = PropertyControl as IView<Certificate>;
-
-            // Выводим данные о свидетельстве на панель свойств
-            view.Build(certificate);
-
-            // Выводим страницы документа на панель предпросмотра
-            if (Settings.Instance.AutoPreviewEnabled)
-                (PreviewControl as IView<string>).Build(certificate.CertificatePath);
         }
     }
 }

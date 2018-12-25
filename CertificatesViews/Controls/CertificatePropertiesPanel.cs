@@ -8,13 +8,15 @@ using System.IO;
 
 namespace CertificatesViews.Controls
 {
-    public partial class CertificatePropertiesPanel : UserControl, IView<Certificate>
+    public partial class CertificatePropertiesPanel : UserControl, IViewAndEdit<Certificate>
     {
         // Свидетельство
         Certificate _certificate;
 
         // Событие изменения формы
         public event EventHandler Changed = delegate { };
+        public event EventHandler Edited;
+        public event EventHandler Deleted;
 
         // Конструктор класса
         public CertificatePropertiesPanel()
@@ -60,13 +62,6 @@ namespace CertificatesViews.Controls
             }
         }
 
-        // Поиск по шаблону
-        private void btSearch_Click(object sender, EventArgs e)
-        {
-            // передаем событие с аргументами в родительскую форму
-            Changed(this, MakeSearchPattern());
-        }
-
         // Если все чекбоксы пустые, то отключаем кнопку поиска
         private void CheckBoxes_CheckedChanged(object sender, EventArgs e)
         {
@@ -76,10 +71,25 @@ namespace CertificatesViews.Controls
                 btSearch.Enabled = false;
         }
 
+        // Поиск по шаблону
+        private void btSearch_Click(object sender, EventArgs e)
+        {
+            // передаем событие с аргументами в родительскую форму
+            Changed(this, MakeSearchPattern());
+        }
+
         // Внести изменения в свидетельство
         private void btEdit_Click(object sender, EventArgs e)
         {
-            Changed(sender, MakeEditPattern());
+            // Запускаем событие на изменение
+            Edited(sender, MakeEditPattern()); 
+        }
+
+        // Удалить выбранные свидетельства
+        private void btDelete_Click(object sender, EventArgs e)
+        {
+            // Запускаем событие на удаление
+            Deleted(this, EventArgs.Empty); 
         }
 
         // Создаем аргументы событию поиска
@@ -131,6 +141,6 @@ namespace CertificatesViews.Controls
 
             // Возвращаем сформированный шаблон
             return pattern;
-        }
+        }        
     }
 }

@@ -1,11 +1,6 @@
 ﻿using CertificatesModel.Components;
 using CertificatesModel.Interfaces;
 using CertificatesModel.Repositories;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CertificatesModel
 {
@@ -27,7 +22,7 @@ namespace CertificatesModel
         }
 
         // Изменить свидетельство согласно шаблону
-        public void ModifyCertificate(CertificateEventArgs pattern)
+        public void EditCertificate(CertificateEventArgs pattern)
         {
             Repository.ModifyCertificate(pattern);
         }

@@ -98,6 +98,7 @@
     <Compile Include="Factories\AppLocator.cs" />
     <Compile Include="Factories\GuiFactory.cs" />
     <Compile Include="Interfaces\IView.cs" />
+    <Compile Include="Interfaces\IViewAndEdit.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -213,6 +214,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\page_edit.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\cross1.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

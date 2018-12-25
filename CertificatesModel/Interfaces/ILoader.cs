@@ -25,6 +25,6 @@ namespace CertificatesModel.Interfaces
         /// </summary>
         /// <param name="pattern"></param>
         /// <returns></returns>
-        void ModifyCertificate(CertificateEventArgs pattern);
+        void EditCertificate(CertificateEventArgs pattern);
     }
 }

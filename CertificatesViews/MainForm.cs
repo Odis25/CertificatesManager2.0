@@ -48,8 +48,14 @@ namespace CertificatesViews
         {
             var loader = AppLocator.ModelFactory.Create<ILoader>();
             _certificates = loader.GetAllCertificates();
-            CurrentControl = (Control)AppLocator.GuiFactory.Create<IView<Certificates>>();
-            (CurrentControl as IView<Certificates>).Build(_certificates);
+            var view= AppLocator.GuiFactory.Create<IView<Certificates>>();
+            view.Changed += delegate 
+            {
+                _certificates = loader.GetAllCertificates();
+                view.Build(_certificates);
+            };
+            CurrentControl = view as Control;
+            view.Build(_certificates);
         }
 
         private void btAdd_Click(object sender, EventArgs e)
@@ -97,6 +103,7 @@ namespace CertificatesViews
 
         private void MainForm_Changed(object sender, EventArgs e)
         {
+            //TODO: Антипаттерн. Переделать
             (CurrentControl as CertificatesPanel).ShowOrHidePreviewPanel();
         }
 

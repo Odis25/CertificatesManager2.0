@@ -107,6 +107,7 @@
             this.tvCertificates.Name = "tvCertificates";
             this.tvCertificates.Size = new System.Drawing.Size(221, 298);
             this.tvCertificates.TabIndex = 0;
+            this.tvCertificates.AfterCheck += new System.Windows.Forms.TreeViewEventHandler(this.tvCertificates_AfterCheck);
             this.tvCertificates.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.tvCertificates_AfterSelect);
             // 
             // lvCertificatesDetails

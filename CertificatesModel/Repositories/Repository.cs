@@ -38,7 +38,8 @@ namespace CertificatesModel.Repositories
 
             using (CertificateDbContext db = new CertificateDbContext())
             {
-                IQueryable<Certificate> querry = db.Certificates.OrderBy(x=>x.ID);
+                IQueryable<Certificate> querry = db.Certificates;
+                querry = querry.OrderBy(x=>x.ID);
 
                 if (pattern.ID.HasValue)
                     querry = querry.Where(x => x.ID == pattern.ID);
