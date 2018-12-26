@@ -17,8 +17,8 @@ namespace CertificatesViews
 {
     public partial class MainForm : Form
     {
-        Certificates _certificates;
-        Control _currentControl;
+        private Certificates _certificates;
+        private Control _currentControl;
 
         public event EventHandler Changed = delegate { };
 
@@ -46,7 +46,7 @@ namespace CertificatesViews
         // Дерево свидетельств
         private void BuildTreeView()
         {
-            var loader = AppLocator.ModelFactory.Create<ILoader>();
+            var loader = AppLocator.ModelFactory.Create<ICertificatesLoader>();
             _certificates = loader.GetAllCertificates();
             var view= AppLocator.GuiFactory.Create<IView<Certificates>>();
             view.Changed += delegate 

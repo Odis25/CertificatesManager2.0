@@ -12,6 +12,7 @@ using CertificatesModel;
 using PdfiumViewer;
 using System.IO;
 using System.Threading;
+using System.Net;
 
 namespace CertificatesViews.Controls
 {
@@ -52,9 +53,11 @@ namespace CertificatesViews.Controls
             // Получаем токен отмены
             var token = _cts.Token;
 
+            var path = CheckPath(obj);
+
             // Если файл доступен, то асинхронно загружаем его в панель предпросмотра
-            if (File.Exists(obj))
-                Viewer.Document = await Task.Run(() => { return PdfDocument.Load(obj); }, token);
+            if (File.Exists(path))
+                Viewer.Document = await Task.Run(() => { return PdfDocument.Load(path); }, token);
             else
                 //Иначе оставляем панель пустой
                 Viewer.Document = null;
@@ -62,6 +65,25 @@ namespace CertificatesViews.Controls
             // Убираем CancellationTokenSource текущего метода из переменной класса
             if (_cts == cts)
                 _cts = null;
+        }
+
+        // Если путь содержит IP Address, то заменяем его на UNC
+        private string CheckPath(string path)
+        {
+            // Если путь сетевой
+            if (path.StartsWith(@"\\"))
+            {
+                // Получаем имя или IP адресс хоста
+                var nameOrIP = path.TrimStart('\\').Split('\\')[0];
+                // Получение имя удаленного компьютера
+                var hostName = Dns.GetHostEntry(nameOrIP).HostName.Split('.')[0];
+                // Формируем новый путь к файлу
+                var newPath = path.Replace(nameOrIP, hostName);
+
+                return newPath;
+            }
+
+            return path;
         }
     }
 }

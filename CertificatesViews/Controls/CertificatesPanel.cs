@@ -28,9 +28,7 @@ namespace CertificatesViews.Controls
         // Событие на изменение
         public event EventHandler Changed = delegate { };
 
-        /// <summary>
-        /// Панель предпросмотра 
-        /// </summary>
+        // Панель предпросмотра 
         public Control PreviewControl
         {
             get { return _previewControl; }
@@ -48,9 +46,7 @@ namespace CertificatesViews.Controls
             }
         }
 
-        /// <summary>
-        /// Панель детализированной информации о свидетельстве
-        /// </summary>
+        // Панель детализированной информации о свидетельстве
         public Control PropertyControl
         {
             get { return _propertyControl; }
@@ -121,23 +117,44 @@ namespace CertificatesViews.Controls
         // Внесение изменений в свидетельство
         private void CertificatesPanel_Edited(object sender, EventArgs e)
         {
-            var model = AppLocator.ModelFactory.Create<ILoader>();
+            var model = AppLocator.ModelFactory.Create<ICertificatesLoader>();
             var editPattern = e as CertificateEventArgs;
             model.EditCertificate(editPattern);
+
             Changed(this, EventArgs.Empty);
-            MessageBox.Show("Изменения в свидетельство успешно внесены.", "Внесение изменений", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            MessageBox.Show("Изменения в свидетельство успешно внесены.", "Операция изменения", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         // Удаление выбранных свидетельств
         private void CertificatesPanel_Deleted(object sender, EventArgs e)
         {
-            throw new NotImplementedException();
+            // Выбранные свидетельства
+            var selectedItems = lvCertificatesDetails.SelectedItems;
+
+            // Проверяем выбраны ли какие то свидетельства
+            if (selectedItems.Count == 0)
+                return;
+
+            // Создаем и заполняем массив Id 
+            var id = new int[selectedItems.Count];
+
+            for (int i = 0; i < id.Length; i++)
+            {
+                id[i] = Convert.ToInt32(selectedItems[i].SubItems[0].Text);
+            }
+
+            // Передаем массив Id в модель
+            var model = AppLocator.ModelFactory.Create<ICertificatesLoader>();
+            model.DeleteCertificates(id);
+
+            Changed(this, EventArgs.Empty);
+            MessageBox.Show("Указанные свидетельства были успешно удалены из базы данных", "Операция удаления", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         // Поиск свидетельств по шаблону
         private void CertificatesPanel_Changed(object sender, EventArgs e)
         {
-            var model = AppLocator.ModelFactory.Create<ILoader>();
+            var model = AppLocator.ModelFactory.Create<ICertificatesLoader>();
             var searchPattern = e as CertificateEventArgs;
             var result = model.GetCertificatesBySearchPattern(searchPattern).ListOfCertificates;
             FillListView(result);

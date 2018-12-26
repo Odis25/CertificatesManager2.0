@@ -1,10 +1,12 @@
-﻿using CertificatesModel.Components;
+﻿using System;
+using System.Collections.Generic;
+using CertificatesModel.Components;
 using CertificatesModel.Interfaces;
 using CertificatesModel.Repositories;
 
 namespace CertificatesModel
 {
-    public class CertificatesLoader : ILoader
+    public class CertificatesLoader : ICertificatesLoader
     {
 
         // Получить весь список свидетельств
@@ -24,7 +26,13 @@ namespace CertificatesModel
         // Изменить свидетельство согласно шаблону
         public void EditCertificate(CertificateEventArgs pattern)
         {
-            Repository.ModifyCertificate(pattern);
+            Repository.EditCertificate(pattern);
+        }
+
+        // Удалить выбранные свидетельства
+        public void DeleteCertificates(params int[] idList)
+        {
+            Repository.DeleteCertificates(idList);
         }
     }
 }

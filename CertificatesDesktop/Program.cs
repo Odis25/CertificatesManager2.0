@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using CertificatesModel.Authorisation;
 
 namespace CertificatesDesktop
 {
@@ -19,6 +20,8 @@ namespace CertificatesDesktop
         {
             // Обработка исключений
             ExceptionHandler.Init();
+
+            Authorisation.Authorisate();
 
             // Создаем фабрики
             AppLocator.GuiFactory = new GuiFactory();

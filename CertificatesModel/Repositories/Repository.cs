@@ -27,8 +27,16 @@ namespace CertificatesModel.Repositories
 
         // Получаем все свидетельства из БД и сортируем по ID
         public static Certificates GetAllCertificatesFromDB()
-        {            
-            return GetAllCertificatesFromDB(new CertificateEventArgs());
+        { 
+            try
+            {
+                return GetAllCertificatesFromDB(new CertificateEventArgs());
+            }
+            catch(SqlCeException e)
+            {
+                return new Certificates();
+            }
+            
         }
 
         // Получаем список свидетельств соответствующих поисковому шаблону
@@ -76,7 +84,7 @@ namespace CertificatesModel.Repositories
         }
 
         // Внесение изменений в свидетельство по шаблону
-        public static void ModifyCertificate(CertificateEventArgs pattern)
+        public static void EditCertificate(CertificateEventArgs pattern)
         {
             using (CertificateDbContext db = new CertificateDbContext())
             {
@@ -94,6 +102,19 @@ namespace CertificatesModel.Repositories
                 certificate.CalibrationExpireDate = pattern.CalibrationExpireDate.Value;
                 certificate.CertificatePath = pattern.CertificatePath;
                 // Сохраняем изменения
+                db.SaveChanges();
+            }
+        }
+
+        public static void DeleteCertificates(params int[] idList)
+        {
+            using (CertificateDbContext db = new CertificateDbContext())
+            {
+                foreach(var id in idList)
+                {
+                    var cert = db.Certificates.Find(id);
+                    db.Certificates.Remove(cert);
+                }
                 db.SaveChanges();
             }
         }

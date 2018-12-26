@@ -6,7 +6,7 @@ namespace CertificatesModel.Factories
     {
         public ModelFactory()
         {
-            Register<ILoader, CertificatesLoader>();
+            Register<ICertificatesLoader, CertificatesLoader>();
         }
     }
 }

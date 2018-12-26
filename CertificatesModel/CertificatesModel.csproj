@@ -66,6 +66,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Authorisation\AccessRights.cs" />
+    <Compile Include="Authorisation\Authorisation.cs" />
+    <Compile Include="Authorisation\NetworkConnection.cs" />
+    <Compile Include="Authorisation\User.cs" />
     <Compile Include="Components\CertificateEventArgs.cs" />
     <Compile Include="Domain\Certificate.cs" />
     <Compile Include="Domain\CertificateDbContext.cs" />
@@ -74,7 +78,7 @@
     <Compile Include="Domain\Year.cs" />
     <Compile Include="Factories\BaseFactory.cs" />
     <Compile Include="Factories\ModelFactory.cs" />
-    <Compile Include="Interfaces\ILoader.cs" />
+    <Compile Include="Interfaces\ICertificatesLoader.cs" />
     <Compile Include="CertificatesLoader.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Interfaces\IRepository.cs" />
