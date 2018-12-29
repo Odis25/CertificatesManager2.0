@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text;
 using System.Threading;
 using System.Windows.Forms;
 
@@ -26,7 +27,12 @@ namespace CertificatesDesktop
                     ex = ex.InnerException;
                 }
             }
-            MessageBox.Show(e.ExceptionObject.ToString());
+            MessageBox.Show(e.ExceptionObject.ToString(), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            //StringBuilder builder = new StringBuilder();
+            //builder.AppendLine(ex.Message);
+            //builder.AppendLine();
+            //builder.AppendLine(ex.StackTrace);
+            //MessageBox.Show(builder.ToString(), "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
 
         }
 

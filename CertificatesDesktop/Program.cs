@@ -1,12 +1,14 @@
 ﻿using CertificatesModel.Factories;
 using CertificatesViews.Factories;
-using CertificatesViews;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using CertificatesModel.Authorisation;
+using CertificatesModel.Authorization;
+using CertificatesViews.Interfaces;
+using CertificatesViews;
+using CertificatesViews.Controls;
 
 namespace CertificatesDesktop
 {
@@ -21,14 +23,23 @@ namespace CertificatesDesktop
             // Обработка исключений
             ExceptionHandler.Init();
 
-            Authorisation.Authorisate();
-
             // Создаем фабрики
             AppLocator.GuiFactory = new GuiFactory();
             AppLocator.ModelFactory = new ModelFactory();
 
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
+
+            // Авторизация пользователя
+            if (!Authorization.GetUserCredential())
+            {
+                var loginForm = new ContainerForm<User>();
+                loginForm.Build(Authorization.CurrentUser);
+                loginForm.Changed += delegate { loginForm.DialogResult = DialogResult.OK; };
+                if (loginForm.ShowDialog() == DialogResult.Cancel)
+                    Environment.Exit(0);
+            }
+
             Application.Run(new MainForm());
         }
     }

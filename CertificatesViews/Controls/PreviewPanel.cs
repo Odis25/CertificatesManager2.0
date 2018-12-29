@@ -1,18 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Drawing;
-using System.Data;
-using System.Linq;
-using System.Text;
+﻿using CertificatesViews.Interfaces;
+using PdfiumViewer;
+using System;
+using System.IO;
+using System.Net;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using CertificatesViews.Interfaces;
-using CertificatesModel;
-using PdfiumViewer;
-using System.IO;
-using System.Threading;
-using System.Net;
 
 namespace CertificatesViews.Controls
 {

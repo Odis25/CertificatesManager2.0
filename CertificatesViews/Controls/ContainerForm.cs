@@ -1,4 +1,5 @@
-﻿using CertificatesViews.Interfaces;
+﻿using CertificatesViews.Factories;
+using CertificatesViews.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -22,7 +23,15 @@ namespace CertificatesViews.Controls
 
         public void Build(T obj)
         {
-            throw new NotImplementedException();
+            //create control to show server
+            var ctrl = (Control)AppLocator.GuiFactory.Create<IView<T>>(); //we need control implements IView<Server>
+            //place ctrl
+            ctrl.Parent = this;
+            ctrl.Dock = DockStyle.Fill;
+            //build control
+            (ctrl as IView<T>).Build(obj);
+            //route event Changed
+            (ctrl as IView<T>).Changed += (o, e) => Changed(o, e);
         }
     }
 

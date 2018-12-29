@@ -4,7 +4,7 @@ using System.ComponentModel;
 using System.Net;
 using System.Runtime.InteropServices;
 
-namespace CertificatesModel.Authorisation
+namespace CertificatesModel.Authorization
 {
     internal class NetworkConnection : IDisposable
     {
@@ -59,19 +59,19 @@ namespace CertificatesModel.Authorisation
                 case 1219:
                     // Соединение к сетевому ресурсу уже открыто
                     throw new Win32Exception(result, "Соединение с сетевым ресурсом уже существует.");
-                    break;
+
                 case 1326:
                     // Пароль или логин не верны
                     throw new Win32Exception(result, "Некорректный логин или пароль.");
-                    break;
+
                 case 2202:
                     // логин не верны
                     throw new Win32Exception(result, "Некорректное имя пользователя.");
-                    break;
+
                 default:
                     // Все прочие варианты
                     throw new Win32Exception(result, "Ошибка подключения к сетевому ресурсу.");
-                    break;
+
             }
         }
 

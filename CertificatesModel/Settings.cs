@@ -39,6 +39,8 @@ namespace CertificatesModel
             {
                 _instance = new Settings();
                 _instance.DataBasePath = "D:\\Test.sdf";
+                _instance.CertificatesFolderPath = "";
+                _instance.CertificatesZipFolderPath = "";
             }
         }
 
@@ -70,5 +72,9 @@ namespace CertificatesModel
         /// Отображать свидетельства в окне предпросмотра
         /// </summary>
         public bool AutoPreviewEnabled { get; set; }
+        /// <summary>
+        /// Не спрашивать учетные данные пользователя при входе
+        /// </summary>
+        public bool SaveUserCredential { get; set; }
     }
 }

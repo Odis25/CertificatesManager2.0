@@ -65,6 +65,12 @@
     <Compile Include="Components\TreeViewModified.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Controls\AuthorisationPanel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\AuthorisationPanel.Designer.cs">
+      <DependentUpon>AuthorisationPanel.cs</DependentUpon>
+    </Compile>
     <Compile Include="Controls\CertificatePropertiesPanel.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -113,11 +119,17 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Controls\AuthorisationPanel.resx">
+      <DependentUpon>AuthorisationPanel.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Controls\CertificatePropertiesPanel.resx">
       <DependentUpon>CertificatePropertiesPanel.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\CertificatesPanel.resx">
       <DependentUpon>CertificatesPanel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\ContainerForm.resx">
+      <DependentUpon>ContainerForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\PreviewPanel.resx">
       <DependentUpon>PreviewPanel.cs</DependentUpon>
