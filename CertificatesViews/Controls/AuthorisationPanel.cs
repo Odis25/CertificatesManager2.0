@@ -40,7 +40,7 @@ namespace CertificatesViews.Controls
             var user = new User()
             {
                 Login = tbLogin.Text,
-                Password = tbPassword.Text               
+                Password = tbPassword.Text
             };
 
             // Попытка авторизации
@@ -57,13 +57,9 @@ namespace CertificatesViews.Controls
         private void TryToAuthorisate(User user)
         {
             try
-            {
+            {               
+                Settings.Instance.SaveUserCredential = chbSaveCredentials.Checked;
                 Authorization.LogIn(user);
-                if (chbSaveCredentials.Checked)
-                {
-                    Settings.Instance.SaveUserCredential = true;
-                    Authorization.SaveUserCredential(user);
-                }
                 Changed(this, EventArgs.Empty);
             }
             catch (Win32Exception ex)

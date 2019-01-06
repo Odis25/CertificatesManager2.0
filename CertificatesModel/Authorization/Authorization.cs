@@ -41,7 +41,7 @@ namespace CertificatesModel.Authorization
                 if (zipCertFolder.StartsWith(@"\\"))
                     _hosts.Add(zipCertFolder.TrimStart('\\').Split('\\')[0]);
 
-                if (_hosts.Count > 0)
+                if (_hosts.Any())
                     return true;
                 else
                     return false;
@@ -73,13 +73,15 @@ namespace CertificatesModel.Authorization
             {
                 ConnectToHost(host, user);
             }
+            if (Settings.Instance.SaveUserCredential)
+                SaveUserCredential(user);
+
             CurrentUser = user;
             UserLogined = true;
         }
 
         private static void ConnectToHost(string host, User user)
         {
-
             // Получение IP адреса удаленного компьютера
             string hostIPAddress = Dns.GetHostAddresses(host)[0].ToString();
             // Получение имя удаленного компьютера
@@ -99,7 +101,7 @@ namespace CertificatesModel.Authorization
         }
 
         // Получаем логин/пароль пользователя, если они были сохранены
-        public static User GetUserCredential()
+        private static User GetUserCredential()
         {
             User currentUser = new User();
             try
@@ -121,7 +123,6 @@ namespace CertificatesModel.Authorization
                 return currentUser;
             }
         }
-
 
         public static void SaveUserCredential(User user)
         {
