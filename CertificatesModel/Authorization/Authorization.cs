@@ -58,7 +58,6 @@ namespace CertificatesModel.Authorization
             {
                 CurrentUser = GetUserCredential();
                 LogIn(CurrentUser);
-
             }
             else
             {
@@ -69,7 +68,6 @@ namespace CertificatesModel.Authorization
 
         public static void LogIn(User user)
         {
-
             // Создаем подключения к хостам для всех сетевых путей
             foreach (var host in _hosts.Distinct())
             {
@@ -86,7 +84,6 @@ namespace CertificatesModel.Authorization
             string hostIPAddress = Dns.GetHostAddresses(host)[0].ToString();
             // Получение имя удаленного компьютера
             string hostName = Dns.GetHostEntry(host).HostName.Split('.')[0];
-
 
             var cred = new NetworkCredential()
             {
@@ -114,7 +111,7 @@ namespace CertificatesModel.Authorization
                         BinaryFormatter formatter = new BinaryFormatter();
                         var user = (User)formatter.Deserialize(fs);
                         currentUser.Login = user.Login;
-                        currentUser.Password = SecureIt.DecryptString(user.Password).ToInsecureString();
+                        currentUser.Password = user.Password.DecryptString().ToInsecureString();
                     }
                 }
                 return currentUser;
@@ -128,6 +125,9 @@ namespace CertificatesModel.Authorization
 
         public static void SaveUserCredential(User user)
         {
+            var securedPassword = user.Password.ToSecureString().EncryptString();
+            user.Password = securedPassword;
+
             using (FileStream fs = new FileStream("credentials.dat", FileMode.Create))
             {
                 BinaryFormatter formatter = new BinaryFormatter();
