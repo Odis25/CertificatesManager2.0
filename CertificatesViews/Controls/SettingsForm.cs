@@ -24,6 +24,7 @@ namespace CertificatesViews.Controls
             tbCertificatesFolderPath.Text = Settings.Instance.CertificatesFolderPath;
             tbCertificatesZipFolderPath.Text = Settings.Instance.CertificatesZipFolderPath;
             chbAutoPreviewEnabled.Checked = Settings.Instance.AutoPreviewEnabled;
+            chbSaveUserCredential.Checked = Settings.Instance.SaveUserCredential;
             // Отключаем кнопку сохранения
             btSaveChanges.Enabled = false;
         }
@@ -41,6 +42,7 @@ namespace CertificatesViews.Controls
             Settings.Instance.CertificatesFolderPath = tbCertificatesFolderPath.Text;
             Settings.Instance.CertificatesZipFolderPath = tbCertificatesZipFolderPath.Text;
             Settings.Instance.AutoPreviewEnabled = chbAutoPreviewEnabled.Checked;
+            Settings.Instance.SaveUserCredential = chbSaveUserCredential.Checked;
 
             // Сериализуем класс настроек
             Settings.Serialize();

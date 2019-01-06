@@ -27,6 +27,7 @@ namespace CertificatesDesktop
                     ex = ex.InnerException;
                 }
             }
+
             MessageBox.Show(e.ExceptionObject.ToString(), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             //StringBuilder builder = new StringBuilder();
             //builder.AppendLine(ex.Message);

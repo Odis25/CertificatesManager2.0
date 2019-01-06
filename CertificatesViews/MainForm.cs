@@ -1,4 +1,5 @@
 ﻿using CertificatesModel;
+using CertificatesModel.Authorization;
 using CertificatesModel.Interfaces;
 using CertificatesViews.Controls;
 using CertificatesViews.Factories;

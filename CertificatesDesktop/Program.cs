@@ -31,10 +31,11 @@ namespace CertificatesDesktop
             Application.SetCompatibleTextRenderingDefault(false);
 
             // Авторизация пользователя
-            if (!Authorization.GetUserCredential())
+            if (!Authorization.UserLogined)
             {
                 var loginForm = new ContainerForm<User>();
                 loginForm.Build(Authorization.CurrentUser);
+
                 loginForm.Changed += delegate { loginForm.DialogResult = DialogResult.OK; };
                 if (loginForm.ShowDialog() == DialogResult.Cancel)
                     Environment.Exit(0);

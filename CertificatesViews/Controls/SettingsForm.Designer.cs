@@ -29,8 +29,11 @@
         private void InitializeComponent()
         {
             this.gbPaths = new System.Windows.Forms.GroupBox();
+            this.btChangeCertificatesZipFolderPath = new System.Windows.Forms.Button();
             this.button3 = new System.Windows.Forms.Button();
+            this.btChangeCertificatesFolderPath = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
+            this.btChangeDataBasePath = new System.Windows.Forms.Button();
             this.tbCertificatesZipFolderPath = new System.Windows.Forms.TextBox();
             this.tbCertificatesFolderPath = new System.Windows.Forms.TextBox();
             this.tbDataBasePath = new System.Windows.Forms.TextBox();
@@ -41,9 +44,7 @@
             this.chbAutoPreviewEnabled = new System.Windows.Forms.CheckBox();
             this.btCancel = new System.Windows.Forms.Button();
             this.btSaveChanges = new System.Windows.Forms.Button();
-            this.btChangeCertificatesZipFolderPath = new System.Windows.Forms.Button();
-            this.btChangeCertificatesFolderPath = new System.Windows.Forms.Button();
-            this.btChangeDataBasePath = new System.Windows.Forms.Button();
+            this.chbSaveUserCredential = new System.Windows.Forms.CheckBox();
             this.gbPaths.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
@@ -69,6 +70,17 @@
             this.gbPaths.TabStop = false;
             this.gbPaths.Text = "Пути";
             // 
+            // btChangeCertificatesZipFolderPath
+            // 
+            this.btChangeCertificatesZipFolderPath.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.btChangeCertificatesZipFolderPath.Image = global::CertificatesViews.Properties.Resources.folder_explore;
+            this.btChangeCertificatesZipFolderPath.Location = new System.Drawing.Point(537, 88);
+            this.btChangeCertificatesZipFolderPath.Name = "btChangeCertificatesZipFolderPath";
+            this.btChangeCertificatesZipFolderPath.Size = new System.Drawing.Size(33, 23);
+            this.btChangeCertificatesZipFolderPath.TabIndex = 2;
+            this.btChangeCertificatesZipFolderPath.UseVisualStyleBackColor = true;
+            this.btChangeCertificatesZipFolderPath.Click += new System.EventHandler(this.btChangeCertificatesZipFolderPath_Click);
+            // 
             // button3
             // 
             this.button3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
@@ -79,6 +91,17 @@
             this.button3.Text = "...";
             this.button3.UseVisualStyleBackColor = true;
             // 
+            // btChangeCertificatesFolderPath
+            // 
+            this.btChangeCertificatesFolderPath.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.btChangeCertificatesFolderPath.Image = global::CertificatesViews.Properties.Resources.folder_explore;
+            this.btChangeCertificatesFolderPath.Location = new System.Drawing.Point(537, 60);
+            this.btChangeCertificatesFolderPath.Name = "btChangeCertificatesFolderPath";
+            this.btChangeCertificatesFolderPath.Size = new System.Drawing.Size(33, 23);
+            this.btChangeCertificatesFolderPath.TabIndex = 2;
+            this.btChangeCertificatesFolderPath.UseVisualStyleBackColor = true;
+            this.btChangeCertificatesFolderPath.Click += new System.EventHandler(this.btChangeCertificatesFolderPath_Click);
+            // 
             // button2
             // 
             this.button2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
@@ -88,6 +111,17 @@
             this.button2.TabIndex = 2;
             this.button2.Text = "...";
             this.button2.UseVisualStyleBackColor = true;
+            // 
+            // btChangeDataBasePath
+            // 
+            this.btChangeDataBasePath.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.btChangeDataBasePath.Image = global::CertificatesViews.Properties.Resources.folder_explore;
+            this.btChangeDataBasePath.Location = new System.Drawing.Point(537, 32);
+            this.btChangeDataBasePath.Name = "btChangeDataBasePath";
+            this.btChangeDataBasePath.Size = new System.Drawing.Size(33, 23);
+            this.btChangeDataBasePath.TabIndex = 2;
+            this.btChangeDataBasePath.UseVisualStyleBackColor = true;
+            this.btChangeDataBasePath.Click += new System.EventHandler(this.btChangeDataBasePath_Click);
             // 
             // tbCertificatesZipFolderPath
             // 
@@ -142,6 +176,7 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.chbSaveUserCredential);
             this.groupBox1.Controls.Add(this.chbAutoPreviewEnabled);
             this.groupBox1.Dock = System.Windows.Forms.DockStyle.Top;
             this.groupBox1.Location = new System.Drawing.Point(0, 129);
@@ -155,7 +190,7 @@
             // 
             this.chbAutoPreviewEnabled.AutoSize = true;
             this.chbAutoPreviewEnabled.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.chbAutoPreviewEnabled.Location = new System.Drawing.Point(16, 45);
+            this.chbAutoPreviewEnabled.Location = new System.Drawing.Point(16, 30);
             this.chbAutoPreviewEnabled.Name = "chbAutoPreviewEnabled";
             this.chbAutoPreviewEnabled.Size = new System.Drawing.Size(262, 17);
             this.chbAutoPreviewEnabled.TabIndex = 1;
@@ -187,38 +222,17 @@
             this.btSaveChanges.UseVisualStyleBackColor = true;
             this.btSaveChanges.Click += new System.EventHandler(this.btSaveChanges_Click);
             // 
-            // btChangeCertificatesZipFolderPath
+            // chbSaveUserCredential
             // 
-            this.btChangeCertificatesZipFolderPath.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.btChangeCertificatesZipFolderPath.Image = global::CertificatesViews.Properties.Resources.folder_explore;
-            this.btChangeCertificatesZipFolderPath.Location = new System.Drawing.Point(537, 88);
-            this.btChangeCertificatesZipFolderPath.Name = "btChangeCertificatesZipFolderPath";
-            this.btChangeCertificatesZipFolderPath.Size = new System.Drawing.Size(33, 23);
-            this.btChangeCertificatesZipFolderPath.TabIndex = 2;
-            this.btChangeCertificatesZipFolderPath.UseVisualStyleBackColor = true;
-            this.btChangeCertificatesZipFolderPath.Click += new System.EventHandler(this.btChangeCertificatesZipFolderPath_Click);
-            // 
-            // btChangeCertificatesFolderPath
-            // 
-            this.btChangeCertificatesFolderPath.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.btChangeCertificatesFolderPath.Image = global::CertificatesViews.Properties.Resources.folder_explore;
-            this.btChangeCertificatesFolderPath.Location = new System.Drawing.Point(537, 60);
-            this.btChangeCertificatesFolderPath.Name = "btChangeCertificatesFolderPath";
-            this.btChangeCertificatesFolderPath.Size = new System.Drawing.Size(33, 23);
-            this.btChangeCertificatesFolderPath.TabIndex = 2;
-            this.btChangeCertificatesFolderPath.UseVisualStyleBackColor = true;
-            this.btChangeCertificatesFolderPath.Click += new System.EventHandler(this.btChangeCertificatesFolderPath_Click);
-            // 
-            // btChangeDataBasePath
-            // 
-            this.btChangeDataBasePath.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.btChangeDataBasePath.Image = global::CertificatesViews.Properties.Resources.folder_explore;
-            this.btChangeDataBasePath.Location = new System.Drawing.Point(537, 32);
-            this.btChangeDataBasePath.Name = "btChangeDataBasePath";
-            this.btChangeDataBasePath.Size = new System.Drawing.Size(33, 23);
-            this.btChangeDataBasePath.TabIndex = 2;
-            this.btChangeDataBasePath.UseVisualStyleBackColor = true;
-            this.btChangeDataBasePath.Click += new System.EventHandler(this.btChangeDataBasePath_Click);
+            this.chbSaveUserCredential.AutoSize = true;
+            this.chbSaveUserCredential.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.chbSaveUserCredential.Location = new System.Drawing.Point(16, 53);
+            this.chbSaveUserCredential.Name = "chbSaveUserCredential";
+            this.chbSaveUserCredential.Size = new System.Drawing.Size(231, 17);
+            this.chbSaveUserCredential.TabIndex = 1;
+            this.chbSaveUserCredential.Text = "Автоматическая авторизация при входе";
+            this.chbSaveUserCredential.UseVisualStyleBackColor = true;
+            this.chbSaveUserCredential.CheckedChanged += new System.EventHandler(this.SettingsChanged);
             // 
             // SettingsForm
             // 
@@ -261,5 +275,6 @@
         private System.Windows.Forms.Button btCancel;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.CheckBox chbAutoPreviewEnabled;
+        private System.Windows.Forms.CheckBox chbSaveUserCredential;
     }
 }

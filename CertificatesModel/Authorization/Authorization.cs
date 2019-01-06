@@ -13,49 +13,86 @@ namespace CertificatesModel.Authorization
 {
     public static class Authorization
     {
+        private static List<string> _hosts;
+
         /// <summary>
         /// Текущий пользователь
         /// </summary>
         public static User CurrentUser { get; set; }
 
-        public static void Authorizate()
+        // Используются сетевые пути
+        public static bool HasNetworkPaths
         {
-            var dbPath = Settings.Instance.DataBasePath;
-            var certFolder = Settings.Instance.CertificatesFolderPath;
-            var zipCertFolder = Settings.Instance.CertificatesZipFolderPath;
-
-            List<string> hosts = new List<string>();
-
-            // Проверяем, являются ли пути к базе и каталогам свидетельств сетевыми
-            if (dbPath.StartsWith(@"\\"))
-                hosts.Add(dbPath.TrimStart('\\').Split('\\')[0]);
-
-            if (certFolder.StartsWith(@"\\"))
-                hosts.Add(certFolder.TrimStart('\\').Split('\\')[0]);
-
-            if (zipCertFolder.StartsWith(@"\\"))
-                hosts.Add(zipCertFolder.TrimStart('\\').Split('\\')[0]);
-
-            // Создаем подключения к хостам для всех сетевых путей
-
-            foreach (var host in hosts.Distinct())
+            get
             {
-                TryToConnect(host);
+                var dbPath = Settings.Instance.DataBasePath;
+                var certFolder = Settings.Instance.CertificatesFolderPath;
+                var zipCertFolder = Settings.Instance.CertificatesZipFolderPath;
+
+                _hosts = new List<string>();
+
+                // Проверяем, являются ли пути к базе и каталогам свидетельств сетевыми
+                if (dbPath.StartsWith(@"\\"))
+                    _hosts.Add(dbPath.TrimStart('\\').Split('\\')[0]);
+
+                if (certFolder.StartsWith(@"\\"))
+                    _hosts.Add(certFolder.TrimStart('\\').Split('\\')[0]);
+
+                if (zipCertFolder.StartsWith(@"\\"))
+                    _hosts.Add(zipCertFolder.TrimStart('\\').Split('\\')[0]);
+
+                if (_hosts.Count > 0)
+                    return true;
+                else
+                    return false;
+            }
+
+        }
+
+        // Пользователь успешно авторизован
+        public static bool UserLogined { get; set; }
+
+        static Authorization()
+        {
+            if (HasNetworkPaths)
+            {
+                CurrentUser = GetUserCredential();
+                LogIn(CurrentUser);
+
+            }
+            else
+            {
+                CurrentUser = new User();
+                UserLogined = true;
             }
         }
 
-        private static void TryToConnect(string host)
+        public static void LogIn(User user)
         {
+
+            // Создаем подключения к хостам для всех сетевых путей
+            foreach (var host in _hosts.Distinct())
+            {
+                ConnectToHost(host, user);
+            }
+            CurrentUser = user;
+            UserLogined = true;
+        }
+
+        private static void ConnectToHost(string host, User user)
+        {
+
             // Получение IP адреса удаленного компьютера
             string hostIPAddress = Dns.GetHostAddresses(host)[0].ToString();
             // Получение имя удаленного компьютера
             string hostName = Dns.GetHostEntry(host).HostName.Split('.')[0];
 
+
             var cred = new NetworkCredential()
             {
-                UserName = CurrentUser.Login,
-                Password = CurrentUser.Password,
-                Domain = "Incomsystem.ru"
+                UserName = user.Login,
+                Password = user.Password,
+                Domain = user.Domain
             };
 
             // авторизация в домене по имени удаленной машины
@@ -65,24 +102,37 @@ namespace CertificatesModel.Authorization
         }
 
         // Получаем логин/пароль пользователя, если они были сохранены
-        public static bool GetUserCredential()
+        public static User GetUserCredential()
         {
-            var result = false;
-
-            if (Settings.Instance.SaveUserCredential)
+            User currentUser = new User();
+            try
             {
-                using (FileStream fs = new FileStream("credentials.dat", FileMode.Open))
+                if (Settings.Instance.SaveUserCredential)
                 {
-                    BinaryFormatter formatter = new BinaryFormatter();
-                    var user = (User)formatter.Deserialize(fs);
-                    CurrentUser.Login = user.Login;
-                    CurrentUser.Password = SecureIt.DecryptString(user.Password).ToInsecureString();
+                    using (FileStream fs = new FileStream("credentials.dat", FileMode.Open))
+                    {
+                        BinaryFormatter formatter = new BinaryFormatter();
+                        var user = (User)formatter.Deserialize(fs);
+                        currentUser.Login = user.Login;
+                        currentUser.Password = SecureIt.DecryptString(user.Password).ToInsecureString();
+                    }
                 }
-
-                result = true;
+                return currentUser;
             }
+            catch
+            {
+                return currentUser;
+            }
+        }
 
-            return result;
+
+        public static void SaveUserCredential(User user)
+        {
+            using (FileStream fs = new FileStream("credentials.dat", FileMode.Create))
+            {
+                BinaryFormatter formatter = new BinaryFormatter();
+                formatter.Serialize(fs, user);
+            }
         }
     }
 }

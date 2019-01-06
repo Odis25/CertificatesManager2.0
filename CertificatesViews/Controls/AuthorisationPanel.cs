@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using CertificatesViews.Interfaces;
 using CertificatesModel.Authorization;
+using CertificatesModel;
 
 namespace CertificatesViews.Controls
 {
@@ -29,6 +30,8 @@ namespace CertificatesViews.Controls
             parent.Text = "Авторизация";
             parent.Height = 210;
             parent.Width = 310;
+
+            chbSaveCredentials.Checked = Settings.Instance.SaveUserCredential;
         }
 
         // Попытка авторизации пользователя
@@ -55,8 +58,12 @@ namespace CertificatesViews.Controls
         {
             try
             {
-                Authorization.CurrentUser = user;
-                Authorization.Authorizate();
+                Authorization.LogIn(user);
+                if (chbSaveCredentials.Checked)
+                {
+                    Settings.Instance.SaveUserCredential = true;
+                    Authorization.SaveUserCredential(user);
+                }
                 Changed(this, EventArgs.Empty);
             }
             catch (Win32Exception ex)

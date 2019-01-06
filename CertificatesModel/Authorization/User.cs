@@ -11,7 +11,10 @@ namespace CertificatesModel.Authorization
     {
         public User()
         {
+            Login = "";
+            Password = "";
             Domain = "Incomsystem.ru";
+            SecurityLevel = AccessRights.User;
         }
 
         public int Id { get; set; }
