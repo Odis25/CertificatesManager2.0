@@ -35,14 +35,11 @@ namespace CertificatesModel
 
             try
             {
-                var decryptedData = ProtectedData.Unprotect(
-                    Convert.FromBase64String(encryptedData),
-                    entropy,
-                    DataProtectionScope.CurrentUser);
+                var decryptedData = ProtectedData.Unprotect(Convert.FromBase64String(encryptedData), entropy, DataProtectionScope.CurrentUser);
 
                 return Encoding.Unicode.GetString(decryptedData).ToSecureString();
             }
-            catch
+            catch(Exception e)
             {
                 return new SecureString();
             }

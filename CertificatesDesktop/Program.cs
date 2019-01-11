@@ -9,6 +9,7 @@ using CertificatesModel.Authorization;
 using CertificatesViews.Interfaces;
 using CertificatesViews;
 using CertificatesViews.Controls;
+using CertificatesModel.UsersModel;
 
 namespace CertificatesDesktop
 {
@@ -24,8 +25,9 @@ namespace CertificatesDesktop
             ExceptionHandler.Init();
 
             // Создаем фабрики
-            AppLocator.GuiFactory = new GuiFactory();
-            AppLocator.ModelFactory = new ModelFactory();
+            CertificatesViews.Factories.AppLocator.GuiFactory = new GuiFactory();
+            CertificatesViews.Factories.AppLocator.ModelFactory = new ModelFactory();
+            CertificatesModel.Factories.AppLocator.ModelFactory = new ModelFactory();
 
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);

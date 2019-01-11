@@ -12,27 +12,27 @@ namespace CertificatesModel
         // Получить весь список свидетельств
         public Certificates GetAllCertificates()
         {
-            Certificates result = Repository.GetAllCertificatesFromDB();
+            Certificates result = CertificatesRepository.GetAllCertificatesFromDB();
             return result;
         }
 
         // Получить список свидетельств соответствующих шаблону
         public Certificates GetCertificatesBySearchPattern(CertificateEventArgs pattern)
         {
-            Certificates result = Repository.GetAllCertificatesFromDB(pattern);
+            Certificates result = CertificatesRepository.GetAllCertificatesFromDB(pattern);
             return result;
         }
 
         // Изменить свидетельство согласно шаблону
         public void EditCertificate(CertificateEventArgs pattern)
         {
-            Repository.EditCertificate(pattern);
+            CertificatesRepository.EditCertificate(pattern);
         }
 
         // Удалить выбранные свидетельства
         public void DeleteCertificates(params int[] idList)
         {
-            Repository.DeleteCertificates(idList);
+            CertificatesRepository.DeleteCertificates(idList);
         }
     }
 }

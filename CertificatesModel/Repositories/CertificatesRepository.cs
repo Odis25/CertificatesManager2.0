@@ -10,17 +10,13 @@ using System.Threading.Tasks;
 
 namespace CertificatesModel.Repositories
 {
-    public static class Repository
+    public static class CertificatesRepository
     {
         static string _connectionString;
 
-        static Certificates Certificates
-        {
-            get;
-            set;
-        }
+        static Certificates Certificates { get; set; }
 
-        static Repository()
+        static CertificatesRepository()
         {
             _connectionString = $"Data Source = {Settings.Instance.DataBasePath}";
         }
@@ -35,8 +31,7 @@ namespace CertificatesModel.Repositories
             catch(SqlCeException e)
             {
                 return new Certificates();
-            }
-            
+            }           
         }
 
         // Получаем список свидетельств соответствующих поисковому шаблону

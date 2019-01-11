@@ -10,6 +10,7 @@ using System.Windows.Forms;
 using CertificatesViews.Interfaces;
 using CertificatesModel.Authorization;
 using CertificatesModel;
+using CertificatesModel.UsersModel;
 
 namespace CertificatesViews.Controls
 {
@@ -60,6 +61,7 @@ namespace CertificatesViews.Controls
             {               
                 Settings.Instance.SaveUserCredential = chbSaveCredentials.Checked;
                 Authorization.LogIn(user);
+                Settings.Serialize();
                 Changed(this, EventArgs.Empty);
             }
             catch (Win32Exception ex)

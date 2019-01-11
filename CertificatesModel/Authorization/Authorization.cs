@@ -1,6 +1,10 @@
-﻿using System;
+﻿using CertificatesModel.Factories;
+using CertificatesModel.Interfaces;
+using CertificatesModel.UsersModel;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.DirectoryServices.AccountManagement;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -46,7 +50,6 @@ namespace CertificatesModel.Authorization
                 else
                     return false;
             }
-
         }
 
         // Пользователь успешно авторизован
@@ -57,7 +60,12 @@ namespace CertificatesModel.Authorization
             if (HasNetworkPaths)
             {
                 CurrentUser = GetUserCredential();
-                LogIn(CurrentUser);
+                try
+                {
+                    LogIn(CurrentUser);
+                }
+                catch(Exception e)
+                { }
             }
             else
             {
@@ -66,15 +74,26 @@ namespace CertificatesModel.Authorization
             }
         }
 
+        // Авторизация пользователя
         public static void LogIn(User user)
         {
-            // Создаем подключения к хостам для всех сетевых путей
-            foreach (var host in _hosts.Distinct())
+            // Проверяем корректность логина/пароля
+            bool valid = false;
+            using (PrincipalContext context = new PrincipalContext(ContextType.Domain, user.Domain))
             {
-                ConnectToHost(host, user);
+                valid = context.ValidateCredentials(user.Login, user.Password);
             }
+
+            // Имперсонация пользователя
+            bool impersonationResult = Validate.ImpersonateUser(user.Login, user.Domain, user.Password);
+
+            // Сохраняем учетные данные пользователя, если он того желает
             if (Settings.Instance.SaveUserCredential)
                 SaveUserCredential(user);
+
+            // Получаем права пользователя
+            var userList = AppLocator.ModelFactory.Create<IUsersLoader>();
+            user.UserRights = userList.GetUserData(user.Login).UserRights;
 
             CurrentUser = user;
             UserLogined = true;
@@ -124,6 +143,7 @@ namespace CertificatesModel.Authorization
             }
         }
 
+        // Сохраняем учетные данные пользователя
         public static void SaveUserCredential(User user)
         {
             var securedPassword = user.Password.ToSecureString().EncryptString();

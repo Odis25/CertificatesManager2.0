@@ -64,17 +64,17 @@ namespace CertificatesViews.Controls
         private string CheckPath(string path)
         {
             // Если путь сетевой
-            if (path.StartsWith(@"\\"))
-            {
-                // Получаем имя или IP адресс хоста
-                var nameOrIP = path.TrimStart('\\').Split('\\')[0];
-                // Получение имя удаленного компьютера
-                var hostName = Dns.GetHostEntry(nameOrIP).HostName.Split('.')[0];
-                // Формируем новый путь к файлу
-                var newPath = path.Replace(nameOrIP, hostName);
+            //if (path.StartsWith(@"\\"))
+            //{
+            //    // Получаем имя или IP адресс хоста
+            //    var nameOrIP = path.TrimStart('\\').Split('\\')[0];
+            //    // Получение имя удаленного компьютера
+            //    var hostName = Dns.GetHostEntry(nameOrIP).HostName.Split('.')[0];
+            //    // Формируем новый путь к файлу
+            //    var newPath = path.Replace(nameOrIP, hostName);
 
-                return newPath;
-            }
+            //    return newPath;
+            //}
 
             return path;
         }

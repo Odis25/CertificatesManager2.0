@@ -29,13 +29,18 @@
         private void InitializeComponent()
         {
             this.tsMain = new System.Windows.Forms.ToolStrip();
+            this.stMain = new System.Windows.Forms.StatusStrip();
+            this.tsCurrentUser = new System.Windows.Forms.ToolStripStatusLabel();
+            this.tsUserLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.btAdd = new System.Windows.Forms.ToolStripButton();
             this.btRemove = new System.Windows.Forms.ToolStripButton();
             this.btSettings = new System.Windows.Forms.ToolStripButton();
             this.btChangeUser = new System.Windows.Forms.ToolStripButton();
             this.btUsersEdit = new System.Windows.Forms.ToolStripButton();
-            this.statusStrip1 = new System.Windows.Forms.StatusStrip();
+            this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
+            this.tsUserRights = new System.Windows.Forms.ToolStripStatusLabel();
             this.tsMain.SuspendLayout();
+            this.stMain.SuspendLayout();
             this.SuspendLayout();
             // 
             // tsMain
@@ -51,6 +56,34 @@
             this.tsMain.Size = new System.Drawing.Size(1034, 25);
             this.tsMain.TabIndex = 0;
             this.tsMain.Text = "tsMain";
+            // 
+            // stMain
+            // 
+            this.stMain.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.tsUserRights,
+            this.toolStripStatusLabel1,
+            this.tsCurrentUser,
+            this.tsUserLabel});
+            this.stMain.Location = new System.Drawing.Point(0, 600);
+            this.stMain.Name = "stMain";
+            this.stMain.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.stMain.Size = new System.Drawing.Size(1034, 22);
+            this.stMain.TabIndex = 1;
+            this.stMain.Text = "sbMain";
+            // 
+            // tsCurrentUser
+            // 
+            this.tsCurrentUser.Name = "tsCurrentUser";
+            this.tsCurrentUser.Size = new System.Drawing.Size(32, 17);
+            this.tsCurrentUser.Text = "Вася";
+            // 
+            // tsUserLabel
+            // 
+            this.tsUserLabel.Image = global::CertificatesViews.Properties.Resources.user;
+            this.tsUserLabel.Name = "tsUserLabel";
+            this.tsUserLabel.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.tsUserLabel.Size = new System.Drawing.Size(154, 17);
+            this.tsUserLabel.Text = "Текущий пользователь:";
             // 
             // btAdd
             // 
@@ -107,20 +140,25 @@
             this.btUsersEdit.ToolTipText = "Управление правами доступа пользователей";
             this.btUsersEdit.Click += new System.EventHandler(this.btUsersEdit_Click);
             // 
-            // statusStrip1
+            // toolStripStatusLabel1
             // 
-            this.statusStrip1.Location = new System.Drawing.Point(0, 600);
-            this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(1034, 22);
-            this.statusStrip1.TabIndex = 1;
-            this.statusStrip1.Text = "statusStrip1";
+            this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
+            this.toolStripStatusLabel1.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.toolStripStatusLabel1.Size = new System.Drawing.Size(46, 17);
+            this.toolStripStatusLabel1.Text = "Статус:";
+            // 
+            // tsUserRights
+            // 
+            this.tsUserRights.Name = "tsUserRights";
+            this.tsUserRights.Size = new System.Drawing.Size(84, 17);
+            this.tsUserRights.Text = "Пользователь";
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1034, 622);
-            this.Controls.Add(this.statusStrip1);
+            this.Controls.Add(this.stMain);
             this.Controls.Add(this.tsMain);
             this.DoubleBuffered = true;
             this.Name = "MainForm";
@@ -128,6 +166,8 @@
             this.Text = "Certificates Manager 2.0";
             this.tsMain.ResumeLayout(false);
             this.tsMain.PerformLayout();
+            this.stMain.ResumeLayout(false);
+            this.stMain.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -141,7 +181,11 @@
         private System.Windows.Forms.ToolStripButton btSettings;
         private System.Windows.Forms.ToolStripButton btChangeUser;
         private System.Windows.Forms.ToolStripButton btUsersEdit;
-        private System.Windows.Forms.StatusStrip statusStrip1;
+        private System.Windows.Forms.StatusStrip stMain;
+        private System.Windows.Forms.ToolStripStatusLabel tsCurrentUser;
+        private System.Windows.Forms.ToolStripStatusLabel tsUserLabel;
+        private System.Windows.Forms.ToolStripStatusLabel tsUserRights;
+        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel1;
     }
 }
 

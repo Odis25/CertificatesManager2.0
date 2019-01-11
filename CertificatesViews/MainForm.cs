@@ -1,6 +1,7 @@
 ﻿using CertificatesModel;
 using CertificatesModel.Authorization;
 using CertificatesModel.Interfaces;
+using CertificatesModel.UsersModel;
 using CertificatesViews.Controls;
 using CertificatesViews.Factories;
 using CertificatesViews.Interfaces;
@@ -20,6 +21,7 @@ namespace CertificatesViews
     {
         private Certificates _certificates;
         private Control _currentControl;
+        private User _currentUser;
 
         public event EventHandler Changed = delegate { };
 
@@ -49,6 +51,25 @@ namespace CertificatesViews
         {
             var loader = AppLocator.ModelFactory.Create<ICertificatesLoader>();
             _certificates = loader.GetAllCertificates();
+
+            _currentUser = Authorization.CurrentUser;
+            tsCurrentUser.Text = _currentUser.Login;
+
+            switch (_currentUser.UserRights.ToLower())
+            {
+                case "administrator":
+                    tsUserRights.Text = "Администратор";
+                    break;
+                case "metrolog":
+                case "metrologist":
+                    tsUserRights.Text = "Метролог";
+                    break;
+                default:
+                    tsUserRights.Text = "Пользователь";
+                    break;
+            }
+            //tsUserRights.Text = _currentUser.UserRights;
+
             var view= AppLocator.GuiFactory.Create<IView<Certificates>>();
             view.Changed += delegate 
             {
