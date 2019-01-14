@@ -1,22 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Drawing;
-using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using CertificatesViews.Interfaces;
+﻿using CertificatesModel;
 using CertificatesModel.Authorization;
-using CertificatesModel;
 using CertificatesModel.UsersModel;
+using CertificatesViews.Interfaces;
+using System;
+using System.Windows.Forms;
 
 namespace CertificatesViews.Controls
 {
-    public partial class AuthorisationPanel : UserControl, IView<User>
+    public partial class AuthorizationPanel : UserControl, IView<User>
     {
-        public AuthorisationPanel()
+        public AuthorizationPanel()
         {
             InitializeComponent();
         }
@@ -29,33 +22,35 @@ namespace CertificatesViews.Controls
             parent.FormBorderStyle = FormBorderStyle.FixedToolWindow;
             parent.Dock = DockStyle.Fill;
             parent.Text = "Авторизация";
-            parent.Height = 210;
-            parent.Width = 310;
+            parent.Height = 240;
+            parent.Width = 480;
+            parent.AcceptButton = btLogin;
+            parent.CancelButton = btCancel;
 
             chbSaveCredentials.Checked = Settings.Instance.SaveUserCredential;
+            tbDomain.Text = obj.Domain;
+            tbLogin.Text = obj.Login;
+            tbPassword.Text = obj.Password;
         }
 
         // Попытка авторизации пользователя
-        private void btOk_Click(object sender, EventArgs e)
+        private void btLogin_Click(object sender, EventArgs e)
         {
-            var user = new User()
-            {
-                Login = tbLogin.Text,
-                Password = tbPassword.Text
-            };
+            var user = new User() { Login = tbLogin.Text, Password = tbPassword.Text };
 
             // Попытка авторизации
-            TryToAuthorisate(user);
+            TryToAuthorizate(user);
         }
 
         // Выход из приложения
         private void btCancel_Click(object sender, EventArgs e)
         {
-            Application.Exit();
+            var parent = Parent as Form;
+            parent.Close();
         }
 
         // Попытка авторизации
-        private void TryToAuthorisate(User user)
+        private void TryToAuthorizate(User user)
         {
             Settings.Instance.SaveUserCredential = chbSaveCredentials.Checked;
             Authorization.LogIn(user);

@@ -29,16 +29,15 @@
         private void InitializeComponent()
         {
             this.tsMain = new System.Windows.Forms.ToolStrip();
-            this.stMain = new System.Windows.Forms.StatusStrip();
-            this.tsCurrentUser = new System.Windows.Forms.ToolStripStatusLabel();
-            this.tsUserLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.btAdd = new System.Windows.Forms.ToolStripButton();
-            this.btRemove = new System.Windows.Forms.ToolStripButton();
             this.btSettings = new System.Windows.Forms.ToolStripButton();
             this.btChangeUser = new System.Windows.Forms.ToolStripButton();
             this.btUsersEdit = new System.Windows.Forms.ToolStripButton();
-            this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
+            this.stMain = new System.Windows.Forms.StatusStrip();
             this.tsUserRights = new System.Windows.Forms.ToolStripStatusLabel();
+            this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
+            this.tsCurrentUser = new System.Windows.Forms.ToolStripStatusLabel();
+            this.tsUserLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.tsMain.SuspendLayout();
             this.stMain.SuspendLayout();
             this.SuspendLayout();
@@ -47,7 +46,6 @@
             // 
             this.tsMain.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.btAdd,
-            this.btRemove,
             this.btSettings,
             this.btChangeUser,
             this.btUsersEdit});
@@ -56,6 +54,50 @@
             this.tsMain.Size = new System.Drawing.Size(1034, 25);
             this.tsMain.TabIndex = 0;
             this.tsMain.Text = "tsMain";
+            // 
+            // btAdd
+            // 
+            this.btAdd.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btAdd.Image = global::CertificatesViews.Properties.Resources.add;
+            this.btAdd.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btAdd.Name = "btAdd";
+            this.btAdd.Size = new System.Drawing.Size(23, 22);
+            this.btAdd.Text = "AddNewCertificate";
+            this.btAdd.ToolTipText = "Добавить новое свидетельство";
+            this.btAdd.Click += new System.EventHandler(this.btAdd_Click);
+            // 
+            // btSettings
+            // 
+            this.btSettings.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btSettings.Image = global::CertificatesViews.Properties.Resources.cog;
+            this.btSettings.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btSettings.Name = "btSettings";
+            this.btSettings.Size = new System.Drawing.Size(23, 22);
+            this.btSettings.Text = "Settings";
+            this.btSettings.ToolTipText = "Настройки приложения";
+            this.btSettings.Click += new System.EventHandler(this.btSettings_Click);
+            // 
+            // btChangeUser
+            // 
+            this.btChangeUser.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btChangeUser.Image = global::CertificatesViews.Properties.Resources.key;
+            this.btChangeUser.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btChangeUser.Name = "btChangeUser";
+            this.btChangeUser.Size = new System.Drawing.Size(23, 22);
+            this.btChangeUser.Text = "ChangeUser";
+            this.btChangeUser.ToolTipText = "Смена пользователя";
+            this.btChangeUser.Click += new System.EventHandler(this.btChangeUser_Click);
+            // 
+            // btUsersEdit
+            // 
+            this.btUsersEdit.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btUsersEdit.Image = global::CertificatesViews.Properties.Resources.group_edit;
+            this.btUsersEdit.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btUsersEdit.Name = "btUsersEdit";
+            this.btUsersEdit.Size = new System.Drawing.Size(23, 22);
+            this.btUsersEdit.Text = "UsersEdit";
+            this.btUsersEdit.ToolTipText = "Управление правами доступа пользователей";
+            this.btUsersEdit.Click += new System.EventHandler(this.btUsersEdit_Click);
             // 
             // stMain
             // 
@@ -71,6 +113,19 @@
             this.stMain.TabIndex = 1;
             this.stMain.Text = "sbMain";
             // 
+            // tsUserRights
+            // 
+            this.tsUserRights.Name = "tsUserRights";
+            this.tsUserRights.Size = new System.Drawing.Size(84, 17);
+            this.tsUserRights.Text = "Пользователь";
+            // 
+            // toolStripStatusLabel1
+            // 
+            this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
+            this.toolStripStatusLabel1.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.toolStripStatusLabel1.Size = new System.Drawing.Size(46, 17);
+            this.toolStripStatusLabel1.Text = "Статус:";
+            // 
             // tsCurrentUser
             // 
             this.tsCurrentUser.Name = "tsCurrentUser";
@@ -84,74 +139,6 @@
             this.tsUserLabel.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.tsUserLabel.Size = new System.Drawing.Size(154, 17);
             this.tsUserLabel.Text = "Текущий пользователь:";
-            // 
-            // btAdd
-            // 
-            this.btAdd.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btAdd.Image = global::CertificatesViews.Properties.Resources.add;
-            this.btAdd.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btAdd.Name = "btAdd";
-            this.btAdd.Size = new System.Drawing.Size(23, 22);
-            this.btAdd.Text = "toolStripButton1";
-            this.btAdd.ToolTipText = "Добавить новое свидетельство";
-            this.btAdd.Click += new System.EventHandler(this.btAdd_Click);
-            // 
-            // btRemove
-            // 
-            this.btRemove.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btRemove.Image = global::CertificatesViews.Properties.Resources.cross;
-            this.btRemove.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btRemove.Name = "btRemove";
-            this.btRemove.Size = new System.Drawing.Size(23, 22);
-            this.btRemove.Text = "toolStripButton2";
-            this.btRemove.ToolTipText = "Удалить выбранные свидетельства";
-            this.btRemove.Click += new System.EventHandler(this.btRemove_Click);
-            // 
-            // btSettings
-            // 
-            this.btSettings.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btSettings.Image = global::CertificatesViews.Properties.Resources.cog;
-            this.btSettings.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btSettings.Name = "btSettings";
-            this.btSettings.Size = new System.Drawing.Size(23, 22);
-            this.btSettings.Text = "toolStripButton1";
-            this.btSettings.ToolTipText = "Настройки приложения";
-            this.btSettings.Click += new System.EventHandler(this.btSettings_Click);
-            // 
-            // btChangeUser
-            // 
-            this.btChangeUser.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btChangeUser.Image = global::CertificatesViews.Properties.Resources.key;
-            this.btChangeUser.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btChangeUser.Name = "btChangeUser";
-            this.btChangeUser.Size = new System.Drawing.Size(23, 22);
-            this.btChangeUser.Text = "toolStripButton1";
-            this.btChangeUser.ToolTipText = "Смена пользователя";
-            this.btChangeUser.Click += new System.EventHandler(this.btChangeUser_Click);
-            // 
-            // btUsersEdit
-            // 
-            this.btUsersEdit.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btUsersEdit.Image = global::CertificatesViews.Properties.Resources.group_edit;
-            this.btUsersEdit.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btUsersEdit.Name = "btUsersEdit";
-            this.btUsersEdit.Size = new System.Drawing.Size(23, 22);
-            this.btUsersEdit.Text = "toolStripButton2";
-            this.btUsersEdit.ToolTipText = "Управление правами доступа пользователей";
-            this.btUsersEdit.Click += new System.EventHandler(this.btUsersEdit_Click);
-            // 
-            // toolStripStatusLabel1
-            // 
-            this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
-            this.toolStripStatusLabel1.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.toolStripStatusLabel1.Size = new System.Drawing.Size(46, 17);
-            this.toolStripStatusLabel1.Text = "Статус:";
-            // 
-            // tsUserRights
-            // 
-            this.tsUserRights.Name = "tsUserRights";
-            this.tsUserRights.Size = new System.Drawing.Size(84, 17);
-            this.tsUserRights.Text = "Пользователь";
             // 
             // MainForm
             // 
@@ -177,7 +164,6 @@
 
         private System.Windows.Forms.ToolStrip tsMain;
         private System.Windows.Forms.ToolStripButton btAdd;
-        private System.Windows.Forms.ToolStripButton btRemove;
         private System.Windows.Forms.ToolStripButton btSettings;
         private System.Windows.Forms.ToolStripButton btChangeUser;
         private System.Windows.Forms.ToolStripButton btUsersEdit;

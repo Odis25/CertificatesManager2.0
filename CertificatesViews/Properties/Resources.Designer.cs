@@ -243,6 +243,16 @@ namespace CertificatesViews.Properties {
         /// <summary>
         ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap key_PNG1181 {
+            get {
+                object obj = ResourceManager.GetObject("key_PNG1181", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap page_edit {
             get {
                 object obj = ResourceManager.GetObject("page_edit", resourceCulture);

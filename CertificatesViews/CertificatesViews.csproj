@@ -65,11 +65,11 @@
     <Compile Include="Components\TreeViewModified.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Controls\AuthorisationPanel.cs">
+    <Compile Include="Controls\AuthorizationPanel.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Controls\AuthorisationPanel.Designer.cs">
-      <DependentUpon>AuthorisationPanel.cs</DependentUpon>
+    <Compile Include="Controls\AuthorizationPanel.Designer.cs">
+      <DependentUpon>AuthorizationPanel.cs</DependentUpon>
     </Compile>
     <Compile Include="Controls\CertificatePropertiesPanel.cs">
       <SubType>UserControl</SubType>
@@ -119,8 +119,8 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Controls\AuthorisationPanel.resx">
-      <DependentUpon>AuthorisationPanel.cs</DependentUpon>
+    <EmbeddedResource Include="Controls\AuthorizationPanel.resx">
+      <DependentUpon>AuthorizationPanel.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\CertificatePropertiesPanel.resx">
       <DependentUpon>CertificatePropertiesPanel.cs</DependentUpon>
@@ -232,6 +232,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\user.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\key_PNG1181.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

@@ -117,7 +117,7 @@ namespace CertificatesModel.Authorization
         }
 
         // Сохраняем учетные данные пользователя
-        public static void SaveUserCredential(User user)
+        private static void SaveUserCredential(User user)
         {
             var userPassword = user.Password;
             var securedPassword = user.Password.ToSecureString().EncryptString();

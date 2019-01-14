@@ -39,6 +39,30 @@ namespace CertificatesViews
             }
         }
 
+        private User CurrentUser
+        {
+            set
+            {
+                _currentUser = value;
+                tsCurrentUser.Text = _currentUser.Login;
+
+                switch (_currentUser.UserRights.ToLower())
+                {
+                    case "administrator":
+                        tsUserRights.Text = "Администратор";
+                        break;
+                    case "metrolog":
+                    case "metrologist":
+                        tsUserRights.Text = "Метролог";
+                        break;
+                    default:
+                        tsUserRights.Text = "Пользователь";
+                        break;
+                }
+            }
+            get { return Authorization.CurrentUser; }
+        }
+
         public MainForm()
         {
             InitializeComponent();
@@ -49,29 +73,15 @@ namespace CertificatesViews
         // Дерево свидетельств
         private void BuildTreeView()
         {
+            // Получаем список свидетельств
             var loader = AppLocator.ModelFactory.Create<ICertificatesLoader>();
             _certificates = loader.GetAllCertificates();
 
-            _currentUser = Authorization.CurrentUser;
-            tsCurrentUser.Text = _currentUser.Login;
+            // Устанавливаем текущего пользователя
+            CurrentUser = Authorization.CurrentUser;
 
-            switch (_currentUser.UserRights.ToLower())
-            {
-                case "administrator":
-                    tsUserRights.Text = "Администратор";
-                    break;
-                case "metrolog":
-                case "metrologist":
-                    tsUserRights.Text = "Метролог";
-                    break;
-                default:
-                    tsUserRights.Text = "Пользователь";
-                    break;
-            }
-            //tsUserRights.Text = _currentUser.UserRights;
-
-            var view= AppLocator.GuiFactory.Create<IView<Certificates>>();
-            view.Changed += delegate 
+            var view = AppLocator.GuiFactory.Create<IView<Certificates>>();
+            view.Changed += delegate
             {
                 _certificates = loader.GetAllCertificates();
                 view.Build(_certificates);
@@ -83,11 +93,6 @@ namespace CertificatesViews
         private void btAdd_Click(object sender, EventArgs e)
         {
             OpenAddingNewCertificateForm();
-        }
-
-        private void btRemove_Click(object sender, EventArgs e)
-        {
-            RemoveCertificateFromDataBase();
         }
 
         private void btSettings_Click(object sender, EventArgs e)
@@ -111,11 +116,6 @@ namespace CertificatesViews
 
         }
 
-        private void RemoveCertificateFromDataBase()
-        {
-
-        }
-
         private void OpenSettingsForm()
         {
             var form = new SettingsForm();
@@ -131,7 +131,10 @@ namespace CertificatesViews
 
         private void OpenUserChangingForm()
         {
-
+            var form = new ContainerForm<User>();
+            form.Build(CurrentUser);
+            form.Changed += delegate { form.DialogResult = DialogResult.OK; CurrentUser = Authorization.CurrentUser; };
+            form.ShowDialog();
         }
 
         private void OpenUserAccountsEditForm()
