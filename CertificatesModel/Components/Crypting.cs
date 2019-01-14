@@ -18,10 +18,7 @@ namespace CertificatesModel
                 return null;
             }
 
-            var encryptedData = ProtectedData.Protect(
-                Encoding.Unicode.GetBytes(input.ToInsecureString()),
-                entropy,
-                DataProtectionScope.CurrentUser);
+            var encryptedData = ProtectedData.Protect(Encoding.Unicode.GetBytes(input.ToInsecureString()), entropy, DataProtectionScope.CurrentUser);
 
             return Convert.ToBase64String(encryptedData);
         }
@@ -60,6 +57,7 @@ namespace CertificatesModel
             }
 
             secure.MakeReadOnly();
+
             return secure;
         }
 

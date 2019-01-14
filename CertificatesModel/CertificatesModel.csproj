@@ -72,7 +72,6 @@
     <Compile Include="Authorization\AccessRights.cs" />
     <Compile Include="Authorization\Authorization.cs" />
     <Compile Include="Authorization\NativeMethods.cs" />
-    <Compile Include="Authorization\NetworkConnection.cs" />
     <Compile Include="Authorization\Validate.cs" />
     <Compile Include="Domain\UsersModel\User.cs" />
     <Compile Include="Components\CertificateEventArgs.cs" />

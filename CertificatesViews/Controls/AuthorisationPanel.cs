@@ -57,31 +57,12 @@ namespace CertificatesViews.Controls
         // Попытка авторизации
         private void TryToAuthorisate(User user)
         {
-            try
-            {               
-                Settings.Instance.SaveUserCredential = chbSaveCredentials.Checked;
-                Authorization.LogIn(user);
-                Settings.Serialize();
-                Changed(this, EventArgs.Empty);
-            }
-            catch (Win32Exception ex)
-            {
-                switch (ex.NativeErrorCode)
-                {
-                    case 11001:
-                    case 11004:
-                        MessageBox.Show($"Не удалось подключиться к сети INCOMSYSTEM.{Environment.NewLine}Убедитесь, что ваш компьютер подключен к сети и повторите попытку.", "Ошибка авторизации", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                        break;
-                    case 1326:
-                        MessageBox.Show("Некорректный логин или пароль", "Ошибка авторизации", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                        break;
-                    case 2202:
-                        MessageBox.Show("Некорректный логин", "Ошибка авторизации", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                        break;
-                    default:
-                        throw ex;
-                }
-            }
+            Settings.Instance.SaveUserCredential = chbSaveCredentials.Checked;
+            Authorization.LogIn(user);
+            if (!Authorization.UserLogined)
+                return;
+            Settings.Serialize();
+            Changed(this, EventArgs.Empty);
         }
     }
 }

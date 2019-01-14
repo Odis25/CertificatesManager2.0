@@ -17,8 +17,6 @@ namespace CertificatesModel.Authorization
 {
     public static class Authorization
     {
-        private static List<string> _hosts;
-
         /// <summary>
         /// Текущий пользователь
         /// </summary>
@@ -33,28 +31,18 @@ namespace CertificatesModel.Authorization
                 var certFolder = Settings.Instance.CertificatesFolderPath;
                 var zipCertFolder = Settings.Instance.CertificatesZipFolderPath;
 
-                _hosts = new List<string>();
-
                 // Проверяем, являются ли пути к базе и каталогам свидетельств сетевыми
-                if (dbPath.StartsWith(@"\\"))
-                    _hosts.Add(dbPath.TrimStart('\\').Split('\\')[0]);
-
-                if (certFolder.StartsWith(@"\\"))
-                    _hosts.Add(certFolder.TrimStart('\\').Split('\\')[0]);
-
-                if (zipCertFolder.StartsWith(@"\\"))
-                    _hosts.Add(zipCertFolder.TrimStart('\\').Split('\\')[0]);
-
-                if (_hosts.Any())
+                if (dbPath.StartsWith(@"\\") || certFolder.StartsWith(@"\\") || zipCertFolder.StartsWith(@"\\"))
                     return true;
                 else
                     return false;
             }
         }
 
-        // Пользователь успешно авторизован
+        // Пользователь авторизован
         public static bool UserLogined { get; set; }
 
+        // Конструктор
         static Authorization()
         {
             if (HasNetworkPaths)
@@ -83,40 +71,25 @@ namespace CertificatesModel.Authorization
             {
                 valid = context.ValidateCredentials(user.Login, user.Password);
             }
-
-            // Имперсонация пользователя
-            bool impersonationResult = Validate.ImpersonateUser(user.Login, user.Domain, user.Password);
-
+            // Если учетные данные пользователя не верны
+            if (!valid)
+            {
+                UserLogined = false;
+                throw new Exception("Некорректный логин или пароль");
+            }
             // Сохраняем учетные данные пользователя, если он того желает
             if (Settings.Instance.SaveUserCredential)
                 SaveUserCredential(user);
 
+            // Имперсонация пользователя
+            bool impersonationResult = Validate.ImpersonateUser(user.Login, user.Domain, user.Password);
+            
             // Получаем права пользователя
             var userList = AppLocator.ModelFactory.Create<IUsersLoader>();
             user.UserRights = userList.GetUserData(user.Login).UserRights;
 
             CurrentUser = user;
             UserLogined = true;
-        }
-
-        private static void ConnectToHost(string host, User user)
-        {
-            // Получение IP адреса удаленного компьютера
-            string hostIPAddress = Dns.GetHostAddresses(host)[0].ToString();
-            // Получение имя удаленного компьютера
-            string hostName = Dns.GetHostEntry(host).HostName.Split('.')[0];
-
-            var cred = new NetworkCredential()
-            {
-                UserName = user.Login,
-                Password = user.Password,
-                Domain = user.Domain
-            };
-
-            // авторизация в домене по имени удаленной машины
-            var connectionTry = new NetworkConnection(@"\\" + hostName, cred);
-            // авторизация в домене по IP адресу удаленной машины
-            var connectionTry2 = new NetworkConnection(@"\\" + hostIPAddress, cred);
         }
 
         // Получаем логин/пароль пользователя, если они были сохранены
@@ -146,6 +119,7 @@ namespace CertificatesModel.Authorization
         // Сохраняем учетные данные пользователя
         public static void SaveUserCredential(User user)
         {
+            var userPassword = user.Password;
             var securedPassword = user.Password.ToSecureString().EncryptString();
             user.Password = securedPassword;
 
@@ -154,6 +128,7 @@ namespace CertificatesModel.Authorization
                 BinaryFormatter formatter = new BinaryFormatter();
                 formatter.Serialize(fs, user);
             }
+            user.Password = userPassword;
         }
     }
 }
