@@ -33,7 +33,7 @@ namespace CertificatesViews.Controls
 
         public event EventHandler Changed;
 
-        async public void Build(string obj)
+        async public void Build(string path)
         {
             // Отменяем предыдущий запрос
             if (_cts != null)
@@ -46,11 +46,14 @@ namespace CertificatesViews.Controls
             // Получаем токен отмены
             var token = _cts.Token;
 
-            var path = CheckPath(obj);
-
             // Если файл доступен, то асинхронно загружаем его в панель предпросмотра
             if (File.Exists(path))
-                Viewer.Document = await Task.Run(() => { return PdfDocument.Load(path); }, token);
+            {
+                if (Viewer.Document != null)
+                    Viewer.Document.Dispose();
+                // Viewer.Document = await Task.Run(() => { return PdfDocument.Load(path); }, token);
+                Viewer.Document = PdfDocument.Load(path);
+            }
             else
                 //Иначе оставляем панель пустой
                 Viewer.Document = null;
@@ -58,25 +61,6 @@ namespace CertificatesViews.Controls
             // Убираем CancellationTokenSource текущего метода из переменной класса
             if (_cts == cts)
                 _cts = null;
-        }
-
-        // Если путь содержит IP Address, то заменяем его на UNC
-        private string CheckPath(string path)
-        {
-            // Если путь сетевой
-            //if (path.StartsWith(@"\\"))
-            //{
-            //    // Получаем имя или IP адресс хоста
-            //    var nameOrIP = path.TrimStart('\\').Split('\\')[0];
-            //    // Получение имя удаленного компьютера
-            //    var hostName = Dns.GetHostEntry(nameOrIP).HostName.Split('.')[0];
-            //    // Формируем новый путь к файлу
-            //    var newPath = path.Replace(nameOrIP, hostName);
-
-            //    return newPath;
-            //}
-
-            return path;
         }
     }
 }

@@ -49,14 +49,17 @@ namespace CertificatesViews
                 switch (_currentUser.UserRights.ToLower())
                 {
                     case "administrator":
-                        tsUserRights.Text = "Администратор";
+                        tsUserRights.Text = "(Администратор)";
+                        tsUserLabel.Image = Properties.Resources.user_suit;
                         break;
                     case "metrolog":
                     case "metrologist":
-                        tsUserRights.Text = "Метролог";
+                        tsUserRights.Text = "(Метролог)";
+                        tsUserLabel.Image = Properties.Resources.user_gray;
                         break;
                     default:
-                        tsUserRights.Text = "Пользователь";
+                        tsUserRights.Text = "(Пользователь)";
+                        tsUserLabel.Image = Properties.Resources.user;
                         break;
                 }
             }

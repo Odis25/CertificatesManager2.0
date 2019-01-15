@@ -82,14 +82,18 @@ namespace CertificatesViews.Controls
         private void btEdit_Click(object sender, EventArgs e)
         {
             // Запускаем событие на изменение
-            Edited(sender, MakeEditPattern()); 
+            var question = MessageBox.Show("Вы уверены что хотите внести изменения в выбранные свидетельства?", "Внесение изменений", MessageBoxButtons.OKCancel, MessageBoxIcon.Question);
+            if (question == DialogResult.OK)
+                Edited(sender, MakeEditPattern());
         }
 
         // Удалить выбранные свидетельства
         private void btDelete_Click(object sender, EventArgs e)
         {
             // Запускаем событие на удаление
-            Deleted(this, EventArgs.Empty); 
+            var question = MessageBox.Show("Вы уверены что хотите удалить выбранные свидетельства?", "Удаление", MessageBoxButtons.OKCancel, MessageBoxIcon.Question);
+            if (question == DialogResult.OK)
+                Deleted(this, EventArgs.Empty);
         }
 
         // Создаем аргументы событию поиска
@@ -117,7 +121,7 @@ namespace CertificatesViews.Controls
         private CertificateEventArgs MakeEditPattern()
         {
             CertificateEventArgs pattern = new CertificateEventArgs();
-            
+
             // Немодифицируемые параметры
             pattern.ID = (int)numId.Value;
 
@@ -141,6 +145,6 @@ namespace CertificatesViews.Controls
 
             // Возвращаем сформированный шаблон
             return pattern;
-        }        
+        }
     }
 }

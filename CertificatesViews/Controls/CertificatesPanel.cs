@@ -179,30 +179,33 @@ namespace CertificatesViews.Controls
         // Выбор свидетельства в ListView
         private void lvCertificatesDetails_ItemSelectionChanged(object sender, ListViewItemSelectionChangedEventArgs e)
         {
-            // Если список свидетельств пуст, выходим из метода
-            if (_certificates == null || _certificates.ListOfCertificates.Count == 0)
-                return;
+            if (e.IsSelected)
+            {
+                // Если список свидетельств пуст, выходим из метода
+                if (_certificates == null || _certificates.ListOfCertificates.Count == 0)
+                    return;
 
-            // ID выбранного свидетельства
-            var id = int.Parse(e.Item.SubItems[0].Text);
+                // ID выбранного свидетельства
+                var id = int.Parse(e.Item.SubItems[0].Text);
 
-            // Выбираем свидетельство
-            var certificate = _certificates.ListOfCertificates.Where(x => x.ID == id).ToList()[0];
+                // Выбираем свидетельство
+                var certificate = _certificates.ListOfCertificates.Where(x => x.ID == id).ToList()[0];
 
-            // Панель свойств
-            var view = PropertyControl as IView<Certificate>;
+                // Панель свойств
+                var view = PropertyControl as IView<Certificate>;
 
-            // Выводим данные о свидетельстве на панель свойств
-            view.Build(certificate);
+                // Выводим данные о свидетельстве на панель свойств
+                view.Build(certificate);
 
-            // Выводим страницы документа на панель предпросмотра
-            if (Settings.Instance.AutoPreviewEnabled)
-                (PreviewControl as IView<string>).Build(certificate.CertificatePath);
+                // Выводим страницы документа на панель предпросмотра
+                if (Settings.Instance.AutoPreviewEnabled)
+                    (PreviewControl as IView<string>).Build(certificate.CertificatePath);
+            }
         }
 
         // Меняем состояние CheckBox у TreeView
         private void tvCertificates_AfterCheck(object sender, TreeViewEventArgs e)
-        {
+        {     
             // The code only executes if the user caused the checked state to change.
             if (e.Action != TreeViewAction.Unknown)
             {

@@ -9,6 +9,7 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Runtime.Serialization.Formatters.Binary;
+using System.Security.Principal;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -52,7 +53,7 @@ namespace CertificatesModel.Authorization
                 {
                     LogIn(CurrentUser);
                 }
-                catch(Exception e)
+                catch (Exception e)
                 { }
             }
             else
@@ -60,6 +61,7 @@ namespace CertificatesModel.Authorization
                 CurrentUser = new User();
                 UserLogined = true;
             }
+
         }
 
         // Авторизация пользователя
@@ -83,7 +85,7 @@ namespace CertificatesModel.Authorization
 
             // Имперсонация пользователя
             bool impersonationResult = Validate.ImpersonateUser(user.Login, user.Domain, user.Password);
-            
+
             // Получаем права пользователя
             var userList = AppLocator.ModelFactory.Create<IUsersLoader>();
             user.UserRights = userList.GetUserData(user.Login).UserRights;

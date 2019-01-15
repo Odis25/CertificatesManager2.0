@@ -43,6 +43,9 @@
             this.chbYear = new System.Windows.Forms.CheckBox();
             this.chbId = new System.Windows.Forms.CheckBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.btDelete = new System.Windows.Forms.Button();
+            this.btEdit = new System.Windows.Forms.Button();
+            this.btSearch = new System.Windows.Forms.Button();
             this.dpCalibrationExpireDate = new System.Windows.Forms.DateTimePicker();
             this.dpCalibrationDate = new System.Windows.Forms.DateTimePicker();
             this.cbVerificationMethod = new System.Windows.Forms.ComboBox();
@@ -69,9 +72,6 @@
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
-            this.btDelete = new System.Windows.Forms.Button();
-            this.btEdit = new System.Windows.Forms.Button();
-            this.btSearch = new System.Windows.Forms.Button();
             this.groupBox2.SuspendLayout();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numYear)).BeginInit();
@@ -302,12 +302,48 @@
             this.groupBox1.Controls.Add(this.label2);
             this.groupBox1.Controls.Add(this.label1);
             this.groupBox1.Dock = System.Windows.Forms.DockStyle.Right;
-            this.groupBox1.Location = new System.Drawing.Point(0, 0);
+            this.groupBox1.Location = new System.Drawing.Point(3, 0);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(386, 410);
+            this.groupBox1.Size = new System.Drawing.Size(383, 410);
             this.groupBox1.TabIndex = 2;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Инфо";
+            // 
+            // btDelete
+            // 
+            this.btDelete.Image = global::CertificatesViews.Properties.Resources.cross1;
+            this.btDelete.Location = new System.Drawing.Point(250, 369);
+            this.btDelete.Name = "btDelete";
+            this.btDelete.Size = new System.Drawing.Size(84, 29);
+            this.btDelete.TabIndex = 14;
+            this.btDelete.Text = "Удалить";
+            this.btDelete.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.btDelete.UseVisualStyleBackColor = true;
+            this.btDelete.Click += new System.EventHandler(this.btDelete_Click);
+            // 
+            // btEdit
+            // 
+            this.btEdit.Image = global::CertificatesViews.Properties.Resources.page_edit;
+            this.btEdit.Location = new System.Drawing.Point(150, 369);
+            this.btEdit.Name = "btEdit";
+            this.btEdit.Size = new System.Drawing.Size(84, 29);
+            this.btEdit.TabIndex = 14;
+            this.btEdit.Text = "Изменить";
+            this.btEdit.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.btEdit.UseVisualStyleBackColor = true;
+            this.btEdit.Click += new System.EventHandler(this.btEdit_Click);
+            // 
+            // btSearch
+            // 
+            this.btSearch.Image = global::CertificatesViews.Properties.Resources.zoom;
+            this.btSearch.Location = new System.Drawing.Point(50, 369);
+            this.btSearch.Name = "btSearch";
+            this.btSearch.Size = new System.Drawing.Size(84, 29);
+            this.btSearch.TabIndex = 14;
+            this.btSearch.Text = "Найти";
+            this.btSearch.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.btSearch.UseVisualStyleBackColor = true;
+            this.btSearch.Click += new System.EventHandler(this.btSearch_Click);
             // 
             // dpCalibrationExpireDate
             // 
@@ -534,42 +570,6 @@
             this.label1.Size = new System.Drawing.Size(18, 13);
             this.label1.TabIndex = 0;
             this.label1.Text = "ID";
-            // 
-            // btDelete
-            // 
-            this.btDelete.Image = global::CertificatesViews.Properties.Resources.cross1;
-            this.btDelete.Location = new System.Drawing.Point(250, 369);
-            this.btDelete.Name = "btDelete";
-            this.btDelete.Size = new System.Drawing.Size(84, 29);
-            this.btDelete.TabIndex = 14;
-            this.btDelete.Text = "Удалить";
-            this.btDelete.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.btDelete.UseVisualStyleBackColor = true;
-            this.btDelete.Click += new System.EventHandler(this.btDelete_Click);
-            // 
-            // btEdit
-            // 
-            this.btEdit.Image = global::CertificatesViews.Properties.Resources.page_edit;
-            this.btEdit.Location = new System.Drawing.Point(150, 369);
-            this.btEdit.Name = "btEdit";
-            this.btEdit.Size = new System.Drawing.Size(84, 29);
-            this.btEdit.TabIndex = 14;
-            this.btEdit.Text = "Изменить";
-            this.btEdit.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.btEdit.UseVisualStyleBackColor = true;
-            this.btEdit.Click += new System.EventHandler(this.btEdit_Click);
-            // 
-            // btSearch
-            // 
-            this.btSearch.Image = global::CertificatesViews.Properties.Resources.zoom;
-            this.btSearch.Location = new System.Drawing.Point(50, 369);
-            this.btSearch.Name = "btSearch";
-            this.btSearch.Size = new System.Drawing.Size(84, 29);
-            this.btSearch.TabIndex = 14;
-            this.btSearch.Text = "Найти";
-            this.btSearch.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.btSearch.UseVisualStyleBackColor = true;
-            this.btSearch.Click += new System.EventHandler(this.btSearch_Click);
             // 
             // CertificatePropertiesPanel
             // 

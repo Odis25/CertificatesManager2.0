@@ -11,10 +11,12 @@ namespace CertificatesModel.Authorization
 {
     public static class Validate
     {
+        public static WindowsImpersonationContext _scontext;
+
         public static bool ImpersonateUser(string username, string domain, string password)
         {
             IntPtr token;
-
+            var _token = WindowsIdentity.GetCurrent().Token;
             bool success = NativeMethods.LogonUser(
                 username,
                 domain,
@@ -23,12 +25,11 @@ namespace CertificatesModel.Authorization
                 NativeMethods.LogonProvider.Default,
                 out token);
 
-            var res = Marshal.GetLastWin32Error();
-
             if (token != IntPtr.Zero)
             {
                 WindowsIdentity identity = new WindowsIdentity(token);
-                var _scontext = identity.Impersonate();
+                _scontext = identity.Impersonate();
+                           
             }
             
             return success;

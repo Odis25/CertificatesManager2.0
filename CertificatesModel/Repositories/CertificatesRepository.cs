@@ -84,6 +84,7 @@ namespace CertificatesModel.Repositories
             using (CertificateDbContext db = new CertificateDbContext())
             {
                 var certificate = db.Certificates.Where(x => x.ID == pattern.ID).First();
+                certificate.Year = (int)pattern.Year;
                 certificate.CertificateNumber = pattern.CertificateNumber;
                 certificate.RegisterNumber = pattern.RegisterNumber;
                 certificate.VerificationMethod = pattern.VerificationMethod;

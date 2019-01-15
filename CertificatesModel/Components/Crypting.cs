@@ -18,8 +18,8 @@ namespace CertificatesModel
                 return null;
             }
 
-            var encryptedData = ProtectedData.Protect(Encoding.Unicode.GetBytes(input.ToInsecureString()), entropy, DataProtectionScope.CurrentUser);
-
+            var encryptedData = ProtectedData.Protect(Encoding.Unicode.GetBytes(input.ToInsecureString()), entropy, DataProtectionScope.LocalMachine);
+           
             return Convert.ToBase64String(encryptedData);
         }
 
@@ -32,7 +32,7 @@ namespace CertificatesModel
 
             try
             {
-                var decryptedData = ProtectedData.Unprotect(Convert.FromBase64String(encryptedData), entropy, DataProtectionScope.CurrentUser);
+                var decryptedData = ProtectedData.Unprotect(Convert.FromBase64String(encryptedData), entropy, DataProtectionScope.LocalMachine);
 
                 return Encoding.Unicode.GetString(decryptedData).ToSecureString();
             }

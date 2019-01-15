@@ -33,6 +33,7 @@ namespace CertificatesDesktop
             Application.SetCompatibleTextRenderingDefault(false);
 
             // Авторизация пользователя
+           
             if (!Authorization.UserLogined)
             {
                 var loginForm = new ContainerForm<User>();
