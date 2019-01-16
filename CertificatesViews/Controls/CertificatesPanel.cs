@@ -205,7 +205,7 @@ namespace CertificatesViews.Controls
 
         // Меняем состояние CheckBox у TreeView
         private void tvCertificates_AfterCheck(object sender, TreeViewEventArgs e)
-        {     
+        {
             // The code only executes if the user caused the checked state to change.
             if (e.Action != TreeViewAction.Unknown)
             {
@@ -217,7 +217,7 @@ namespace CertificatesViews.Controls
                 }
                 tvCertificates.SerializeNodeState();
             }
-            
+
         }
 
         // Рекурсивное обновление дочерних узлов
@@ -319,8 +319,7 @@ namespace CertificatesViews.Controls
                     });
 
             // Если пришел запрос отмены выполнения операции, то прекращаем выполнение
-            if (token.IsCancellationRequested)
-                token.ThrowIfCancellationRequested();
+            token.ThrowIfCancellationRequested();
 
             // Возвращаем результат
             return item;

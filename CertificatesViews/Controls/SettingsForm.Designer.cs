@@ -41,10 +41,10 @@
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.chbSaveUserCredential = new System.Windows.Forms.CheckBox();
             this.chbAutoPreviewEnabled = new System.Windows.Forms.CheckBox();
             this.btCancel = new System.Windows.Forms.Button();
             this.btSaveChanges = new System.Windows.Forms.Button();
-            this.chbSaveUserCredential = new System.Windows.Forms.CheckBox();
             this.gbPaths.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
@@ -62,10 +62,9 @@
             this.gbPaths.Controls.Add(this.label3);
             this.gbPaths.Controls.Add(this.label2);
             this.gbPaths.Controls.Add(this.label1);
-            this.gbPaths.Dock = System.Windows.Forms.DockStyle.Top;
-            this.gbPaths.Location = new System.Drawing.Point(0, 0);
+            this.gbPaths.Location = new System.Drawing.Point(6, 0);
             this.gbPaths.Name = "gbPaths";
-            this.gbPaths.Size = new System.Drawing.Size(582, 129);
+            this.gbPaths.Size = new System.Drawing.Size(570, 129);
             this.gbPaths.TabIndex = 0;
             this.gbPaths.TabStop = false;
             this.gbPaths.Text = "Пути";
@@ -178,13 +177,24 @@
             // 
             this.groupBox1.Controls.Add(this.chbSaveUserCredential);
             this.groupBox1.Controls.Add(this.chbAutoPreviewEnabled);
-            this.groupBox1.Dock = System.Windows.Forms.DockStyle.Top;
-            this.groupBox1.Location = new System.Drawing.Point(0, 129);
+            this.groupBox1.Location = new System.Drawing.Point(6, 129);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(582, 100);
+            this.groupBox1.Size = new System.Drawing.Size(570, 100);
             this.groupBox1.TabIndex = 3;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Другие настройки";
+            // 
+            // chbSaveUserCredential
+            // 
+            this.chbSaveUserCredential.AutoSize = true;
+            this.chbSaveUserCredential.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.chbSaveUserCredential.Location = new System.Drawing.Point(16, 53);
+            this.chbSaveUserCredential.Name = "chbSaveUserCredential";
+            this.chbSaveUserCredential.Size = new System.Drawing.Size(231, 17);
+            this.chbSaveUserCredential.TabIndex = 1;
+            this.chbSaveUserCredential.Text = "Автоматическая авторизация при входе";
+            this.chbSaveUserCredential.UseVisualStyleBackColor = true;
+            this.chbSaveUserCredential.CheckedChanged += new System.EventHandler(this.SettingsChanged);
             // 
             // chbAutoPreviewEnabled
             // 
@@ -221,18 +231,6 @@
             this.btSaveChanges.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btSaveChanges.UseVisualStyleBackColor = true;
             this.btSaveChanges.Click += new System.EventHandler(this.btSaveChanges_Click);
-            // 
-            // chbSaveUserCredential
-            // 
-            this.chbSaveUserCredential.AutoSize = true;
-            this.chbSaveUserCredential.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.chbSaveUserCredential.Location = new System.Drawing.Point(16, 53);
-            this.chbSaveUserCredential.Name = "chbSaveUserCredential";
-            this.chbSaveUserCredential.Size = new System.Drawing.Size(231, 17);
-            this.chbSaveUserCredential.TabIndex = 1;
-            this.chbSaveUserCredential.Text = "Автоматическая авторизация при входе";
-            this.chbSaveUserCredential.UseVisualStyleBackColor = true;
-            this.chbSaveUserCredential.CheckedChanged += new System.EventHandler(this.SettingsChanged);
             // 
             // SettingsForm
             // 

@@ -1,8 +1,11 @@
 ﻿using CertificatesViews.Interfaces;
 using PdfiumViewer;
 using System;
+using System.Linq;
+using System.Collections;
+using System.Collections.Generic;
+
 using System.IO;
-using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -31,10 +34,11 @@ namespace CertificatesViews.Controls
             Viewer.Dock = DockStyle.Fill;
         }
 
-        public event EventHandler Changed;
+        public event EventHandler Changed = delegate { };
 
         async public void Build(string path)
         {
+
             // Отменяем предыдущий запрос
             if (_cts != null)
                 _cts.Cancel();
@@ -46,13 +50,35 @@ namespace CertificatesViews.Controls
             // Получаем токен отмены
             var token = _cts.Token;
 
+            // Удаляем picturebox с предыдущего вызова и очищаем память
+            foreach (PictureBox c in panPages.Controls.OfType<PictureBox>())
+            { c.Dispose(); GC.Collect(); }
+
+            Viewer.Document?.Dispose();
+
             // Если файл доступен, то асинхронно загружаем его в панель предпросмотра
             if (File.Exists(path))
             {
-                if (Viewer.Document != null)
-                    Viewer.Document.Dispose();
-                // Viewer.Document = await Task.Run(() => { return PdfDocument.Load(path); }, token);
-                Viewer.Document = PdfDocument.Load(path);
+                // Если свидетельство в формате pdf-документа
+                if (path.EndsWith(".pdf", true, null))
+                {
+                    Viewer.Visible = true;
+
+                    //TODO: Разобраться с утечкой памяти и асинхронностью
+                    Viewer.Document = await Task.Run(() => { return PdfDocument.Load(path); }, token);
+                    //Viewer.Document = await Task.Run(() => { return PdfDocument.Load(new MemoryStream(File.ReadAllBytes(path))); });
+                }
+                // Если свидетельство в формате изображения
+                else
+                {
+                    Viewer.Visible = false;
+                    // Создаем новый picturebox и загружаем туда изображение 
+                    var pb = new PictureBox();
+                    pb.SizeMode = PictureBoxSizeMode.Zoom;
+                    pb.Load(path);
+                    panPages.Controls.Add(pb);
+                    pb.Dock = DockStyle.Fill;
+                }
             }
             else
                 //Иначе оставляем панель пустой
