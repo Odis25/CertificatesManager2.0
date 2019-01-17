@@ -269,6 +269,7 @@ namespace CertificatesViews.Controls
             foreach (var cert in certificates)
             {
                 var item = await Task<ListViewItem>.Factory.StartNew(() => GetCertificateDetails(cert, token), token);
+
                 if (item != null)
                     lvCertificatesDetails.Items.Add(item);
             }

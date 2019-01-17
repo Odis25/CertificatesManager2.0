@@ -12,6 +12,7 @@ using System.Windows.Forms;
 
 namespace CertificatesViews.Controls
 {
+    
     public partial class PreviewPanel : UserControl, IView<string>
     {
         PdfViewer _viewer;
@@ -23,6 +24,7 @@ namespace CertificatesViews.Controls
             {
                 if (_viewer == null)
                     _viewer = new PdfViewer();
+                
                 return _viewer;
             }
         }
@@ -54,8 +56,6 @@ namespace CertificatesViews.Controls
             foreach (PictureBox c in panPages.Controls.OfType<PictureBox>())
             { c.Dispose(); GC.Collect(); }
 
-            Viewer.Document?.Dispose();
-
             // Если файл доступен, то асинхронно загружаем его в панель предпросмотра
             if (File.Exists(path))
             {
@@ -65,8 +65,9 @@ namespace CertificatesViews.Controls
                     Viewer.Visible = true;
 
                     //TODO: Разобраться с утечкой памяти и асинхронностью
-                    Viewer.Document = await Task.Run(() => { return PdfDocument.Load(path); }, token);
-                    //Viewer.Document = await Task.Run(() => { return PdfDocument.Load(new MemoryStream(File.ReadAllBytes(path))); });
+                    await Task.Delay(100, token);
+                    Viewer.Document?.Dispose();
+                    Viewer.Document = PdfDocument.Load(path);
                 }
                 // Если свидетельство в формате изображения
                 else
