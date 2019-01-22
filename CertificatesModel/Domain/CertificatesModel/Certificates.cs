@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,78 +7,138 @@ using System.Threading.Tasks;
 
 namespace CertificatesModel
 {
-
-    public class Certificates : List<Year>
+    public class Certificates : IEnumerable<Certificate>
     {
-        private List<Certificate> _certificates;
-        private List<Contract> _contracts;
+        protected List<Certificate> _list;
 
-        /// <summary>
-        /// Добавить список свидетельств
-        /// </summary>
-        /// <param name="certificates"></param>
-        public void AddRange(IEnumerable<Certificate> certificates)
+        public Certificates()
         {
-            _certificates = certificates.ToList();
-
-            _contracts = new List<Contract>();
-
-            // Создаем и заполняем список годов
-            var sortedYearsList = certificates.Select(x => x.Year).Distinct().OrderBy(x => x).ToList();
-
-            sortedYearsList.ForEach((y) => { this.Add(new Year() { YearOfCreationCertificate = y }); });
-
-            // Создаем и заполняем список договоров для каждого года
-            foreach (Year year in this)
-            {
-                // Список Номеров договора конкретного года
-                var contractsOfCurrentYear = certificates
-                    .Where(x => x.Year == year.YearOfCreationCertificate)
-                    .Select(x => x.ContractNumber)
-                    .Distinct()
-                    .OrderBy(x => x)
-                    .ToList();
-
-                contractsOfCurrentYear.ForEach((c) => { year.Add(new Contract() { ContractNumber = c }); });
-
-                // Создаем и заполняем список свидетельств для каждого договора
-                foreach (Contract contract in year)
-                {
-                    contract.AddRange(certificates.Where(x => x.Year == year.YearOfCreationCertificate && x.ContractNumber == contract.ContractNumber));
-                }
-
-                _contracts.AddRange(year);
-            }
+            _list = new List<Certificate>();
         }
 
-        // Преобразование List<Certificate> в Certificates
+        public Certificates(List<Certificate> list)
+        {
+            _list = list;
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetEnumerator();
+        }
+
+        public IEnumerator<Certificate> GetEnumerator()
+        {
+            return _list.GetEnumerator();
+        }
+
+        // Преобразование из List<Certificate> к типу Certificates
         public static explicit operator Certificates(List<Certificate> v)
-        {
-            var result = new Certificates();
-            result.AddRange(v);
-            return result;
+        {            
+            return new Certificates(v);
         }
 
-        /// <summary>
-        /// Список договоров
-        /// </summary>
-        public List<Contract> ListOfContracts
+        // Удаление элемента
+        internal void Remove(Certificate cert)
         {
-            get
-            {
-                return _contracts ?? new List<Contract>();
-            }
+            _list.Remove(cert);
         }
 
-        /// <summary>
-        /// Список свидетельств
-        /// </summary>
-        public List<Certificate> ListOfCertificates
+        // Поиск элемента
+        internal Certificate Find(Predicate<Certificate> p)
         {
-            get
-            {
-                return _certificates ?? new List<Certificate>();
-            }
+            return _list.Find(p);
+        }
+
+        // Добавление элемента
+        internal void Add(Certificate item)
+        {
+            _list.Add(item);
+        }
+
+        // Добавление коллекции элементов
+        internal void AddRange(IEnumerable<Certificate> collection)
+        {
+            _list.AddRange(collection);
         }
     }
+
+    //public class Certificates : List<Year>
+    //{
+    //    private List<Certificate> _certificates;
+    //    private List<Contract> _contracts;
+
+    //    /// <summary>
+    //    /// Добавить список свидетельств
+    //    /// </summary>
+    //    /// <param name="certificates"></param>
+    //    public void AddRange(IEnumerable<Certificate> certificates)
+    //    {
+    //        _certificates = certificates.ToList();
+
+    //        _contracts = new List<Contract>();
+
+    //        // Создаем и заполняем список годов
+    //        var sortedYearsList = certificates.Select(x => x.Year).Distinct().OrderBy(x => x);
+
+    //        foreach (var year in sortedYearsList)
+    //        {
+    //            Add(new Year() { YearOfCreationCertificate = year });
+    //        }
+
+    //        // Создаем и заполняем список договоров для каждого года
+    //        foreach (Year year in this)
+    //        {
+    //            // Список Номеров договора конкретного года
+    //            var contractsOfCurrentYear = certificates
+    //                .Where(x => x.Year == year.YearOfCreationCertificate)
+    //                .Select(x => x.ContractNumber)
+    //                .Distinct()
+    //                .OrderBy(x => x);
+
+    //            foreach (var contract in contractsOfCurrentYear)
+    //            {
+    //                year.Add(new Contract() { ContractNumber = contract });
+    //            }
+
+    //            // Создаем и заполняем список свидетельств для каждого договора
+    //            foreach (Contract contract in year)
+    //            {
+    //                contract.AddRange(certificates.Where(x => x.Year == year.YearOfCreationCertificate && x.ContractNumber == contract.ContractNumber));
+    //            }
+
+    //            _contracts.AddRange(year);
+    //        }
+    //    }
+
+    //    // Преобразование List<Certificate> в Certificates
+    //    public static explicit operator Certificates(List<Certificate> v)
+    //    {
+    //        var result = new Certificates();
+    //        result.AddRange(v);
+    //        return result;
+    //    }
+
+    //    /// <summary>
+    //    /// Список договоров
+    //    /// </summary>
+    //    public List<Contract> ListOfContracts
+    //    {
+    //        get
+    //        {
+    //            return _contracts ?? new List<Contract>();
+    //        }
+    //    }
+
+    //    /// <summary>
+    //    /// Список свидетельств
+    //    /// </summary>
+    //    public List<Certificate> ListOfCertificates
+    //    {
+    //        get
+    //        {
+    //            return _certificates ?? new List<Certificate>();
+    //        }
+    //    }
+    //}
+
 }

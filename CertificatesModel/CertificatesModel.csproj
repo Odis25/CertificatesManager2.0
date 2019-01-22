@@ -113,11 +113,10 @@
     <Compile Include="Components\CertificateEventArgs.cs" />
     <Compile Include="Components\Crypting.cs" />
     <Compile Include="Domain\CertificatesModel\Certificate.cs" />
-    <Compile Include="Domain\CertificatesModel\CertificateDbContext.cs" />
+    <Compile Include="Domain\MetrologyDbContext.cs" />
     <Compile Include="Domain\CertificatesModel\Certificates.cs" />
     <Compile Include="Domain\CertificatesModel\Contract.cs" />
     <Compile Include="Domain\CertificatesModel\Year.cs" />
-    <Compile Include="Domain\UsersModel\UserDbContext.cs" />
     <Compile Include="Factories\AppLocator.cs" />
     <Compile Include="Factories\BaseFactory.cs" />
     <Compile Include="Factories\ModelFactory.cs" />

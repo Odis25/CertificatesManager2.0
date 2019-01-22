@@ -93,7 +93,7 @@ namespace CertificatesViews.Controls
             // Запускаем событие на удаление
             var question = MessageBox.Show("Вы уверены что хотите удалить выбранные свидетельства?", "Удаление", MessageBoxButtons.OKCancel, MessageBoxIcon.Question);
             if (question == DialogResult.OK)
-                Deleted(this, EventArgs.Empty);
+                Deleted(sender, EventArgs.Empty);
         }
 
         // Создаем аргументы событию поиска

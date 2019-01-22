@@ -1,5 +1,4 @@
-﻿using CertificatesModel.Domain.UsersModel;
-using CertificatesModel.UsersModel;
+﻿using CertificatesModel.UsersModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,7 +19,7 @@ namespace CertificatesModel.Repositories
 
         public static User GetUserData(string login)
         {
-            using (UserDbContext db = new UserDbContext())
+            using (MetrologyDbContext db = new MetrologyDbContext())
             {
                 IQueryable<User> querry = db.Users.Where(x => x.Login.ToLower() == login);
                 var result = querry.FirstOrDefault();

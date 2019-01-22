@@ -12,8 +12,8 @@ using static CertificatesViews.TreeNodeCollectionExtensions;
 namespace CertificatesViews
 {
     public static class TreeNodeCollectionExtensions
-    { 
-        [Serializable]      
+    {
+        [Serializable]
         public struct TreeNodeList
         {
             private List<string> uncheckedNodes;
@@ -110,7 +110,7 @@ namespace CertificatesViews
 
         [DllImport("user32.dll", CharSet = CharSet.Auto)]
         private static extern IntPtr SendMessage(IntPtr hWnd, int Msg, IntPtr wParam, ref TVITEM lParam);
-        
+
         /// <summary>
         /// Hides the checkbox for the specified node on a TreeView control.
         /// </summary>
@@ -142,38 +142,54 @@ namespace CertificatesViews
             imageCollection.Images.Add("Certificate", Resources.certificate);
 
             // Добавляем коллекцию к текущему дереву
-            treeView.ImageList = imageCollection;            
+            treeView.ImageList = imageCollection;
 
-            foreach (var year in certificates)
+            var sortedYears = certificates.Select(x => x.Year).Distinct().OrderBy(x => x);
+
+
+
+            foreach (var year in sortedYears)
             {
                 TreeNode node = new TreeNode();
-                node.Name = year.YearOfCreationCertificate.ToString();
-                node.Tag = year;
-                node.Text = year.YearOfCreationCertificate.ToString();
+                node.Name = year.ToString();
+                node.Tag = "year";
+                node.Text = year.ToString();
                 node.ImageKey = "UnselectedFolder";
                 node.SelectedImageKey = "SelectedFolder";
-                node.Checked = true;                
-                
-                foreach (var contract in year)
+                node.Checked = true;
+
+                var contractsOfCurrentYear = certificates
+                    .Where(x => x.Year == year)
+                    .Select(x => x.ContractNumber)
+                    .Distinct()
+                    .OrderBy(x => x);
+
+                foreach (var contract in contractsOfCurrentYear)
                 {
                     TreeNode subNode = new TreeNode();
-                    subNode.Name = contract.ContractNumber;
-                    subNode.Tag = contract;
-                    subNode.Text = contract.ContractNumber;
+                    subNode.Name = contract;
+                    subNode.Tag = "contract";
+                    subNode.Text = contract;
                     subNode.ImageKey = "Certificate";
                     subNode.SelectedImageKey = "Certificate";
                     subNode.Checked = true;
 
-                    foreach (var certificate in contract)
-                    {
-                        TreeNode subSubNode = new TreeNode();
-                        subSubNode.Name = certificate.CertificatePath;
-                        subSubNode.Tag = certificate;
-                        subSubNode.Text = certificate.CertificatePath;
-                        subSubNode.Checked = true;                       
+                    //var sortedCertificates = certificates
+                    //    .Where(x => x.Year == year)
+                    //    .Select(x => x.ContractNumber)
+                    //    .Distinct()
+                    //    .OrderBy(x => x); ;
 
-                        subNode.Nodes.Add(subSubNode);
-                    }
+                    //foreach (var certificate in sortedCertificates)
+                    //{
+                    //    TreeNode subSubNode = new TreeNode();
+                    //    subSubNode.Name = certificate;
+                    //    subSubNode.Tag = "certificate";
+                    //    subSubNode.Text = certificate;
+                    //    subSubNode.Checked = true;
+
+                    //    subNode.Nodes.Add(subSubNode);
+                    //}
 
                     node.Nodes.Add(subNode);
                 }

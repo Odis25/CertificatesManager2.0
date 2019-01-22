@@ -156,7 +156,8 @@ namespace CertificatesViews.Controls
         {
             var model = AppLocator.ModelFactory.Create<ICertificatesLoader>();
             var searchPattern = e as CertificateEventArgs;
-            var result = model.GetCertificatesBySearchPattern(searchPattern).ListOfCertificates;
+            //var result = model.GetCertificatesBySearchPattern(searchPattern).ListOfCertificates;
+            var result = model.GetCertificatesBySearchPattern(searchPattern);
             FillListView(result);
         }
 
@@ -164,16 +165,20 @@ namespace CertificatesViews.Controls
         private void tvCertificates_AfterSelect(object sender, TreeViewEventArgs e)
         {
             // Получаем контекст выбранного узла
-            var content = e.Node.Tag;
+            var content = e.Node.Tag.ToString().ToLower();
             var type = content.GetType();
+            IEnumerable<Certificate> certificates = new List<Certificate>();
 
             // Заполняем ListView результатами выборки
-            if (type == typeof(Certificates))
-                FillListView((content as Certificates).ListOfCertificates);
-            else if (type == typeof(Year))
-                FillListView((content as Year).ListOfCertificates);
-            else if (type == typeof(Contract))
-                FillListView(content as Contract);
+            if (content == "year")
+            {
+                certificates = _certificates.Where(x => x.Year == int.Parse(e.Node.Name));
+            }
+            else if (content == "contract")
+            {
+                certificates = _certificates.Where(x => x.Year == int.Parse(e.Node.Parent.Name) && x.ContractNumber == e.Node.Name);
+            }
+            FillListView(certificates);
         }
 
         // Выбор свидетельства в ListView
@@ -182,14 +187,16 @@ namespace CertificatesViews.Controls
             if (e.IsSelected)
             {
                 // Если список свидетельств пуст, выходим из метода
-                if (_certificates == null || _certificates.ListOfCertificates.Count == 0)
+                //if (_certificates == null || _certificates.ListOfCertificates.Count == 0)
+                if (_certificates == null || _certificates.ToList().Count == 0)
                     return;
 
                 // ID выбранного свидетельства
                 var id = int.Parse(e.Item.SubItems[0].Text);
 
                 // Выбираем свидетельство
-                var certificate = _certificates.ListOfCertificates.Where(x => x.ID == id).ToList()[0];
+                //var certificate = _certificates.ListOfCertificates.Where(x => x.ID == id).ToList()[0];
+                var certificate = _certificates.Where(x => x.ID == id).ToList()[0];
 
                 // Панель свойств
                 var view = PropertyControl as IView<Certificate>;
@@ -249,7 +256,7 @@ namespace CertificatesViews.Controls
         }
 
         // Асинхронное заполнение ListView результатами выборки
-        private async void FillListView(List<Certificate> certificates)
+        private async void FillListView(IEnumerable<Certificate> certificates)
         {
             // Отменяем исполняемую задачу, если таковая имелась
             if (_cancelationTokenSource != null)

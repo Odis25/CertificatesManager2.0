@@ -1,6 +1,7 @@
 ﻿using CertificatesModel.Components;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Data;
 using System.Data.Entity;
 using System.Data.Linq;
@@ -12,9 +13,19 @@ namespace CertificatesModel.Repositories
 {
     public static class CertificatesRepository
     {
-        static string _connectionString;
+        private static string _connectionString;
+        private static Certificates _certificates;
 
-        static Certificates Certificates { get; set; }
+        public static Certificates Certificates
+        {
+            get
+            {
+                if (_certificates == null)
+                    _certificates = GetAllCertificatesFromDB();
+                return _certificates;
+            }
+            set { _certificates = value; }
+        }
 
         static CertificatesRepository()
         {
@@ -22,7 +33,7 @@ namespace CertificatesModel.Repositories
         }
 
         // Получаем все свидетельства из БД и сортируем по ID
-        public static Certificates GetAllCertificatesFromDB()
+        private static Certificates GetAllCertificatesFromDB()
         { 
             try
             {
@@ -39,7 +50,7 @@ namespace CertificatesModel.Repositories
         {
             var result = new Certificates();
 
-            using (CertificateDbContext db = new CertificateDbContext())
+            using (MetrologyDbContext db = new MetrologyDbContext())
             {
                 IQueryable<Certificate> querry = db.Certificates;
                 querry = querry.OrderBy(x=>x.ID);
@@ -81,9 +92,10 @@ namespace CertificatesModel.Repositories
         // Внесение изменений в свидетельство по шаблону
         public static void EditCertificate(CertificateEventArgs pattern)
         {
-            using (CertificateDbContext db = new CertificateDbContext())
+            using (MetrologyDbContext db = new MetrologyDbContext())
             {
-                var certificate = db.Certificates.Where(x => x.ID == pattern.ID).First();
+                var certificate = _certificates.Where(x => x.ID == pattern.ID).FirstOrDefault();
+
                 certificate.Year = (int)pattern.Year;
                 certificate.CertificateNumber = pattern.CertificateNumber;
                 certificate.RegisterNumber = pattern.RegisterNumber;
@@ -98,18 +110,22 @@ namespace CertificatesModel.Repositories
                 certificate.CalibrationExpireDate = pattern.CalibrationExpireDate.Value;
                 certificate.CertificatePath = pattern.CertificatePath;
                 // Сохраняем изменения
+                db.Entry(certificate).State = EntityState.Modified;
                 db.SaveChanges();
             }
         }
 
+        // Удаление свидетельств
         public static void DeleteCertificates(params int[] idList)
         {
-            using (CertificateDbContext db = new CertificateDbContext())
+            using (MetrologyDbContext db = new MetrologyDbContext())
             {
                 foreach(var id in idList)
                 {
-                    var cert = db.Certificates.Find(id);
-                    db.Certificates.Remove(cert);
+                    var cert = _certificates.Find(x => x.ID == id);
+
+                    _certificates.Remove(cert);
+                    db.Entry(cert).State = EntityState.Deleted;
                 }
                 db.SaveChanges();
             }

@@ -1,18 +1,15 @@
 ﻿using CertificatesViews.Interfaces;
 using PdfiumViewer;
 using System;
-using System.Linq;
-using System.Collections;
-using System.Collections.Generic;
-
 using System.IO;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace CertificatesViews.Controls
 {
-    
+
     public partial class PreviewPanel : UserControl, IView<string>
     {
         PdfViewer _viewer;

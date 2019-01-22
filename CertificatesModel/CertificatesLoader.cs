@@ -8,11 +8,12 @@ namespace CertificatesModel
 {
     public class CertificatesLoader : ICertificatesLoader
     {
-
+        
         // Получить весь список свидетельств
         public Certificates GetAllCertificates()
         {
-            Certificates result = CertificatesRepository.GetAllCertificatesFromDB();
+            Certificates result = CertificatesRepository.Certificates;
+            //Certificates result = CertificatesRepository.GetAllCertificatesFromDB();
             return result;
         }
 

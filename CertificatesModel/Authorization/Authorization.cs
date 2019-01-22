@@ -61,7 +61,6 @@ namespace CertificatesModel.Authorization
                 CurrentUser = new User();
                 UserLogined = true;
             }
-
         }
 
         // Авторизация пользователя
