@@ -25,6 +25,15 @@ namespace CertificatesViews
 
         public event EventHandler Changed = delegate { };
 
+        private Certificates Certificates
+        {
+            get { return _certificates; }
+            set
+            {
+                _certificates = value;
+                tsCertificatesQuantity.Text = _certificates.Count().ToString();
+            }
+        }
         private Control CurrentControl
         {
             get { return _currentControl; }
@@ -38,7 +47,6 @@ namespace CertificatesViews
                 value.BringToFront();
             }
         }
-
         private User CurrentUser
         {
             set
@@ -69,7 +77,6 @@ namespace CertificatesViews
         public MainForm()
         {
             InitializeComponent();
-
             BuildTreeView();
         }
 
@@ -78,7 +85,7 @@ namespace CertificatesViews
         {
             // Получаем список свидетельств
             var loader = AppLocator.ModelFactory.Create<ICertificatesLoader>();
-            _certificates = loader.GetAllCertificates();
+            Certificates = loader.GetAllCertificates();
 
             // Устанавливаем текущего пользователя
             CurrentUser = Authorization.CurrentUser;

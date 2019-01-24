@@ -32,7 +32,9 @@
             this.stMain = new System.Windows.Forms.StatusStrip();
             this.tsUserRights = new System.Windows.Forms.ToolStripStatusLabel();
             this.tsCurrentUser = new System.Windows.Forms.ToolStripStatusLabel();
+            this.tsCertificatesQuantity = new System.Windows.Forms.ToolStripStatusLabel();
             this.tsUserLabel = new System.Windows.Forms.ToolStripStatusLabel();
+            this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.btAdd = new System.Windows.Forms.ToolStripButton();
             this.btSettings = new System.Windows.Forms.ToolStripButton();
             this.btChangeUser = new System.Windows.Forms.ToolStripButton();
@@ -59,7 +61,9 @@
             this.stMain.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.tsUserRights,
             this.tsCurrentUser,
-            this.tsUserLabel});
+            this.tsUserLabel,
+            this.tsCertificatesQuantity,
+            this.toolStripStatusLabel1});
             this.stMain.Location = new System.Drawing.Point(0, 600);
             this.stMain.Name = "stMain";
             this.stMain.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
@@ -80,6 +84,13 @@
             this.tsCurrentUser.Size = new System.Drawing.Size(32, 17);
             this.tsCurrentUser.Text = "Вася";
             // 
+            // tsCertificatesQuantity
+            // 
+            this.tsCertificatesQuantity.Margin = new System.Windows.Forms.Padding(20, 3, 0, 2);
+            this.tsCertificatesQuantity.Name = "tsCertificatesQuantity";
+            this.tsCertificatesQuantity.Size = new System.Drawing.Size(31, 17);
+            this.tsCertificatesQuantity.Text = "9999";
+            // 
             // tsUserLabel
             // 
             this.tsUserLabel.Image = global::CertificatesViews.Properties.Resources.user;
@@ -87,6 +98,14 @@
             this.tsUserLabel.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.tsUserLabel.Size = new System.Drawing.Size(154, 17);
             this.tsUserLabel.Text = "Текущий пользователь:";
+            // 
+            // toolStripStatusLabel1
+            // 
+            this.toolStripStatusLabel1.Image = global::CertificatesViews.Properties.Resources.script;
+            this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
+            this.toolStripStatusLabel1.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.toolStripStatusLabel1.Size = new System.Drawing.Size(167, 17);
+            this.toolStripStatusLabel1.Text = "Кол-во свидетельств в БД:";
             // 
             // btAdd
             // 
@@ -163,6 +182,8 @@
         private System.Windows.Forms.ToolStripStatusLabel tsCurrentUser;
         private System.Windows.Forms.ToolStripStatusLabel tsUserLabel;
         private System.Windows.Forms.ToolStripStatusLabel tsUserRights;
+        private System.Windows.Forms.ToolStripStatusLabel tsCertificatesQuantity;
+        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel1;
     }
 }
 

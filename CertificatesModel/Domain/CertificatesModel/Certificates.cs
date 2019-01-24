@@ -38,25 +38,25 @@ namespace CertificatesModel
         }
 
         // Удаление элемента
-        internal void Remove(Certificate cert)
+        public void Remove(Certificate cert)
         {
             _list.Remove(cert);
         }
 
         // Поиск элемента
-        internal Certificate Find(Predicate<Certificate> p)
+        public Certificate Find(Predicate<Certificate> p)
         {
             return _list.Find(p);
         }
 
         // Добавление элемента
-        internal void Add(Certificate item)
+        public void Add(Certificate item)
         {
             _list.Add(item);
         }
 
         // Добавление коллекции элементов
-        internal void AddRange(IEnumerable<Certificate> collection)
+        public void AddRange(IEnumerable<Certificate> collection)
         {
             _list.AddRange(collection);
         }

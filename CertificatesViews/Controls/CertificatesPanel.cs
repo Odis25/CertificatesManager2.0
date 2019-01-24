@@ -25,6 +25,20 @@ namespace CertificatesViews.Controls
         Certificates _certificates;
         CancellationTokenSource _cancelationTokenSource;
 
+        // Список отслеживаемых свидетельств 
+        private IEnumerable<Certificate> TracedCertificates
+        {
+            get
+            {
+                var checkedNodes = tvCertificates.Nodes.Descendants().Where(x => x.Checked);
+
+                return from node in checkedNodes
+                       from cert in _certificates
+                       where node.Text == cert.ContractNumber && node.Parent.Name == cert.Year.ToString()
+                       select cert;
+            }
+        }
+
         // Событие на изменение
         public event EventHandler Changed = delegate { };
 
@@ -156,8 +170,7 @@ namespace CertificatesViews.Controls
         {
             var model = AppLocator.ModelFactory.Create<ICertificatesLoader>();
             var searchPattern = e as CertificateEventArgs;
-            //var result = model.GetCertificatesBySearchPattern(searchPattern).ListOfCertificates;
-            var result = model.GetCertificatesBySearchPattern(searchPattern);
+            var result = model.GetCertificatesBySearchPattern(searchPattern).ToList();
             FillListView(result);
         }
 
@@ -178,7 +191,7 @@ namespace CertificatesViews.Controls
             {
                 certificates = _certificates.Where(x => x.Year == int.Parse(e.Node.Parent.Name) && x.ContractNumber == e.Node.Name);
             }
-            FillListView(certificates);
+            FillListView(certificates.ToList());
         }
 
         // Выбор свидетельства в ListView
@@ -187,7 +200,6 @@ namespace CertificatesViews.Controls
             if (e.IsSelected)
             {
                 // Если список свидетельств пуст, выходим из метода
-                //if (_certificates == null || _certificates.ListOfCertificates.Count == 0)
                 if (_certificates == null || _certificates.ToList().Count == 0)
                     return;
 
@@ -195,8 +207,7 @@ namespace CertificatesViews.Controls
                 var id = int.Parse(e.Item.SubItems[0].Text);
 
                 // Выбираем свидетельство
-                //var certificate = _certificates.ListOfCertificates.Where(x => x.ID == id).ToList()[0];
-                var certificate = _certificates.Where(x => x.ID == id).ToList()[0];
+                var certificate = _certificates.Where(x => x.ID == id).FirstOrDefault();
 
                 // Панель свойств
                 var view = PropertyControl as IView<Certificate>;
@@ -211,7 +222,7 @@ namespace CertificatesViews.Controls
         }
 
         // Меняем состояние CheckBox у TreeView
-        private void tvCertificates_AfterCheck(object sender, TreeViewEventArgs e)
+        private async void tvCertificates_AfterCheck(object sender, TreeViewEventArgs e)
         {
             // The code only executes if the user caused the checked state to change.
             if (e.Action != TreeViewAction.Unknown)
@@ -223,8 +234,12 @@ namespace CertificatesViews.Controls
                     this.CheckAllChildNodes(e.Node, e.Node.Checked);
                 }
                 tvCertificates.SerializeNodeState();
-            }
 
+                foreach (ListViewItem item in lvCertificatesDetails.Items)
+                {
+                    await Task.Run(()=> PaintListViewItem(item));
+                }
+            }
         }
 
         // Рекурсивное обновление дочерних узлов
@@ -256,7 +271,7 @@ namespace CertificatesViews.Controls
         }
 
         // Асинхронное заполнение ListView результатами выборки
-        private async void FillListView(IEnumerable<Certificate> certificates)
+        private async void FillListView(List<Certificate> certificates)
         {
             // Отменяем исполняемую задачу, если таковая имелась
             if (_cancelationTokenSource != null)
@@ -271,14 +286,19 @@ namespace CertificatesViews.Controls
 
             // Очищаем ListView перед заполнением результатом выборки
             lvCertificatesDetails.Items.Clear();
+            // Колличество элементов выборки
+            int count = certificates.Count;
+            // Массив ListViewItem для заполнения
+            ListViewItem[] lviArray = new ListViewItem[count];
+            // Массив задач для результатов
 
-            // Асинхронно заполняем ListView результатами выборки
-            foreach (var cert in certificates)
+            for (int i = 0; i < count; i++)
             {
-                var item = await Task<ListViewItem>.Factory.StartNew(() => GetCertificateDetails(cert, token), token);
+                var item = await Task.Run(() => GetCertificateDetails(certificates[i], token));
 
-                if (item != null)
-                    lvCertificatesDetails.Items.Add(item);
+                lvCertificatesDetails.Items.Add(item);
+
+                lviArray[i] = item;
             }
 
             // Убираем CancellationTokenSource текущего метода из переменной класса
@@ -291,19 +311,18 @@ namespace CertificatesViews.Controls
         {
             string fileSize, fileCreationDate;
             FileInfo fileInfo = new FileInfo(cert.CertificatePath);
-
-            try
+            if (File.Exists(cert.CertificatePath))
             {
                 // Размер файла
                 fileSize = fileInfo.Length.ToString();
                 // Дата создания файла
                 fileCreationDate = fileInfo.CreationTime.ToString();
             }
-            catch
+            else
             {
                 // Если файл не доступен, то заполняем поля заглушками
-                fileSize = "---";
-                fileCreationDate = "---";
+                fileSize = "----";
+                fileCreationDate = "----";
             }
 
             // Формируем ListViewItem и заполняем результатами выборки
@@ -328,9 +347,36 @@ namespace CertificatesViews.Controls
 
             // Если пришел запрос отмены выполнения операции, то прекращаем выполнение
             token.ThrowIfCancellationRequested();
-
+            PaintListViewItem(item);
             // Возвращаем результат
             return item;
+        }
+
+        // Цвет ListViewItem в ListView
+        private void PaintListViewItem(ListViewItem item)
+        {
+
+            var itemId = int.Parse(item.SubItems[0].Text);
+            var certificate = _certificates.Where(x => x.ID == itemId).FirstOrDefault();
+
+            if (TracedCertificates.Contains(certificate))
+            {
+                if (certificate.CalibrationExpireDate <= DateTime.Now)
+                {
+                    item.BackColor = Color.Red;
+                    item.ForeColor = Color.Yellow;
+                }
+                else if (certificate.CalibrationExpireDate <= DateTime.Now.AddDays(30))
+                {
+                    item.BackColor = Color.Yellow;
+                    item.ForeColor = Color.Black;
+                }
+            }
+            else
+            {
+                item.BackColor = Color.White;
+                item.ForeColor = Color.Black;
+            }
         }
     }
 }

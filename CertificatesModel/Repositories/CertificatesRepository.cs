@@ -1,13 +1,8 @@
 ﻿using CertificatesModel.Components;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
 using System.Data.Entity;
-using System.Data.Linq;
 using System.Data.SqlServerCe;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace CertificatesModel.Repositories
 {
@@ -123,7 +118,6 @@ namespace CertificatesModel.Repositories
                 foreach(var id in idList)
                 {
                     var cert = _certificates.Find(x => x.ID == id);
-
                     _certificates.Remove(cert);
                     db.Entry(cert).State = EntityState.Deleted;
                 }
