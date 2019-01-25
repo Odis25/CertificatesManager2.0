@@ -7,7 +7,7 @@ using System.Windows.Forms;
 
 namespace CertificatesViews.Components
 {
-    public class ListViewModified : ListView
+    internal class ListViewModified : ListView
     {
         // Объявление констант
         const int LVM_FIRST = 0x1000;

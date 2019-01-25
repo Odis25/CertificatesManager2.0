@@ -1,7 +1,6 @@
 ﻿using CertificatesModel;
-using CertificatesModel.Authorization;
+using CertificatesModel.Domain.UsersModel;
 using CertificatesModel.Factories;
-using CertificatesModel.UsersModel;
 using CertificatesViews.Controls;
 using CertificatesViews.Interfaces;
 
@@ -15,6 +14,7 @@ namespace CertificatesViews.Factories
             Register<IViewAndEdit<Certificate>, CertificatePropertiesPanel>();
             Register<IView<string>, PreviewPanel>();
             Register<IView<User>, AuthorizationPanel>();
+            Register<IView<Users>, UsersAdministrationPanel>();
         }
     }
 }

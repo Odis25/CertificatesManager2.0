@@ -1,9 +1,4 @@
-﻿using CertificatesModel.UsersModel;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using CertificatesModel.Domain.UsersModel;
 
 namespace CertificatesModel.Interfaces
 {
@@ -15,5 +10,10 @@ namespace CertificatesModel.Interfaces
         /// <param name="login">Логин пользователя в сети</param>
         /// <returns></returns>
         User GetUserData(string login);
+        /// <summary>
+        /// Получить список пользователей из БД
+        /// </summary>
+        /// <returns></returns>
+        Users GetUsersList();
     }
 }

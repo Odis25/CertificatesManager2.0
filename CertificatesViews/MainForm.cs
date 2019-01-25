@@ -1,18 +1,12 @@
 ﻿using CertificatesModel;
 using CertificatesModel.Authorization;
+using CertificatesModel.Domain.UsersModel;
 using CertificatesModel.Interfaces;
-using CertificatesModel.UsersModel;
 using CertificatesViews.Controls;
 using CertificatesViews.Factories;
 using CertificatesViews.Interfaces;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace CertificatesViews
@@ -149,7 +143,13 @@ namespace CertificatesViews
 
         private void OpenUserAccountsEditForm()
         {
-
+            var model = AppLocator.ModelFactory.Create<UsersLoader>();
+            var users = model.GetUsersList();
+            var form = new ContainerForm<Users>();
+            form.Build(users);
+            // Событие формы
+            form.Changed += delegate { };
+            form.ShowDialog();
         }
 
         #endregion

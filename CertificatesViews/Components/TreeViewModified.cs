@@ -6,10 +6,10 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Windows.Forms;
 
-namespace CertificatesViews
+namespace CertificatesViews.Components
 {
     [Serializable]
-    public class TreeViewModified : TreeView
+    internal class TreeViewModified : TreeView
     {
 
         // Pinvoke:

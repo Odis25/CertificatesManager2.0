@@ -1,6 +1,6 @@
-﻿using CertificatesModel.Factories;
+﻿using CertificatesModel.Domain.UsersModel;
+using CertificatesModel.Factories;
 using CertificatesModel.Interfaces;
-using CertificatesModel.UsersModel;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;

@@ -1,4 +1,6 @@
-﻿namespace CertificatesViews.Controls
+﻿using CertificatesViews.Components;
+
+namespace CertificatesViews.Controls
 {
     partial class CertificatesPanel
     {
@@ -29,9 +31,14 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(CertificatesPanel));
             this.scMainSpliter = new System.Windows.Forms.SplitContainer();
             this.scSecondarySpliter = new System.Windows.Forms.SplitContainer();
-            this.tvCertificates = new CertificatesViews.TreeViewModified();
+            this.panMain = new System.Windows.Forms.Panel();
+            this.panPreview = new System.Windows.Forms.Panel();
+            this.scPreviewSplitter = new System.Windows.Forms.SplitContainer();
+            this.niCertificatesManager = new System.Windows.Forms.NotifyIcon(this.components);
+            this.tvCertificates = new CertificatesViews.Components.TreeViewModified();
             this.lvCertificatesDetails = new CertificatesViews.Components.ListViewModified();
             this.headerId = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.headerContractNumber = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -48,9 +55,6 @@
             this.headerCertificatePath = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.headerFileSize = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.headerFileCreationDate = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.panMain = new System.Windows.Forms.Panel();
-            this.panPreview = new System.Windows.Forms.Panel();
-            this.scPreviewSplitter = new System.Windows.Forms.SplitContainer();
             ((System.ComponentModel.ISupportInitialize)(this.scMainSpliter)).BeginInit();
             this.scMainSpliter.Panel1.SuspendLayout();
             this.scMainSpliter.Panel2.SuspendLayout();
@@ -98,6 +102,48 @@
             this.scSecondarySpliter.Size = new System.Drawing.Size(666, 298);
             this.scSecondarySpliter.SplitterDistance = 221;
             this.scSecondarySpliter.TabIndex = 0;
+            // 
+            // panMain
+            // 
+            this.panMain.Controls.Add(this.scMainSpliter);
+            this.panMain.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panMain.Location = new System.Drawing.Point(0, 0);
+            this.panMain.Name = "panMain";
+            this.panMain.Size = new System.Drawing.Size(666, 517);
+            this.panMain.TabIndex = 1;
+            // 
+            // panPreview
+            // 
+            this.panPreview.BackColor = System.Drawing.SystemColors.Control;
+            this.panPreview.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panPreview.Location = new System.Drawing.Point(0, 0);
+            this.panPreview.Name = "panPreview";
+            this.panPreview.Size = new System.Drawing.Size(435, 517);
+            this.panPreview.TabIndex = 2;
+            // 
+            // scPreviewSplitter
+            // 
+            this.scPreviewSplitter.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.scPreviewSplitter.Location = new System.Drawing.Point(0, 0);
+            this.scPreviewSplitter.Name = "scPreviewSplitter";
+            // 
+            // scPreviewSplitter.Panel1
+            // 
+            this.scPreviewSplitter.Panel1.Controls.Add(this.panMain);
+            // 
+            // scPreviewSplitter.Panel2
+            // 
+            this.scPreviewSplitter.Panel2.Controls.Add(this.panPreview);
+            this.scPreviewSplitter.Panel2MinSize = 423;
+            this.scPreviewSplitter.Size = new System.Drawing.Size(1105, 517);
+            this.scPreviewSplitter.SplitterDistance = 666;
+            this.scPreviewSplitter.TabIndex = 3;
+            // 
+            // niCertificatesManager
+            // 
+            this.niCertificatesManager.Icon = ((System.Drawing.Icon)(resources.GetObject("niCertificatesManager.Icon")));
+            this.niCertificatesManager.Text = "Certificates Manager 2.0";
+            this.niCertificatesManager.Visible = true;
             // 
             // tvCertificates
             // 
@@ -204,42 +250,6 @@
             // 
             this.headerFileCreationDate.Text = "Дата создания файла";
             // 
-            // panMain
-            // 
-            this.panMain.Controls.Add(this.scMainSpliter);
-            this.panMain.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panMain.Location = new System.Drawing.Point(0, 0);
-            this.panMain.Name = "panMain";
-            this.panMain.Size = new System.Drawing.Size(666, 517);
-            this.panMain.TabIndex = 1;
-            // 
-            // panPreview
-            // 
-            this.panPreview.BackColor = System.Drawing.SystemColors.Control;
-            this.panPreview.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panPreview.Location = new System.Drawing.Point(0, 0);
-            this.panPreview.Name = "panPreview";
-            this.panPreview.Size = new System.Drawing.Size(435, 517);
-            this.panPreview.TabIndex = 2;
-            // 
-            // scPreviewSplitter
-            // 
-            this.scPreviewSplitter.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.scPreviewSplitter.Location = new System.Drawing.Point(0, 0);
-            this.scPreviewSplitter.Name = "scPreviewSplitter";
-            // 
-            // scPreviewSplitter.Panel1
-            // 
-            this.scPreviewSplitter.Panel1.Controls.Add(this.panMain);
-            // 
-            // scPreviewSplitter.Panel2
-            // 
-            this.scPreviewSplitter.Panel2.Controls.Add(this.panPreview);
-            this.scPreviewSplitter.Panel2MinSize = 423;
-            this.scPreviewSplitter.Size = new System.Drawing.Size(1105, 517);
-            this.scPreviewSplitter.SplitterDistance = 666;
-            this.scPreviewSplitter.TabIndex = 3;
-            // 
             // CertificatesPanel
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -287,5 +297,6 @@
         private System.Windows.Forms.Panel panMain;
         private System.Windows.Forms.Panel panPreview;
         private System.Windows.Forms.SplitContainer scPreviewSplitter;
+        private System.Windows.Forms.NotifyIcon niCertificatesManager;
     }
 }

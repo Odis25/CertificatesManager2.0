@@ -1,15 +1,11 @@
-﻿using CertificatesModel.Factories;
-using CertificatesViews.Factories;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using CertificatesModel.Authorization;
-using CertificatesViews.Interfaces;
+﻿using CertificatesModel.Authorization;
+using CertificatesModel.Domain.UsersModel;
+using CertificatesModel.Factories;
 using CertificatesViews;
 using CertificatesViews.Controls;
-using CertificatesModel.UsersModel;
+using CertificatesViews.Factories;
+using System;
+using System.Windows.Forms;
 
 namespace CertificatesDesktop
 {

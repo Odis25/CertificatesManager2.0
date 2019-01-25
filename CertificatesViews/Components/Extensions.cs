@@ -1,4 +1,5 @@
 ﻿using CertificatesModel;
+using CertificatesViews.Components;
 using CertificatesViews.Properties;
 using System;
 using System.Collections.Generic;
@@ -133,7 +134,7 @@ namespace CertificatesViews
         /// </summary>
         /// <param name="treeView"></param>
         /// <param name="certificates"></param>
-        public static void AddCertificates(this TreeViewModified treeView, Certificates certificates)
+        internal static void AddCertificates(this TreeViewModified treeView, Certificates certificates)
         {
             // Составляем коллекцию  иконок для текущего дерева узлов
             ImageList imageCollection = new ImageList();
@@ -198,7 +199,7 @@ namespace CertificatesViews
             }
         }
 
-        public static void SerializeNodeState(this TreeViewModified treeView) // Сериализация TreeView
+        internal static void SerializeNodeState(this TreeViewModified treeView) // Сериализация TreeView
         {
             TreeNodeList state = treeView.Nodes.getNodeCollectionState();
             state.SelectedNode = treeView.SelectedNode;
@@ -210,7 +211,7 @@ namespace CertificatesViews
             }
         }
 
-        public static void DeserializeNodeState(this TreeViewModified treeView) // Десериализация TreeView
+        internal static void DeserializeNodeState(this TreeViewModified treeView) // Десериализация TreeView
         {
             if (!File.Exists("TreeState.dat"))
                 return;

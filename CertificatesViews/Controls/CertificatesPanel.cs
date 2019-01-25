@@ -111,6 +111,8 @@ namespace CertificatesViews.Controls
 
             // Построение панели свойств свидетельства
             BuildProperty();
+
+            ShowTrayToolTip();
         }
 
         // Построение панели свойств свидетельства
@@ -239,6 +241,8 @@ namespace CertificatesViews.Controls
                 {
                     await Task.Run(()=> PaintListViewItem(item));
                 }
+                // Отображение всплывающей подсказки
+                ShowTrayToolTip();
             }
         }
 
@@ -377,6 +381,19 @@ namespace CertificatesViews.Controls
                 item.BackColor = Color.White;
                 item.ForeColor = Color.Black;
             }
+        }
+
+        // Отобразить всплывающее оповещение в трее
+        private void ShowTrayToolTip()
+        {
+            var expiredCertificateCount = TracedCertificates.Where(x => x.CalibrationExpireDate < DateTime.Now).Count();
+            var almostExpiredCertificateCount = TracedCertificates.Where(x => x.CalibrationExpireDate >= DateTime.Now && x.CalibrationExpireDate < DateTime.Now.AddDays(30)).Count();
+            niCertificatesManager.BalloonTipIcon = ToolTipIcon.Info;
+            niCertificatesManager.BalloonTipTitle = "Внимание!";
+            niCertificatesManager.BalloonTipText = $"У {expiredCertificateCount} свидетельств истек срок поверки."
+                                                    + Environment.NewLine
+                                                    + $"У {almostExpiredCertificateCount} свидетельств срок закончится втечении 30 дней.";
+            niCertificatesManager.ShowBalloonTip(10000);
         }
     }
 }

@@ -1,6 +1,6 @@
 ﻿using CertificatesModel;
 using CertificatesModel.Authorization;
-using CertificatesModel.UsersModel;
+using CertificatesModel.Domain.UsersModel;
 using CertificatesViews.Interfaces;
 using System;
 using System.Windows.Forms;

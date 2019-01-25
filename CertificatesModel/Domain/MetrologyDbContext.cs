@@ -1,4 +1,4 @@
-﻿using CertificatesModel.UsersModel;
+﻿using CertificatesModel.Domain.UsersModel;
 using System.Data.Entity;
 using System.Data.SqlServerCe;
 

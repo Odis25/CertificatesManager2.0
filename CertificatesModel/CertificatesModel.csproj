@@ -117,6 +117,7 @@
     <Compile Include="Domain\CertificatesModel\Certificates.cs" />
     <Compile Include="Domain\CertificatesModel\Contract.cs" />
     <Compile Include="Domain\CertificatesModel\Year.cs" />
+    <Compile Include="Domain\UsersModel\Users.cs" />
     <Compile Include="Factories\AppLocator.cs" />
     <Compile Include="Factories\BaseFactory.cs" />
     <Compile Include="Factories\ModelFactory.cs" />
