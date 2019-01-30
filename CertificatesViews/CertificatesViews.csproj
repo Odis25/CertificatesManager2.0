@@ -137,6 +137,12 @@
     <Compile Include="Controls\SettingsForm.Designer.cs">
       <DependentUpon>SettingsForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Controls\UserEditForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Controls\UserEditForm.Designer.cs">
+      <DependentUpon>UserEditForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Controls\UsersAdministrationPanel.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -178,6 +184,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\SettingsForm.resx">
       <DependentUpon>SettingsForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\UserEditForm.resx">
+      <DependentUpon>UserEditForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\UsersAdministrationPanel.resx">
       <DependentUpon>UsersAdministrationPanel.cs</DependentUpon>
@@ -291,7 +300,15 @@
   <ItemGroup>
     <None Include="Resources\script.png" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <None Include="Resources\Delicious.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\user_add.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\user_delete.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

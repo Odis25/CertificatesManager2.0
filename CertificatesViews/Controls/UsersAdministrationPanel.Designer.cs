@@ -29,36 +29,20 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            this.btAdd = new System.Windows.Forms.Button();
-            this.btDelete = new System.Windows.Forms.Button();
             this.dgvUsers = new System.Windows.Forms.DataGridView();
+            this.btEditUser = new System.Windows.Forms.Button();
+            this.btAddUser = new System.Windows.Forms.Button();
+            this.btDeleteUser = new System.Windows.Forms.Button();
             this.usersBindingSource = new System.Windows.Forms.BindingSource(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.dgvUsers)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.usersBindingSource)).BeginInit();
             this.SuspendLayout();
             // 
-            // btAdd
-            // 
-            this.btAdd.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btAdd.Location = new System.Drawing.Point(357, 115);
-            this.btAdd.Name = "btAdd";
-            this.btAdd.Size = new System.Drawing.Size(75, 23);
-            this.btAdd.TabIndex = 1;
-            this.btAdd.Text = "Добавить";
-            this.btAdd.UseVisualStyleBackColor = true;
-            // 
-            // btDelete
-            // 
-            this.btDelete.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btDelete.Location = new System.Drawing.Point(357, 154);
-            this.btDelete.Name = "btDelete";
-            this.btDelete.Size = new System.Drawing.Size(75, 23);
-            this.btDelete.TabIndex = 2;
-            this.btDelete.Text = "Удалить";
-            this.btDelete.UseVisualStyleBackColor = true;
-            // 
             // dgvUsers
             // 
+            this.dgvUsers.AllowUserToAddRows = false;
+            this.dgvUsers.AllowUserToDeleteRows = false;
+            this.dgvUsers.AllowUserToOrderColumns = true;
             this.dgvUsers.AllowUserToResizeRows = false;
             this.dgvUsers.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
@@ -67,10 +51,51 @@
             this.dgvUsers.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvUsers.Location = new System.Drawing.Point(13, 13);
             this.dgvUsers.Name = "dgvUsers";
+            this.dgvUsers.ReadOnly = true;
             this.dgvUsers.RowHeadersVisible = false;
             this.dgvUsers.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvUsers.Size = new System.Drawing.Size(325, 239);
+            this.dgvUsers.Size = new System.Drawing.Size(356, 239);
             this.dgvUsers.TabIndex = 3;
+            this.dgvUsers.SelectionChanged += new System.EventHandler(this.dgvUsers_SelectionChanged);
+            // 
+            // btEditUser
+            // 
+            this.btEditUser.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btEditUser.Image = global::CertificatesViews.Properties.Resources.user_edit;
+            this.btEditUser.Location = new System.Drawing.Point(375, 52);
+            this.btEditUser.Name = "btEditUser";
+            this.btEditUser.Size = new System.Drawing.Size(91, 33);
+            this.btEditUser.TabIndex = 2;
+            this.btEditUser.Text = "Изменить";
+            this.btEditUser.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.btEditUser.UseVisualStyleBackColor = true;
+            this.btEditUser.Click += new System.EventHandler(this.btEditUser_Click);
+            // 
+            // btAddUser
+            // 
+            this.btAddUser.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btAddUser.Image = global::CertificatesViews.Properties.Resources.user_add;
+            this.btAddUser.Location = new System.Drawing.Point(375, 13);
+            this.btAddUser.Name = "btAddUser";
+            this.btAddUser.Size = new System.Drawing.Size(91, 33);
+            this.btAddUser.TabIndex = 1;
+            this.btAddUser.Text = "Добавить";
+            this.btAddUser.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.btAddUser.UseVisualStyleBackColor = true;
+            this.btAddUser.Click += new System.EventHandler(this.btAdd_Click);
+            // 
+            // btDeleteUser
+            // 
+            this.btDeleteUser.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btDeleteUser.Image = global::CertificatesViews.Properties.Resources.user_delete;
+            this.btDeleteUser.Location = new System.Drawing.Point(375, 91);
+            this.btDeleteUser.Name = "btDeleteUser";
+            this.btDeleteUser.Size = new System.Drawing.Size(91, 33);
+            this.btDeleteUser.TabIndex = 2;
+            this.btDeleteUser.Text = "Удалить";
+            this.btDeleteUser.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.btDeleteUser.UseVisualStyleBackColor = true;
+            this.btDeleteUser.Click += new System.EventHandler(this.btDelete_Click);
             // 
             // usersBindingSource
             // 
@@ -81,10 +106,11 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.dgvUsers);
-            this.Controls.Add(this.btDelete);
-            this.Controls.Add(this.btAdd);
+            this.Controls.Add(this.btDeleteUser);
+            this.Controls.Add(this.btEditUser);
+            this.Controls.Add(this.btAddUser);
             this.Name = "UsersAdministrationPanel";
-            this.Size = new System.Drawing.Size(445, 272);
+            this.Size = new System.Drawing.Size(479, 272);
             ((System.ComponentModel.ISupportInitialize)(this.dgvUsers)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.usersBindingSource)).EndInit();
             this.ResumeLayout(false);
@@ -93,9 +119,10 @@
 
         #endregion
 
-        private System.Windows.Forms.Button btAdd;
-        private System.Windows.Forms.Button btDelete;
+        private System.Windows.Forms.Button btAddUser;
+        private System.Windows.Forms.Button btEditUser;
         private System.Windows.Forms.DataGridView dgvUsers;
         private System.Windows.Forms.BindingSource usersBindingSource;
+        private System.Windows.Forms.Button btDeleteUser;
     }
 }

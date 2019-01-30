@@ -17,7 +17,7 @@ namespace CertificatesModel.Domain.UsersModel
             UserRights = "Пользователь";
         }
 
-        [Column("Id")]
+        [Column("ID")]
         public int Id { get; set; }
 
         [DisplayName("Имя пользователя")]

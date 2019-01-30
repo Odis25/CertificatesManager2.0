@@ -2,7 +2,7 @@
 
 namespace CertificatesModel.Interfaces
 {
-    interface IUsersLoader
+    public interface IUsersLoader
     {
         /// <summary>
         /// Получаем информацию о пользователе
@@ -15,5 +15,20 @@ namespace CertificatesModel.Interfaces
         /// </summary>
         /// <returns></returns>
         Users GetUsersList();
+        /// <summary>
+        /// Добавить нового пользователя
+        /// </summary>
+        /// <param name="newUser">Логин</param>
+        void AddNewUser(User newUser);
+        /// <summary>
+        /// Удалить пользователей
+        /// </summary>
+        /// <param name="arrayId">Массив Id пользователей</param>
+        void DeleteUsers(int[] arrayId);
+        /// <summary>
+        /// Изменить данные пользователя
+        /// </summary>
+        /// <param name="id"></param>
+        void EditUserData(User user);
     }
 }

@@ -17,8 +17,10 @@ namespace CertificatesViews
         private Control _currentControl;
         private User _currentUser;
 
+        // Событие для отслеживания изменения формы
         public event EventHandler Changed = delegate { };
 
+        // Список свидетельств
         private Certificates Certificates
         {
             get { return _certificates; }
@@ -28,6 +30,7 @@ namespace CertificatesViews
                 tsCertificatesQuantity.Text = _certificates.Count().ToString();
             }
         }
+        // текущий контрол ( TreeView )
         private Control CurrentControl
         {
             get { return _currentControl; }
@@ -41,6 +44,8 @@ namespace CertificatesViews
                 value.BringToFront();
             }
         }
+
+        // Текущий пользователей
         private User CurrentUser
         {
             set
@@ -141,15 +146,15 @@ namespace CertificatesViews
             form.ShowDialog();
         }
 
+        // Редактирование пользователей (только для администратора)
         private void OpenUserAccountsEditForm()
         {
             var model = AppLocator.ModelFactory.Create<UsersLoader>();
             var users = model.GetUsersList();
             var form = new ContainerForm<Users>();
-            form.Build(users);
-            // Событие формы
             form.Changed += delegate { };
-            form.ShowDialog();
+            form.Build(users);
+            form.ShowDialog(this);
         }
 
         #endregion
