@@ -43,8 +43,6 @@ namespace CertificatesModel.Repositories
         // Получаем список свидетельств соответствующих поисковому шаблону
         public static Certificates GetAllCertificatesFromDB(CertificateEventArgs pattern)
         {
-            var result = new Certificates();
-
             using (MetrologyDbContext db = new MetrologyDbContext())
             {
                 IQueryable<Certificate> querry = db.Certificates;
@@ -78,10 +76,8 @@ namespace CertificatesModel.Repositories
                 if (pattern.CalibrationExpireDate.HasValue)
                     querry = querry.Where(x => x.CalibrationExpireDate <= pattern.CalibrationExpireDate);
 
-                result = (Certificates)querry.ToList();
-            }
-
-            return result;
+                return new Certificates(querry.ToList());
+            }        
         }
 
         // Внесение изменений в свидетельство по шаблону
@@ -117,7 +113,7 @@ namespace CertificatesModel.Repositories
             {
                 foreach(var id in idList)
                 {
-                    var cert = _certificates.Find(x => x.ID == id);
+                    var cert = _certificates.Single(x => x.ID == id);
                     _certificates.Remove(cert);
                     db.Entry(cert).State = EntityState.Deleted;
                 }

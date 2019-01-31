@@ -1,65 +1,76 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace CertificatesModel
 {
-    public class Certificates : IEnumerable<Certificate>
+    public class Certificates : BindingList<Certificate> //IEnumerable<Certificate>
     {
-        protected List<Certificate> _list;
-
-        public Certificates()
+        public Certificates() :base()
         {
-            _list = new List<Certificate>();
+
         }
 
-        public Certificates(List<Certificate> list)
+        public Certificates(List<Certificate> list) : base(list)
         {
-            _list = list;
+
         }
 
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return GetEnumerator();
-        }
+        //protected List<Certificate> _list;
 
-        public IEnumerator<Certificate> GetEnumerator()
-        {
-            return _list.GetEnumerator();
-        }
+        //public Certificates()
+        //{
+        //    _list = new List<Certificate>();
+        //}
 
-        // Преобразование из List<Certificate> к типу Certificates
-        public static explicit operator Certificates(List<Certificate> v)
-        {            
-            return new Certificates(v);
-        }
+        //public Certificates(List<Certificate> list)
+        //{
+        //    _list = list;
+        //}
 
-        // Удаление элемента
-        public void Remove(Certificate cert)
-        {
-            _list.Remove(cert);
-        }
+        //IEnumerator IEnumerable.GetEnumerator()
+        //{
+        //    return GetEnumerator();
+        //}
 
-        // Поиск элемента
-        public Certificate Find(Predicate<Certificate> p)
-        {
-            return _list.Find(p);
-        }
+        //public IEnumerator<Certificate> GetEnumerator()
+        //{
+        //    return _list.GetEnumerator();
+        //}
 
-        // Добавление элемента
-        public void Add(Certificate item)
-        {
-            _list.Add(item);
-        }
+        //// Преобразование из List<Certificate> к типу Certificates
+        //public static explicit operator Certificates(List<Certificate> v)
+        //{            
+        //    return new Certificates(v);
+        //}
 
-        // Добавление коллекции элементов
-        public void AddRange(IEnumerable<Certificate> collection)
-        {
-            _list.AddRange(collection);
-        }
+        //// Удаление элемента
+        //public void Remove(Certificate cert)
+        //{
+        //    _list.Remove(cert);
+        //}
+
+        //// Поиск элемента
+        //public Certificate Find(Predicate<Certificate> p)
+        //{
+        //    return _list.Find(p);
+        //}
+
+        //// Добавление элемента
+        //public void Add(Certificate item)
+        //{
+        //    _list.Add(item);
+        //}
+
+        //// Добавление коллекции элементов
+        //public void AddRange(IEnumerable<Certificate> collection)
+        //{
+        //    _list.AddRange(collection);
+        //}
     }
 
     //public class Certificates : List<Year>

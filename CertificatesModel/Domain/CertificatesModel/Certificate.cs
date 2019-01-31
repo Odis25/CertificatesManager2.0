@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,7 +10,7 @@ using System.Threading.Tasks;
 namespace CertificatesModel
 {
     [Table("METROLOGY")]
-    public class Certificate //IComparable<Certificate>
+    public class Certificate
     {
         /// <summary>
         /// ID свидетельства в БД
@@ -82,14 +83,30 @@ namespace CertificatesModel
         [Column("PATH")]
         public string CertificatePath { get; set; }
 
-        ///// <summary>
-        ///// Сортировка по ID
-        ///// </summary>
-        ///// <param name="other"></param>
-        ///// <returns></returns>
-        //public int CompareTo(Certificate other)
-        //{
-        //    return this.ID.CompareTo(other.ID);
-        //}
+        //string _fileSize;
+        [NotMapped]
+        public virtual string FileSize
+        {
+            get
+            {
+                if (File.Exists(CertificatePath))
+                    return new FileInfo(CertificatePath).Length.ToString();
+                else
+                    return "---";
+            }
+        }
+
+        //string _fileCreationDate;
+        [NotMapped]
+        public virtual string FileCreationDate
+        {
+            get
+            {
+                if (File.Exists(CertificatePath))
+                    return new FileInfo(CertificatePath).CreationTime.ToString();
+                else
+                    return "---";
+            }
+        }
     }
 }

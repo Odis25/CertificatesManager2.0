@@ -113,6 +113,12 @@
     <Compile Include="Controls\CertificatePropertiesPanel.Designer.cs">
       <DependentUpon>CertificatePropertiesPanel.cs</DependentUpon>
     </Compile>
+    <Compile Include="Controls\CertificatesPanel2.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\CertificatesPanel2.Designer.cs">
+      <DependentUpon>CertificatesPanel2.cs</DependentUpon>
+    </Compile>
     <Compile Include="Controls\CertificatesPanel.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -173,6 +179,9 @@
     <EmbeddedResource Include="Controls\CertificatePropertiesPanel.resx">
       <DependentUpon>CertificatePropertiesPanel.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Controls\CertificatesPanel2.resx">
+      <DependentUpon>CertificatesPanel2.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Controls\CertificatesPanel.resx">
       <DependentUpon>CertificatesPanel.cs</DependentUpon>
     </EmbeddedResource>
@@ -207,6 +216,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+    <None Include="Properties\DataSources\CertificatesModel.Certificate.datasource" />
     <None Include="Properties\DataSources\CertificatesModel.Domain.UsersModel.Users.datasource" />
     <None Include="Resources\add+_16x16.png" />
   </ItemGroup>

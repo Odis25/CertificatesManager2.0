@@ -137,7 +137,7 @@ namespace CertificatesViews.Controls
             var editPattern = e as CertificateEventArgs;
             model.EditCertificate(editPattern);
 
-            Changed(this, EventArgs.Empty);
+            //Changed(this, EventArgs.Empty);
             MessageBox.Show("Изменения в свидетельство успешно внесены.", "Операция изменения", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
