@@ -1,11 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CertificatesModel
 {
@@ -83,7 +78,6 @@ namespace CertificatesModel
         [Column("PATH")]
         public string CertificatePath { get; set; }
 
-        //string _fileSize;
         [NotMapped]
         public virtual string FileSize
         {
@@ -96,7 +90,6 @@ namespace CertificatesModel
             }
         }
 
-        //string _fileCreationDate;
         [NotMapped]
         public virtual string FileCreationDate
         {

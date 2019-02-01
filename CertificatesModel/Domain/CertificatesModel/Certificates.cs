@@ -1,18 +1,13 @@
-﻿using System;
-using System.Collections;
+﻿using CertificatesModel.Components;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CertificatesModel
 {
-    public class Certificates : BindingList<Certificate> //IEnumerable<Certificate>
+    public class Certificates : SortableBindingList<Certificate> //IEnumerable<Certificate>
     {
         public Certificates() :base()
         {
-
+            
         }
 
         public Certificates(List<Certificate> list) : base(list)

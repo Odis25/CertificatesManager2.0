@@ -6,9 +6,15 @@ using System.Threading.Tasks;
 
 namespace CertificatesViews.Interfaces
 {
-    public interface IView<T>
+    interface IView<T>
     {
         event EventHandler Changed;
-        void Build(T obj);
+        void Build(T arg1);
+    }
+
+    interface IView<T,V>
+    {
+        event EventHandler Changed;
+        void Build(T arg1, V arg2);
     }
 }

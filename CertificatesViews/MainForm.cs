@@ -135,7 +135,7 @@ namespace CertificatesViews
         private void MainForm_Changed(object sender, EventArgs e)
         {
             //TODO: Антипаттерн. Переделать
-            (CurrentControl as CertificatesPanel2).ShowOrHidePreviewPanel();
+            (CurrentControl as CertificatesPanel).ShowOrHidePreviewPanel();
         }
 
         private void OpenUserChangingForm()

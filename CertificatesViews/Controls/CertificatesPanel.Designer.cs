@@ -34,27 +34,29 @@ namespace CertificatesViews.Controls
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(CertificatesPanel));
             this.scMainSpliter = new System.Windows.Forms.SplitContainer();
             this.scSecondarySpliter = new System.Windows.Forms.SplitContainer();
+            this.dgvCerts = new System.Windows.Forms.DataGridView();
+            this.iDDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.yearDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.contractNumberDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.certificateNumberDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.registerNumberDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.verificationMethodDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewLinkColumn();
+            this.clientNameDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.objectNameDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.deviceTypeDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.deviceNameDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.serialNumberDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.calibrationDateDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.calibrationExpireDateDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.certificatePathDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.fileSizeDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.FileCreationDate = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.certificateBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.panMain = new System.Windows.Forms.Panel();
             this.panPreview = new System.Windows.Forms.Panel();
             this.scPreviewSplitter = new System.Windows.Forms.SplitContainer();
             this.niCertificatesManager = new System.Windows.Forms.NotifyIcon(this.components);
             this.tvCertificates = new CertificatesViews.Components.TreeViewModified();
-            this.lvCertificatesDetails = new CertificatesViews.Components.ListViewModified();
-            this.headerId = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.headerContractNumber = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.headerCertificateNumber = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.headerRegisterNumber = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.headerVerificationMethod = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.headerClientName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.headerObjectName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.headerDeviceType = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.headerDeviceName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.headerSerialNumber = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.headerCalibrationDate = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.headerCalibrationExpireDate = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.headerCertificatePath = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.headerFileSize = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.headerFileCreationDate = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             ((System.ComponentModel.ISupportInitialize)(this.scMainSpliter)).BeginInit();
             this.scMainSpliter.Panel1.SuspendLayout();
             this.scMainSpliter.Panel2.SuspendLayout();
@@ -62,6 +64,8 @@ namespace CertificatesViews.Controls
             ((System.ComponentModel.ISupportInitialize)(this.scSecondarySpliter)).BeginInit();
             this.scSecondarySpliter.Panel1.SuspendLayout();
             this.scSecondarySpliter.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvCerts)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.certificateBindingSource)).BeginInit();
             this.panMain.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.scPreviewSplitter)).BeginInit();
             this.scPreviewSplitter.Panel1.SuspendLayout();
@@ -83,7 +87,7 @@ namespace CertificatesViews.Controls
             // 
             // scMainSpliter.Panel2
             // 
-            this.scMainSpliter.Panel2.Controls.Add(this.lvCertificatesDetails);
+            this.scMainSpliter.Panel2.Controls.Add(this.dgvCerts);
             this.scMainSpliter.Size = new System.Drawing.Size(666, 517);
             this.scMainSpliter.SplitterDistance = 298;
             this.scMainSpliter.TabIndex = 2;
@@ -102,6 +106,160 @@ namespace CertificatesViews.Controls
             this.scSecondarySpliter.Size = new System.Drawing.Size(666, 298);
             this.scSecondarySpliter.SplitterDistance = 221;
             this.scSecondarySpliter.TabIndex = 0;
+            // 
+            // dgvCerts
+            // 
+            this.dgvCerts.AllowUserToAddRows = false;
+            this.dgvCerts.AllowUserToDeleteRows = false;
+            this.dgvCerts.AllowUserToResizeRows = false;
+            this.dgvCerts.AutoGenerateColumns = false;
+            this.dgvCerts.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvCerts.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.iDDataGridViewTextBoxColumn,
+            this.yearDataGridViewTextBoxColumn,
+            this.contractNumberDataGridViewTextBoxColumn,
+            this.certificateNumberDataGridViewTextBoxColumn,
+            this.registerNumberDataGridViewTextBoxColumn,
+            this.verificationMethodDataGridViewTextBoxColumn,
+            this.clientNameDataGridViewTextBoxColumn,
+            this.objectNameDataGridViewTextBoxColumn,
+            this.deviceTypeDataGridViewTextBoxColumn,
+            this.deviceNameDataGridViewTextBoxColumn,
+            this.serialNumberDataGridViewTextBoxColumn,
+            this.calibrationDateDataGridViewTextBoxColumn,
+            this.calibrationExpireDateDataGridViewTextBoxColumn,
+            this.certificatePathDataGridViewTextBoxColumn,
+            this.fileSizeDataGridViewTextBoxColumn,
+            this.FileCreationDate});
+            this.dgvCerts.DataSource = this.certificateBindingSource;
+            this.dgvCerts.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dgvCerts.Location = new System.Drawing.Point(0, 0);
+            this.dgvCerts.Name = "dgvCerts";
+            this.dgvCerts.ReadOnly = true;
+            this.dgvCerts.RowHeadersVisible = false;
+            this.dgvCerts.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.dgvCerts.Size = new System.Drawing.Size(666, 215);
+            this.dgvCerts.TabIndex = 0;
+            this.dgvCerts.RowPrePaint += new System.Windows.Forms.DataGridViewRowPrePaintEventHandler(this.dgvCerts_RowPrePaint);
+            this.dgvCerts.SelectionChanged += new System.EventHandler(this.dgvCerts_SelectionChanged);
+            // 
+            // iDDataGridViewTextBoxColumn
+            // 
+            this.iDDataGridViewTextBoxColumn.DataPropertyName = "ID";
+            this.iDDataGridViewTextBoxColumn.HeaderText = "Id";
+            this.iDDataGridViewTextBoxColumn.Name = "iDDataGridViewTextBoxColumn";
+            this.iDDataGridViewTextBoxColumn.ReadOnly = true;
+            // 
+            // yearDataGridViewTextBoxColumn
+            // 
+            this.yearDataGridViewTextBoxColumn.DataPropertyName = "Year";
+            this.yearDataGridViewTextBoxColumn.HeaderText = "Год";
+            this.yearDataGridViewTextBoxColumn.Name = "yearDataGridViewTextBoxColumn";
+            this.yearDataGridViewTextBoxColumn.ReadOnly = true;
+            // 
+            // contractNumberDataGridViewTextBoxColumn
+            // 
+            this.contractNumberDataGridViewTextBoxColumn.DataPropertyName = "ContractNumber";
+            this.contractNumberDataGridViewTextBoxColumn.HeaderText = "Номер договора";
+            this.contractNumberDataGridViewTextBoxColumn.Name = "contractNumberDataGridViewTextBoxColumn";
+            this.contractNumberDataGridViewTextBoxColumn.ReadOnly = true;
+            // 
+            // certificateNumberDataGridViewTextBoxColumn
+            // 
+            this.certificateNumberDataGridViewTextBoxColumn.DataPropertyName = "CertificateNumber";
+            this.certificateNumberDataGridViewTextBoxColumn.HeaderText = "Номер свидетельства";
+            this.certificateNumberDataGridViewTextBoxColumn.Name = "certificateNumberDataGridViewTextBoxColumn";
+            this.certificateNumberDataGridViewTextBoxColumn.ReadOnly = true;
+            // 
+            // registerNumberDataGridViewTextBoxColumn
+            // 
+            this.registerNumberDataGridViewTextBoxColumn.DataPropertyName = "RegisterNumber";
+            this.registerNumberDataGridViewTextBoxColumn.HeaderText = "Номер в гос. реестре";
+            this.registerNumberDataGridViewTextBoxColumn.Name = "registerNumberDataGridViewTextBoxColumn";
+            this.registerNumberDataGridViewTextBoxColumn.ReadOnly = true;
+            // 
+            // verificationMethodDataGridViewTextBoxColumn
+            // 
+            this.verificationMethodDataGridViewTextBoxColumn.DataPropertyName = "VerificationMethod";
+            this.verificationMethodDataGridViewTextBoxColumn.HeaderText = "Методика поверки";
+            this.verificationMethodDataGridViewTextBoxColumn.Name = "verificationMethodDataGridViewTextBoxColumn";
+            this.verificationMethodDataGridViewTextBoxColumn.ReadOnly = true;
+            this.verificationMethodDataGridViewTextBoxColumn.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.verificationMethodDataGridViewTextBoxColumn.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            // 
+            // clientNameDataGridViewTextBoxColumn
+            // 
+            this.clientNameDataGridViewTextBoxColumn.DataPropertyName = "ClientName";
+            this.clientNameDataGridViewTextBoxColumn.HeaderText = "Заказчик";
+            this.clientNameDataGridViewTextBoxColumn.Name = "clientNameDataGridViewTextBoxColumn";
+            this.clientNameDataGridViewTextBoxColumn.ReadOnly = true;
+            // 
+            // objectNameDataGridViewTextBoxColumn
+            // 
+            this.objectNameDataGridViewTextBoxColumn.DataPropertyName = "ObjectName";
+            this.objectNameDataGridViewTextBoxColumn.HeaderText = "Объект эксплуатации";
+            this.objectNameDataGridViewTextBoxColumn.Name = "objectNameDataGridViewTextBoxColumn";
+            this.objectNameDataGridViewTextBoxColumn.ReadOnly = true;
+            // 
+            // deviceTypeDataGridViewTextBoxColumn
+            // 
+            this.deviceTypeDataGridViewTextBoxColumn.DataPropertyName = "DeviceType";
+            this.deviceTypeDataGridViewTextBoxColumn.HeaderText = "Группа СИ";
+            this.deviceTypeDataGridViewTextBoxColumn.Name = "deviceTypeDataGridViewTextBoxColumn";
+            this.deviceTypeDataGridViewTextBoxColumn.ReadOnly = true;
+            // 
+            // deviceNameDataGridViewTextBoxColumn
+            // 
+            this.deviceNameDataGridViewTextBoxColumn.DataPropertyName = "DeviceName";
+            this.deviceNameDataGridViewTextBoxColumn.HeaderText = "Наименование СИ";
+            this.deviceNameDataGridViewTextBoxColumn.Name = "deviceNameDataGridViewTextBoxColumn";
+            this.deviceNameDataGridViewTextBoxColumn.ReadOnly = true;
+            // 
+            // serialNumberDataGridViewTextBoxColumn
+            // 
+            this.serialNumberDataGridViewTextBoxColumn.DataPropertyName = "SerialNumber";
+            this.serialNumberDataGridViewTextBoxColumn.HeaderText = "Серийный номер";
+            this.serialNumberDataGridViewTextBoxColumn.Name = "serialNumberDataGridViewTextBoxColumn";
+            this.serialNumberDataGridViewTextBoxColumn.ReadOnly = true;
+            // 
+            // calibrationDateDataGridViewTextBoxColumn
+            // 
+            this.calibrationDateDataGridViewTextBoxColumn.DataPropertyName = "CalibrationDate";
+            this.calibrationDateDataGridViewTextBoxColumn.HeaderText = "Дата поверки";
+            this.calibrationDateDataGridViewTextBoxColumn.Name = "calibrationDateDataGridViewTextBoxColumn";
+            this.calibrationDateDataGridViewTextBoxColumn.ReadOnly = true;
+            // 
+            // calibrationExpireDateDataGridViewTextBoxColumn
+            // 
+            this.calibrationExpireDateDataGridViewTextBoxColumn.DataPropertyName = "CalibrationExpireDate";
+            this.calibrationExpireDateDataGridViewTextBoxColumn.HeaderText = "Дата истечения поверки";
+            this.calibrationExpireDateDataGridViewTextBoxColumn.Name = "calibrationExpireDateDataGridViewTextBoxColumn";
+            this.calibrationExpireDateDataGridViewTextBoxColumn.ReadOnly = true;
+            // 
+            // certificatePathDataGridViewTextBoxColumn
+            // 
+            this.certificatePathDataGridViewTextBoxColumn.DataPropertyName = "CertificatePath";
+            this.certificatePathDataGridViewTextBoxColumn.HeaderText = "Путь к файлу";
+            this.certificatePathDataGridViewTextBoxColumn.Name = "certificatePathDataGridViewTextBoxColumn";
+            this.certificatePathDataGridViewTextBoxColumn.ReadOnly = true;
+            // 
+            // fileSizeDataGridViewTextBoxColumn
+            // 
+            this.fileSizeDataGridViewTextBoxColumn.DataPropertyName = "FileSize";
+            this.fileSizeDataGridViewTextBoxColumn.HeaderText = "Размер файла";
+            this.fileSizeDataGridViewTextBoxColumn.Name = "fileSizeDataGridViewTextBoxColumn";
+            this.fileSizeDataGridViewTextBoxColumn.ReadOnly = true;
+            // 
+            // FileCreationDate
+            // 
+            this.FileCreationDate.DataPropertyName = "FileCreationDate";
+            this.FileCreationDate.HeaderText = "Дата создания файла";
+            this.FileCreationDate.Name = "FileCreationDate";
+            this.FileCreationDate.ReadOnly = true;
+            // 
+            // certificateBindingSource
+            // 
+            this.certificateBindingSource.DataSource = typeof(CertificatesModel.Certificate);
             // 
             // panMain
             // 
@@ -156,107 +314,13 @@ namespace CertificatesViews.Controls
             this.tvCertificates.AfterCheck += new System.Windows.Forms.TreeViewEventHandler(this.tvCertificates_AfterCheck);
             this.tvCertificates.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.tvCertificates_AfterSelect);
             // 
-            // lvCertificatesDetails
-            // 
-            this.lvCertificatesDetails.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.headerId,
-            this.headerContractNumber,
-            this.headerCertificateNumber,
-            this.headerRegisterNumber,
-            this.headerVerificationMethod,
-            this.headerClientName,
-            this.headerObjectName,
-            this.headerDeviceType,
-            this.headerDeviceName,
-            this.headerSerialNumber,
-            this.headerCalibrationDate,
-            this.headerCalibrationExpireDate,
-            this.headerCertificatePath,
-            this.headerFileSize,
-            this.headerFileCreationDate});
-            this.lvCertificatesDetails.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lvCertificatesDetails.FullRowSelect = true;
-            this.lvCertificatesDetails.GridLines = true;
-            this.lvCertificatesDetails.HeaderContextMenu = null;
-            this.lvCertificatesDetails.Location = new System.Drawing.Point(0, 0);
-            this.lvCertificatesDetails.Name = "lvCertificatesDetails";
-            this.lvCertificatesDetails.Size = new System.Drawing.Size(666, 215);
-            this.lvCertificatesDetails.TabIndex = 0;
-            this.lvCertificatesDetails.UseCompatibleStateImageBehavior = false;
-            this.lvCertificatesDetails.View = System.Windows.Forms.View.Details;
-            this.lvCertificatesDetails.ItemSelectionChanged += new System.Windows.Forms.ListViewItemSelectionChangedEventHandler(this.lvCertificatesDetails_ItemSelectionChanged);
-            // 
-            // headerId
-            // 
-            this.headerId.Text = "Id";
-            this.headerId.Width = 49;
-            // 
-            // headerContractNumber
-            // 
-            this.headerContractNumber.Text = "Номер договора";
-            this.headerContractNumber.Width = 103;
-            // 
-            // headerCertificateNumber
-            // 
-            this.headerCertificateNumber.Text = "Номер свидетельства";
-            this.headerCertificateNumber.Width = 131;
-            // 
-            // headerRegisterNumber
-            // 
-            this.headerRegisterNumber.Text = "Номер в гос. реестре";
-            this.headerRegisterNumber.Width = 127;
-            // 
-            // headerVerificationMethod
-            // 
-            this.headerVerificationMethod.Text = "Методика поверки";
-            // 
-            // headerClientName
-            // 
-            this.headerClientName.Text = "Заказчик";
-            // 
-            // headerObjectName
-            // 
-            this.headerObjectName.Text = "Объект эксплуатации";
-            // 
-            // headerDeviceType
-            // 
-            this.headerDeviceType.Text = "Группа СИ";
-            // 
-            // headerDeviceName
-            // 
-            this.headerDeviceName.Text = "Наименование СИ";
-            // 
-            // headerSerialNumber
-            // 
-            this.headerSerialNumber.Text = "Заводской номер";
-            // 
-            // headerCalibrationDate
-            // 
-            this.headerCalibrationDate.Text = "Дата поверки";
-            // 
-            // headerCalibrationExpireDate
-            // 
-            this.headerCalibrationExpireDate.Text = "Дата окончания срока поверки";
-            // 
-            // headerCertificatePath
-            // 
-            this.headerCertificatePath.Text = "Путь к файлу";
-            // 
-            // headerFileSize
-            // 
-            this.headerFileSize.Text = "Размер файла";
-            // 
-            // headerFileCreationDate
-            // 
-            this.headerFileCreationDate.Text = "Дата создания файла";
-            // 
-            // CertificatesPanel
+            // CertificatesPanel2
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.Controls.Add(this.scPreviewSplitter);
-            this.Name = "CertificatesPanel";
+            this.Name = "CertificatesPanel2";
             this.Size = new System.Drawing.Size(1105, 517);
             this.scMainSpliter.Panel1.ResumeLayout(false);
             this.scMainSpliter.Panel2.ResumeLayout(false);
@@ -265,6 +329,8 @@ namespace CertificatesViews.Controls
             this.scSecondarySpliter.Panel1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.scSecondarySpliter)).EndInit();
             this.scSecondarySpliter.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dgvCerts)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.certificateBindingSource)).EndInit();
             this.panMain.ResumeLayout(false);
             this.scPreviewSplitter.Panel1.ResumeLayout(false);
             this.scPreviewSplitter.Panel2.ResumeLayout(false);
@@ -278,25 +344,27 @@ namespace CertificatesViews.Controls
         private System.Windows.Forms.SplitContainer scMainSpliter;
         private System.Windows.Forms.SplitContainer scSecondarySpliter;
         private TreeViewModified tvCertificates;
-        private Components.ListViewModified lvCertificatesDetails;
-        private System.Windows.Forms.ColumnHeader headerId;
-        private System.Windows.Forms.ColumnHeader headerContractNumber;
-        private System.Windows.Forms.ColumnHeader headerCertificateNumber;
-        private System.Windows.Forms.ColumnHeader headerRegisterNumber;
-        private System.Windows.Forms.ColumnHeader headerVerificationMethod;
-        private System.Windows.Forms.ColumnHeader headerClientName;
-        private System.Windows.Forms.ColumnHeader headerObjectName;
-        private System.Windows.Forms.ColumnHeader headerDeviceType;
-        private System.Windows.Forms.ColumnHeader headerDeviceName;
-        private System.Windows.Forms.ColumnHeader headerSerialNumber;
-        private System.Windows.Forms.ColumnHeader headerCalibrationDate;
-        private System.Windows.Forms.ColumnHeader headerCalibrationExpireDate;
-        private System.Windows.Forms.ColumnHeader headerCertificatePath;
-        private System.Windows.Forms.ColumnHeader headerFileSize;
-        private System.Windows.Forms.ColumnHeader headerFileCreationDate;
         private System.Windows.Forms.Panel panMain;
         private System.Windows.Forms.Panel panPreview;
         private System.Windows.Forms.SplitContainer scPreviewSplitter;
         private System.Windows.Forms.NotifyIcon niCertificatesManager;
+        private System.Windows.Forms.DataGridView dgvCerts;
+        private System.Windows.Forms.BindingSource certificateBindingSource;
+        private System.Windows.Forms.DataGridViewTextBoxColumn iDDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn yearDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn contractNumberDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn certificateNumberDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn registerNumberDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewLinkColumn verificationMethodDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn clientNameDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn objectNameDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn deviceTypeDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn deviceNameDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn serialNumberDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn calibrationDateDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn calibrationExpireDateDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn certificatePathDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn fileSizeDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn FileCreationDate;
     }
 }

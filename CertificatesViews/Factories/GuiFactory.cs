@@ -10,8 +10,8 @@ namespace CertificatesViews.Factories
     {
         public GuiFactory()
         {
-            Register<IView<Certificates>, CertificatesPanel2>();
-            Register<IViewAndEdit<Certificate>, CertificatePropertiesPanel>();
+            Register<IView<Certificates>, CertificatesPanel>();
+            Register<IViewAndEdit<Certificate, Certificates>, CertificatePropertiesPanel>();
             Register<IView<string>, PreviewPanel>();
             Register<IView<User>, AuthorizationPanel>();
             Register<IView<Users>, UsersAdministrationPanel>();

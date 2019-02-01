@@ -105,10 +105,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Authorization\AccessRights.cs" />
     <Compile Include="Authorization\Authorization.cs" />
     <Compile Include="Authorization\NativeMethods.cs" />
     <Compile Include="Authorization\Validate.cs" />
+    <Compile Include="Components\SortableBindingList.cs" />
     <Compile Include="Domain\UsersModel\User.cs" />
     <Compile Include="Components\CertificateEventArgs.cs" />
     <Compile Include="Components\Crypting.cs" />

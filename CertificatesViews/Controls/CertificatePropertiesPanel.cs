@@ -8,10 +8,11 @@ using System.IO;
 
 namespace CertificatesViews.Controls
 {
-    public partial class CertificatePropertiesPanel : UserControl, IViewAndEdit<Certificate>
+    public partial class CertificatePropertiesPanel : UserControl, IViewAndEdit<Certificate, Certificates>
     {
         // Свидетельство
         Certificate _certificate;
+        Certificates _certificates;
 
         // Событие изменения формы
         public event EventHandler Changed = delegate { };
@@ -26,14 +27,34 @@ namespace CertificatesViews.Controls
             CheckBoxes_CheckedChanged(this, EventArgs.Empty);
         }
 
-        public void Build(Certificate certificate)
+        public void Build(Certificate certificate, Certificates certificates)
         {
             if (_certificate != certificate)
                 _certificate = certificate;
 
+            if (_certificates != certificates)
+            {
+                _certificates = certificates;
+                CreateAutoCompleteCollection();
+            }
+           
             // Заполняем текстбоксы
             if (certificate != null)
                 FillTextBoxes(certificate);
+        }
+
+        private void CreateAutoCompleteCollection()
+        {
+            tbCertificateNumber.AutoCompleteCustomSource.AddRange(_certificates.Select(x => x.CertificateNumber).Distinct().Where(x=> x != null).ToArray());
+            tbRegisterNumber.AutoCompleteCustomSource.AddRange(_certificates.Select(x => x.RegisterNumber).Distinct().Where(x => x != null).ToArray());
+            tbContractNumber.AutoCompleteCustomSource.AddRange(_certificates.Select(x => x.ContractNumber).Distinct().Where(x => x != null).ToArray());
+            tbClientName.AutoCompleteCustomSource.AddRange(_certificates.Select(x => x.ClientName).Distinct().Where(x => x != null).ToArray());
+            tbObjectName.AutoCompleteCustomSource.AddRange(_certificates.Select(x => x.ObjectName).Distinct().Where(x => x != null).ToArray());
+            tbDeviceType.AutoCompleteCustomSource.AddRange(_certificates.Select(x => x.DeviceType).Distinct().Where(x => x != null).ToArray());
+            tbDeviceName.AutoCompleteCustomSource.AddRange(_certificates.Select(x => x.DeviceName).Distinct().Where(x => x != null).ToArray());
+            tbSerialNumber.AutoCompleteCustomSource.AddRange(_certificates.Select(x => x.SerialNumber).Distinct().Where(x => x != null).ToArray());
+
+            cbVerificationMethod.AutoCompleteCustomSource.AddRange(_certificates.Select(x => x.VerificationMethod).Distinct().Where(x => x != null).ToArray());
         }
 
         // Заполняем форму данными

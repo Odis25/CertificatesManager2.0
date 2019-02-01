@@ -363,6 +363,8 @@
             // 
             // cbVerificationMethod
             // 
+            this.cbVerificationMethod.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.cbVerificationMethod.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource;
             this.cbVerificationMethod.FormattingEnabled = true;
             this.cbVerificationMethod.Location = new System.Drawing.Point(178, 130);
             this.cbVerificationMethod.Name = "cbVerificationMethod";
@@ -371,6 +373,8 @@
             // 
             // tbSerialNumber
             // 
+            this.tbSerialNumber.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.tbSerialNumber.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource;
             this.tbSerialNumber.Location = new System.Drawing.Point(178, 287);
             this.tbSerialNumber.Name = "tbSerialNumber";
             this.tbSerialNumber.Size = new System.Drawing.Size(200, 20);
@@ -387,6 +391,8 @@
             // 
             // tbDeviceName
             // 
+            this.tbDeviceName.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.tbDeviceName.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource;
             this.tbDeviceName.Location = new System.Drawing.Point(178, 261);
             this.tbDeviceName.Name = "tbDeviceName";
             this.tbDeviceName.Size = new System.Drawing.Size(200, 20);
@@ -403,6 +409,8 @@
             // 
             // tbDeviceType
             // 
+            this.tbDeviceType.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.tbDeviceType.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource;
             this.tbDeviceType.Location = new System.Drawing.Point(178, 235);
             this.tbDeviceType.Name = "tbDeviceType";
             this.tbDeviceType.Size = new System.Drawing.Size(200, 20);
@@ -419,6 +427,8 @@
             // 
             // tbObjectName
             // 
+            this.tbObjectName.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.tbObjectName.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource;
             this.tbObjectName.Location = new System.Drawing.Point(178, 209);
             this.tbObjectName.Name = "tbObjectName";
             this.tbObjectName.Size = new System.Drawing.Size(200, 20);
@@ -435,6 +445,8 @@
             // 
             // tbClientName
             // 
+            this.tbClientName.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.tbClientName.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource;
             this.tbClientName.Location = new System.Drawing.Point(178, 183);
             this.tbClientName.Name = "tbClientName";
             this.tbClientName.Size = new System.Drawing.Size(200, 20);
@@ -451,6 +463,8 @@
             // 
             // tbContractNumber
             // 
+            this.tbContractNumber.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.tbContractNumber.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource;
             this.tbContractNumber.Location = new System.Drawing.Point(178, 157);
             this.tbContractNumber.Name = "tbContractNumber";
             this.tbContractNumber.Size = new System.Drawing.Size(200, 20);
@@ -476,6 +490,8 @@
             // 
             // tbRegisterNumber
             // 
+            this.tbRegisterNumber.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.tbRegisterNumber.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource;
             this.tbRegisterNumber.Location = new System.Drawing.Point(178, 105);
             this.tbRegisterNumber.Name = "tbRegisterNumber";
             this.tbRegisterNumber.Size = new System.Drawing.Size(200, 20);
@@ -492,6 +508,8 @@
             // 
             // tbCertificateNumber
             // 
+            this.tbCertificateNumber.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.tbCertificateNumber.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource;
             this.tbCertificateNumber.Location = new System.Drawing.Point(178, 79);
             this.tbCertificateNumber.Name = "tbCertificateNumber";
             this.tbCertificateNumber.Size = new System.Drawing.Size(200, 20);

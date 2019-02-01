@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace CertificatesViews.Interfaces
 {
-    interface IViewAndEdit<T>: IView<T>
+    interface IViewAndEdit<T,V>: IView<T,V>
     {
         event EventHandler Edited;
         event EventHandler Deleted;
