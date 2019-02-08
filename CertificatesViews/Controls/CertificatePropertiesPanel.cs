@@ -5,10 +5,12 @@ using System;
 using System.Windows.Forms;
 using System.Linq;
 using System.IO;
+using System.Drawing;
+using CertificatesModel.Authorization;
 
 namespace CertificatesViews.Controls
 {
-    public partial class CertificatePropertiesPanel : UserControl, IViewAndEdit<Certificate, Certificates>
+    public partial class CertificatePropertiesPanel : UserControl, IDetailsView<Certificate, Certificates>
     {
         // Свидетельство
         Certificate _certificate;
@@ -25,6 +27,10 @@ namespace CertificatesViews.Controls
             InitializeComponent();
 
             CheckBoxes_CheckedChanged(this, EventArgs.Empty);
+            // Событие смены пользователя
+            Authorization.UserChanged += delegate { UserChanged(); };
+
+            UserChanged();
         }
 
         public void Build(Certificate certificate, Certificates certificates)
@@ -37,12 +43,28 @@ namespace CertificatesViews.Controls
                 _certificates = certificates;
                 CreateAutoCompleteCollection();
             }
-           
+
             // Заполняем текстбоксы
             if (certificate != null)
                 FillTextBoxes(certificate);
         }
 
+        // Состояние кнопок
+        private void UserChanged()
+        {
+            if (Authorization.CurrentUser.UserRights.ToLower() == "user")
+            {
+                btDelete.Enabled = false;
+                btEdit.Enabled = false;
+            }
+            else
+            {
+                btDelete.Enabled = true;
+                btEdit.Enabled = true;
+            }
+        }
+
+        // Списки автозаполнения для textbox и combobox
         private void CreateAutoCompleteCollection()
         {
             tbCertificateNumber.AutoCompleteCustomSource.AddRange(_certificates.Select(x => x.CertificateNumber).Distinct().Where(x=> x != null).ToArray());
@@ -53,8 +75,7 @@ namespace CertificatesViews.Controls
             tbDeviceType.AutoCompleteCustomSource.AddRange(_certificates.Select(x => x.DeviceType).Distinct().Where(x => x != null).ToArray());
             tbDeviceName.AutoCompleteCustomSource.AddRange(_certificates.Select(x => x.DeviceName).Distinct().Where(x => x != null).ToArray());
             tbSerialNumber.AutoCompleteCustomSource.AddRange(_certificates.Select(x => x.SerialNumber).Distinct().Where(x => x != null).ToArray());
-
-            cbVerificationMethod.AutoCompleteCustomSource.AddRange(_certificates.Select(x => x.VerificationMethod).Distinct().Where(x => x != null).ToArray());
+            cbVerificationMethod.Items.AddRange(_certificates.Select(x => x.VerificationMethod).Distinct().Where(x => x != null).ToArray());
         }
 
         // Заполняем форму данными
@@ -166,6 +187,35 @@ namespace CertificatesViews.Controls
 
             // Возвращаем сформированный шаблон
             return pattern;
+        }
+
+        // Отрисовка подсказок для списка Item в комбобоксе методик поверки
+        private void cbVerificationMethod_DrawItem(object sender, DrawItemEventArgs e)
+        {
+            if (e.Index == -1)
+                return;
+
+            string text = cbVerificationMethod.GetItemText(cbVerificationMethod.Items[e.Index]);
+            e.DrawBackground();
+            using (SolidBrush br = new SolidBrush(e.ForeColor))
+            {
+                e.Graphics.DrawString(text, e.Font, br, e.Bounds);
+            }
+
+            if ((e.State & DrawItemState.Selected) == DrawItemState.Selected)
+            {
+                tipVerificationMethodItems.Show(text, cbVerificationMethod, e.Bounds.Right, e.Bounds.Bottom);
+            }
+            else
+            {
+                tipVerificationMethodItems.Hide(cbVerificationMethod);
+            }
+            e.DrawFocusRectangle();
+        }
+
+        private void cbVerificationMethod_DropDownClosed(object sender, EventArgs e)
+        {
+            tipVerificationMethodItems.Hide(cbVerificationMethod);
         }
     }
 }

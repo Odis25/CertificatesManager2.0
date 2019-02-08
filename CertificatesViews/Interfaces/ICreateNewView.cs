@@ -6,9 +6,7 @@ using System.Threading.Tasks;
 
 namespace CertificatesViews.Interfaces
 {
-    interface IDetailsView<T,V>: IView<T,V>
+    interface ICreateNewView<T>: IView<T>
     {
-        event EventHandler Edited;
-        event EventHandler Deleted;
     }
 }

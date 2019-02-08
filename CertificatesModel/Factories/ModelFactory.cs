@@ -8,6 +8,7 @@ namespace CertificatesModel.Factories
         {
             Register<ICertificatesLoader, CertificatesLoader>();
             Register<IUsersLoader, UsersLoader>();
+            Register<IScanner, Scanner>();
         }
     }
 }

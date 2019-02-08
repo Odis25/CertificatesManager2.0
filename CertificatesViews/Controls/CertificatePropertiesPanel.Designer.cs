@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.chbCalibrationExpireDate = new System.Windows.Forms.CheckBox();
             this.chbCalibrationDate = new System.Windows.Forms.CheckBox();
@@ -72,6 +73,7 @@
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
+            this.tipVerificationMethodItems = new System.Windows.Forms.ToolTip(this.components);
             this.groupBox2.SuspendLayout();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numYear)).BeginInit();
@@ -364,12 +366,17 @@
             // cbVerificationMethod
             // 
             this.cbVerificationMethod.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
-            this.cbVerificationMethod.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource;
+            this.cbVerificationMethod.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
+            this.cbVerificationMethod.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
+            this.cbVerificationMethod.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbVerificationMethod.FormattingEnabled = true;
             this.cbVerificationMethod.Location = new System.Drawing.Point(178, 130);
             this.cbVerificationMethod.Name = "cbVerificationMethod";
             this.cbVerificationMethod.Size = new System.Drawing.Size(200, 21);
+            this.cbVerificationMethod.Sorted = true;
             this.cbVerificationMethod.TabIndex = 5;
+            this.cbVerificationMethod.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.cbVerificationMethod_DrawItem);
+            this.cbVerificationMethod.DropDownClosed += new System.EventHandler(this.cbVerificationMethod_DropDownClosed);
             // 
             // tbSerialNumber
             // 
@@ -654,5 +661,6 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button btEdit;
         private System.Windows.Forms.Button btDelete;
+        private System.Windows.Forms.ToolTip tipVerificationMethodItems;
     }
 }

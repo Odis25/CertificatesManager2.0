@@ -14,7 +14,7 @@ namespace CertificatesModel.Domain.UsersModel
             Login = "";
             Password = "";
             Domain = "Incomsystem.ru";
-            UserRights = "Пользователь";
+            UserRights = "User";
         }
 
         [Column("ID")]

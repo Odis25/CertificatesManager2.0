@@ -3,6 +3,7 @@ using CertificatesModel.Domain.UsersModel;
 using CertificatesModel.Factories;
 using CertificatesViews.Controls;
 using CertificatesViews.Interfaces;
+using System.IO;
 
 namespace CertificatesViews.Factories
 {
@@ -11,10 +12,11 @@ namespace CertificatesViews.Factories
         public GuiFactory()
         {
             Register<IView<Certificates>, CertificatesPanel>();
-            Register<IViewAndEdit<Certificate, Certificates>, CertificatePropertiesPanel>();
+            Register<IDetailsView<Certificate, Certificates>, CertificatePropertiesPanel>();
             Register<IView<string>, PreviewPanel>();
             Register<IView<User>, AuthorizationPanel>();
             Register<IView<Users>, UsersAdministrationPanel>();
+            Register<ICreateNewView<MemoryStream>, NewCertificatePanel>();
         }
     }
 }

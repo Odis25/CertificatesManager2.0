@@ -1,4 +1,5 @@
 ﻿using CertificatesModel;
+using CertificatesModel.Authorization;
 using System;
 using System.Windows.Forms;
 
@@ -12,9 +13,23 @@ namespace CertificatesViews.Controls
         public SettingsForm()
         {
             InitializeComponent();
-            
+
             // Получаем настройки
             GetSettings();
+            // Проверяем права пользователя
+            CheckUserRights();
+        }
+
+        // Проверяем права пользователя
+        private void CheckUserRights()
+        {
+            if (Authorization.CurrentUser.UserRights.ToLower() == "user")
+            {
+                tbCertificatesFolderPath.Enabled = false;
+                tbCertificatesZipFolderPath.Enabled = false;
+                btChangeCertificatesFolderPath.Enabled = false;
+                btChangeCertificatesZipFolderPath.Enabled = false;
+            }                           
         }
 
         // Получение настроек приложения
@@ -38,16 +53,7 @@ namespace CertificatesViews.Controls
         // Сохраняем изменения настроек
         private void btSaveChanges_Click(object sender, EventArgs e)
         {
-            Settings.Instance.DataBasePath = tbDataBasePath.Text;
-            Settings.Instance.CertificatesFolderPath = tbCertificatesFolderPath.Text;
-            Settings.Instance.CertificatesZipFolderPath = tbCertificatesZipFolderPath.Text;
-            Settings.Instance.AutoPreviewEnabled = chbAutoPreviewEnabled.Checked;
-            Settings.Instance.SaveUserCredential = chbSaveUserCredential.Checked;
-
-            // Сериализуем класс настроек
-            Settings.Serialize();
-            btSaveChanges.Enabled = false;
-
+            SaveChanges();
             Changed(this, EventArgs.Empty); // сработка события на главной форме
         }
 
@@ -92,6 +98,27 @@ namespace CertificatesViews.Controls
             {
                 tbCertificatesZipFolderPath.Text = fbd.SelectedPath;
             }
+        }
+
+        // Сохранение настроек
+        private void SaveChanges()
+        {
+            Settings.Instance.DataBasePath = tbDataBasePath.Text;
+            Settings.Instance.CertificatesFolderPath = tbCertificatesFolderPath.Text;
+            Settings.Instance.CertificatesZipFolderPath = tbCertificatesZipFolderPath.Text;
+            Settings.Instance.AutoPreviewEnabled = chbAutoPreviewEnabled.Checked;
+            Settings.Instance.SaveUserCredential = chbSaveUserCredential.Checked;
+            // Сериализуем класс настроек
+            Settings.Serialize();
+            btSaveChanges.Enabled = false;            
+        }
+
+        // Сохранить и закрыть форму
+        private void btOk_Click(object sender, EventArgs e)
+        {
+            SaveChanges();
+            Changed(this, EventArgs.Empty); // сработка события на главной форме
+            Close();
         }
     }
 }

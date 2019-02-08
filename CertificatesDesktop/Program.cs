@@ -4,6 +4,7 @@ using CertificatesModel.Factories;
 using CertificatesViews;
 using CertificatesViews.Controls;
 using CertificatesViews.Factories;
+using CertificatesViews.Interfaces;
 using System;
 using System.Windows.Forms;
 
@@ -32,7 +33,7 @@ namespace CertificatesDesktop
            
             if (!Authorization.UserLogined)
             {
-                var loginForm = new ContainerForm<User>();
+                var loginForm = new ContainerForm<User, IView<User>>();
                 loginForm.Build(Authorization.CurrentUser);
 
                 loginForm.Changed += delegate { loginForm.DialogResult = DialogResult.OK; };

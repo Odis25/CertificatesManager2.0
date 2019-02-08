@@ -1,6 +1,6 @@
 ﻿namespace CertificatesViews.Controls
 {
-    partial class ContainerForm<T>
+    partial class ContainerForm<T,V>
     {
         /// <summary>
         /// Required designer variable.
@@ -34,6 +34,8 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoSize = true;
+            this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.ClientSize = new System.Drawing.Size(800, 450);
             this.Name = "ContainerForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;

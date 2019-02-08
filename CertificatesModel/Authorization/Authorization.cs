@@ -2,17 +2,9 @@
 using CertificatesModel.Factories;
 using CertificatesModel.Interfaces;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.DirectoryServices.AccountManagement;
 using System.IO;
-using System.Linq;
-using System.Net;
 using System.Runtime.Serialization.Formatters.Binary;
-using System.Security.Principal;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 
 namespace CertificatesModel.Authorization
 {
@@ -22,6 +14,8 @@ namespace CertificatesModel.Authorization
         /// Текущий пользователь
         /// </summary>
         public static User CurrentUser { get; set; }
+
+        public static event EventHandler UserChanged = delegate { };
 
         // Используются сетевые пути
         public static bool HasNetworkPaths
@@ -91,6 +85,8 @@ namespace CertificatesModel.Authorization
 
             CurrentUser = user;
             UserLogined = true;
+
+            UserChanged(new object(), EventArgs.Empty);
         }
 
         // Получаем логин/пароль пользователя, если они были сохранены

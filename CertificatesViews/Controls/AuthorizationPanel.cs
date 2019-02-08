@@ -20,10 +20,8 @@ namespace CertificatesViews.Controls
         {
             var parent = Parent as Form;
             parent.FormBorderStyle = FormBorderStyle.FixedToolWindow;
-            parent.Dock = DockStyle.Fill;
+            //parent.Dock = DockStyle.Fill;
             parent.Text = "Авторизация";
-            parent.Height = 240;
-            parent.Width = 480;
             parent.AcceptButton = btLogin;
             parent.CancelButton = btCancel;
 

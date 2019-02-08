@@ -23,5 +23,4 @@ namespace CertificatesModel.Factories
                 return (TInterface)Activator.CreateInstance(typeof(TInterface), arguments);
         }
     }
-
 }

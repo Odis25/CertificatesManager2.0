@@ -21,13 +21,9 @@ namespace CertificatesViews.Controls
 
         public void Build(Users obj)
         {
-            ParentForm.Dock = DockStyle.Left;
             ParentForm.Icon = Properties.Resources.Delicious;
-            ParentForm.Width = 455;
-            ParentForm.Height = 292;
             ParentForm.Text = "Администрирование пользователей";
-            Width = 445;
-            Height = 272;
+            ParentForm.FormBorderStyle = FormBorderStyle.FixedSingle;
 
             _usersList = obj;
 

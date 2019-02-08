@@ -102,7 +102,7 @@ namespace CertificatesViews.Controls
         // Построение панели свойств свидетельства
         private void BuildProperty()
         {
-            var view = AppLocator.GuiFactory.Create<IViewAndEdit<Certificate, Certificates>>();
+            var view = AppLocator.GuiFactory.Create<IDetailsView<Certificate, Certificates>>();
             view.Build(new Certificate(), _certificates);
             view.Changed += CertificatesPanel_Changed;
             view.Deleted += CertificatesPanel_Deleted;

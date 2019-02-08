@@ -15,13 +15,13 @@ namespace CertificatesViews.Controls
         PdfViewer _viewer;
         CancellationTokenSource _cts;
 
-        PdfViewer Viewer
+        public PdfViewer Viewer
         {
             get
             {
                 if (_viewer == null)
                     _viewer = new PdfViewer();
-                
+
                 return _viewer;
             }
         }
@@ -77,6 +77,42 @@ namespace CertificatesViews.Controls
                     panPages.Controls.Add(pb);
                     pb.Dock = DockStyle.Fill;
                 }
+            }
+            else
+                //Иначе оставляем панель пустой
+                Viewer.Document = null;
+
+            // Убираем CancellationTokenSource текущего метода из переменной класса
+            if (_cts == cts)
+                _cts = null;
+        }
+
+        async public void Build(MemoryStream stream)
+        {
+            // Отменяем предыдущий запрос
+            if (_cts != null)
+                _cts.Cancel();
+
+            // Создаем CancellationTokenSource для текущего метода, и передаем его в переменную класса
+            var cts = new CancellationTokenSource();
+            _cts = cts;
+
+            // Получаем токен отмены
+            var token = _cts.Token;
+
+            // Удаляем picturebox с предыдущего вызова и очищаем память
+            foreach (PictureBox c in panPages.Controls.OfType<PictureBox>())
+            { c.Dispose(); GC.Collect(); }
+
+            // Если файл доступен, то асинхронно загружаем его в панель предпросмотра
+            if (stream != null)
+            {
+                Viewer.Visible = true;
+
+                //TODO: Разобраться с утечкой памяти и асинхронностью
+                await Task.Delay(100, token);
+                Viewer.Document?.Dispose();
+                Viewer.Document = PdfDocument.Load(stream);
             }
             else
                 //Иначе оставляем панель пустой

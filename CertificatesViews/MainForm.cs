@@ -6,6 +6,7 @@ using CertificatesViews.Controls;
 using CertificatesViews.Factories;
 using CertificatesViews.Interfaces;
 using System;
+using System.IO;
 using System.Linq;
 using System.Windows.Forms;
 
@@ -76,7 +77,18 @@ namespace CertificatesViews
         public MainForm()
         {
             InitializeComponent();
+            Authorization.UserChanged += Authorization_UserChanged;
             BuildTreeView();
+            Authorization_UserChanged(this, EventArgs.Empty);
+        }
+
+        // Событие смены пользователя
+        private void Authorization_UserChanged(object sender, EventArgs e)
+        {
+            if (Authorization.CurrentUser.UserRights.ToLower() == "administrator")
+                btUsersEdit.Enabled = true;
+            else
+                btUsersEdit.Enabled = false;
         }
 
         // Дерево свидетельств
@@ -122,7 +134,10 @@ namespace CertificatesViews
         #region Add, Remove, Settings, UserChanging, AccountsEdit
         private void OpenAddingNewCertificateForm()
         {
-
+            var form = new ContainerForm<MemoryStream, ICreateNewView<MemoryStream>>();
+            form.Build(null);
+            form.Changed += delegate { };
+            form.ShowDialog();
         }
 
         private void OpenSettingsForm()
@@ -140,7 +155,7 @@ namespace CertificatesViews
 
         private void OpenUserChangingForm()
         {
-            var form = new ContainerForm<User>();
+            var form = new ContainerForm<User, IView<User>>();
             form.Build(CurrentUser);
             form.Changed += delegate { form.DialogResult = DialogResult.OK; CurrentUser = Authorization.CurrentUser; };
             form.ShowDialog();
@@ -151,7 +166,7 @@ namespace CertificatesViews
         {
             var model = AppLocator.ModelFactory.Create<UsersLoader>();
             var users = model.GetUsersList();
-            var form = new ContainerForm<Users>();
+            var form = new ContainerForm<Users, IView<Users>>();
             form.Changed += delegate { };
             form.Build(users);
             form.ShowDialog(this);

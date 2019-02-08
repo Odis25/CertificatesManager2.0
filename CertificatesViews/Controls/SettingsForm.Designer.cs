@@ -45,6 +45,7 @@
             this.chbAutoPreviewEnabled = new System.Windows.Forms.CheckBox();
             this.btCancel = new System.Windows.Forms.Button();
             this.btSaveChanges = new System.Windows.Forms.Button();
+            this.btOk = new System.Windows.Forms.Button();
             this.gbPaths.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
@@ -210,12 +211,12 @@
             // 
             // btCancel
             // 
-            this.btCancel.Image = global::CertificatesViews.Properties.Resources.cross;
-            this.btCancel.Location = new System.Drawing.Point(319, 241);
+            this.btCancel.Image = global::CertificatesViews.Properties.Resources.door_in;
+            this.btCancel.Location = new System.Drawing.Point(362, 241);
             this.btCancel.Name = "btCancel";
             this.btCancel.Size = new System.Drawing.Size(77, 28);
             this.btCancel.TabIndex = 2;
-            this.btCancel.Text = "Отмена";
+            this.btCancel.Text = "Закрыть";
             this.btCancel.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btCancel.UseVisualStyleBackColor = true;
             this.btCancel.Click += new System.EventHandler(this.btCancel_Click);
@@ -223,7 +224,7 @@
             // btSaveChanges
             // 
             this.btSaveChanges.Image = global::CertificatesViews.Properties.Resources.disk;
-            this.btSaveChanges.Location = new System.Drawing.Point(175, 241);
+            this.btSaveChanges.Location = new System.Drawing.Point(258, 241);
             this.btSaveChanges.Name = "btSaveChanges";
             this.btSaveChanges.Size = new System.Drawing.Size(86, 28);
             this.btSaveChanges.TabIndex = 1;
@@ -232,6 +233,18 @@
             this.btSaveChanges.UseVisualStyleBackColor = true;
             this.btSaveChanges.Click += new System.EventHandler(this.btSaveChanges_Click);
             // 
+            // btOk
+            // 
+            this.btOk.Image = global::CertificatesViews.Properties.Resources.check;
+            this.btOk.Location = new System.Drawing.Point(154, 241);
+            this.btOk.Name = "btOk";
+            this.btOk.Size = new System.Drawing.Size(86, 28);
+            this.btOk.TabIndex = 1;
+            this.btOk.Text = "ОК";
+            this.btOk.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.btOk.UseVisualStyleBackColor = true;
+            this.btOk.Click += new System.EventHandler(this.btOk_Click);
+            // 
             // SettingsForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -239,6 +252,7 @@
             this.ClientSize = new System.Drawing.Size(582, 281);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.btCancel);
+            this.Controls.Add(this.btOk);
             this.Controls.Add(this.btSaveChanges);
             this.Controls.Add(this.gbPaths);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
@@ -274,5 +288,6 @@
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.CheckBox chbAutoPreviewEnabled;
         private System.Windows.Forms.CheckBox chbSaveUserCredential;
+        private System.Windows.Forms.Button btOk;
     }
 }
