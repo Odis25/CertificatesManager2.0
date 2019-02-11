@@ -9,14 +9,23 @@ namespace CertificatesModel.ScannerService
 {
     public class ScanHelper
     {
-        public MemoryStream ScanNewCertificate(bool duplex)
+        public byte[] ScanNewCertificate(bool duplex)
         {
             Scanner scanner = new Scanner();
             ScanSaver saver = new ScanSaver();
 
             var imageList = scanner.Scan(duplex);
-            //saver.SaveToPDF(imageList);
-            return saver.SaveToStream(imageList);
+            return saver.SaveToByteArray(imageList);
+        }
+
+        public byte[] AddPagesToScannedCertificate(byte[] sourceArray, bool duplex)
+        {
+            Scanner scanner = new Scanner();
+            ScanSaver saver = new ScanSaver();
+
+            var imageList = scanner.Scan(duplex);
+            var result = saver.AddNewPagesToDocument(imageList, sourceArray);
+            return result;
         }
     }
 }

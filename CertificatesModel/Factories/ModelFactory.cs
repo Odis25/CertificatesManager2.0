@@ -1,4 +1,5 @@
 ﻿using CertificatesModel.Interfaces;
+using CertificatesModel.Validation;
 
 namespace CertificatesModel.Factories
 {
@@ -9,6 +10,7 @@ namespace CertificatesModel.Factories
             Register<ICertificatesLoader, CertificatesLoader>();
             Register<IUsersLoader, UsersLoader>();
             Register<IScanner, Scanner>();
+            Register<IValidationModel, ValidationModel>();
         }
     }
 }

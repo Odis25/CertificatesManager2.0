@@ -3,7 +3,6 @@ using CertificatesModel.Domain.UsersModel;
 using CertificatesModel.Factories;
 using CertificatesViews.Controls;
 using CertificatesViews.Interfaces;
-using System.IO;
 
 namespace CertificatesViews.Factories
 {
@@ -16,7 +15,9 @@ namespace CertificatesViews.Factories
             Register<IView<string>, PreviewPanel>();
             Register<IView<User>, AuthorizationPanel>();
             Register<IView<Users>, UsersAdministrationPanel>();
-            Register<ICreateNewView<MemoryStream>, NewCertificatePanel>();
+
+            Register<ICreateNewView<byte[]>, NewCertificatePanel>();
+            Register<IView<byte[]>, PreviewPanel>();
         }
     }
 }

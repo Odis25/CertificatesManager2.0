@@ -1,12 +1,7 @@
 ﻿using iTextSharp.text;
 using iTextSharp.text.pdf;
-using System;
 using System.Collections.Generic;
-using System.Drawing;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CertificatesModel.ScannerService
 {
@@ -27,7 +22,7 @@ namespace CertificatesModel.ScannerService
 
                     foreach (var image in scansList)
                     {
-                        iTextSharp.text.Image pic = iTextSharp.text.Image.GetInstance(image, System.Drawing.Imaging.ImageFormat.Jpeg);
+                        Image pic = Image.GetInstance(image, System.Drawing.Imaging.ImageFormat.Jpeg);
                         pic.SetAbsolutePosition(0, 0);
                         pic.ScaleAbsoluteHeight(doc.PageSize.Height);
                         pic.ScaleAbsoluteWidth(doc.PageSize.Width);
@@ -39,7 +34,12 @@ namespace CertificatesModel.ScannerService
             }
         }
 
-        public MemoryStream SaveToStream(IEnumerable<System.Drawing.Image> scansList)
+        /// <summary>
+        /// Сохранение изображений в массив байт
+        /// </summary>
+        /// <param name="scansList">Список изображений</param>
+        /// <returns>pdf-файл в виде массива байт</returns>
+        public byte[] SaveToByteArray(IEnumerable<System.Drawing.Image> scansList)
         {
             using (Document doc = new Document(iTextSharp.text.PageSize.A4))
             {
@@ -50,7 +50,7 @@ namespace CertificatesModel.ScannerService
 
                     foreach (var image in scansList)
                     {
-                        iTextSharp.text.Image pic = iTextSharp.text.Image.GetInstance(image, System.Drawing.Imaging.ImageFormat.Jpeg);
+                        Image pic = Image.GetInstance(image, System.Drawing.Imaging.ImageFormat.Jpeg);
                         pic.SetAbsolutePosition(0, 0);
                         pic.ScaleAbsoluteHeight(doc.PageSize.Height);
                         pic.ScaleAbsoluteWidth(doc.PageSize.Width);
@@ -58,8 +58,43 @@ namespace CertificatesModel.ScannerService
                         doc.NewPage();
                     }
                     doc.Close();
-                    return stream;
+                    return stream.ToArray();
                 }
+            }
+        }
+
+        public byte[] AddNewPagesToDocument(IEnumerable<System.Drawing.Image> scansList, byte[] sourceArray)
+        {
+            using (Document doc = new Document(iTextSharp.text.PageSize.A4))
+            {
+                using (MemoryStream result = new MemoryStream())
+                {
+                    PdfReader reader = new PdfReader(sourceArray);
+                    PdfConcatenate concatenator = new PdfConcatenate(result);
+                    concatenator.AddPages(reader);
+
+                    using (MemoryStream stream = new MemoryStream())
+                    {
+                        PdfWriter.GetInstance(doc, stream);
+                        doc.Open();
+                        foreach (var image in scansList)
+                        {
+                            Image pic = Image.GetInstance(image, System.Drawing.Imaging.ImageFormat.Jpeg);
+                            pic.SetAbsolutePosition(0, 0);
+                            pic.ScaleAbsoluteHeight(doc.PageSize.Height);
+                            pic.ScaleAbsoluteWidth(doc.PageSize.Width);
+                            doc.Add(pic);
+                            doc.NewPage();
+                        }
+                        doc.Close();
+                        reader = new PdfReader(stream.ToArray());
+                    }
+
+                    concatenator.AddPages(reader);
+                    reader.Close();
+                    concatenator.Close();
+                    return result.ToArray();
+                }          
             }
         }
     }

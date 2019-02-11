@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.ComponentModel.DataAnnotations;
 using System.IO;
 
 namespace CertificatesModel
@@ -21,6 +22,7 @@ namespace CertificatesModel
         /// Номер договора
         /// </summary>
         [Column("CONTRACT_NUMBER")]
+        [Required(ErrorMessage = "Необходимо указать номер договора.")]
         public string ContractNumber { get; set; }
         /// <summary>
         /// Серийный номер свидетельства
@@ -51,11 +53,13 @@ namespace CertificatesModel
         /// Тип средства измерения
         /// </summary>
         [Column("TYPE_DEVICE")]
+        [Required(ErrorMessage = "Необходимо указать группу СИ.")]
         public string DeviceType { get; set; }
         /// <summary>
         /// Наименование средства измерения
         /// </summary>
         [Column("NAME_DEVICE")]
+        [Required(ErrorMessage = "Необходимо указать наименование СИ.")]
         public string DeviceName { get; set; }
         /// <summary>
         /// Заводской номер средства измерения

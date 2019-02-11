@@ -220,6 +220,7 @@
     <None Include="packages.config" />
     <None Include="Properties\DataSources\CertificatesModel.Certificate.datasource" />
     <None Include="Properties\DataSources\CertificatesModel.Domain.UsersModel.Users.datasource" />
+    <None Include="Properties\DataSources\CertificatesViews.Controls.NewCertificatePanel.datasource" />
     <None Include="Resources\add+_16x16.png" />
   </ItemGroup>
   <ItemGroup>

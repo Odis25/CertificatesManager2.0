@@ -132,14 +132,16 @@ namespace CertificatesViews
         }
 
         #region Add, Remove, Settings, UserChanging, AccountsEdit
+        // Добавление нового свидетельства
         private void OpenAddingNewCertificateForm()
         {
-            var form = new ContainerForm<MemoryStream, ICreateNewView<MemoryStream>>();
+            var form = new ContainerForm<byte[], ICreateNewView<byte[]>>();
             form.Build(null);
             form.Changed += delegate { };
             form.ShowDialog();
         }
 
+        // Настройки
         private void OpenSettingsForm()
         {
             var form = new SettingsForm();
@@ -153,6 +155,7 @@ namespace CertificatesViews
             (CurrentControl as CertificatesPanel).ShowOrHidePreviewPanel();
         }
 
+        // Смена пользователя
         private void OpenUserChangingForm()
         {
             var form = new ContainerForm<User, IView<User>>();
