@@ -139,6 +139,8 @@ namespace CertificatesViews
             form.Build(null);
             form.Changed += delegate { };
             form.ShowDialog();
+
+            (CurrentControl as IView<Certificates>).Build(_certificates);
         }
 
         // Настройки

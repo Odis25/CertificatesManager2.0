@@ -42,6 +42,9 @@ namespace CertificatesViews.Controls
         public NewCertificatePanel()
         {
             InitializeComponent();
+
+            cbDocumentType.Enabled = false;
+            cbVerifierName.Enabled = false;
         }
 
         // Загрузка превью из файла
@@ -85,6 +88,8 @@ namespace CertificatesViews.Controls
                 labSourceFilePath.Text = ofd.FileName;
             }
             Build(ofd.FileName);
+            //TODO: проверить
+            _byteArray = File.ReadAllBytes(ofd.FileName);
             CheckButtonState();
         }
 
@@ -109,19 +114,16 @@ namespace CertificatesViews.Controls
             }
         }
 
+        // Добавить свидетельство в базу
         private void btAdd_Click(object sender, EventArgs e)
         {
             // Создаем свидетельство и проверяем его
             var certificate = BuildNewCertificate();
-            // Проверить правильность введенных данных
-            // Сформировать путь к файлу
-            // Проверить нужно ли делать резервное копирование
-            // Если да:
-            // // Проверить правильность данных для резервной копии
-            // // Сформировать путь к новому файлу в резервной папке
-            // // Внести свидетельство в 
-            // Если нет:
-            // // Внести свидетельство в базу 
+
+            var model = AppLocator.ModelFactory.Create<ICertificatesLoader>();
+            model.AddNewCertificate(certificate, (byte[])_byteArray);
+
+            MessageBox.Show("Свидетельство успешно добавлено в базу.", "Результат операции", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         private Certificate BuildNewCertificate()
@@ -141,16 +143,35 @@ namespace CertificatesViews.Controls
             certificate.CalibrationExpireDate = dpCalibrationExpireDate.Value;
 
             var validator = AppLocator.ModelFactory.Create<IValidationModel>();
-            var result = validator.ValidateDataModel(certificate);
+
+            string result;
+
+            if (cbZipCopyEnabled.Checked)
+                result = validator.ValidateDataModelForZip(certificate);
+            else
+                result = validator.ValidateDataModel(certificate);
+
             if (!string.IsNullOrEmpty(result))
             {
                 MessageBox.Show(result, "Некорректные входные данные", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
                 return null;
             }
 
-            var illegalChars = Path.GetInvalidFileNameChars();
-
             return certificate;
+        }
+
+        private void cbZipCopyEnabled_CheckedChanged(object sender, EventArgs e)
+        {
+            if (cbZipCopyEnabled.Checked)
+            {
+                cbDocumentType.Enabled = true;
+                cbVerifierName.Enabled = true;
+            }
+            else
+            {
+                cbDocumentType.Enabled = false;
+                cbVerifierName.Enabled = false;
+            }
         }
     }
 }

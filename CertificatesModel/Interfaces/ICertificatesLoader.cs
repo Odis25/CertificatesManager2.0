@@ -34,5 +34,11 @@ namespace CertificatesModel.Interfaces
         /// </summary>
         /// <param name=""></param>
         void DeleteCertificates(params int[] idList);
+
+        /// <summary>
+        /// Добавление в базу нового свидетельства
+        /// </summary>
+        /// <param name="certificate">Новое свидетельство</param>
+        void AddNewCertificate(Certificate certificate, byte[] byteArray);
     }
 }

@@ -80,6 +80,17 @@ namespace CertificatesModel.Repositories
             }        
         }
 
+        // Добавить новое свидетельство в база
+        public static void AddNewCertificate(Certificate newCertificate)
+        {
+            using (MetrologyDbContext db = new MetrologyDbContext())
+            {
+                var result = db.Certificates.Add(newCertificate);
+                db.SaveChanges();
+                _certificates.Add(result);
+            }
+        }
+
         // Внесение изменений в свидетельство по шаблону
         public static void EditCertificate(CertificateEventArgs pattern)
         {

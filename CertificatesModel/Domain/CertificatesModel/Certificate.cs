@@ -33,6 +33,7 @@ namespace CertificatesModel
         /// Номер свидетельства в Гос.Реестра
         /// </summary>
         [Column("REGISTER_NUMBER")]
+        [Required(ErrorMessage = "Необходимо указать номер свидетельства.")]
         public string RegisterNumber { get; set; }
         /// <summary>
         /// Наименование методики поверки

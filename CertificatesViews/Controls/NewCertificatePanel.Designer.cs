@@ -29,10 +29,20 @@
         private void InitializeComponent()
         {
             this.panMain = new System.Windows.Forms.Panel();
+            this.btAdd = new System.Windows.Forms.Button();
+            this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.label16 = new System.Windows.Forms.Label();
+            this.label15 = new System.Windows.Forms.Label();
+            this.cbVerifierName = new System.Windows.Forms.ComboBox();
+            this.cbDocumentType = new System.Windows.Forms.ComboBox();
+            this.cbZipCopyEnabled = new System.Windows.Forms.CheckBox();
             this.tcFileSource = new System.Windows.Forms.TabControl();
             this.tabFile = new System.Windows.Forms.TabPage();
+            this.labSourceFilePath = new System.Windows.Forms.Label();
+            this.label14 = new System.Windows.Forms.Label();
             this.btSelectFile = new System.Windows.Forms.Button();
             this.tabScanner = new System.Windows.Forms.TabPage();
+            this.cbDuplex = new System.Windows.Forms.CheckBox();
             this.btAddNewPages = new System.Windows.Forms.Button();
             this.btScanNewDoc = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
@@ -61,23 +71,13 @@
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.panPreview = new System.Windows.Forms.Panel();
-            this.cbDuplex = new System.Windows.Forms.CheckBox();
-            this.label14 = new System.Windows.Forms.Label();
-            this.labSourceFilePath = new System.Windows.Forms.Label();
-            this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.cbZipCopyEnabled = new System.Windows.Forms.CheckBox();
-            this.cbDocumentType = new System.Windows.Forms.ComboBox();
-            this.cbVerifierName = new System.Windows.Forms.ComboBox();
-            this.label15 = new System.Windows.Forms.Label();
-            this.label16 = new System.Windows.Forms.Label();
-            this.btAdd = new System.Windows.Forms.Button();
             this.panMain.SuspendLayout();
+            this.groupBox2.SuspendLayout();
             this.tcFileSource.SuspendLayout();
             this.tabFile.SuspendLayout();
             this.tabScanner.SuspendLayout();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numYear)).BeginInit();
-            this.groupBox2.SuspendLayout();
             this.SuspendLayout();
             // 
             // panMain
@@ -91,6 +91,91 @@
             this.panMain.Name = "panMain";
             this.panMain.Size = new System.Drawing.Size(482, 662);
             this.panMain.TabIndex = 0;
+            // 
+            // btAdd
+            // 
+            this.btAdd.Image = global::CertificatesViews.Properties.Resources.check;
+            this.btAdd.Location = new System.Drawing.Point(168, 609);
+            this.btAdd.Name = "btAdd";
+            this.btAdd.Size = new System.Drawing.Size(123, 35);
+            this.btAdd.TabIndex = 2;
+            this.btAdd.Text = "Добавить в базу";
+            this.btAdd.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.btAdd.UseVisualStyleBackColor = true;
+            this.btAdd.Click += new System.EventHandler(this.btAdd_Click);
+            // 
+            // groupBox2
+            // 
+            this.groupBox2.Controls.Add(this.label16);
+            this.groupBox2.Controls.Add(this.label15);
+            this.groupBox2.Controls.Add(this.cbVerifierName);
+            this.groupBox2.Controls.Add(this.cbDocumentType);
+            this.groupBox2.Controls.Add(this.cbZipCopyEnabled);
+            this.groupBox2.Location = new System.Drawing.Point(14, 490);
+            this.groupBox2.Name = "groupBox2";
+            this.groupBox2.Size = new System.Drawing.Size(451, 103);
+            this.groupBox2.TabIndex = 1;
+            this.groupBox2.TabStop = false;
+            this.groupBox2.Text = "Резервное копирование";
+            // 
+            // label16
+            // 
+            this.label16.AutoSize = true;
+            this.label16.Location = new System.Drawing.Point(10, 77);
+            this.label16.Name = "label16";
+            this.label16.Size = new System.Drawing.Size(197, 13);
+            this.label16.TabIndex = 4;
+            this.label16.Text = "ФИО поверителя \"ИНКОМСИСТЕМ\":";
+            // 
+            // label15
+            // 
+            this.label15.AutoSize = true;
+            this.label15.Location = new System.Drawing.Point(121, 49);
+            this.label15.Name = "label15";
+            this.label15.Size = new System.Drawing.Size(86, 13);
+            this.label15.TabIndex = 3;
+            this.label15.Text = "Тип документа:";
+            // 
+            // cbVerifierName
+            // 
+            this.cbVerifierName.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbVerifierName.FormattingEnabled = true;
+            this.cbVerifierName.Items.AddRange(new object[] {
+            "Бакусев Р.Я.",
+            "Иванов М.П.",
+            "Комзалов В.С.",
+            "Королев А.А.",
+            "Кулаков Р.Р.",
+            "Старченко А.В.",
+            "Турицин В.В."});
+            this.cbVerifierName.Location = new System.Drawing.Point(213, 74);
+            this.cbVerifierName.Name = "cbVerifierName";
+            this.cbVerifierName.Size = new System.Drawing.Size(228, 21);
+            this.cbVerifierName.TabIndex = 2;
+            // 
+            // cbDocumentType
+            // 
+            this.cbDocumentType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbDocumentType.FormattingEnabled = true;
+            this.cbDocumentType.Items.AddRange(new object[] {
+            "Свидетельство",
+            "Свидетельство+протокол",
+            "Извещение о непригодности"});
+            this.cbDocumentType.Location = new System.Drawing.Point(213, 46);
+            this.cbDocumentType.Name = "cbDocumentType";
+            this.cbDocumentType.Size = new System.Drawing.Size(228, 21);
+            this.cbDocumentType.TabIndex = 1;
+            // 
+            // cbZipCopyEnabled
+            // 
+            this.cbZipCopyEnabled.AutoSize = true;
+            this.cbZipCopyEnabled.Location = new System.Drawing.Point(13, 19);
+            this.cbZipCopyEnabled.Name = "cbZipCopyEnabled";
+            this.cbZipCopyEnabled.Size = new System.Drawing.Size(304, 17);
+            this.cbZipCopyEnabled.TabIndex = 0;
+            this.cbZipCopyEnabled.Text = "Сохранять копию свидетельства в резервный каталог";
+            this.cbZipCopyEnabled.UseVisualStyleBackColor = true;
+            this.cbZipCopyEnabled.CheckedChanged += new System.EventHandler(this.cbZipCopyEnabled_CheckedChanged);
             // 
             // tcFileSource
             // 
@@ -114,6 +199,24 @@
             this.tabFile.Size = new System.Drawing.Size(443, 91);
             this.tabFile.TabIndex = 0;
             this.tabFile.Text = "Существующий файл";
+            // 
+            // labSourceFilePath
+            // 
+            this.labSourceFilePath.AutoEllipsis = true;
+            this.labSourceFilePath.Location = new System.Drawing.Point(92, 26);
+            this.labSourceFilePath.Name = "labSourceFilePath";
+            this.labSourceFilePath.Size = new System.Drawing.Size(345, 13);
+            this.labSourceFilePath.TabIndex = 1;
+            this.labSourceFilePath.Text = "( файл не выбран )";
+            // 
+            // label14
+            // 
+            this.label14.AutoSize = true;
+            this.label14.Location = new System.Drawing.Point(9, 26);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(77, 13);
+            this.label14.TabIndex = 1;
+            this.label14.Text = "Путь к файлу:";
             // 
             // btSelectFile
             // 
@@ -139,6 +242,16 @@
             this.tabScanner.Size = new System.Drawing.Size(443, 91);
             this.tabScanner.TabIndex = 1;
             this.tabScanner.Text = "Сканнер";
+            // 
+            // cbDuplex
+            // 
+            this.cbDuplex.AutoSize = true;
+            this.cbDuplex.Location = new System.Drawing.Point(28, 62);
+            this.cbDuplex.Name = "cbDuplex";
+            this.cbDuplex.Size = new System.Drawing.Size(141, 17);
+            this.cbDuplex.TabIndex = 2;
+            this.cbDuplex.Text = "Двухсторонняя печать";
+            this.cbDuplex.UseVisualStyleBackColor = true;
             // 
             // btAddNewPages
             // 
@@ -431,118 +544,6 @@
             this.panPreview.Size = new System.Drawing.Size(485, 662);
             this.panPreview.TabIndex = 1;
             // 
-            // cbDuplex
-            // 
-            this.cbDuplex.AutoSize = true;
-            this.cbDuplex.Location = new System.Drawing.Point(28, 62);
-            this.cbDuplex.Name = "cbDuplex";
-            this.cbDuplex.Size = new System.Drawing.Size(141, 17);
-            this.cbDuplex.TabIndex = 2;
-            this.cbDuplex.Text = "Двухсторонняя печать";
-            this.cbDuplex.UseVisualStyleBackColor = true;
-            // 
-            // label14
-            // 
-            this.label14.AutoSize = true;
-            this.label14.Location = new System.Drawing.Point(9, 26);
-            this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(77, 13);
-            this.label14.TabIndex = 1;
-            this.label14.Text = "Путь к файлу:";
-            // 
-            // labSourceFilePath
-            // 
-            this.labSourceFilePath.AutoEllipsis = true;
-            this.labSourceFilePath.Location = new System.Drawing.Point(92, 26);
-            this.labSourceFilePath.Name = "labSourceFilePath";
-            this.labSourceFilePath.Size = new System.Drawing.Size(345, 13);
-            this.labSourceFilePath.TabIndex = 1;
-            this.labSourceFilePath.Text = "( файл не выбран )";
-            // 
-            // groupBox2
-            // 
-            this.groupBox2.Controls.Add(this.label16);
-            this.groupBox2.Controls.Add(this.label15);
-            this.groupBox2.Controls.Add(this.cbVerifierName);
-            this.groupBox2.Controls.Add(this.cbDocumentType);
-            this.groupBox2.Controls.Add(this.cbZipCopyEnabled);
-            this.groupBox2.Location = new System.Drawing.Point(14, 490);
-            this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(451, 103);
-            this.groupBox2.TabIndex = 1;
-            this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "Резервное копирование";
-            // 
-            // cbZipCopyEnabled
-            // 
-            this.cbZipCopyEnabled.AutoSize = true;
-            this.cbZipCopyEnabled.Location = new System.Drawing.Point(13, 19);
-            this.cbZipCopyEnabled.Name = "cbZipCopyEnabled";
-            this.cbZipCopyEnabled.Size = new System.Drawing.Size(304, 17);
-            this.cbZipCopyEnabled.TabIndex = 0;
-            this.cbZipCopyEnabled.Text = "Сохранять копию свидетельства в резервный каталог";
-            this.cbZipCopyEnabled.UseVisualStyleBackColor = true;
-            // 
-            // cbDocumentType
-            // 
-            this.cbDocumentType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbDocumentType.FormattingEnabled = true;
-            this.cbDocumentType.Items.AddRange(new object[] {
-            "Свидетельство",
-            "Свидетельство+протокол",
-            "Извещение о непригодности"});
-            this.cbDocumentType.Location = new System.Drawing.Point(213, 46);
-            this.cbDocumentType.Name = "cbDocumentType";
-            this.cbDocumentType.Size = new System.Drawing.Size(228, 21);
-            this.cbDocumentType.TabIndex = 1;
-            // 
-            // cbVerifierName
-            // 
-            this.cbVerifierName.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbVerifierName.FormattingEnabled = true;
-            this.cbVerifierName.Items.AddRange(new object[] {
-            "Бакусев Р.Я.",
-            "Иванов М.П.",
-            "Комзалов В.С.",
-            "Королев А.А.",
-            "Кулаков Р.Р.",
-            "Старченко А.В.",
-            "Турицин В.В."});
-            this.cbVerifierName.Location = new System.Drawing.Point(213, 74);
-            this.cbVerifierName.Name = "cbVerifierName";
-            this.cbVerifierName.Size = new System.Drawing.Size(228, 21);
-            this.cbVerifierName.TabIndex = 2;
-            // 
-            // label15
-            // 
-            this.label15.AutoSize = true;
-            this.label15.Location = new System.Drawing.Point(121, 49);
-            this.label15.Name = "label15";
-            this.label15.Size = new System.Drawing.Size(86, 13);
-            this.label15.TabIndex = 3;
-            this.label15.Text = "Тип документа:";
-            // 
-            // label16
-            // 
-            this.label16.AutoSize = true;
-            this.label16.Location = new System.Drawing.Point(10, 77);
-            this.label16.Name = "label16";
-            this.label16.Size = new System.Drawing.Size(197, 13);
-            this.label16.TabIndex = 4;
-            this.label16.Text = "ФИО поверителя \"ИНКОМСИСТЕМ\":";
-            // 
-            // btAdd
-            // 
-            this.btAdd.Image = global::CertificatesViews.Properties.Resources.check;
-            this.btAdd.Location = new System.Drawing.Point(168, 609);
-            this.btAdd.Name = "btAdd";
-            this.btAdd.Size = new System.Drawing.Size(123, 35);
-            this.btAdd.TabIndex = 2;
-            this.btAdd.Text = "Добавить в базу";
-            this.btAdd.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.btAdd.UseVisualStyleBackColor = true;
-            this.btAdd.Click += new System.EventHandler(this.btAdd_Click);
-            // 
             // NewCertificatePanel
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -552,6 +553,8 @@
             this.Name = "NewCertificatePanel";
             this.Size = new System.Drawing.Size(967, 662);
             this.panMain.ResumeLayout(false);
+            this.groupBox2.ResumeLayout(false);
+            this.groupBox2.PerformLayout();
             this.tcFileSource.ResumeLayout(false);
             this.tabFile.ResumeLayout(false);
             this.tabFile.PerformLayout();
@@ -560,8 +563,6 @@
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numYear)).EndInit();
-            this.groupBox2.ResumeLayout(false);
-            this.groupBox2.PerformLayout();
             this.ResumeLayout(false);
 
         }
