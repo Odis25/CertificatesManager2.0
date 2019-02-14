@@ -32,7 +32,7 @@ namespace CertificatesModel.Repositories
         { 
             try
             {
-                return GetAllCertificatesFromDB(new CertificateEventArgs());
+                return GetSelectedCertificatesFromDB(new CertificateEventArgs());
             }
             catch(SqlCeException e)
             {
@@ -41,7 +41,7 @@ namespace CertificatesModel.Repositories
         }
 
         // Получаем список свидетельств соответствующих поисковому шаблону
-        public static Certificates GetAllCertificatesFromDB(CertificateEventArgs pattern)
+        public static Certificates GetSelectedCertificatesFromDB(CertificateEventArgs pattern)
         {
             using (MetrologyDbContext db = new MetrologyDbContext())
             {

@@ -103,9 +103,9 @@ namespace CertificatesViews.Controls
         // Сохранение настроек
         private void SaveChanges()
         {
-            Settings.Instance.DataBasePath = tbDataBasePath.Text;
-            Settings.Instance.CertificatesFolderPath = tbCertificatesFolderPath.Text;
-            Settings.Instance.CertificatesZipFolderPath = tbCertificatesZipFolderPath.Text;
+            Settings.Instance.DataBasePath = tbDataBasePath.Text.Trim();
+            Settings.Instance.CertificatesFolderPath = tbCertificatesFolderPath.Text.Trim();
+            Settings.Instance.CertificatesZipFolderPath = tbCertificatesZipFolderPath.Text.Trim();
             Settings.Instance.AutoPreviewEnabled = chbAutoPreviewEnabled.Checked;
             Settings.Instance.SaveUserCredential = chbSaveUserCredential.Checked;
             // Сериализуем класс настроек

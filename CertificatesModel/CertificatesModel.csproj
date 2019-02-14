@@ -139,6 +139,7 @@
     <Compile Include="Settings.cs" />
     <Compile Include="UsersLoader.cs" />
     <Compile Include="Interfaces\IValidationModel.cs" />
+    <Compile Include="Validation\Attributes\DateLessOrEqualThanAttribute.cs" />
     <Compile Include="Validation\ValidationModel.cs" />
   </ItemGroup>
   <ItemGroup>

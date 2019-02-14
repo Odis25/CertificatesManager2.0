@@ -4,7 +4,9 @@ using CertificatesModel.ScannerService;
 using CertificatesViews.Factories;
 using CertificatesViews.Interfaces;
 using System;
+using System.Drawing;
 using System.IO;
+using System.Linq;
 using System.Windows.Forms;
 
 namespace CertificatesViews.Controls
@@ -45,6 +47,10 @@ namespace CertificatesViews.Controls
 
             cbDocumentType.Enabled = false;
             cbVerifierName.Enabled = false;
+            cbDocumentType.SelectedIndex = 0;
+            cbVerifierName.SelectedIndex = 0;
+
+            CreateAutoCompleteCollection();
         }
 
         // Загрузка превью из файла
@@ -86,11 +92,10 @@ namespace CertificatesViews.Controls
             if (ofd.ShowDialog() == DialogResult.OK)
             {
                 labSourceFilePath.Text = ofd.FileName;
+                Build(ofd.FileName);
+                _byteArray = File.ReadAllBytes(ofd.FileName);
+                CheckButtonState();
             }
-            Build(ofd.FileName);
-            //TODO: проверить
-            _byteArray = File.ReadAllBytes(ofd.FileName);
-            CheckButtonState();
         }
 
         // Добавление новых страниц к скану
@@ -102,45 +107,47 @@ namespace CertificatesViews.Controls
             Build(result);
         }
 
-        private void CheckButtonState()
-        {
-            if (_byteArray == null)
-            {
-                btAddNewPages.Enabled = false;
-            }
-            else
-            {
-                btAddNewPages.Enabled = true;
-            }
-        }
-
         // Добавить свидетельство в базу
         private void btAdd_Click(object sender, EventArgs e)
         {
-            // Создаем свидетельство и проверяем его
+            // Формируем свидетельство
             var certificate = BuildNewCertificate();
+            if (certificate == null)
+                return;
 
+            // Вносим свидетельство в базу
             var model = AppLocator.ModelFactory.Create<ICertificatesLoader>();
-            model.AddNewCertificate(certificate, (byte[])_byteArray);
+            var result = model.AddNewCertificate(certificate, (byte[])_byteArray);
+            if (!result)
+            {
+                MessageBox.Show("Такое свидетельство уже есть в базе.", "Результат операции", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            // Резервное копирование свидетельства
+            if (cbZipCopyEnabled.Checked)
+                if (!CreateZipCopy())
+                    MessageBox.Show("Не удалось создать резервную копию файла", "Результат операции", MessageBoxButtons.OK, MessageBoxIcon.Error);
 
             MessageBox.Show("Свидетельство успешно добавлено в базу.", "Результат операции", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
+        // Создать свидетельство и проверить корректность введенных данных
         private Certificate BuildNewCertificate()
         {
             Certificate certificate = new Certificate();
             certificate.Year = (int)numYear.Value;
-            certificate.CertificateNumber = tbCertificateNumber.Text;
-            certificate.RegisterNumber = tbRegisterNumber.Text;
-            certificate.VerificationMethod = cbVerificationMethod.Text;
-            certificate.ContractNumber = tbContractNumber.Text;
-            certificate.ClientName = tbClientName.Text;
-            certificate.ObjectName = tbObjectName.Text;
-            certificate.SerialNumber = tbSerialNumber.Text;
-            certificate.DeviceType = tbDeviceType.Text;
-            certificate.DeviceName = tbDeviceName.Text;
-            certificate.CalibrationDate = dpCalibrationDate.Value;
-            certificate.CalibrationExpireDate = dpCalibrationExpireDate.Value;
+            certificate.CertificateNumber = tbCertificateNumber.Text.Trim();
+            certificate.RegisterNumber = tbRegisterNumber.Text.Trim();
+            certificate.VerificationMethod = cbVerificationMethod.Text.Trim();
+            certificate.ContractNumber = tbContractNumber.Text.Trim();
+            certificate.ClientName = tbClientName.Text.Trim();
+            certificate.ObjectName = tbObjectName.Text.Trim();
+            certificate.SerialNumber = tbSerialNumber.Text.Trim();
+            certificate.DeviceType = tbDeviceType.Text.Trim();
+            certificate.DeviceName = cbDeviceName.Text.Trim();
+            certificate.CalibrationDate = dpCalibrationDate.Value.Date;
+            certificate.CalibrationExpireDate = dpCalibrationExpireDate.Value.Date;
 
             var validator = AppLocator.ModelFactory.Create<IValidationModel>();
 
@@ -160,6 +167,35 @@ namespace CertificatesViews.Controls
             return certificate;
         }
 
+        // Создать резервную копию
+        private bool CreateZipCopy()
+        {
+            try
+            {
+                var halfYear = DateTime.Now.Month > 6 ? "2 полугодие" : "1 полугодие";
+                var certNumber = tbCertificateNumber.Text.Split('-').Length > 1 ? tbCertificateNumber.Text.Split('-')[1] : tbCertificateNumber.Text;
+                var fileName = $"{cbDocumentType.SelectedText}_№{certNumber}";
+                var extension = ".pdf";
+                var path = Path.Combine(Settings.Instance.CertificatesZipFolderPath, numYear.Value.ToString(), halfYear, cbVerifierName.SelectedText, fileName + extension);
+
+                // Записываем в созданный файл данные в бинарном формате
+                using (BinaryWriter writer = new BinaryWriter(File.Create(path)))
+                {
+                    writer.Write((byte[])_byteArray);
+                    writer.Flush();
+                    writer.Close();
+                }
+                // файл создан
+                return true;
+            }
+            catch
+            {
+                //файл не создан
+                return false;
+            }
+        }
+
+        // Состояние комбобоксов
         private void cbZipCopyEnabled_CheckedChanged(object sender, EventArgs e)
         {
             if (cbZipCopyEnabled.Checked)
@@ -171,6 +207,117 @@ namespace CertificatesViews.Controls
             {
                 cbDocumentType.Enabled = false;
                 cbVerifierName.Enabled = false;
+            }
+        }
+
+        // Состояние кнопок
+        private void CheckButtonState()
+        {
+            if (_byteArray == null)
+            {
+                btAddNewPages.Enabled = false;
+            }
+            else
+            {
+                btAddNewPages.Enabled = true;
+            }
+        }
+
+        // Автозаполнение
+        private void CreateAutoCompleteCollection()
+        {
+            var model = AppLocator.ModelFactory.Create<ICertificatesLoader>();
+            var certificates = model.GetAllCertificates();
+
+            tbCertificateNumber.AutoCompleteCustomSource.AddRange(certificates.Select(x => x.CertificateNumber).Distinct().Where(x => x != null).ToArray());
+            tbRegisterNumber.AutoCompleteCustomSource.AddRange(certificates.Select(x => x.RegisterNumber).Distinct().Where(x => x != null).ToArray());
+            tbContractNumber.AutoCompleteCustomSource.AddRange(certificates.Select(x => x.ContractNumber).Distinct().Where(x => x != null).ToArray());
+            tbClientName.AutoCompleteCustomSource.AddRange(certificates.Select(x => x.ClientName).Distinct().Where(x => x != null).ToArray());
+            tbObjectName.AutoCompleteCustomSource.AddRange(certificates.Select(x => x.ObjectName).Distinct().Where(x => x != null).ToArray());
+            tbDeviceType.AutoCompleteCustomSource.AddRange(certificates.Select(x => x.DeviceType).Distinct().Where(x => x != null).ToArray());            
+            tbSerialNumber.AutoCompleteCustomSource.AddRange(certificates.Select(x => x.SerialNumber).Distinct().Where(x => x != null).ToArray());
+            cbVerificationMethod.Items.AddRange(certificates.Select(x => x.VerificationMethod).Distinct().Where(x => x != null).ToArray());
+
+            cbDeviceName.Items.AddRange(certificates.Select(x => x.DeviceType).Distinct().Where(x => x != null).ToArray());
+        }
+
+        private void cbVerificationMethod_DrawItem(object sender, DrawItemEventArgs e)
+        {
+            ComboBox currentBox = (ComboBox)sender;
+
+            if (e.Index == -1)
+                return;
+
+            string text = currentBox.GetItemText(currentBox.Items[e.Index]);
+            e.DrawBackground();
+            using (SolidBrush br = new SolidBrush(e.ForeColor))
+            {
+                e.Graphics.DrawString(text, e.Font, br, e.Bounds);
+            }
+
+            if ((e.State & DrawItemState.Selected) == DrawItemState.Selected)
+            {
+                tipVerificationMethodItems.Show(text, currentBox, e.Bounds.Right, e.Bounds.Bottom);
+            }
+            else
+            {
+                tipVerificationMethodItems.Hide(currentBox);
+            }
+            e.DrawFocusRectangle();
+        }
+
+        private void cbVerificationMethod_DropDownClosed(object sender, EventArgs e)
+        {
+            tipVerificationMethodItems.Hide(cbVerificationMethod);
+        }
+
+        // Автозаполнение при вводе номера в гос.реестре
+        private void tbRegisterNumber_Validating(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            var text = ((TextBox)sender).Text;
+            AutoCompleteStringCollection stringCollection = new AutoCompleteStringCollection();
+
+            if (!string.IsNullOrWhiteSpace(text))
+            {
+                var model = AppLocator.ModelFactory.Create<ICertificatesLoader>();
+                var certificates = model.GetAllCertificates();
+
+                var deviceNamesCollection = certificates.Where(x => x.RegisterNumber == text).Select(x => x.DeviceName).Distinct().ToArray();
+                var verificationMethodCollection = certificates.Where(x => x.RegisterNumber == text && x.VerificationMethod != "").Select(x => x.VerificationMethod).Distinct().ToArray();
+
+                cbVerificationMethod.Text = verificationMethodCollection.FirstOrDefault();
+
+                if (deviceNamesCollection.Length == 0)
+                {
+                    cbDeviceName.Items.Clear();
+                    cbDeviceName.Items.AddRange(certificates.Select(x => x.DeviceType).Distinct().Where(x => x != null).ToArray());
+                    cbDeviceName.ResetText();
+                }
+                else if (deviceNamesCollection.Length == 1)
+                {
+                    cbDeviceName.Items.Clear();
+                    cbDeviceName.Items.AddRange(deviceNamesCollection);
+                    cbDeviceName.SelectedIndex = 0;
+                }
+                else
+                {
+                    cbDeviceName.ResetText();
+                    stringCollection.AddRange(deviceNamesCollection);
+                    cbDeviceName.Items.Clear();
+                    cbDeviceName.Items.AddRange(deviceNamesCollection);
+                }
+            }
+        }
+
+        // Автозаполнение при вводе серийного номера
+        private void tbSerialNumber_Validating(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            var text = ((TextBox)sender).Text;
+            AutoCompleteStringCollection stringCollection = new AutoCompleteStringCollection();
+
+            if (!string.IsNullOrWhiteSpace(text))
+            {
+
             }
         }
     }

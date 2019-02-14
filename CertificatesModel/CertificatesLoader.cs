@@ -1,9 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using CertificatesModel.Components;
 using CertificatesModel.Interfaces;
 using CertificatesModel.Repositories;
 using System.IO;
+using System.Linq;
 
 namespace CertificatesModel
 {
@@ -21,11 +21,12 @@ namespace CertificatesModel
         // Получить список свидетельств соответствующих шаблону
         public Certificates GetCertificatesBySearchPattern(CertificateEventArgs pattern)
         {
-            Certificates result = CertificatesRepository.GetAllCertificatesFromDB(pattern);
+            Certificates result = CertificatesRepository.GetSelectedCertificatesFromDB(pattern);
             return result;
         }
 
-        public void AddNewCertificate(Certificate certificate, byte[] byteArray)
+        // Добавить нового свидетельства
+        public bool AddNewCertificate(Certificate certificate, byte[] byteArray)
         {
             var checkedContractNumber = string.Join("-", certificate.ContractNumber.Split(Path.GetInvalidFileNameChars()));
             var checkedDeviceType = string.Join("-", certificate.DeviceType.Split(Path.GetInvalidFileNameChars()));
@@ -34,8 +35,8 @@ namespace CertificatesModel
             var certificatePath = $"{Settings.Instance.CertificatesFolderPath}\\{certificate.Year}\\{checkedContractNumber}\\Свидетельства\\{checkedDeviceType}_{checkedDeviceName}.pdf";
 
             // Проверяем есть ли такое свидетельство в базе
-            //bool result = CheckIfCertificateAllreadyExist(certificate);
-            //if (result) return;
+            if (CheckIfCertificateAllreadyExist(certificate))
+                return false;
 
             // Создаем файл свидетельства в указанном месте
             CreateFile(ref certificatePath, byteArray);
@@ -43,6 +44,7 @@ namespace CertificatesModel
             certificate.CertificatePath = certificatePath;
 
             CertificatesRepository.AddNewCertificate(certificate);
+            return true;
         }
 
         // Изменить свидетельство согласно шаблону
@@ -57,9 +59,10 @@ namespace CertificatesModel
             CertificatesRepository.DeleteCertificates(idList);
         }
 
+        // Проверяем существует ли такое свидетельство в базе
         private bool CheckIfCertificateAllreadyExist(Certificate certificate)
         {
-            throw new NotImplementedException();
+            return CertificatesRepository.Certificates.Any(x => x.SerialNumber == certificate.SerialNumber && x.CalibrationDate == certificate.CalibrationDate);
         }
 
         // Создаем файл с уникальным именем пути
@@ -92,5 +95,6 @@ namespace CertificatesModel
                 writer.Close();
             }
         }
+
     }
 }

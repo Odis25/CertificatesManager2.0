@@ -1,6 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
+using CertificatesModel.Validation.Attributes;
 using System.IO;
 
 namespace CertificatesModel
@@ -28,12 +29,12 @@ namespace CertificatesModel
         /// Серийный номер свидетельства
         /// </summary>
         [Column("CERTIFICATE_NUMBER")]
+        [Required(ErrorMessage = "Необходимо указать номер свидетельства.")]
         public string CertificateNumber { get; set; }
         /// <summary>
         /// Номер свидетельства в Гос.Реестра
         /// </summary>
         [Column("REGISTER_NUMBER")]
-        [Required(ErrorMessage = "Необходимо указать номер свидетельства.")]
         public string RegisterNumber { get; set; }
         /// <summary>
         /// Наименование методики поверки
@@ -76,6 +77,7 @@ namespace CertificatesModel
         /// Дата истечения срока поверки средства измерения
         /// </summary>
         [Column("CALIB_LAST_DATE")]
+        [DateLessOrEqualThan("CalibrationDate", ErrorMessage = "Дата истечения срока поверки должна быть больше даты поверки")]
         public DateTime CalibrationExpireDate { get; set; }
         /// <summary>
         /// Путь к файлу свидетельства

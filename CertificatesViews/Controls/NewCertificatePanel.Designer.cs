@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.panMain = new System.Windows.Forms.Panel();
             this.btAdd = new System.Windows.Forms.Button();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
@@ -51,7 +52,6 @@
             this.cbVerificationMethod = new System.Windows.Forms.ComboBox();
             this.tbSerialNumber = new System.Windows.Forms.TextBox();
             this.label13 = new System.Windows.Forms.Label();
-            this.tbDeviceName = new System.Windows.Forms.TextBox();
             this.label12 = new System.Windows.Forms.Label();
             this.tbDeviceType = new System.Windows.Forms.TextBox();
             this.label11 = new System.Windows.Forms.Label();
@@ -71,6 +71,8 @@
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.panPreview = new System.Windows.Forms.Panel();
+            this.tipVerificationMethodItems = new System.Windows.Forms.ToolTip(this.components);
+            this.cbDeviceName = new System.Windows.Forms.ComboBox();
             this.panMain.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.tcFileSource.SuspendLayout();
@@ -95,7 +97,7 @@
             // btAdd
             // 
             this.btAdd.Image = global::CertificatesViews.Properties.Resources.check;
-            this.btAdd.Location = new System.Drawing.Point(168, 609);
+            this.btAdd.Location = new System.Drawing.Point(168, 619);
             this.btAdd.Name = "btAdd";
             this.btAdd.Size = new System.Drawing.Size(123, 35);
             this.btAdd.TabIndex = 2;
@@ -111,7 +113,7 @@
             this.groupBox2.Controls.Add(this.cbVerifierName);
             this.groupBox2.Controls.Add(this.cbDocumentType);
             this.groupBox2.Controls.Add(this.cbZipCopyEnabled);
-            this.groupBox2.Location = new System.Drawing.Point(14, 490);
+            this.groupBox2.Location = new System.Drawing.Point(14, 500);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(451, 103);
             this.groupBox2.TabIndex = 1;
@@ -184,7 +186,7 @@
             this.tcFileSource.Location = new System.Drawing.Point(14, 366);
             this.tcFileSource.Name = "tcFileSource";
             this.tcFileSource.SelectedIndex = 0;
-            this.tcFileSource.Size = new System.Drawing.Size(451, 117);
+            this.tcFileSource.Size = new System.Drawing.Size(451, 128);
             this.tcFileSource.TabIndex = 0;
             // 
             // tabFile
@@ -196,7 +198,7 @@
             this.tabFile.Location = new System.Drawing.Point(4, 22);
             this.tabFile.Name = "tabFile";
             this.tabFile.Padding = new System.Windows.Forms.Padding(3);
-            this.tabFile.Size = new System.Drawing.Size(443, 91);
+            this.tabFile.Size = new System.Drawing.Size(443, 102);
             this.tabFile.TabIndex = 0;
             this.tabFile.Text = "Существующий файл";
             // 
@@ -239,14 +241,14 @@
             this.tabScanner.Location = new System.Drawing.Point(4, 22);
             this.tabScanner.Name = "tabScanner";
             this.tabScanner.Padding = new System.Windows.Forms.Padding(3);
-            this.tabScanner.Size = new System.Drawing.Size(443, 91);
+            this.tabScanner.Size = new System.Drawing.Size(443, 102);
             this.tabScanner.TabIndex = 1;
             this.tabScanner.Text = "Сканнер";
             // 
             // cbDuplex
             // 
             this.cbDuplex.AutoSize = true;
-            this.cbDuplex.Location = new System.Drawing.Point(28, 62);
+            this.cbDuplex.Location = new System.Drawing.Point(40, 78);
             this.cbDuplex.Name = "cbDuplex";
             this.cbDuplex.Size = new System.Drawing.Size(141, 17);
             this.cbDuplex.TabIndex = 2;
@@ -256,9 +258,9 @@
             // btAddNewPages
             // 
             this.btAddNewPages.Image = global::CertificatesViews.Properties.Resources.image_add;
-            this.btAddNewPages.Location = new System.Drawing.Point(229, 21);
+            this.btAddNewPages.Location = new System.Drawing.Point(11, 43);
             this.btAddNewPages.Name = "btAddNewPages";
-            this.btAddNewPages.Size = new System.Drawing.Size(185, 33);
+            this.btAddNewPages.Size = new System.Drawing.Size(185, 29);
             this.btAddNewPages.TabIndex = 1;
             this.btAddNewPages.Text = "Добавить страницы к скану";
             this.btAddNewPages.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
@@ -268,9 +270,9 @@
             // btScanNewDoc
             // 
             this.btScanNewDoc.Image = global::CertificatesViews.Properties.Resources.image;
-            this.btScanNewDoc.Location = new System.Drawing.Point(17, 21);
+            this.btScanNewDoc.Location = new System.Drawing.Point(11, 9);
             this.btScanNewDoc.Name = "btScanNewDoc";
-            this.btScanNewDoc.Size = new System.Drawing.Size(185, 33);
+            this.btScanNewDoc.Size = new System.Drawing.Size(185, 29);
             this.btScanNewDoc.TabIndex = 0;
             this.btScanNewDoc.Text = "Сканировать новый документ";
             this.btScanNewDoc.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
@@ -281,10 +283,10 @@
             // 
             this.groupBox1.Controls.Add(this.dpCalibrationExpireDate);
             this.groupBox1.Controls.Add(this.dpCalibrationDate);
+            this.groupBox1.Controls.Add(this.cbDeviceName);
             this.groupBox1.Controls.Add(this.cbVerificationMethod);
             this.groupBox1.Controls.Add(this.tbSerialNumber);
             this.groupBox1.Controls.Add(this.label13);
-            this.groupBox1.Controls.Add(this.tbDeviceName);
             this.groupBox1.Controls.Add(this.label12);
             this.groupBox1.Controls.Add(this.tbDeviceType);
             this.groupBox1.Controls.Add(this.label11);
@@ -331,13 +333,14 @@
             this.cbVerificationMethod.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
             this.cbVerificationMethod.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.cbVerificationMethod.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
-            this.cbVerificationMethod.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbVerificationMethod.FormattingEnabled = true;
             this.cbVerificationMethod.Location = new System.Drawing.Point(213, 109);
             this.cbVerificationMethod.Name = "cbVerificationMethod";
             this.cbVerificationMethod.Size = new System.Drawing.Size(200, 21);
             this.cbVerificationMethod.Sorted = true;
             this.cbVerificationMethod.TabIndex = 31;
+            this.cbVerificationMethod.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.cbVerificationMethod_DrawItem);
+            this.cbVerificationMethod.DropDownClosed += new System.EventHandler(this.cbVerificationMethod_DropDownClosed);
             // 
             // tbSerialNumber
             // 
@@ -347,6 +350,7 @@
             this.tbSerialNumber.Name = "tbSerialNumber";
             this.tbSerialNumber.Size = new System.Drawing.Size(200, 20);
             this.tbSerialNumber.TabIndex = 37;
+            this.tbSerialNumber.Validating += new System.ComponentModel.CancelEventHandler(this.tbSerialNumber_Validating);
             // 
             // label13
             // 
@@ -356,15 +360,6 @@
             this.label13.Size = new System.Drawing.Size(167, 13);
             this.label13.TabIndex = 26;
             this.label13.Text = "Дата окончания срока поверки";
-            // 
-            // tbDeviceName
-            // 
-            this.tbDeviceName.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
-            this.tbDeviceName.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource;
-            this.tbDeviceName.Location = new System.Drawing.Point(213, 240);
-            this.tbDeviceName.Name = "tbDeviceName";
-            this.tbDeviceName.Size = new System.Drawing.Size(200, 20);
-            this.tbDeviceName.TabIndex = 36;
             // 
             // label12
             // 
@@ -379,6 +374,7 @@
             // 
             this.tbDeviceType.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
             this.tbDeviceType.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource;
+            this.tbDeviceType.BackColor = System.Drawing.SystemColors.Window;
             this.tbDeviceType.Location = new System.Drawing.Point(213, 214);
             this.tbDeviceType.Name = "tbDeviceType";
             this.tbDeviceType.Size = new System.Drawing.Size(200, 20);
@@ -464,6 +460,7 @@
             this.tbRegisterNumber.Name = "tbRegisterNumber";
             this.tbRegisterNumber.Size = new System.Drawing.Size(200, 20);
             this.tbRegisterNumber.TabIndex = 30;
+            this.tbRegisterNumber.Validating += new System.ComponentModel.CancelEventHandler(this.tbRegisterNumber_Validating);
             // 
             // label6
             // 
@@ -544,6 +541,20 @@
             this.panPreview.Size = new System.Drawing.Size(485, 662);
             this.panPreview.TabIndex = 1;
             // 
+            // cbDeviceName
+            // 
+            this.cbDeviceName.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.cbDeviceName.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
+            this.cbDeviceName.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
+            this.cbDeviceName.FormattingEnabled = true;
+            this.cbDeviceName.Location = new System.Drawing.Point(213, 239);
+            this.cbDeviceName.Name = "cbDeviceName";
+            this.cbDeviceName.Size = new System.Drawing.Size(200, 21);
+            this.cbDeviceName.Sorted = true;
+            this.cbDeviceName.TabIndex = 36;
+            this.cbDeviceName.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.cbVerificationMethod_DrawItem);
+            this.cbDeviceName.DropDownClosed += new System.EventHandler(this.cbVerificationMethod_DropDownClosed);
+            // 
             // NewCertificatePanel
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -582,7 +593,6 @@
         private System.Windows.Forms.ComboBox cbVerificationMethod;
         private System.Windows.Forms.TextBox tbSerialNumber;
         private System.Windows.Forms.Label label13;
-        private System.Windows.Forms.TextBox tbDeviceName;
         private System.Windows.Forms.Label label12;
         private System.Windows.Forms.TextBox tbDeviceType;
         private System.Windows.Forms.Label label11;
@@ -612,5 +622,7 @@
         private System.Windows.Forms.ComboBox cbVerifierName;
         private System.Windows.Forms.ComboBox cbDocumentType;
         private System.Windows.Forms.CheckBox cbZipCopyEnabled;
+        private System.Windows.Forms.ToolTip tipVerificationMethodItems;
+        private System.Windows.Forms.ComboBox cbDeviceName;
     }
 }

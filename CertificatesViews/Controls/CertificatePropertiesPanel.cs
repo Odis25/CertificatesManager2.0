@@ -178,9 +178,10 @@ namespace CertificatesViews.Controls
             pattern.DeviceType = tbDeviceType.Text;
             pattern.DeviceName = tbDeviceName.Text;
             pattern.SerialNumber = tbSerialNumber.Text;
-            pattern.CalibrationDate = dpCalibrationDate.Value;
-            pattern.CalibrationExpireDate = dpCalibrationExpireDate?.Value;
+            pattern.CalibrationDate = dpCalibrationDate.Value.Date;
+            pattern.CalibrationExpireDate = dpCalibrationExpireDate.Value.Date;
 
+            // todo: Проверить
             // Автоматически формируемые параметры
             var checkedContractNumber = pattern.ContractNumber.Replace('/', '-').Replace('\\', '-');
             pattern.CertificatePath = $"{Settings.Instance.CertificatesFolderPath}\\{pattern.Year}\\{checkedContractNumber}\\Свидетельства\\{pattern.DeviceType}_{pattern.DeviceName + Path.GetExtension(_certificate.CertificatePath)}";

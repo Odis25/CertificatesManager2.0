@@ -368,7 +368,6 @@
             this.cbVerificationMethod.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
             this.cbVerificationMethod.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.cbVerificationMethod.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
-            this.cbVerificationMethod.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbVerificationMethod.FormattingEnabled = true;
             this.cbVerificationMethod.Location = new System.Drawing.Point(178, 130);
             this.cbVerificationMethod.Name = "cbVerificationMethod";
