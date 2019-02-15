@@ -1,5 +1,4 @@
-﻿using System;
-using CertificatesModel.Components;
+﻿using CertificatesModel.Components;
 using CertificatesModel.Interfaces;
 using CertificatesModel.Repositories;
 using System.IO;
@@ -13,9 +12,7 @@ namespace CertificatesModel
         // Получить весь список свидетельств
         public Certificates GetAllCertificates()
         {
-            Certificates result = CertificatesRepository.Certificates;
-            //Certificates result = CertificatesRepository.GetAllCertificatesFromDB();
-            return result;
+            return CertificatesRepository.Certificates;
         }
 
         // Получить список свидетельств соответствующих шаблону
@@ -71,6 +68,9 @@ namespace CertificatesModel
             var dir = Path.GetDirectoryName(certificatePath);
             var extension = Path.GetExtension(certificatePath);
             var fileName = Path.GetFileNameWithoutExtension(certificatePath);
+
+            if (!Directory.Exists(dir))
+                Directory.CreateDirectory(dir);
 
             certificatePath = Path.Combine(dir, fileName + extension);
             // Если файл с таким именем существует

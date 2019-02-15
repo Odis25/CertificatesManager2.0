@@ -66,6 +66,7 @@ namespace CertificatesViews.Controls
         // Загрузка превью из массива байт(скана)
         public void Build(byte[] byteArray)
         {
+            ParentForm.Text = "Добавление новог свидетельства";
             var preview = AppLocator.GuiFactory.Create<IView<byte[]>>();
             preview.Build(byteArray);
             PreviewPanel = preview as Control;
@@ -141,10 +142,10 @@ namespace CertificatesViews.Controls
             certificate.RegisterNumber = tbRegisterNumber.Text.Trim();
             certificate.VerificationMethod = cbVerificationMethod.Text.Trim();
             certificate.ContractNumber = tbContractNumber.Text.Trim();
-            certificate.ClientName = tbClientName.Text.Trim();
-            certificate.ObjectName = tbObjectName.Text.Trim();
+            certificate.ClientName = cbClientName.Text.Trim();
+            certificate.ObjectName = cbObjectName.Text.Trim();
             certificate.SerialNumber = tbSerialNumber.Text.Trim();
-            certificate.DeviceType = tbDeviceType.Text.Trim();
+            certificate.DeviceType = cbDeviceType.Text.Trim();
             certificate.DeviceName = cbDeviceName.Text.Trim();
             certificate.CalibrationDate = dpCalibrationDate.Value.Date;
             certificate.CalibrationExpireDate = dpCalibrationExpireDate.Value.Date;
@@ -173,10 +174,15 @@ namespace CertificatesViews.Controls
             try
             {
                 var halfYear = DateTime.Now.Month > 6 ? "2 полугодие" : "1 полугодие";
+                var dir = Path.Combine(Settings.Instance.CertificatesZipFolderPath, numYear.Value.ToString(), halfYear, cbVerifierName.SelectedItem.ToString());
+                // Если каталога с таким именем нет - создаем
+                if (!Directory.Exists(dir))
+                    Directory.CreateDirectory(dir);
+
                 var certNumber = tbCertificateNumber.Text.Split('-').Length > 1 ? tbCertificateNumber.Text.Split('-')[1] : tbCertificateNumber.Text;
-                var fileName = $"{cbDocumentType.SelectedText}_№{certNumber}";
+                var fileName = $"{cbDocumentType.SelectedItem.ToString()}_№{certNumber}";
                 var extension = ".pdf";
-                var path = Path.Combine(Settings.Instance.CertificatesZipFolderPath, numYear.Value.ToString(), halfYear, cbVerifierName.SelectedText, fileName + extension);
+                var path = Path.Combine(dir, fileName + extension);
 
                 // Записываем в созданный файл данные в бинарном формате
                 using (BinaryWriter writer = new BinaryWriter(File.Create(path)))
@@ -223,25 +229,168 @@ namespace CertificatesViews.Controls
             }
         }
 
-        // Автозаполнение
+        // Заполнение AutoCompleteCustomSource для textbox и Items для ComboBox
         private void CreateAutoCompleteCollection()
         {
             var model = AppLocator.ModelFactory.Create<ICertificatesLoader>();
             var certificates = model.GetAllCertificates();
-
+            // textboxes
             tbCertificateNumber.AutoCompleteCustomSource.AddRange(certificates.Select(x => x.CertificateNumber).Distinct().Where(x => x != null).ToArray());
             tbRegisterNumber.AutoCompleteCustomSource.AddRange(certificates.Select(x => x.RegisterNumber).Distinct().Where(x => x != null).ToArray());
             tbContractNumber.AutoCompleteCustomSource.AddRange(certificates.Select(x => x.ContractNumber).Distinct().Where(x => x != null).ToArray());
-            tbClientName.AutoCompleteCustomSource.AddRange(certificates.Select(x => x.ClientName).Distinct().Where(x => x != null).ToArray());
-            tbObjectName.AutoCompleteCustomSource.AddRange(certificates.Select(x => x.ObjectName).Distinct().Where(x => x != null).ToArray());
-            tbDeviceType.AutoCompleteCustomSource.AddRange(certificates.Select(x => x.DeviceType).Distinct().Where(x => x != null).ToArray());            
             tbSerialNumber.AutoCompleteCustomSource.AddRange(certificates.Select(x => x.SerialNumber).Distinct().Where(x => x != null).ToArray());
+            // comboboxes
+            cbClientName.Items.AddRange(certificates.Select(x => x.ClientName).Distinct().Where(x => x != null).ToArray());
+            cbObjectName.Items.AddRange(certificates.Select(x => x.ObjectName).Distinct().Where(x => x != null).ToArray());
             cbVerificationMethod.Items.AddRange(certificates.Select(x => x.VerificationMethod).Distinct().Where(x => x != null).ToArray());
-
+            cbDeviceType.Items.AddRange(certificates.Select(x => x.DeviceType).Distinct().Where(x => x != null).ToArray());
             cbDeviceName.Items.AddRange(certificates.Select(x => x.DeviceType).Distinct().Where(x => x != null).ToArray());
         }
 
-        private void cbVerificationMethod_DrawItem(object sender, DrawItemEventArgs e)
+        // Автозаполнение при вводе номера в гос.реестре
+        private void tbRegisterNumber_Validating(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            var text = ((TextBox)sender).Text;
+
+            var model = AppLocator.ModelFactory.Create<ICertificatesLoader>();
+            var certificates = model.GetAllCertificates();
+
+            if (!string.IsNullOrWhiteSpace(text))
+            {
+                // Наименование СИ
+                var deviceNamesCollection = certificates.Where(x => x.RegisterNumber == text).Select(x => x.DeviceName).Distinct().ToArray();
+
+                if (deviceNamesCollection.Length == 0)
+                {
+                    cbDeviceName.Items.Clear();
+                    cbDeviceName.Items.AddRange(certificates.Select(x => x.DeviceType).Distinct().Where(x => x != null).ToArray());
+                    cbDeviceName.ResetText();
+                }
+                else if (deviceNamesCollection.Length == 1)
+                {
+                    cbDeviceName.Items.Clear();
+                    cbDeviceName.Items.AddRange(deviceNamesCollection);
+                    cbDeviceName.SelectedIndex = 0;
+                }
+                else
+                {
+                    cbDeviceName.ResetText();
+                    cbDeviceName.Items.Clear();
+                    cbDeviceName.Items.AddRange(deviceNamesCollection);
+                }
+
+                // Методика поверки
+                var verificationMethodCollection = certificates.Where(x => x.RegisterNumber == text && x.VerificationMethod != "").Select(x => x.VerificationMethod).Distinct().ToArray();
+
+                if (verificationMethodCollection.Length == 0)
+                {
+                    cbVerificationMethod.Items.Clear();
+                    cbVerificationMethod.Items.AddRange(certificates.Select(x => x.VerificationMethod).Distinct().Where(x => x != null).ToArray());
+                    cbVerificationMethod.ResetText();
+                }
+                else if (verificationMethodCollection.Length == 1)
+                {
+                    cbVerificationMethod.Items.Clear();
+                    cbVerificationMethod.Items.AddRange(verificationMethodCollection);
+                    cbVerificationMethod.SelectedIndex = 0;
+                }
+                else
+                {
+                    cbVerificationMethod.ResetText();
+                    cbVerificationMethod.Items.Clear();
+                    cbVerificationMethod.Items.AddRange(verificationMethodCollection);
+                }
+
+                // Группа СИ
+                var deviceTypeCollection = certificates.Where(x => x.RegisterNumber == text).Select(x => x.DeviceType).Distinct().ToArray();
+
+                if (deviceTypeCollection.Length == 0)
+                {
+                    cbDeviceType.Items.Clear();
+                    cbDeviceType.Items.AddRange(certificates.Select(x => x.DeviceType).Distinct().Where(x => x != null).ToArray());
+                    cbDeviceType.ResetText();
+                }
+                else if (deviceTypeCollection.Length == 1)
+                {
+                    cbDeviceType.Items.Clear();
+                    cbDeviceType.Items.AddRange(deviceTypeCollection);
+                    cbDeviceType.SelectedIndex = 0;
+                }
+                else
+                {
+                    cbDeviceType.ResetText();
+                    cbDeviceType.Items.Clear();
+                    cbDeviceType.Items.AddRange(deviceTypeCollection);
+                }
+            }
+            else
+            {
+                cbDeviceName.Items.Clear();
+                cbDeviceName.Items.AddRange(certificates.Select(x => x.DeviceType).Distinct().Where(x => x != null).ToArray());
+                cbVerificationMethod.Items.Clear();
+                cbVerificationMethod.Items.AddRange(certificates.Select(x => x.VerificationMethod).Distinct().Where(x => x != null).ToArray());
+                cbDeviceType.Items.Clear();
+                cbDeviceType.Items.AddRange(certificates.Select(x => x.DeviceType).Distinct().Where(x => x != null).ToArray());
+            }
+        }
+
+        // Автозаполнение при вводе серийного номера
+        private void tbSerialNumber_Validating(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            var text = ((TextBox)sender).Text;
+
+            var model = AppLocator.ModelFactory.Create<ICertificatesLoader>();
+            var certificates = model.GetAllCertificates();
+
+            if (!string.IsNullOrWhiteSpace(text))
+            {
+                // Наименование объекта
+                var objectCollection = certificates.Where(x => x.SerialNumber == text).Select(x => x.ObjectName).Distinct().ToArray();
+                // Наименование заказчика
+                var clientCollection = certificates.Where(x => x.SerialNumber == text).Select(x => x.ClientName).Distinct().ToArray();
+
+                if (objectCollection.Length == 0)
+                {
+                    cbObjectName.Items.Clear();
+                    cbObjectName.Items.AddRange(certificates.Select(x => x.ObjectName).Distinct().Where(x => x != null).ToArray());
+                    cbObjectName.ResetText();
+
+                    cbClientName.Items.Clear();
+                    cbClientName.Items.AddRange(certificates.Select(x => x.ClientName).Distinct().Where(x => x != null).ToArray());
+                    cbClientName.ResetText();
+                }
+                else if (objectCollection.Length == 1)
+                {
+                    cbObjectName.Items.Clear();
+                    cbObjectName.Items.AddRange(objectCollection);
+                    cbObjectName.SelectedIndex = 0;
+
+                    cbClientName.Items.Clear();
+                    cbClientName.Items.AddRange(clientCollection);
+                    cbClientName.SelectedIndex = 0;
+                }
+                else
+                {
+                    cbObjectName.ResetText();
+                    cbObjectName.Items.Clear();
+                    cbObjectName.Items.AddRange(objectCollection);
+
+                    cbClientName.ResetText();
+                    cbClientName.Items.Clear();
+                    cbClientName.Items.AddRange(clientCollection);
+                }
+            }
+            else
+            {
+                cbObjectName.Items.Clear();
+                cbClientName.Items.Clear();
+                cbObjectName.Items.AddRange(certificates.Select(x => x.ObjectName).Distinct().Where(x => x != null).ToArray());
+                cbClientName.Items.AddRange(certificates.Select(x => x.ClientName).Distinct().Where(x => x != null).ToArray());
+            }            
+        }
+
+        // Отрисовка подсказки для Items в комбобоксе
+        private void combobox_DrawItem(object sender, DrawItemEventArgs e)
         {
             ComboBox currentBox = (ComboBox)sender;
 
@@ -265,60 +414,10 @@ namespace CertificatesViews.Controls
             }
             e.DrawFocusRectangle();
         }
-
-        private void cbVerificationMethod_DropDownClosed(object sender, EventArgs e)
+        // Скрыть подсказку при закрытии комбобокса
+        private void combobox_DropDownClosed(object sender, EventArgs e)
         {
             tipVerificationMethodItems.Hide(cbVerificationMethod);
-        }
-
-        // Автозаполнение при вводе номера в гос.реестре
-        private void tbRegisterNumber_Validating(object sender, System.ComponentModel.CancelEventArgs e)
-        {
-            var text = ((TextBox)sender).Text;
-            AutoCompleteStringCollection stringCollection = new AutoCompleteStringCollection();
-
-            if (!string.IsNullOrWhiteSpace(text))
-            {
-                var model = AppLocator.ModelFactory.Create<ICertificatesLoader>();
-                var certificates = model.GetAllCertificates();
-
-                var deviceNamesCollection = certificates.Where(x => x.RegisterNumber == text).Select(x => x.DeviceName).Distinct().ToArray();
-                var verificationMethodCollection = certificates.Where(x => x.RegisterNumber == text && x.VerificationMethod != "").Select(x => x.VerificationMethod).Distinct().ToArray();
-
-                cbVerificationMethod.Text = verificationMethodCollection.FirstOrDefault();
-
-                if (deviceNamesCollection.Length == 0)
-                {
-                    cbDeviceName.Items.Clear();
-                    cbDeviceName.Items.AddRange(certificates.Select(x => x.DeviceType).Distinct().Where(x => x != null).ToArray());
-                    cbDeviceName.ResetText();
-                }
-                else if (deviceNamesCollection.Length == 1)
-                {
-                    cbDeviceName.Items.Clear();
-                    cbDeviceName.Items.AddRange(deviceNamesCollection);
-                    cbDeviceName.SelectedIndex = 0;
-                }
-                else
-                {
-                    cbDeviceName.ResetText();
-                    stringCollection.AddRange(deviceNamesCollection);
-                    cbDeviceName.Items.Clear();
-                    cbDeviceName.Items.AddRange(deviceNamesCollection);
-                }
-            }
-        }
-
-        // Автозаполнение при вводе серийного номера
-        private void tbSerialNumber_Validating(object sender, System.ComponentModel.CancelEventArgs e)
-        {
-            var text = ((TextBox)sender).Text;
-            AutoCompleteStringCollection stringCollection = new AutoCompleteStringCollection();
-
-            if (!string.IsNullOrWhiteSpace(text))
-            {
-
-            }
         }
     }
 }

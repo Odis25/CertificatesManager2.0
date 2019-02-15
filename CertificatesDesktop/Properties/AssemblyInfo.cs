@@ -5,12 +5,12 @@ using System.Runtime.InteropServices;
 // Общие сведения об этой сборке предоставляются следующим набором
 // набора атрибутов. Измените значения этих атрибутов, чтобы изменить сведения,
 // связанные со сборкой.
-[assembly: AssemblyTitle("CertificatesView")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyTitle("Certificate Manager 2.0")]
+[assembly: AssemblyDescription("Программа учета метрологических свидетельств")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("CertificatesView")]
-[assembly: AssemblyCopyright("Copyright ©  2018")]
+[assembly: AssemblyCompany("ЗАО НИЦ ИНКОМСИСТЕМ")]
+[assembly: AssemblyProduct("Certificate Manager 2.0")]
+[assembly: AssemblyCopyright("Incomsystem ©  2019")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

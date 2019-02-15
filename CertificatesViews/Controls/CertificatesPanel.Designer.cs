@@ -34,6 +34,7 @@ namespace CertificatesViews.Controls
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(CertificatesPanel));
             this.scMainSpliter = new System.Windows.Forms.SplitContainer();
             this.scSecondarySpliter = new System.Windows.Forms.SplitContainer();
+            this.tvCertificates = new CertificatesViews.Components.TreeViewModified();
             this.dgvCerts = new System.Windows.Forms.DataGridView();
             this.iDDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.yearDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -50,13 +51,29 @@ namespace CertificatesViews.Controls
             this.calibrationExpireDateDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.certificatePathDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.fileSizeDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.FileCreationDate = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.fileCreationDateDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.certificateBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.panMain = new System.Windows.Forms.Panel();
             this.panPreview = new System.Windows.Forms.Panel();
             this.scPreviewSplitter = new System.Windows.Forms.SplitContainer();
             this.niCertificatesManager = new System.Windows.Forms.NotifyIcon(this.components);
-            this.tvCertificates = new CertificatesViews.Components.TreeViewModified();
+            this.dgvHeaderMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.Id = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmiYear = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmiContractNumber = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmiCertificateNumber = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmiRegisterNumber = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmiVerificationMethod = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmiClientName = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmiObjectName = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmiSerialNumber = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmiCalibrationDate = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmiCalibrationExpireDate = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmiDeviceType = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmiDeviceName = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmiCertificatePath = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmiFileSize = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmiFileCreationDate = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.scMainSpliter)).BeginInit();
             this.scMainSpliter.Panel1.SuspendLayout();
             this.scMainSpliter.Panel2.SuspendLayout();
@@ -71,6 +88,7 @@ namespace CertificatesViews.Controls
             this.scPreviewSplitter.Panel1.SuspendLayout();
             this.scPreviewSplitter.Panel2.SuspendLayout();
             this.scPreviewSplitter.SuspendLayout();
+            this.dgvHeaderMenuStrip.SuspendLayout();
             this.SuspendLayout();
             // 
             // scMainSpliter
@@ -107,6 +125,17 @@ namespace CertificatesViews.Controls
             this.scSecondarySpliter.SplitterDistance = 221;
             this.scSecondarySpliter.TabIndex = 0;
             // 
+            // tvCertificates
+            // 
+            this.tvCertificates.CheckBoxes = true;
+            this.tvCertificates.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tvCertificates.Location = new System.Drawing.Point(0, 0);
+            this.tvCertificates.Name = "tvCertificates";
+            this.tvCertificates.Size = new System.Drawing.Size(221, 298);
+            this.tvCertificates.TabIndex = 0;
+            this.tvCertificates.AfterCheck += new System.Windows.Forms.TreeViewEventHandler(this.tvCertificates_AfterCheck);
+            this.tvCertificates.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.tvCertificates_AfterSelect);
+            // 
             // dgvCerts
             // 
             this.dgvCerts.AllowUserToAddRows = false;
@@ -130,7 +159,7 @@ namespace CertificatesViews.Controls
             this.calibrationExpireDateDataGridViewTextBoxColumn,
             this.certificatePathDataGridViewTextBoxColumn,
             this.fileSizeDataGridViewTextBoxColumn,
-            this.FileCreationDate});
+            this.fileCreationDateDataGridViewTextBoxColumn});
             this.dgvCerts.DataSource = this.certificateBindingSource;
             this.dgvCerts.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgvCerts.Location = new System.Drawing.Point(0, 0);
@@ -140,22 +169,27 @@ namespace CertificatesViews.Controls
             this.dgvCerts.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvCerts.Size = new System.Drawing.Size(666, 215);
             this.dgvCerts.TabIndex = 0;
+            this.dgvCerts.ColumnHeaderMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dgvCerts_ColumnHeaderMouseClick);
             this.dgvCerts.RowPrePaint += new System.Windows.Forms.DataGridViewRowPrePaintEventHandler(this.dgvCerts_RowPrePaint);
             this.dgvCerts.SelectionChanged += new System.EventHandler(this.dgvCerts_SelectionChanged);
             // 
             // iDDataGridViewTextBoxColumn
             // 
+            this.iDDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
             this.iDDataGridViewTextBoxColumn.DataPropertyName = "ID";
             this.iDDataGridViewTextBoxColumn.HeaderText = "Id";
             this.iDDataGridViewTextBoxColumn.Name = "iDDataGridViewTextBoxColumn";
             this.iDDataGridViewTextBoxColumn.ReadOnly = true;
+            this.iDDataGridViewTextBoxColumn.Width = 41;
             // 
             // yearDataGridViewTextBoxColumn
             // 
+            this.yearDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
             this.yearDataGridViewTextBoxColumn.DataPropertyName = "Year";
             this.yearDataGridViewTextBoxColumn.HeaderText = "Год";
             this.yearDataGridViewTextBoxColumn.Name = "yearDataGridViewTextBoxColumn";
             this.yearDataGridViewTextBoxColumn.ReadOnly = true;
+            this.yearDataGridViewTextBoxColumn.Width = 50;
             // 
             // contractNumberDataGridViewTextBoxColumn
             // 
@@ -250,12 +284,12 @@ namespace CertificatesViews.Controls
             this.fileSizeDataGridViewTextBoxColumn.Name = "fileSizeDataGridViewTextBoxColumn";
             this.fileSizeDataGridViewTextBoxColumn.ReadOnly = true;
             // 
-            // FileCreationDate
+            // fileCreationDateDataGridViewTextBoxColumn
             // 
-            this.FileCreationDate.DataPropertyName = "FileCreationDate";
-            this.FileCreationDate.HeaderText = "Дата создания файла";
-            this.FileCreationDate.Name = "FileCreationDate";
-            this.FileCreationDate.ReadOnly = true;
+            this.fileCreationDateDataGridViewTextBoxColumn.DataPropertyName = "FileCreationDate";
+            this.fileCreationDateDataGridViewTextBoxColumn.HeaderText = "Дата создания файла";
+            this.fileCreationDateDataGridViewTextBoxColumn.Name = "fileCreationDateDataGridViewTextBoxColumn";
+            this.fileCreationDateDataGridViewTextBoxColumn.ReadOnly = true;
             // 
             // certificateBindingSource
             // 
@@ -303,24 +337,195 @@ namespace CertificatesViews.Controls
             this.niCertificatesManager.Text = "Certificates Manager 2.0";
             this.niCertificatesManager.Visible = true;
             // 
-            // tvCertificates
+            // dgvHeaderMenuStrip
             // 
-            this.tvCertificates.CheckBoxes = true;
-            this.tvCertificates.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tvCertificates.Location = new System.Drawing.Point(0, 0);
-            this.tvCertificates.Name = "tvCertificates";
-            this.tvCertificates.Size = new System.Drawing.Size(221, 298);
-            this.tvCertificates.TabIndex = 0;
-            this.tvCertificates.AfterCheck += new System.Windows.Forms.TreeViewEventHandler(this.tvCertificates_AfterCheck);
-            this.tvCertificates.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.tvCertificates_AfterSelect);
+            this.dgvHeaderMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.Id,
+            this.tsmiYear,
+            this.tsmiContractNumber,
+            this.tsmiCertificateNumber,
+            this.tsmiRegisterNumber,
+            this.tsmiVerificationMethod,
+            this.tsmiClientName,
+            this.tsmiObjectName,
+            this.tsmiDeviceType,
+            this.tsmiDeviceName,
+            this.tsmiSerialNumber,
+            this.tsmiCalibrationDate,
+            this.tsmiCalibrationExpireDate,
+            this.tsmiCertificatePath,
+            this.tsmiFileSize,
+            this.tsmiFileCreationDate});
+            this.dgvHeaderMenuStrip.Name = "dgvHeaderMenuStrip";
+            this.dgvHeaderMenuStrip.Size = new System.Drawing.Size(209, 378);
             // 
-            // CertificatesPanel2
+            // Id
+            // 
+            this.Id.Checked = true;
+            this.Id.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.Id.Name = "Id";
+            this.Id.Size = new System.Drawing.Size(208, 22);
+            this.Id.Tag = "0";
+            this.Id.Text = "Id";
+            this.Id.Click += new System.EventHandler(this.ToolStripMenuItem_Click);
+            // 
+            // tsmiYear
+            // 
+            this.tsmiYear.Checked = true;
+            this.tsmiYear.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.tsmiYear.Name = "tsmiYear";
+            this.tsmiYear.Size = new System.Drawing.Size(208, 22);
+            this.tsmiYear.Tag = "1";
+            this.tsmiYear.Text = "Год";
+            this.tsmiYear.Click += new System.EventHandler(this.ToolStripMenuItem_Click);
+            // 
+            // tsmiContractNumber
+            // 
+            this.tsmiContractNumber.Checked = true;
+            this.tsmiContractNumber.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.tsmiContractNumber.Name = "tsmiContractNumber";
+            this.tsmiContractNumber.Size = new System.Drawing.Size(208, 22);
+            this.tsmiContractNumber.Tag = "2";
+            this.tsmiContractNumber.Text = "Номер договора";
+            this.tsmiContractNumber.Click += new System.EventHandler(this.ToolStripMenuItem_Click);
+            // 
+            // tsmiCertificateNumber
+            // 
+            this.tsmiCertificateNumber.Checked = true;
+            this.tsmiCertificateNumber.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.tsmiCertificateNumber.Name = "tsmiCertificateNumber";
+            this.tsmiCertificateNumber.Size = new System.Drawing.Size(208, 22);
+            this.tsmiCertificateNumber.Tag = "3";
+            this.tsmiCertificateNumber.Text = "Номер свидетельства";
+            this.tsmiCertificateNumber.Click += new System.EventHandler(this.ToolStripMenuItem_Click);
+            // 
+            // tsmiRegisterNumber
+            // 
+            this.tsmiRegisterNumber.Checked = true;
+            this.tsmiRegisterNumber.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.tsmiRegisterNumber.Name = "tsmiRegisterNumber";
+            this.tsmiRegisterNumber.Size = new System.Drawing.Size(208, 22);
+            this.tsmiRegisterNumber.Tag = "4";
+            this.tsmiRegisterNumber.Text = "Номер в гос. реестре";
+            this.tsmiRegisterNumber.Click += new System.EventHandler(this.ToolStripMenuItem_Click);
+            // 
+            // tsmiVerificationMethod
+            // 
+            this.tsmiVerificationMethod.Checked = true;
+            this.tsmiVerificationMethod.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.tsmiVerificationMethod.Name = "tsmiVerificationMethod";
+            this.tsmiVerificationMethod.Size = new System.Drawing.Size(208, 22);
+            this.tsmiVerificationMethod.Tag = "5";
+            this.tsmiVerificationMethod.Text = "Методика поверки";
+            this.tsmiVerificationMethod.Click += new System.EventHandler(this.ToolStripMenuItem_Click);
+            // 
+            // tsmiClientName
+            // 
+            this.tsmiClientName.Checked = true;
+            this.tsmiClientName.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.tsmiClientName.Name = "tsmiClientName";
+            this.tsmiClientName.Size = new System.Drawing.Size(208, 22);
+            this.tsmiClientName.Tag = "6";
+            this.tsmiClientName.Text = "Заказчик";
+            this.tsmiClientName.Click += new System.EventHandler(this.ToolStripMenuItem_Click);
+            // 
+            // tsmiObjectName
+            // 
+            this.tsmiObjectName.Checked = true;
+            this.tsmiObjectName.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.tsmiObjectName.Name = "tsmiObjectName";
+            this.tsmiObjectName.Size = new System.Drawing.Size(208, 22);
+            this.tsmiObjectName.Tag = "7";
+            this.tsmiObjectName.Text = "Объект эксплуатации";
+            this.tsmiObjectName.Click += new System.EventHandler(this.ToolStripMenuItem_Click);
+            // 
+            // tsmiSerialNumber
+            // 
+            this.tsmiSerialNumber.Checked = true;
+            this.tsmiSerialNumber.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.tsmiSerialNumber.Name = "tsmiSerialNumber";
+            this.tsmiSerialNumber.Size = new System.Drawing.Size(208, 22);
+            this.tsmiSerialNumber.Tag = "10";
+            this.tsmiSerialNumber.Text = "Заводской номер";
+            this.tsmiSerialNumber.Click += new System.EventHandler(this.ToolStripMenuItem_Click);
+            // 
+            // tsmiCalibrationDate
+            // 
+            this.tsmiCalibrationDate.Checked = true;
+            this.tsmiCalibrationDate.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.tsmiCalibrationDate.Name = "tsmiCalibrationDate";
+            this.tsmiCalibrationDate.Size = new System.Drawing.Size(208, 22);
+            this.tsmiCalibrationDate.Tag = "11";
+            this.tsmiCalibrationDate.Text = "Дата поверки";
+            this.tsmiCalibrationDate.Click += new System.EventHandler(this.ToolStripMenuItem_Click);
+            // 
+            // tsmiCalibrationExpireDate
+            // 
+            this.tsmiCalibrationExpireDate.Checked = true;
+            this.tsmiCalibrationExpireDate.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.tsmiCalibrationExpireDate.Name = "tsmiCalibrationExpireDate";
+            this.tsmiCalibrationExpireDate.Size = new System.Drawing.Size(208, 22);
+            this.tsmiCalibrationExpireDate.Tag = "12";
+            this.tsmiCalibrationExpireDate.Text = "Дата истечения поверки";
+            this.tsmiCalibrationExpireDate.Click += new System.EventHandler(this.ToolStripMenuItem_Click);
+            // 
+            // tsmiDeviceType
+            // 
+            this.tsmiDeviceType.Checked = true;
+            this.tsmiDeviceType.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.tsmiDeviceType.Name = "tsmiDeviceType";
+            this.tsmiDeviceType.Size = new System.Drawing.Size(208, 22);
+            this.tsmiDeviceType.Tag = "8";
+            this.tsmiDeviceType.Text = "Группа СИ";
+            this.tsmiDeviceType.Click += new System.EventHandler(this.ToolStripMenuItem_Click);
+            // 
+            // tsmiDeviceName
+            // 
+            this.tsmiDeviceName.Checked = true;
+            this.tsmiDeviceName.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.tsmiDeviceName.Name = "tsmiDeviceName";
+            this.tsmiDeviceName.Size = new System.Drawing.Size(208, 22);
+            this.tsmiDeviceName.Tag = "9";
+            this.tsmiDeviceName.Text = "Наименование СИ";
+            this.tsmiDeviceName.Click += new System.EventHandler(this.ToolStripMenuItem_Click);
+            // 
+            // tsmiCertificatePath
+            // 
+            this.tsmiCertificatePath.Checked = true;
+            this.tsmiCertificatePath.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.tsmiCertificatePath.Name = "tsmiCertificatePath";
+            this.tsmiCertificatePath.Size = new System.Drawing.Size(208, 22);
+            this.tsmiCertificatePath.Tag = "13";
+            this.tsmiCertificatePath.Text = "Путь к файлу";
+            this.tsmiCertificatePath.Click += new System.EventHandler(this.ToolStripMenuItem_Click);
+            // 
+            // tsmiFileSize
+            // 
+            this.tsmiFileSize.Checked = true;
+            this.tsmiFileSize.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.tsmiFileSize.Name = "tsmiFileSize";
+            this.tsmiFileSize.Size = new System.Drawing.Size(208, 22);
+            this.tsmiFileSize.Tag = "14";
+            this.tsmiFileSize.Text = "Размер файла";
+            this.tsmiFileSize.Click += new System.EventHandler(this.ToolStripMenuItem_Click);
+            // 
+            // tsmiFileCreationDate
+            // 
+            this.tsmiFileCreationDate.Checked = true;
+            this.tsmiFileCreationDate.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.tsmiFileCreationDate.Name = "tsmiFileCreationDate";
+            this.tsmiFileCreationDate.Size = new System.Drawing.Size(208, 22);
+            this.tsmiFileCreationDate.Tag = "15";
+            this.tsmiFileCreationDate.Text = "Дата создания файла";
+            this.tsmiFileCreationDate.Click += new System.EventHandler(this.ToolStripMenuItem_Click);
+            // 
+            // CertificatesPanel
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.Controls.Add(this.scPreviewSplitter);
-            this.Name = "CertificatesPanel2";
+            this.Name = "CertificatesPanel";
             this.Size = new System.Drawing.Size(1105, 517);
             this.scMainSpliter.Panel1.ResumeLayout(false);
             this.scMainSpliter.Panel2.ResumeLayout(false);
@@ -336,6 +541,7 @@ namespace CertificatesViews.Controls
             this.scPreviewSplitter.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.scPreviewSplitter)).EndInit();
             this.scPreviewSplitter.ResumeLayout(false);
+            this.dgvHeaderMenuStrip.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -350,6 +556,9 @@ namespace CertificatesViews.Controls
         private System.Windows.Forms.NotifyIcon niCertificatesManager;
         private System.Windows.Forms.DataGridView dgvCerts;
         private System.Windows.Forms.BindingSource certificateBindingSource;
+        private System.Windows.Forms.ContextMenuStrip dgvHeaderMenuStrip;
+        private System.Windows.Forms.ToolStripMenuItem Id;
+        private System.Windows.Forms.ToolStripMenuItem tsmiYear;
         private System.Windows.Forms.DataGridViewTextBoxColumn iDDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn yearDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn contractNumberDataGridViewTextBoxColumn;
@@ -365,6 +574,20 @@ namespace CertificatesViews.Controls
         private System.Windows.Forms.DataGridViewTextBoxColumn calibrationExpireDateDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn certificatePathDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn fileSizeDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn FileCreationDate;
+        private System.Windows.Forms.DataGridViewTextBoxColumn fileCreationDateDataGridViewTextBoxColumn;
+        private System.Windows.Forms.ToolStripMenuItem tsmiContractNumber;
+        private System.Windows.Forms.ToolStripMenuItem tsmiCertificateNumber;
+        private System.Windows.Forms.ToolStripMenuItem tsmiRegisterNumber;
+        private System.Windows.Forms.ToolStripMenuItem tsmiVerificationMethod;
+        private System.Windows.Forms.ToolStripMenuItem tsmiClientName;
+        private System.Windows.Forms.ToolStripMenuItem tsmiObjectName;
+        private System.Windows.Forms.ToolStripMenuItem tsmiSerialNumber;
+        private System.Windows.Forms.ToolStripMenuItem tsmiCalibrationDate;
+        private System.Windows.Forms.ToolStripMenuItem tsmiCalibrationExpireDate;
+        private System.Windows.Forms.ToolStripMenuItem tsmiDeviceType;
+        private System.Windows.Forms.ToolStripMenuItem tsmiDeviceName;
+        private System.Windows.Forms.ToolStripMenuItem tsmiCertificatePath;
+        private System.Windows.Forms.ToolStripMenuItem tsmiFileSize;
+        private System.Windows.Forms.ToolStripMenuItem tsmiFileCreationDate;
     }
 }

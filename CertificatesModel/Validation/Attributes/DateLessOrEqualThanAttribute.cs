@@ -24,7 +24,7 @@ namespace CertificatesModel.Validation.Attributes
 
             var comparisonValue = (DateTime)property.GetValue(context.ObjectInstance);
 
-            if (currentValue >= comparisonValue)
+            if (currentValue <= comparisonValue)
                 return new ValidationResult(ErrorMessage);
 
             return ValidationResult.Success;

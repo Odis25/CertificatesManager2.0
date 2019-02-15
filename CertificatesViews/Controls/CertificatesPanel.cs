@@ -315,5 +315,40 @@ namespace CertificatesViews.Controls
                  where node.Text == cert.ContractNumber && node.Parent.Name == cert.Year.ToString()
                  select cert);
         }
+
+        private void dgvCerts_ColumnHeaderMouseClick(object sender, DataGridViewCellMouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Right)
+            {
+                
+                //foreach (DataGridViewColumn column in dgvCerts.Columns)
+                //{
+                //    ToolStripMenuItem item = new ToolStripMenuItem();
+                //    item.Text = column.HeaderText;
+                //    item.Tag = column.Index;
+                //    item.Checked = true;
+                //    item.Click += ToolStripMenuItem_Click;
+                //    dgvHeaderMenuStrip.Items.Add(item);
+                //}
+                dgvHeaderMenuStrip.Show(MousePosition);
+            }
+        }
+
+        private void ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ToolStripMenuItem item = sender as ToolStripMenuItem;
+            int num = Convert.ToInt32(item.Tag);
+
+            if (dgvCerts.Columns[num].Visible != false)
+            {
+                dgvCerts.Columns[num].Visible = false;
+                item.Checked = false;
+            }
+            else
+            {
+                dgvCerts.Columns[num].Visible = true;
+                item.Checked = true;
+            }
+        }
     }
 }

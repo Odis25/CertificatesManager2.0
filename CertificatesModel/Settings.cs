@@ -35,8 +35,8 @@ namespace CertificatesModel
             {
                 _instance = new Settings();
                 _instance.DataBasePath = "D:\\Test.sdf";
-                _instance.CertificatesFolderPath = "";
-                _instance.CertificatesZipFolderPath = "";
+                _instance.CertificatesFolderPath = "D:\\Метрология\\";
+                _instance.CertificatesZipFolderPath = "D:\\Служба главного метролога\\Метрология\\";
             }
         }
 
