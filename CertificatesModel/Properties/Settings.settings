@@ -1,0 +1,27 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="CertificatesModel.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="DataBasePath" Type="System.String" Scope="User">
+      <Value Profile="(Default)">D:\Test.sdf</Value>
+    </Setting>
+    <Setting Name="CertificatesFolderPath" Type="System.String" Scope="User">
+      <Value Profile="(Default)">D:\Метрология</Value>
+    </Setting>
+    <Setting Name="CertificatesZipFolderPath" Type="System.String" Scope="User">
+      <Value Profile="(Default)">D:\Служба главного метролога\Метрология</Value>
+    </Setting>
+    <Setting Name="AutoPreviewEnabled" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="SaveUserCredential" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="UserLogin" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="UserPassword" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+  </Settings>
+</SettingsFile>

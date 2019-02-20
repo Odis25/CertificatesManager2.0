@@ -29,11 +29,6 @@ namespace CertificatesDesktop
             }
 
             MessageBox.Show(e.ExceptionObject.ToString(), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            //StringBuilder builder = new StringBuilder();
-            //builder.AppendLine(ex.Message);
-            //builder.AppendLine();
-            //builder.AppendLine(ex.StackTrace);
-            //MessageBox.Show(builder.ToString(), "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
 
         }
 
@@ -50,16 +45,16 @@ namespace CertificatesDesktop
                 {
                     ex = ex.InnerException;
                 }
-#if DEBUG
+//#if DEBUG
                 using (var exceptionDlg = new ThreadExceptionDialog(ex))
                 {
                     var res = exceptionDlg.ShowDialog();
                     if (res == DialogResult.Abort)
                         Application.Exit();
                 }
-#else
-            MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-#endif
+//#else
+           // MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+//#endif
             }
         }
     }     

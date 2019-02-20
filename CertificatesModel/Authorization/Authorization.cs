@@ -97,13 +97,8 @@ namespace CertificatesModel.Authorization
             {
                 if (Settings.Instance.SaveUserCredential)
                 {
-                    using (FileStream fs = new FileStream("credentials.dat", FileMode.Open))
-                    {
-                        BinaryFormatter formatter = new BinaryFormatter();
-                        var user = (User)formatter.Deserialize(fs);
-                        currentUser.Login = user.Login;
-                        currentUser.Password = user.Password.DecryptString().ToInsecureString();
-                    }
+                    currentUser.Login = Properties.Settings.Default.UserLogin;
+                    currentUser.Password = Properties.Settings.Default.UserPassword.DecryptString().ToInsecureString();
                 }
                 return currentUser;
             }
@@ -116,16 +111,10 @@ namespace CertificatesModel.Authorization
         // Сохраняем учетные данные пользователя
         private static void SaveUserCredential(User user)
         {
-            var userPassword = user.Password;
             var securedPassword = user.Password.ToSecureString().EncryptString();
-            user.Password = securedPassword;
-
-            using (FileStream fs = new FileStream("credentials.dat", FileMode.Create))
-            {
-                BinaryFormatter formatter = new BinaryFormatter();
-                formatter.Serialize(fs, user);
-            }
-            user.Password = userPassword;
+            Properties.Settings.Default.UserLogin = user.Login;
+            Properties.Settings.Default.UserPassword = securedPassword;
+            Properties.Settings.Default.Save();
         }
     }
 }

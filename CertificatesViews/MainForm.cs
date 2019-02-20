@@ -6,7 +6,6 @@ using CertificatesViews.Controls;
 using CertificatesViews.Factories;
 using CertificatesViews.Interfaces;
 using System;
-using System.IO;
 using System.Linq;
 using System.Windows.Forms;
 
@@ -77,6 +76,7 @@ namespace CertificatesViews
         public MainForm()
         {
             InitializeComponent();
+
             Authorization.UserChanged += Authorization_UserChanged;
             BuildTreeView();
             Authorization_UserChanged(this, EventArgs.Empty);

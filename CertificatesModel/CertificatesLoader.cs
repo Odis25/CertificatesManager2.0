@@ -29,8 +29,7 @@ namespace CertificatesModel
             var checkedDeviceType = string.Join("-", certificate.DeviceType.Split(Path.GetInvalidFileNameChars()));
             var checkedDeviceName = string.Join("-", certificate.DeviceName.Split(Path.GetInvalidFileNameChars()));
 
-            var certificatePath = $"{Settings.Instance.CertificatesFolderPath}\\{certificate.Year}\\{checkedContractNumber}\\Свидетельства\\{checkedDeviceType}_{checkedDeviceName}.pdf";
-
+            var certificatePath = Path.Combine(Settings.Instance.CertificatesFolderPath, certificate.Year.ToString(), checkedContractNumber, "Свидетельства", $"{checkedDeviceType}_{checkedDeviceName}.pdf");
             // Проверяем есть ли такое свидетельство в базе
             if (CheckIfCertificateAllreadyExist(certificate))
                 return false;

@@ -1,10 +1,5 @@
-﻿using System;
-using System.IO;
-using System.Xml.Serialization;
-
-namespace CertificatesModel
+﻿namespace CertificatesModel
 {
-    [Serializable]
     public class Settings
     {
         private static Settings _instance;
@@ -21,23 +16,17 @@ namespace CertificatesModel
             }
         }
 
-        static Settings() 
+        static Settings()
         {
-            try
-            {               
-                using (FileStream stream = new FileStream("settings.xml", FileMode.OpenOrCreate))
-                {
-                    XmlSerializer serializer = new XmlSerializer(typeof(Settings));
-                    _instance = (Settings)serializer.Deserialize(stream);
-                }
-            }
-            catch
-            {
-                _instance = new Settings();
-                _instance.DataBasePath = "D:\\Test.sdf";
-                _instance.CertificatesFolderPath = "D:\\Метрология\\";
-                _instance.CertificatesZipFolderPath = "D:\\Служба главного метролога\\Метрология\\";
-            }
+            //todo: провести рефакторинг
+
+            _instance = new Settings();
+            _instance.DataBasePath = Properties.Settings.Default.DataBasePath;
+            _instance.CertificatesFolderPath = Properties.Settings.Default.CertificatesFolderPath;
+            _instance.CertificatesZipFolderPath = Properties.Settings.Default.CertificatesZipFolderPath;
+            _instance.AutoPreviewEnabled = Properties.Settings.Default.AutoPreviewEnabled;
+            _instance.SaveUserCredential = Properties.Settings.Default.SaveUserCredential;
+
         }
 
         /// <summary>
@@ -45,11 +34,12 @@ namespace CertificatesModel
         /// </summary>
         public static void Serialize()
         {
-            XmlSerializer serializer = new XmlSerializer(typeof(Settings));
-            using (FileStream stream = new FileStream("settings.xml", FileMode.Create))
-            {
-                serializer.Serialize(stream, Instance);
-            }
+            Properties.Settings.Default.DataBasePath = _instance.DataBasePath;
+            Properties.Settings.Default.CertificatesFolderPath = _instance.CertificatesFolderPath;
+            Properties.Settings.Default.CertificatesZipFolderPath = _instance.CertificatesZipFolderPath;
+            Properties.Settings.Default.AutoPreviewEnabled = _instance.AutoPreviewEnabled;
+            Properties.Settings.Default.SaveUserCredential = _instance.SaveUserCredential;
+            Properties.Settings.Default.Save(); // Сохраняем переменные.
         }
 
         /// <summary>
