@@ -1,4 +1,5 @@
 ﻿using CertificatesModel.Interfaces;
+using CertificatesModel.ScannerService;
 using CertificatesModel.Validation;
 
 namespace CertificatesModel.Factories

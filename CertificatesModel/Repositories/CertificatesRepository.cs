@@ -91,6 +91,21 @@ namespace CertificatesModel.Repositories
             }
         }
 
+        // Изменение путей к файлам свидетельств
+        public static void ModifyFilePath(int[] idArray, string newFilePath)
+        {
+            using (var db = new MetrologyDbContext())
+            {
+                foreach (var id in idArray)
+                {
+                    var certificate = _certificates.Where(x => x.ID == id).FirstOrDefault();
+                    certificate.CertificatePath = newFilePath;
+                    db.Entry(certificate).State = EntityState.Modified;
+                }
+                db.SaveChanges();
+            }
+        }
+
         // Внесение изменений в свидетельство по шаблону
         public static void EditCertificate(CertificateEventArgs pattern)
         {

@@ -1,13 +1,17 @@
 ﻿using CertificatesModel;
 using CertificatesModel.Components;
 using CertificatesModel.Interfaces;
+using CertificatesModel.MailService;
 using CertificatesViews.Factories;
 using CertificatesViews.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
+using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace CertificatesViews.Controls
@@ -173,7 +177,7 @@ namespace CertificatesViews.Controls
             var content = e.Node.Tag.ToString().ToLower();
             var type = content.GetType();
             IEnumerable<Certificate> certificates = new Certificates();
-            
+
             if (content == "year")
             {
                 certificates = _certificates.Where(x => x.Year == int.Parse(e.Node.Name));
@@ -264,7 +268,7 @@ namespace CertificatesViews.Controls
         {
             dgvCerts.DataSource = certificates;
         }
-        
+
         // Отобразить всплывающее оповещение в трее
         private void ShowTrayToolTip()
         {
@@ -316,24 +320,16 @@ namespace CertificatesViews.Controls
                  select cert);
         }
 
+        // Контекстное меню для заголовков DataGridView
         private void dgvCerts_ColumnHeaderMouseClick(object sender, DataGridViewCellMouseEventArgs e)
         {
             if (e.Button == MouseButtons.Right)
             {
-                
-                //foreach (DataGridViewColumn column in dgvCerts.Columns)
-                //{
-                //    ToolStripMenuItem item = new ToolStripMenuItem();
-                //    item.Text = column.HeaderText;
-                //    item.Tag = column.Index;
-                //    item.Checked = true;
-                //    item.Click += ToolStripMenuItem_Click;
-                //    dgvHeaderMenuStrip.Items.Add(item);
-                //}
                 dgvHeaderMenuStrip.Show(MousePosition);
             }
         }
 
+        // Видимость столбцов datagridview
         private void ToolStripMenuItem_Click(object sender, EventArgs e)
         {
             ToolStripMenuItem item = sender as ToolStripMenuItem;
@@ -350,5 +346,231 @@ namespace CertificatesViews.Controls
                 item.Checked = true;
             }
         }
+
+        // Контекстное меню для итемов DataGridView
+        private void dgvCerts_CellMouseClick(object sender, DataGridViewCellMouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Right && e.RowIndex != -1)
+            {
+                if (ModifierKeys != Keys.Control)
+                    dgvCerts.ClearSelection();
+                dgvCerts.Rows[e.RowIndex].Selected = true;
+                dgvCerts.Focus();
+                dgvItemMenuStrip.Show(MousePosition);
+            }
+        }
+
+        // Контекстное меню для Items DataGridView
+        private void dgvItemMenuStrip_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
+        {
+            var paths = new List<string>();
+            for (int i = 0; i < dgvCerts.SelectedRows.Count; i++)
+            {
+                paths.Add(dgvCerts.SelectedRows[i].Cells["certificatePathDataGridViewTextBoxColumn"].Value.ToString());
+            }
+            var pathsArray = paths.Distinct().ToArray();
+
+            switch (e.ClickedItem.Name)
+            {
+                case "tsmOpen":
+                    OpenFile(pathsArray);
+                    break;
+                case "tsmOpenFolder":
+                    OpenFolder(pathsArray);
+                    break;
+                case "tsmCopyInfo":
+                    CopyInfo();
+                    break;
+                case "tsmCopy":
+                    dgvItemMenuStrip.Hide();
+                    Copy(pathsArray);
+                    break;
+                case "tsmSaveFile":
+                    dgvItemMenuStrip.Hide();
+                    SaveFile(pathsArray);
+                    break;
+                case "tsmSendByEmail":
+                    dgvItemMenuStrip.Hide();
+                    SendByEmail(pathsArray);
+                    break;
+                case "tsmChangeFilePath":
+                    dgvItemMenuStrip.Hide();
+                    ChangeFilePath();
+                    break;
+                case "tsmOpenVerificationMethod":
+                    dgvItemMenuStrip.Hide();
+                    OpenVerificationMethod();
+                    break;
+                case "tsmTransferDocument":
+                    dgvItemMenuStrip.Hide();
+                    BuildTransferDocument();
+                    break;
+            }
+        }
+
+        #region Методы для dgvContextStripMenu
+
+        // Открыть файл
+        private void OpenFile(string[] paths)
+        {
+            var file = paths.Last();
+
+            if (File.Exists(file))
+            {
+                Process.Start(file);
+            }
+            else
+                MessageBox.Show("Файл по указанному пути не существует", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        }
+
+        // Открыть папку с файлом
+        private void OpenFolder(string[] pathsArray)
+        {
+            var item = Path.GetDirectoryName(pathsArray.Last());
+            Process.Start(item);
+        }
+
+        // Копировать информацию о свидетельствах в буфер обмена
+        private void CopyInfo()
+        {
+            string text = "";
+            var textArray = new List<string>();
+            var maxLenghtArray = new int[12];
+
+            var selectedRows = dgvCerts.SelectedRows;
+            int j = 1;
+
+            for (int i = 1; i < 12; i++)
+            {
+                foreach (DataGridViewRow row in selectedRows)
+                {
+                    if (row.Cells[i].Value?.ToString().Length > maxLenghtArray[i])
+                        maxLenghtArray[i] = row.Cells[i].Value.ToString().Length;
+                }
+            }
+
+            foreach (DataGridViewRow row in selectedRows)
+            {
+                textArray.Add(j.ToString() + new string(' ', 3));
+                j++;
+                for (int i = 1; i < 12; i++)
+                {
+                    if (row.Cells[i].Value?.ToString().Length < maxLenghtArray[i])
+                        textArray.Add(row.Cells[i].Value.ToString() + new string(' ', maxLenghtArray[i] - row.Cells[i].Value.ToString().Length + 3));
+                    else if (maxLenghtArray[i] == 0)
+                    { }
+                    else
+                        textArray.Add(row.Cells[i].Value.ToString() + new string(' ', 3));
+                }
+                textArray.Add(Environment.NewLine);
+            }
+
+            text = string.Join(null, textArray);
+            Clipboard.SetText(text);
+        }
+
+        // Копировать файл
+        private void Copy(string[] pathsArray)
+        {
+            System.Collections.Specialized.StringCollection stringCollection = new System.Collections.Specialized.StringCollection();
+            stringCollection.AddRange(pathsArray);
+            Clipboard.SetFileDropList(stringCollection);
+        }
+
+        // Сохранить файл по заданному пути
+        private void SaveFile(string[] pathsArray)
+        {
+            if (pathsArray.Length > 1)
+            {
+                FolderBrowserDialog fbd = new FolderBrowserDialog();
+                fbd.Description = "Выберите место сохранения выбранных свидетельств";
+                if (fbd.ShowDialog() == DialogResult.OK)
+                {
+                    foreach (var path in pathsArray)
+                    {
+                        var newPath = Path.Combine(fbd.SelectedPath, Path.GetFileName(path));
+                        File.Copy(path, newPath, true);
+                    }
+                }
+            }
+            else
+            {
+                SaveFileDialog sfd = new SaveFileDialog();
+                sfd.FileName = Path.GetFileName(pathsArray[0]);
+                sfd.Filter = "Все типы файлов (*.*)|(*.*)";
+                if (sfd.ShowDialog() == DialogResult.OK)
+                {
+                    File.Copy(pathsArray[0], sfd.FileName, true);
+                }
+            }
+        }
+
+        // Отправить выбранные файлы по Email
+        private void SendByEmail(string[] pathsArray)
+        {
+            Task.Run(() => MailService.SendFilesByEmail(pathsArray.Distinct().ToArray()));
+        }
+
+        // Изменить путь файла свидетельства
+        private void ChangeFilePath()
+        {
+            var idList = new List<int>();
+            foreach (DataGridViewRow row in dgvCerts.SelectedRows)
+            {
+                idList.Add((int)row.Cells["iDDataGridViewTextBoxColumn"].Value);
+            }
+
+            OpenFileDialog ofd = new OpenFileDialog();
+            ofd.Title = "Укажите путь к новому файлу свидетельства";
+            ofd.Filter = "Документы PDF|*.pdf";
+
+            if (ofd.ShowDialog() == DialogResult.OK)
+            {
+                var model = AppLocator.ModelFactory.Create<ICertificatesLoader>();
+                model.ModifyFilePath(idList.ToArray(), ofd.FileName);
+
+                MessageBox.Show("Путь к файлам был успешно изменен.", "Результат операции", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+            }
+        }
+
+        // Открыть методику поверки
+        private void OpenVerificationMethod()
+        {
+            if (!Directory.Exists(Settings.Instance.VerificateionMethodFolderPath))
+                return;
+
+            var filePaths = Directory.GetFiles(Settings.Instance.VerificateionMethodFolderPath);
+            var verificationMethods = new Dictionary<string, string>();
+
+            foreach (var filePath in filePaths)
+            {
+                verificationMethods.Add(Path.GetFileNameWithoutExtension(filePath).ToLower(), filePath.ToLower());
+            }
+            if (string.IsNullOrWhiteSpace(dgvCerts.SelectedRows[0].Cells["verificationMethodDataGridViewLinkColumn"].Value?.ToString()))
+                return;
+
+            var file = verificationMethods[dgvCerts.SelectedRows[0].Cells["verificationMethodDataGridViewLinkColumn"].Value?.ToString().ToLower()];
+
+            Process.Start(file);
+        }
+
+        // Сформировать акт передачи документов
+        private void BuildTransferDocument()
+        {
+            var idList = new List<int>();
+            foreach (DataGridViewRow row in dgvCerts.SelectedRows)
+            {
+                idList.Add((int)row.Cells["iDDataGridViewTextBoxColumn"].Value);
+            }
+
+            var selectedCertificates = new Certificates(_certificates.Where(x => idList.Contains(x.ID)).ToList());
+
+            var form = new ContainerForm<Certificates, ICreateNewTransferDocumentView<Certificates>>();
+            form.Build(selectedCertificates);
+            form.Changed += delegate { form.DialogResult = DialogResult.OK; };
+            form.ShowDialog();
+        }
+
+        #endregion
     }
 }

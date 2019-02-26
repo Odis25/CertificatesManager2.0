@@ -18,12 +18,11 @@
 
         static Settings()
         {
-            //todo: провести рефакторинг
-
             _instance = new Settings();
             _instance.DataBasePath = Properties.Settings.Default.DataBasePath;
             _instance.CertificatesFolderPath = Properties.Settings.Default.CertificatesFolderPath;
             _instance.CertificatesZipFolderPath = Properties.Settings.Default.CertificatesZipFolderPath;
+            _instance.VerificateionMethodFolderPath = Properties.Settings.Default.VerificationMethodFolder;
             _instance.AutoPreviewEnabled = Properties.Settings.Default.AutoPreviewEnabled;
             _instance.SaveUserCredential = Properties.Settings.Default.SaveUserCredential;
 
@@ -37,6 +36,7 @@
             Properties.Settings.Default.DataBasePath = _instance.DataBasePath;
             Properties.Settings.Default.CertificatesFolderPath = _instance.CertificatesFolderPath;
             Properties.Settings.Default.CertificatesZipFolderPath = _instance.CertificatesZipFolderPath;
+            Properties.Settings.Default.VerificationMethodFolder = _instance.VerificateionMethodFolderPath;
             Properties.Settings.Default.AutoPreviewEnabled = _instance.AutoPreviewEnabled;
             Properties.Settings.Default.SaveUserCredential = _instance.SaveUserCredential;
             Properties.Settings.Default.Save(); // Сохраняем переменные.
@@ -54,6 +54,10 @@
         /// Путь к каталогу резервного хранения свидетельств
         /// </summary>
         public string CertificatesZipFolderPath { get; set; }
+        /// <summary>
+        /// Путь к каталогу хранения методик поверки
+        /// </summary>
+        public string VerificateionMethodFolderPath { get; set; }
         /// <summary>
         /// Отображать свидетельства в окне предпросмотра
         /// </summary>

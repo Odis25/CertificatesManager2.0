@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Drawing;
+using static CertificatesModel.ScannerService.Scanner;
 
 namespace CertificatesModel.Interfaces
 {

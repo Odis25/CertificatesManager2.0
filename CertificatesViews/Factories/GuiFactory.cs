@@ -18,6 +18,7 @@ namespace CertificatesViews.Factories
 
             Register<ICreateNewView<byte[]>, NewCertificatePanel>();
             Register<IView<byte[]>, PreviewPanel>();
+            Register<ICreateNewTransferDocumentView<Certificates>, CreateActPanel>();
         }
     }
 }

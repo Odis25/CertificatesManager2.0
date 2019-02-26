@@ -37,7 +37,7 @@ namespace CertificatesModel.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("D:\\Метрология")]
+        [global::System.Configuration.DefaultSettingValueAttribute("\\\\fileserver\\pub\\Кулаков Р.Р\\Метрология")]
         public string CertificatesFolderPath {
             get {
                 return ((string)(this["CertificatesFolderPath"]));
@@ -49,7 +49,7 @@ namespace CertificatesModel.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("D:\\Служба главного метролога\\Метрология")]
+        [global::System.Configuration.DefaultSettingValueAttribute("\\\\fileserver\\pub\\Кулаков Р.Р\\Служба главного метролога\\Метрология")]
         public string CertificatesZipFolderPath {
             get {
                 return ((string)(this["CertificatesZipFolderPath"]));
@@ -104,6 +104,18 @@ namespace CertificatesModel.Properties {
             }
             set {
                 this["UserPassword"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("D:\\Метрология\\Методики поверки")]
+        public string VerificationMethodFolder {
+            get {
+                return ((string)(this["VerificationMethodFolder"]));
+            }
+            set {
+                this["VerificationMethodFolder"] = value;
             }
         }
     }

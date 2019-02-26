@@ -49,6 +49,12 @@ namespace CertificatesModel
             CertificatesRepository.EditCertificate(pattern);
         }
 
+        // Изменить путь к файлам свидетельств
+        public void ModifyFilePath(int[] idArray, string newPath)
+        {
+            CertificatesRepository.ModifyFilePath(idArray, newPath);
+        }
+
         // Удалить выбранные свидетельства
         public void DeleteCertificates(params int[] idList)
         {

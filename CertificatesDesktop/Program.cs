@@ -6,7 +6,6 @@ using CertificatesViews.Controls;
 using CertificatesViews.Factories;
 using CertificatesViews.Interfaces;
 using System;
-using System.Threading;
 using System.Windows.Forms;
 
 namespace CertificatesDesktop

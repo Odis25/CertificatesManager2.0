@@ -1,9 +1,4 @@
 ﻿using CertificatesModel.Components;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CertificatesModel.Interfaces
 {
@@ -28,6 +23,13 @@ namespace CertificatesModel.Interfaces
         /// <param name="pattern"></param>
         /// <returns></returns>
         void EditCertificate(CertificateEventArgs pattern);
+
+        /// <summary>
+        /// Изменить путь к файлам
+        /// </summary>
+        /// <param name="idArray">Массив id изменяемых свидетельств</param>
+        /// <param name="newPath">Новый путь к файлам</param>
+        void ModifyFilePath(int[] idArray, string newPath);
 
         /// <summary>
         /// Удаление свидетельств

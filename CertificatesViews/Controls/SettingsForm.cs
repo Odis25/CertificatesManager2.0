@@ -27,8 +27,10 @@ namespace CertificatesViews.Controls
             {
                 tbCertificatesFolderPath.Enabled = false;
                 tbCertificatesZipFolderPath.Enabled = false;
+                tbVerificationMethodFolderPath.Enabled = false;
                 btChangeCertificatesFolderPath.Enabled = false;
                 btChangeCertificatesZipFolderPath.Enabled = false;
+                btChangeVerificationMethodPath.Enabled = false;
             }                           
         }
 
@@ -38,6 +40,7 @@ namespace CertificatesViews.Controls
             tbDataBasePath.Text = Settings.Instance.DataBasePath;
             tbCertificatesFolderPath.Text = Settings.Instance.CertificatesFolderPath;
             tbCertificatesZipFolderPath.Text = Settings.Instance.CertificatesZipFolderPath;
+            tbVerificationMethodFolderPath.Text = Settings.Instance.VerificateionMethodFolderPath;
             chbAutoPreviewEnabled.Checked = Settings.Instance.AutoPreviewEnabled;
             chbSaveUserCredential.Checked = Settings.Instance.SaveUserCredential;
             // Отключаем кнопку сохранения
@@ -81,7 +84,7 @@ namespace CertificatesViews.Controls
         {
             FolderBrowserDialog fbd = new FolderBrowserDialog();
             fbd.SelectedPath = tbCertificatesFolderPath.Text;
-            fbd.Description = "Выберите папку для хранения свидетельств поверки";
+            fbd.Description = "Выберите папку для хранения свидетельств";
             if (fbd.ShowDialog() == DialogResult.OK)
             {
                 tbCertificatesFolderPath.Text = fbd.SelectedPath;
@@ -93,10 +96,22 @@ namespace CertificatesViews.Controls
         {
             FolderBrowserDialog fbd = new FolderBrowserDialog();
             fbd.SelectedPath = tbCertificatesZipFolderPath.Text;
-            fbd.Description = "Выберите папку для резервного хранения свидетельств поверки";
+            fbd.Description = "Выберите папку для резервного хранения свидетельств";
             if (fbd.ShowDialog() == DialogResult.OK)
             {
                 tbCertificatesZipFolderPath.Text = fbd.SelectedPath;
+            }
+        }
+
+        // Выбрать каталог хранения методик поверки
+        private void btChangeVerificationMethodPath_Click(object sender, EventArgs e)
+        {
+            FolderBrowserDialog fbd = new FolderBrowserDialog();
+            fbd.SelectedPath = tbVerificationMethodFolderPath.Text;
+            fbd.Description = "Выберите папку для хранения методик поверки";
+            if (fbd.ShowDialog() == DialogResult.OK)
+            {
+                tbVerificationMethodFolderPath.Text = fbd.SelectedPath;
             }
         }
 
@@ -106,6 +121,7 @@ namespace CertificatesViews.Controls
             Settings.Instance.DataBasePath = tbDataBasePath.Text.Trim();
             Settings.Instance.CertificatesFolderPath = tbCertificatesFolderPath.Text.Trim();
             Settings.Instance.CertificatesZipFolderPath = tbCertificatesZipFolderPath.Text.Trim();
+            Settings.Instance.VerificateionMethodFolderPath = tbVerificationMethodFolderPath.Text.Trim();
             Settings.Instance.AutoPreviewEnabled = chbAutoPreviewEnabled.Checked;
             Settings.Instance.SaveUserCredential = chbSaveUserCredential.Checked;
             // Сериализуем класс настроек
@@ -120,5 +136,7 @@ namespace CertificatesViews.Controls
             Changed(this, EventArgs.Empty); // сработка события на главной форме
             Close();
         }
+
+        
     }
 }

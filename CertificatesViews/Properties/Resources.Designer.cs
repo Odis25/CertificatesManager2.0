@@ -183,6 +183,16 @@ namespace CertificatesViews.Properties {
         /// <summary>
         ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap email_go {
+            get {
+                object obj = ResourceManager.GetObject("email_go", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap folder {
             get {
                 object obj = ResourceManager.GetObject("folder", resourceCulture);
@@ -293,9 +303,39 @@ namespace CertificatesViews.Properties {
         /// <summary>
         ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap link_edit {
+            get {
+                object obj = ResourceManager.GetObject("link_edit", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap page_copy {
+            get {
+                object obj = ResourceManager.GetObject("page_copy", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap page_edit {
             get {
                 object obj = ResourceManager.GetObject("page_edit", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap page_white_excel {
+            get {
+                object obj = ResourceManager.GetObject("page_white_excel", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -326,6 +366,16 @@ namespace CertificatesViews.Properties {
         internal static System.Drawing.Bitmap script {
             get {
                 object obj = ResourceManager.GetObject("script", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap script_add {
+            get {
+                object obj = ResourceManager.GetObject("script_add", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

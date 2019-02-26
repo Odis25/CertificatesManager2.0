@@ -8,7 +8,7 @@ using WIA;
 
 namespace CertificatesModel.ScannerService
 {
-    internal class Scanner
+    public class Scanner
     {
         //Image Filenames
         const string wiaFormatBMP = "{B96B3CAB-0728-11D3-9D7B-0000F81EF32E}";
@@ -159,7 +159,7 @@ namespace CertificatesModel.ScannerService
         }
 
         // Вспомогательная структура для задания размеров страниц
-        private struct PageSize
+        public struct PageSize
         {
             public double Height;
             public double Width;

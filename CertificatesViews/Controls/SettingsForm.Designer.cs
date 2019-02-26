@@ -46,26 +46,32 @@
             this.btCancel = new System.Windows.Forms.Button();
             this.btSaveChanges = new System.Windows.Forms.Button();
             this.btOk = new System.Windows.Forms.Button();
+            this.label4 = new System.Windows.Forms.Label();
+            this.tbVerificationMethodFolderPath = new System.Windows.Forms.TextBox();
+            this.btChangeVerificationMethodPath = new System.Windows.Forms.Button();
             this.gbPaths.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
             // gbPaths
             // 
+            this.gbPaths.Controls.Add(this.btChangeVerificationMethodPath);
             this.gbPaths.Controls.Add(this.btChangeCertificatesZipFolderPath);
             this.gbPaths.Controls.Add(this.button3);
             this.gbPaths.Controls.Add(this.btChangeCertificatesFolderPath);
             this.gbPaths.Controls.Add(this.button2);
             this.gbPaths.Controls.Add(this.btChangeDataBasePath);
+            this.gbPaths.Controls.Add(this.tbVerificationMethodFolderPath);
             this.gbPaths.Controls.Add(this.tbCertificatesZipFolderPath);
             this.gbPaths.Controls.Add(this.tbCertificatesFolderPath);
             this.gbPaths.Controls.Add(this.tbDataBasePath);
+            this.gbPaths.Controls.Add(this.label4);
             this.gbPaths.Controls.Add(this.label3);
             this.gbPaths.Controls.Add(this.label2);
             this.gbPaths.Controls.Add(this.label1);
             this.gbPaths.Location = new System.Drawing.Point(6, 0);
             this.gbPaths.Name = "gbPaths";
-            this.gbPaths.Size = new System.Drawing.Size(570, 129);
+            this.gbPaths.Size = new System.Drawing.Size(570, 151);
             this.gbPaths.TabIndex = 0;
             this.gbPaths.TabStop = false;
             this.gbPaths.Text = "Пути";
@@ -178,7 +184,7 @@
             // 
             this.groupBox1.Controls.Add(this.chbSaveUserCredential);
             this.groupBox1.Controls.Add(this.chbAutoPreviewEnabled);
-            this.groupBox1.Location = new System.Drawing.Point(6, 129);
+            this.groupBox1.Location = new System.Drawing.Point(6, 157);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(570, 100);
             this.groupBox1.TabIndex = 3;
@@ -212,7 +218,7 @@
             // btCancel
             // 
             this.btCancel.Image = global::CertificatesViews.Properties.Resources.door_in;
-            this.btCancel.Location = new System.Drawing.Point(362, 241);
+            this.btCancel.Location = new System.Drawing.Point(362, 269);
             this.btCancel.Name = "btCancel";
             this.btCancel.Size = new System.Drawing.Size(77, 28);
             this.btCancel.TabIndex = 2;
@@ -224,7 +230,7 @@
             // btSaveChanges
             // 
             this.btSaveChanges.Image = global::CertificatesViews.Properties.Resources.disk;
-            this.btSaveChanges.Location = new System.Drawing.Point(258, 241);
+            this.btSaveChanges.Location = new System.Drawing.Point(258, 269);
             this.btSaveChanges.Name = "btSaveChanges";
             this.btSaveChanges.Size = new System.Drawing.Size(86, 28);
             this.btSaveChanges.TabIndex = 1;
@@ -236,7 +242,7 @@
             // btOk
             // 
             this.btOk.Image = global::CertificatesViews.Properties.Resources.check;
-            this.btOk.Location = new System.Drawing.Point(154, 241);
+            this.btOk.Location = new System.Drawing.Point(154, 269);
             this.btOk.Name = "btOk";
             this.btOk.Size = new System.Drawing.Size(86, 28);
             this.btOk.TabIndex = 1;
@@ -245,11 +251,39 @@
             this.btOk.UseVisualStyleBackColor = true;
             this.btOk.Click += new System.EventHandler(this.btOk_Click);
             // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(13, 121);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(192, 13);
+            this.label4.TabIndex = 0;
+            this.label4.Text = "Каталог хранения методик поверки:";
+            // 
+            // tbVerificationMethodFolderPath
+            // 
+            this.tbVerificationMethodFolderPath.Location = new System.Drawing.Point(252, 117);
+            this.tbVerificationMethodFolderPath.Name = "tbVerificationMethodFolderPath";
+            this.tbVerificationMethodFolderPath.Size = new System.Drawing.Size(287, 20);
+            this.tbVerificationMethodFolderPath.TabIndex = 1;
+            this.tbVerificationMethodFolderPath.TextChanged += new System.EventHandler(this.SettingsChanged);
+            // 
+            // btChangeVerificationMethodPath
+            // 
+            this.btChangeVerificationMethodPath.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.btChangeVerificationMethodPath.Image = global::CertificatesViews.Properties.Resources.folder_explore;
+            this.btChangeVerificationMethodPath.Location = new System.Drawing.Point(537, 116);
+            this.btChangeVerificationMethodPath.Name = "btChangeVerificationMethodPath";
+            this.btChangeVerificationMethodPath.Size = new System.Drawing.Size(33, 23);
+            this.btChangeVerificationMethodPath.TabIndex = 2;
+            this.btChangeVerificationMethodPath.UseVisualStyleBackColor = true;
+            this.btChangeVerificationMethodPath.Click += new System.EventHandler(this.btChangeVerificationMethodPath_Click);
+            // 
             // SettingsForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(582, 281);
+            this.ClientSize = new System.Drawing.Size(582, 304);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.btCancel);
             this.Controls.Add(this.btOk);
@@ -289,5 +323,8 @@
         private System.Windows.Forms.CheckBox chbAutoPreviewEnabled;
         private System.Windows.Forms.CheckBox chbSaveUserCredential;
         private System.Windows.Forms.Button btOk;
+        private System.Windows.Forms.Button btChangeVerificationMethodPath;
+        private System.Windows.Forms.TextBox tbVerificationMethodFolderPath;
+        private System.Windows.Forms.Label label4;
     }
 }

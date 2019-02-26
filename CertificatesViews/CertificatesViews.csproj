@@ -95,6 +95,7 @@
     <Reference Include="WindowsFormsIntegration" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Components\CheckBoxHeaderCell.cs" />
     <Compile Include="Components\Extensions.cs" />
     <Compile Include="Components\ListViewModified.cs">
       <SubType>Component</SubType>
@@ -125,6 +126,12 @@
     </Compile>
     <Compile Include="Controls\ContainerForm.Designer.cs">
       <DependentUpon>ContainerForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\CreateActPanel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\CreateActPanel.Designer.cs">
+      <DependentUpon>CreateActPanel.cs</DependentUpon>
     </Compile>
     <Compile Include="Controls\NewCertificatePanel.cs">
       <SubType>UserControl</SubType>
@@ -158,6 +165,7 @@
     </Compile>
     <Compile Include="Factories\AppLocator.cs" />
     <Compile Include="Factories\GuiFactory.cs" />
+    <Compile Include="Interfaces\ICreateNewTransferDocumentView.cs" />
     <Compile Include="Interfaces\ICreateNewView.cs" />
     <Compile Include="Interfaces\IView.cs" />
     <Compile Include="Interfaces\IViewAndEdit.cs" />
@@ -186,6 +194,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\ContainerForm.resx">
       <DependentUpon>ContainerForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\CreateActPanel.resx">
+      <DependentUpon>CreateActPanel.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\NewCertificatePanel.resx">
       <DependentUpon>NewCertificatePanel.cs</DependentUpon>
@@ -331,6 +342,21 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\image_add.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\email_go.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\page_copy.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\link_edit.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\page_white_excel.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\script_add.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
