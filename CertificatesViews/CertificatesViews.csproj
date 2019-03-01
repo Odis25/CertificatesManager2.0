@@ -97,9 +97,6 @@
   <ItemGroup>
     <Compile Include="Components\CheckBoxHeaderCell.cs" />
     <Compile Include="Components\Extensions.cs" />
-    <Compile Include="Components\ListViewModified.cs">
-      <SubType>Component</SubType>
-    </Compile>
     <Compile Include="Components\TreeViewModified.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -167,6 +164,7 @@
     <Compile Include="Factories\GuiFactory.cs" />
     <Compile Include="Interfaces\ICreateNewTransferDocumentView.cs" />
     <Compile Include="Interfaces\ICreateNewView.cs" />
+    <Compile Include="Interfaces\IPreView.cs" />
     <Compile Include="Interfaces\IView.cs" />
     <Compile Include="Interfaces\IViewAndEdit.cs" />
     <Compile Include="MainForm.cs">

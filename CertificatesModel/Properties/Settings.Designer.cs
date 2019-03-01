@@ -37,7 +37,7 @@ namespace CertificatesModel.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("\\\\fileserver\\pub\\Кулаков Р.Р\\Метрология")]
+        [global::System.Configuration.DefaultSettingValueAttribute("\\\\fileserver.incomsystem.ru\\pub\\Кулаков Р.Р\\Метрология")]
         public string CertificatesFolderPath {
             get {
                 return ((string)(this["CertificatesFolderPath"]));
@@ -49,7 +49,7 @@ namespace CertificatesModel.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("\\\\fileserver\\pub\\Кулаков Р.Р\\Служба главного метролога\\Метрология")]
+        [global::System.Configuration.DefaultSettingValueAttribute("\\\\fileserver.incomsystem.ru\\pub\\Кулаков Р.Р\\Служба главного метролога\\Метрология")]
         public string CertificatesZipFolderPath {
             get {
                 return ((string)(this["CertificatesZipFolderPath"]));

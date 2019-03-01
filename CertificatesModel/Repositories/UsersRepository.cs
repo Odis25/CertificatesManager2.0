@@ -25,7 +25,7 @@ namespace CertificatesModel.Repositories
         // Конструктор
         static UsersRepository()
         {
-            _connectionString = $"Data Source = {Settings.Instance.DataBasePath}";
+            _connectionString = $"Data Source = {Settings.Instance.DataBasePath}; Max Buffer Size=4096; Persist Security Info=False;";
         }
 
         // Получаем конкретного пользователя

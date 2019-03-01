@@ -12,12 +12,12 @@ namespace CertificatesViews.Factories
         {
             Register<IView<Certificates>, CertificatesPanel>();
             Register<IDetailsView<Certificate, Certificates>, CertificatePropertiesPanel>();
-            Register<IView<string>, PreviewPanel>();
+            Register<IPreView<string>, PreviewPanel>();
             Register<IView<User>, AuthorizationPanel>();
             Register<IView<Users>, UsersAdministrationPanel>();
 
             Register<ICreateNewView<byte[]>, NewCertificatePanel>();
-            Register<IView<byte[]>, PreviewPanel>();
+            Register<IPreView<byte[]>, PreviewPanel>();
             Register<ICreateNewTransferDocumentView<Certificates>, CreateActPanel>();
         }
     }

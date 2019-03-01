@@ -6,10 +6,10 @@
       <Value Profile="(Default)">D:\Test.sdf</Value>
     </Setting>
     <Setting Name="CertificatesFolderPath" Type="System.String" Scope="User">
-      <Value Profile="(Default)">\\fileserver\pub\Кулаков Р.Р\Метрология</Value>
+      <Value Profile="(Default)">\\fileserver.incomsystem.ru\pub\Кулаков Р.Р\Метрология</Value>
     </Setting>
     <Setting Name="CertificatesZipFolderPath" Type="System.String" Scope="User">
-      <Value Profile="(Default)">\\fileserver\pub\Кулаков Р.Р\Служба главного метролога\Метрология</Value>
+      <Value Profile="(Default)">\\fileserver.incomsystem.ru\pub\Кулаков Р.Р\Служба главного метролога\Метрология</Value>
     </Setting>
     <Setting Name="AutoPreviewEnabled" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>

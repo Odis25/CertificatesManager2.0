@@ -45,16 +45,16 @@ namespace CertificatesDesktop
                 {
                     ex = ex.InnerException;
                 }
-//#if DEBUG
+#if DEBUG
                 using (var exceptionDlg = new ThreadExceptionDialog(ex))
                 {
                     var res = exceptionDlg.ShowDialog();
                     if (res == DialogResult.Abort)
                         Application.Exit();
                 }
-//#else
-           // MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-//#endif
+#else
+            MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+#endif
             }
         }
     }     

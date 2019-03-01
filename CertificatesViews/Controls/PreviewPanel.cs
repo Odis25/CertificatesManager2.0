@@ -10,10 +10,9 @@ using System.Windows.Forms;
 namespace CertificatesViews.Controls
 {
 
-    public partial class PreviewPanel : UserControl, IView<string>, IView<byte[]>
+    public partial class PreviewPanel : UserControl, IPreView<string>, IPreView<byte[]>
     {
         PdfViewer _viewer;
-        CancellationTokenSource _cts;
 
         public PdfViewer Viewer
         {
@@ -35,19 +34,8 @@ namespace CertificatesViews.Controls
 
         public event EventHandler Changed = delegate { };
 
-        async public void Build(string path)
+        public void Build(string path)
         {
-            // Отменяем предыдущий запрос
-            if (_cts != null)
-                _cts.Cancel();
-
-            // Создаем CancellationTokenSource для текущего метода, и передаем его в переменную класса
-            var cts = new CancellationTokenSource();
-            _cts = cts;
-
-            // Получаем токен отмены
-            var token = _cts.Token;
-
             // Удаляем picturebox с предыдущего вызова и очищаем память
             foreach (PictureBox c in panPages.Controls.OfType<PictureBox>())
             { c.Dispose(); GC.Collect(); }
@@ -59,11 +47,18 @@ namespace CertificatesViews.Controls
                 if (path.EndsWith(".pdf", true, null))
                 {
                     Viewer.Visible = true;
-
                     //TODO: Разобраться с утечкой памяти и асинхронностью
-                    await Task.Delay(100, token);
-                    Viewer.Document?.Dispose();
-                    Viewer.Document = PdfDocument.Load(path);
+                    if (Viewer.Document != null)
+                    {
+                        Viewer.Document.Dispose();
+                        Viewer.Renderer.Document.Dispose();
+                        Viewer.Document = null;
+                    }
+
+                    //Viewer.Document = PdfDocument.Load(path);
+                    if (Viewer.Document == null)
+                        Viewer.Document = PdfDocument.Load(new MemoryStream(File.ReadAllBytes(path)));
+                    GC.Collect();
                 }
                 // Если свидетельство в формате изображения
                 else
@@ -75,15 +70,11 @@ namespace CertificatesViews.Controls
                     pb.Load(path);
                     panPages.Controls.Add(pb);
                     pb.Dock = DockStyle.Fill;
+                    }
                 }
-            }
             else
-                //Иначе оставляем панель пустой
+                // Иначе оставляем панель пустой
                 Viewer.Document = null;
-
-            // Убираем CancellationTokenSource текущего метода из переменной класса
-            if (_cts == cts)
-                _cts = null;
         }
 
         public void Build(byte[] byteArray)
@@ -97,7 +88,6 @@ namespace CertificatesViews.Controls
             {
                 Viewer.Visible = true;
 
-                //TODO: Разобраться с утечкой памяти и асинхронностью
                 Viewer.Document?.Dispose();
                 Viewer.Document = PdfDocument.Load(new MemoryStream(byteArray));
             }

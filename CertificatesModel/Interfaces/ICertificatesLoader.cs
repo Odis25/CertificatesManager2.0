@@ -22,7 +22,7 @@ namespace CertificatesModel.Interfaces
         /// </summary>
         /// <param name="pattern"></param>
         /// <returns></returns>
-        void EditCertificate(CertificateEventArgs pattern);
+        Certificate EditCertificate(CertificateEventArgs pattern);
 
         /// <summary>
         /// Изменить путь к файлам

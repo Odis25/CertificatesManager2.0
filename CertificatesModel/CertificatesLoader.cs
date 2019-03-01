@@ -44,9 +44,32 @@ namespace CertificatesModel
         }
 
         // Изменить свидетельство согласно шаблону
-        public void EditCertificate(CertificateEventArgs pattern)
+        public Certificate EditCertificate(CertificateEventArgs pattern)
         {
-            CertificatesRepository.EditCertificate(pattern);
+
+            var dir = Path.GetDirectoryName(pattern.CertificatePath);
+            var extension = Path.GetExtension(pattern.CertificatePath);
+            var fileName = Path.GetFileNameWithoutExtension(pattern.CertificatePath);
+
+            // Если директории с таким именем не существует, то создаем
+            if (!Directory.Exists(dir))
+                Directory.CreateDirectory(dir);
+
+            // Если файл с таким именем существует
+            for (int i = 1; ; i++)
+            {
+                if (!File.Exists(pattern.CertificatePath))
+                {
+                    break;
+                }
+                pattern.CertificatePath = Path.Combine(dir, fileName + $"_({i})" + extension);
+            }
+            // записываем изменения в базу
+            var unmodifiedCertificate = CertificatesRepository.EditCertificate(pattern);
+            // Перемещаем файл свидетельства по новому пути
+            File.Move(unmodifiedCertificate.CertificatePath, pattern.CertificatePath);
+
+            return unmodifiedCertificate;
         }
 
         // Изменить путь к файлам свидетельств

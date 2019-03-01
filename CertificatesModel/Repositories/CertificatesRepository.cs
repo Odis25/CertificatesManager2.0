@@ -1,7 +1,9 @@
 ﻿using CertificatesModel.Components;
+using System;
 using System.Data;
 using System.Data.Entity;
 using System.Data.SqlServerCe;
+using System.IO;
 using System.Linq;
 
 namespace CertificatesModel.Repositories
@@ -24,20 +26,20 @@ namespace CertificatesModel.Repositories
 
         static CertificatesRepository()
         {
-            _connectionString = $"Data Source = {Settings.Instance.DataBasePath}";
+            _connectionString = $"Data Source = {Settings.Instance.DataBasePath}; Max Buffer Size=8192; Persist Security Info=False;";
         }
 
         // Получаем все свидетельства из БД и сортируем по ID
         private static Certificates GetAllCertificatesFromDB()
-        { 
+        {
             try
             {
                 return GetSelectedCertificatesFromDB(new CertificateEventArgs());
             }
-            catch(SqlCeException e)
+            catch (SqlCeException e)
             {
                 return new Certificates();
-            }           
+            }
         }
 
         // Получаем список свидетельств соответствующих поисковому шаблону
@@ -46,7 +48,7 @@ namespace CertificatesModel.Repositories
             using (MetrologyDbContext db = new MetrologyDbContext())
             {
                 IQueryable<Certificate> querry = db.Certificates;
-                querry = querry.OrderBy(x=>x.ID);
+                querry = querry.OrderBy(x => x.ID);
 
                 if (pattern.ID.HasValue)
                     querry = querry.Where(x => x.ID == pattern.ID);
@@ -77,7 +79,7 @@ namespace CertificatesModel.Repositories
                     querry = querry.Where(x => x.CalibrationExpireDate <= pattern.CalibrationExpireDate);
 
                 return new Certificates(querry.ToList());
-            }        
+            }
         }
 
         // Добавить новое свидетельство в база
@@ -102,16 +104,19 @@ namespace CertificatesModel.Repositories
                     certificate.CertificatePath = newFilePath;
                     db.Entry(certificate).State = EntityState.Modified;
                 }
+                // Сохраняем изменения без валидации
+                db.Configuration.ValidateOnSaveEnabled = false;               
                 db.SaveChanges();
             }
         }
 
         // Внесение изменений в свидетельство по шаблону
-        public static void EditCertificate(CertificateEventArgs pattern)
+        public static Certificate EditCertificate(CertificateEventArgs pattern)
         {
             using (MetrologyDbContext db = new MetrologyDbContext())
             {
                 var certificate = _certificates.Where(x => x.ID == pattern.ID).FirstOrDefault();
+                var unmodifiedCertificate = (Certificate)certificate.Clone();
 
                 certificate.Year = (int)pattern.Year;
                 certificate.CertificateNumber = pattern.CertificateNumber;
@@ -126,9 +131,13 @@ namespace CertificatesModel.Repositories
                 certificate.CalibrationDate = pattern.CalibrationDate.Value;
                 certificate.CalibrationExpireDate = pattern.CalibrationExpireDate.Value;
                 certificate.CertificatePath = pattern.CertificatePath;
-                // Сохраняем изменения
+                // Сохраняем изменения без валидации
+                db.Configuration.ValidateOnSaveEnabled = false;
                 db.Entry(certificate).State = EntityState.Modified;
+
                 db.SaveChanges();
+
+                return unmodifiedCertificate;
             }
         }
 
@@ -137,9 +146,9 @@ namespace CertificatesModel.Repositories
         {
             using (MetrologyDbContext db = new MetrologyDbContext())
             {
-                foreach(var id in idList)
+                foreach (var id in idList)
                 {
-                    var cert = _certificates.Single(x => x.ID == id);
+                    var cert = _certificates.FirstOrDefault(x => x.ID == id);
                     _certificates.Remove(cert);
                     db.Entry(cert).State = EntityState.Deleted;
                 }

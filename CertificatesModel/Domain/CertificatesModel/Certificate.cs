@@ -7,7 +7,7 @@ using System.IO;
 namespace CertificatesModel
 {
     [Table("METROLOGY")]
-    public class Certificate
+    public class Certificate : ICloneable
     {
         /// <summary>
         /// ID свидетельства в БД
@@ -107,6 +107,11 @@ namespace CertificatesModel
                 else
                     return "---";
             }
+        }
+
+        public object Clone()
+        {
+            return MemberwiseClone();
         }
     }
 }

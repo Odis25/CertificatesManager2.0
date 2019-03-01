@@ -6,7 +6,7 @@ namespace CertificatesModel
 {
     public class MetrologyDbContext : DbContext
     {
-        public MetrologyDbContext() : base(new SqlCeConnection("Data Source = " + Settings.Instance.DataBasePath), true)
+        public MetrologyDbContext() : base(new SqlCeConnection($"Data Source = {Settings.Instance.DataBasePath}; Max Buffer Size=4096; Persist Security Info=False;"), true)
         { }
         public DbSet<Certificate> Certificates { get; set; }
         public DbSet<User> Users { get; set; }

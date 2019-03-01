@@ -181,10 +181,10 @@ namespace CertificatesViews.Controls
             pattern.CalibrationDate = dpCalibrationDate.Value.Date;
             pattern.CalibrationExpireDate = dpCalibrationExpireDate.Value.Date;
 
-            // todo: Проверить
             // Автоматически формируемые параметры
             var checkedContractNumber = pattern.ContractNumber.Replace('/', '-').Replace('\\', '-');
-            pattern.CertificatePath = $"{Settings.Instance.CertificatesFolderPath}\\{pattern.Year}\\{checkedContractNumber}\\Свидетельства\\{pattern.DeviceType}_{pattern.DeviceName + Path.GetExtension(_certificate.CertificatePath)}";
+           
+            pattern.CertificatePath = Path.Combine(Settings.Instance.CertificatesFolderPath, pattern.Year.ToString(), checkedContractNumber, "Свидетельства", $"{pattern.DeviceType}_{pattern.DeviceName}" + Path.GetExtension(_certificate.CertificatePath));
 
             // Возвращаем сформированный шаблон
             return pattern;
@@ -213,7 +213,6 @@ namespace CertificatesViews.Controls
             }
             e.DrawFocusRectangle();
         }
-
         private void cbVerificationMethod_DropDownClosed(object sender, EventArgs e)
         {
             tipVerificationMethodItems.Hide(cbVerificationMethod);

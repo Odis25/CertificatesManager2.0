@@ -1,6 +1,8 @@
 ﻿using CertificatesModel;
+using CertificatesModel.Authorization;
 using CertificatesModel.Components;
 using CertificatesModel.Interfaces;
+using CertificatesModel.LoggingService;
 using CertificatesModel.MailService;
 using CertificatesViews.Factories;
 using CertificatesViews.Interfaces;
@@ -11,6 +13,7 @@ using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -71,8 +74,16 @@ namespace CertificatesViews.Controls
         public CertificatesPanel()
         {
             InitializeComponent();
-        }
 
+            Authorization.UserChanged += delegate
+            {
+                if (Authorization.CurrentUser.UserRights.ToLower() == "user")
+                    tsmChangeFilePath.Enabled = false;
+                else
+                    tsmChangeFilePath.Enabled = true;
+            };
+        }
+        
         // Передача данных в форму
         public void Build(Certificates certificates)
         {
@@ -122,11 +133,40 @@ namespace CertificatesViews.Controls
         {
             var model = AppLocator.ModelFactory.Create<ICertificatesLoader>();
             var editPattern = e as CertificateEventArgs;
-            model.EditCertificate(editPattern);
+            var unmodifiedCertificate = model.EditCertificate(editPattern);
 
             dgvCerts.Refresh();
             BuildTreeView();
 
+            // Логирование
+            var message = new StringBuilder().AppendLine($"Пользователь {Authorization.CurrentUser.Login} ВНЕС ИЗМЕНЕНИЯ в БД для записи ID = {editPattern.ID}:");
+            if (editPattern.Year != unmodifiedCertificate.Year)
+                message.Append(new string(' ', 31)).Append($"Год был изменен с '{unmodifiedCertificate.Year}' на '{editPattern.Year}'").AppendLine();
+            if (editPattern.ContractNumber != unmodifiedCertificate.ContractNumber)
+                message.Append(new string(' ', 31)).Append($"Номер договора был изменен с '{unmodifiedCertificate.ContractNumber}' на '{editPattern.ContractNumber}'").AppendLine();
+            if (editPattern.CertificateNumber != unmodifiedCertificate.CertificateNumber)
+                message.Append(new string(' ', 31)).Append($"Номер свидетельства был изменен с '{unmodifiedCertificate.CertificateNumber}' на '{editPattern.CertificateNumber}'").AppendLine();
+            if (editPattern.RegisterNumber != unmodifiedCertificate.RegisterNumber)
+                message.Append(new string(' ', 31)).Append($"Номер в Гос.реестре был изменен с '{unmodifiedCertificate.RegisterNumber}' на '{editPattern.RegisterNumber}'").AppendLine();
+            if (editPattern.VerificationMethod != unmodifiedCertificate.VerificationMethod)
+                message.Append(new string(' ', 31)).Append($"Методика поверки была изменена с '{unmodifiedCertificate.VerificationMethod}' на '{editPattern.VerificationMethod}'").AppendLine();
+            if (editPattern.ClientName != unmodifiedCertificate.ClientName)
+                message.Append(new string(' ', 31)).Append($"Наименование заказчика было изменено с '{unmodifiedCertificate.ClientName}' на '{editPattern.ClientName}'").AppendLine();
+            if (editPattern.ObjectName != unmodifiedCertificate.ObjectName)
+                message.Append(new string(' ', 31)).Append($"Наименование объекта эксплуатации было изменено с '{unmodifiedCertificate.ObjectName}' на '{editPattern.ObjectName}'").AppendLine();
+            if (editPattern.DeviceType != unmodifiedCertificate.DeviceType)
+                message.Append(new string(' ', 31)).Append($"Группа СИ была изменена с '{unmodifiedCertificate.DeviceType}' на '{editPattern.DeviceType}'").AppendLine();
+            if (editPattern.DeviceName != unmodifiedCertificate.DeviceName)
+                message.Append(new string(' ', 31)).Append($"Наименование СИ было изменено с '{unmodifiedCertificate.DeviceName}' на '{editPattern.DeviceName}'").AppendLine();
+            if (editPattern.SerialNumber != unmodifiedCertificate.SerialNumber)
+                message.Append(new string(' ', 31)).Append($"Сенийный номер был изменен с '{unmodifiedCertificate.SerialNumber}' на '{editPattern.SerialNumber}'").AppendLine();
+            if (editPattern.CalibrationDate != unmodifiedCertificate.CalibrationDate)
+                message.Append(new string(' ', 31)).Append($"Дата поверки был изменена с '{unmodifiedCertificate.CalibrationDate}' на '{editPattern.CalibrationDate}'").AppendLine();
+            if (editPattern.CalibrationExpireDate != unmodifiedCertificate.CalibrationExpireDate)
+                message.Append(new string(' ', 31)).Append($"Дата окончания срока поверки была изменена с '{unmodifiedCertificate.CalibrationExpireDate}' на '{editPattern.CalibrationExpireDate}'").AppendLine();
+            if (editPattern.CertificatePath != unmodifiedCertificate.CertificatePath)
+                message.Append(new string(' ', 31)).Append($"Путь к файлу был изменен с '{unmodifiedCertificate.CertificatePath}' на '{editPattern.CertificatePath}'").AppendLine();
+            LoggingService.LogEvent(message.ToString());
             MessageBox.Show("Изменения в свидетельство успешно внесены.", "Операция изменения", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
@@ -154,6 +194,35 @@ namespace CertificatesViews.Controls
             {
                 var cert = _selectedCertificates.FirstOrDefault(x => x.ID == id[i]);
                 _selectedCertificates.Remove(cert);
+
+                // Логирование
+                var message = new StringBuilder().AppendLine($"Пользователь {Authorization.CurrentUser.Login} УДАЛИЛ из БД запись:");
+                message.Append(new string(' ', 31)).Append($"ID: {cert.ID}").AppendLine();
+                message.Append(new string(' ', 31)).Append($"Год: {cert.Year}").AppendLine();
+                if (cert.ContractNumber?.Length > 0)
+                    message.Append(new string(' ', 31)).Append($"Номер договора: {cert.ContractNumber}").AppendLine();
+                if (cert.CertificateNumber?.Length > 0)
+                    message.Append(new string(' ', 31)).Append($"Номер свидетельства: {cert.CertificateNumber}").AppendLine();
+                if (cert.RegisterNumber?.Length > 0)
+                    message.Append(new string(' ', 31)).Append($"Номер в гос.реестре: {cert.RegisterNumber}").AppendLine();
+                if (cert.VerificationMethod?.Length > 0)
+                    message.Append(new string(' ', 31)).Append($"Методика поверки: {cert.VerificationMethod}").AppendLine();
+                if (cert.ClientName?.Length > 0)
+                    message.Append(new string(' ', 31)).Append($"Наименование заказчика: {cert.ClientName}").AppendLine();
+                if (cert.ObjectName?.Length > 0)
+                    message.Append(new string(' ', 31)).Append($"Наименование объекта эксплуатации: {cert.ObjectName}").AppendLine();
+                if (cert.DeviceType?.Length > 0)
+                    message.Append(new string(' ', 31)).Append($"Группа СИ: {cert.DeviceType}").AppendLine();
+                if (cert.DeviceName?.Length > 0)
+                    message.Append(new string(' ', 31)).Append($"Наименование СИ: {cert.DeviceName}").AppendLine();
+                if (cert.SerialNumber?.Length > 0)
+                    message.Append(new string(' ', 31)).Append($"Серийный номер: {cert.SerialNumber}").AppendLine();
+                message.Append(new string(' ', 31)).Append($"Дата поверки: {cert.CalibrationDate}").AppendLine();
+                message.Append(new string(' ', 31)).Append($"Дата окончания срока поверки: {cert.CalibrationExpireDate}").AppendLine();
+                if (cert.CertificatePath?.Length > 0)
+                    message.Append(new string(' ', 31)).Append($"Путь к файлу: {cert.CertificatePath}").AppendLine();
+
+                LoggingService.LogEvent(message.ToString());
             }
 
             BuildTreeView();
@@ -232,7 +301,7 @@ namespace CertificatesViews.Controls
 
             // Выводим страницы документа на панель предпросмотра
             if (Settings.Instance.AutoPreviewEnabled && certificate != null)
-                (PreviewControl as IView<string>).Build(certificate.CertificatePath);
+                (PreviewControl as IPreView<string>).Build(certificate.CertificatePath);
         }
 
         // Рекурсивное обновление дочерних узлов
@@ -255,7 +324,7 @@ namespace CertificatesViews.Controls
             if (Settings.Instance.AutoPreviewEnabled)
             {
                 scPreviewSplitter.Panel2Collapsed = false;
-                PreviewControl = (Control)AppLocator.GuiFactory.Create<IView<string>>();
+                PreviewControl = (Control)AppLocator.GuiFactory.Create<IPreView<string>>();
             }
             else
             {
@@ -347,6 +416,29 @@ namespace CertificatesViews.Controls
             }
         }
 
+        // Открыть методику поверки
+        private void dgvCerts_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex == -1)
+                return;
+            if (!Directory.Exists(Settings.Instance.VerificateionMethodFolderPath))
+                return;
+
+            var filePaths = Directory.GetFiles(Settings.Instance.VerificateionMethodFolderPath);
+            var verificationMethods = new Dictionary<string, string>();
+
+            foreach (var filePath in filePaths)
+            {
+                verificationMethods.Add(Path.GetFileNameWithoutExtension(filePath).ToLower(), filePath.ToLower());
+            }
+
+            if (dgvCerts.Rows[e.RowIndex].Cells[e.ColumnIndex] is DataGridViewLinkCell)
+            {
+                var file = verificationMethods[dgvCerts.Rows[e.RowIndex].Cells[e.ColumnIndex].Value?.ToString().ToLower()];
+                Process.Start(file);
+            }
+        }
+
         // Контекстное меню для итемов DataGridView
         private void dgvCerts_CellMouseClick(object sender, DataGridViewCellMouseEventArgs e)
         {
@@ -391,7 +483,7 @@ namespace CertificatesViews.Controls
                     break;
                 case "tsmSendByEmail":
                     dgvItemMenuStrip.Hide();
-                    SendByEmail(pathsArray);
+                    SendByEmailAsync(pathsArray);
                     break;
                 case "tsmChangeFilePath":
                     dgvItemMenuStrip.Hide();
@@ -506,9 +598,9 @@ namespace CertificatesViews.Controls
         }
 
         // Отправить выбранные файлы по Email
-        private void SendByEmail(string[] pathsArray)
+        private async void SendByEmailAsync(string[] pathsArray)
         {
-            Task.Run(() => MailService.SendFilesByEmail(pathsArray.Distinct().ToArray()));
+            await Task.Run(() => MailService.SendFilesByEmail(pathsArray.Distinct().ToArray()));
         }
 
         // Изменить путь файла свидетельства
@@ -520,6 +612,8 @@ namespace CertificatesViews.Controls
                 idList.Add((int)row.Cells["iDDataGridViewTextBoxColumn"].Value);
             }
 
+            // Старый путь
+            var oldPath = _certificates.FirstOrDefault(x => x.ID == idList.FirstOrDefault()).CertificatePath;
             OpenFileDialog ofd = new OpenFileDialog();
             ofd.Title = "Укажите путь к новому файлу свидетельства";
             ofd.Filter = "Документы PDF|*.pdf";
@@ -531,6 +625,14 @@ namespace CertificatesViews.Controls
 
                 MessageBox.Show("Путь к файлам был успешно изменен.", "Результат операции", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
             }
+            // Новый путь
+            var newPath = _certificates.FirstOrDefault(x => x.ID == idList.FirstOrDefault()).CertificatePath;
+
+            // Логирование
+            var message = new StringBuilder().AppendLine($"Пользователь {Authorization.CurrentUser.Login} ИЗМЕНИЛ ПУТЬ К ФАЙЛУ СВИДЕТЕЛЬСТВА для записи ID = {idList.FirstOrDefault()}:");
+            message.Append(new string(' ', 31)).Append($"Старый путь: {oldPath}").AppendLine();
+            message.Append(new string(' ', 31)).Append($"Новый путь: {newPath}").AppendLine();
+            LoggingService.LogEvent(message.ToString());
         }
 
         // Открыть методику поверки
@@ -546,6 +648,7 @@ namespace CertificatesViews.Controls
             {
                 verificationMethods.Add(Path.GetFileNameWithoutExtension(filePath).ToLower(), filePath.ToLower());
             }
+
             if (string.IsNullOrWhiteSpace(dgvCerts.SelectedRows[0].Cells["verificationMethodDataGridViewLinkColumn"].Value?.ToString()))
                 return;
 
@@ -572,5 +675,6 @@ namespace CertificatesViews.Controls
         }
 
         #endregion
+
     }
 }

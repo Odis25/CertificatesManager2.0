@@ -1,12 +1,16 @@
 ﻿using CertificatesModel;
+using CertificatesModel.Authorization;
 using CertificatesModel.Interfaces;
+using CertificatesModel.LoggingService;
 using CertificatesModel.ScannerService;
 using CertificatesViews.Factories;
 using CertificatesViews.Interfaces;
 using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Text;
 using System.Windows.Forms;
 
 namespace CertificatesViews.Controls
@@ -38,6 +42,8 @@ namespace CertificatesViews.Controls
         // Объект для хранения pdf документа
         object _byteArray;
 
+        object[] _verificationMethodsCollection;
+
         public event EventHandler Changed = delegate { };
 
         // Конструктор
@@ -56,7 +62,7 @@ namespace CertificatesViews.Controls
         // Загрузка превью из файла
         public void Build(string path)
         {
-            var preview = AppLocator.GuiFactory.Create<IView<string>>();
+            var preview = AppLocator.GuiFactory.Create<IPreView<string>>();
             preview.Build(path);
             PreviewPanel = preview as Control;
             _byteArray = null;
@@ -67,7 +73,7 @@ namespace CertificatesViews.Controls
         public void Build(byte[] byteArray)
         {
             ParentForm.Text = "Добавление новог свидетельства";
-            var preview = AppLocator.GuiFactory.Create<IView<byte[]>>();
+            var preview = AppLocator.GuiFactory.Create<IPreView<byte[]>>();
             preview.Build(byteArray);
             PreviewPanel = preview as Control;
             CheckButtonState();
@@ -119,6 +125,7 @@ namespace CertificatesViews.Controls
             // Вносим свидетельство в базу
             var model = AppLocator.ModelFactory.Create<ICertificatesLoader>();
             var result = model.AddNewCertificate(certificate, (byte[])_byteArray);
+
             if (!result)
             {
                 MessageBox.Show("Такое свидетельство уже есть в базе.", "Результат операции", MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -131,6 +138,46 @@ namespace CertificatesViews.Controls
                     MessageBox.Show("Не удалось создать резервную копию файла", "Результат операции", MessageBoxButtons.OK, MessageBoxIcon.Error);
 
             MessageBox.Show("Свидетельство успешно добавлено в базу.", "Результат операции", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+
+            // Логирование
+            var message = new StringBuilder().AppendLine($"Пользователь {Authorization.CurrentUser.Login} ДОБАВИЛ в БД запись:");
+            if (certificate.ContractNumber.Length > 0)
+                message.Append(new string(' ', 31)).Append($"Номер договора: {certificate.ContractNumber}").AppendLine();
+            if (certificate.RegisterNumber.Length > 0)
+                message.Append(new string(' ', 31)).Append($"Номер в гос.реестре: {certificate.RegisterNumber}").AppendLine();
+            if (certificate.VerificationMethod.Length > 0)
+                message.Append(new string(' ', 31)).Append($"Методика поверки: {certificate.VerificationMethod}").AppendLine();
+            if (certificate.ClientName.Length > 0)
+                message.Append(new string(' ', 31)).Append($"Наименование заказчика: {certificate.ClientName}").AppendLine();
+            if (certificate.ObjectName.Length > 0)
+                message.Append(new string(' ', 31)).Append($"Наименование объекта эксплуатации: {certificate.ObjectName}").AppendLine();
+            if (certificate.DeviceType.Length > 0)
+                message.Append(new string(' ', 31)).Append($"Тип средства измерения: {certificate.DeviceType}").AppendLine();
+            if (certificate.DeviceName.Length > 0)
+                message.Append(new string(' ', 31)).Append($"Наименование средства измерения: {certificate.DeviceName}").AppendLine();
+            if (certificate.SerialNumber.Length > 0)
+                message.Append(new string(' ', 31)).Append($"Серийный номер: {certificate.SerialNumber}").AppendLine();
+            if (certificate.CertificatePath.Length > 0)
+                message.Append(new string(' ', 31)).Append($"Путь к файлу: {certificate.CertificatePath}").AppendLine();                                                       
+            LoggingService.LogEvent(message.ToString());
+            ClearTextBoxes();
+        }
+
+        // очистка текстбоксов
+        private void ClearTextBoxes()
+        {
+            tbCertificateNumber.Clear();
+            tbContractNumber.Clear();
+            tbRegisterNumber.Clear();
+            tbSerialNumber.Clear();
+            cbClientName.ResetText();
+            cbDeviceName.ResetText();
+            cbDeviceType.ResetText();
+            cbObjectName.ResetText();
+            cbVerificationMethod.ResetText();
+
+            CreateAutoCompleteCollection();
         }
 
         // Создать свидетельство и проверить корректность введенных данных
@@ -242,9 +289,23 @@ namespace CertificatesViews.Controls
             // comboboxes
             cbClientName.Items.AddRange(certificates.Select(x => x.ClientName).Distinct().Where(x => x != null).ToArray());
             cbObjectName.Items.AddRange(certificates.Select(x => x.ObjectName).Distinct().Where(x => x != null).ToArray());
-            cbVerificationMethod.Items.AddRange(certificates.Select(x => x.VerificationMethod).Distinct().Where(x => x != null).ToArray());
             cbDeviceType.Items.AddRange(certificates.Select(x => x.DeviceType).Distinct().Where(x => x != null).ToArray());
             cbDeviceName.Items.AddRange(certificates.Select(x => x.DeviceType).Distinct().Where(x => x != null).ToArray());
+
+            if (!Directory.Exists(Settings.Instance.VerificateionMethodFolderPath))
+                return;
+
+            var filePaths = Directory.GetFiles(Settings.Instance.VerificateionMethodFolderPath);
+            var verificationMethods = new List<string>();
+
+            foreach (var filePath in filePaths)
+            {
+                verificationMethods.Add(Path.GetFileNameWithoutExtension(filePath).ToLower());
+            }
+
+            _verificationMethodsCollection = verificationMethods.ToArray();
+            cbVerificationMethod.Items.Clear();
+            cbVerificationMethod.Items.AddRange(_verificationMethodsCollection);
         }
 
         // Автозаполнение при вводе номера в гос.реестре
@@ -285,7 +346,7 @@ namespace CertificatesViews.Controls
                 if (verificationMethodCollection.Length == 0)
                 {
                     cbVerificationMethod.Items.Clear();
-                    cbVerificationMethod.Items.AddRange(certificates.Select(x => x.VerificationMethod).Distinct().Where(x => x != null).ToArray());
+                    cbVerificationMethod.Items.AddRange(_verificationMethodsCollection);
                     cbVerificationMethod.ResetText();
                 }
                 else if (verificationMethodCollection.Length == 1)
@@ -386,7 +447,7 @@ namespace CertificatesViews.Controls
                 cbClientName.Items.Clear();
                 cbObjectName.Items.AddRange(certificates.Select(x => x.ObjectName).Distinct().Where(x => x != null).ToArray());
                 cbClientName.Items.AddRange(certificates.Select(x => x.ClientName).Distinct().Where(x => x != null).ToArray());
-            }            
+            }
         }
 
         // Отрисовка подсказки для Items в комбобоксе

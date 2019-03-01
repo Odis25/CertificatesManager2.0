@@ -16,6 +16,7 @@ namespace CertificatesModel.MailService
             mailItem.Subject = "";
             mailItem.HTMLBody = "";
             mailItem.Display(mailItem);
+
             foreach (string path in filePaths)
             {
                 mailItem.Attachments.Add(path);
