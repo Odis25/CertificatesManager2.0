@@ -23,13 +23,13 @@
     <UpdatePeriodically>false</UpdatePeriodically>
     <UpdateRequired>true</UpdateRequired>
     <MapFileExtensions>true</MapFileExtensions>
-    <InstallUrl>\\Fileserver\pub\Кулаков Р.Р\Certificate Dispather\TestDeploy\</InstallUrl>
-    <UpdateUrl>\\Fileserver\pub\Кулаков Р.Р\Certificate Dispather\TestDeploy\</UpdateUrl>
+    <InstallUrl>\\Fileserver.incomsystem.ru\pub\Кулаков Р.Р\Certificate Dispather\Deploy\</InstallUrl>
+    <UpdateUrl>\\Fileserver.incomsystem.ru\pub\Кулаков Р.Р\Certificate Dispather\Deploy\</UpdateUrl>
     <ProductName>Certificate Manager</ProductName>
     <PublisherName>ЗАО НИЦ ИНКОМСИСТЕМ</PublisherName>
-    <MinimumRequiredVersion>1.0.0.35</MinimumRequiredVersion>
-    <ApplicationRevision>36</ApplicationRevision>
-    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <MinimumRequiredVersion>1.0.1.1</MinimumRequiredVersion>
+    <ApplicationRevision>1</ApplicationRevision>
+    <ApplicationVersion>1.0.1.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <CreateDesktopShortcut>true</CreateDesktopShortcut>
     <PublishWizardCompleted>true</PublishWizardCompleted>

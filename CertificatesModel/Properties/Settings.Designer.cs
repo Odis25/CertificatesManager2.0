@@ -25,7 +25,7 @@ namespace CertificatesModel.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("D:\\Test.sdf")]
+        [global::System.Configuration.DefaultSettingValueAttribute("\\\\fileserver.incomsystem.ru\\pub\\Кулаков Р.Р\\База\\MetrologyDB.sdf")]
         public string DataBasePath {
             get {
                 return ((string)(this["DataBasePath"]));
@@ -109,7 +109,7 @@ namespace CertificatesModel.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("D:\\Метрология\\Методики поверки")]
+        [global::System.Configuration.DefaultSettingValueAttribute("\\\\fileserver.incomsystem.ru\\pub\\Кулаков Р.Р\\Метрология\\Методики поверки")]
         public string VerificationMethodFolder {
             get {
                 return ((string)(this["VerificationMethodFolder"]));

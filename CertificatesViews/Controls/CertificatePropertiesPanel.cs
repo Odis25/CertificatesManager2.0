@@ -16,10 +16,11 @@ namespace CertificatesViews.Controls
         Certificate _certificate;
         Certificates _certificates;
 
-        // Событие изменения формы
+        // События
         public event EventHandler Changed = delegate { };
         public event EventHandler Edited;
         public event EventHandler Deleted;
+        public event EventHandler Search;
 
         // Конструктор класса
         public CertificatePropertiesPanel()
@@ -117,7 +118,7 @@ namespace CertificatesViews.Controls
         private void btSearch_Click(object sender, EventArgs e)
         {
             // передаем событие с аргументами в родительскую форму
-            Changed(this, MakeSearchPattern());
+            Search(this, MakeSearchPattern());
         }
 
         // Внести изменения в свидетельство
@@ -184,7 +185,7 @@ namespace CertificatesViews.Controls
             // Автоматически формируемые параметры
             var checkedContractNumber = pattern.ContractNumber.Replace('/', '-').Replace('\\', '-');
            
-            pattern.CertificatePath = Path.Combine(Settings.Instance.CertificatesFolderPath, pattern.Year.ToString(), checkedContractNumber, "Свидетельства", $"{pattern.DeviceType}_{pattern.DeviceName}" + Path.GetExtension(_certificate.CertificatePath));
+            pattern.CertificatePath = Path.Combine(pattern.Year.ToString(), checkedContractNumber, "Свидетельства", $"{pattern.DeviceType}_{pattern.DeviceName}" + Path.GetExtension(_certificate.CertificatePath));
 
             // Возвращаем сформированный шаблон
             return pattern;

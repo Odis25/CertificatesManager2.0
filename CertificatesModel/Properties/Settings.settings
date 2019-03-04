@@ -3,7 +3,7 @@
   <Profiles />
   <Settings>
     <Setting Name="DataBasePath" Type="System.String" Scope="User">
-      <Value Profile="(Default)">D:\Test.sdf</Value>
+      <Value Profile="(Default)">\\fileserver.incomsystem.ru\pub\Кулаков Р.Р\База\MetrologyDB.sdf</Value>
     </Setting>
     <Setting Name="CertificatesFolderPath" Type="System.String" Scope="User">
       <Value Profile="(Default)">\\fileserver.incomsystem.ru\pub\Кулаков Р.Р\Метрология</Value>
@@ -24,7 +24,7 @@
       <Value Profile="(Default)" />
     </Setting>
     <Setting Name="VerificationMethodFolder" Type="System.String" Scope="User">
-      <Value Profile="(Default)">D:\Метрология\Методики поверки</Value>
+      <Value Profile="(Default)">\\fileserver.incomsystem.ru\pub\Кулаков Р.Р\Метрология\Методики поверки</Value>
     </Setting>
   </Settings>
 </SettingsFile>

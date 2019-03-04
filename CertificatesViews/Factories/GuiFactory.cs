@@ -10,7 +10,7 @@ namespace CertificatesViews.Factories
     {
         public GuiFactory()
         {
-            Register<IView<Certificates>, CertificatesPanel>();
+            Register<ICertificatePanelView<Certificates>, CertificatesPanel>();
             Register<IDetailsView<Certificate, Certificates>, CertificatePropertiesPanel>();
             Register<IPreView<string>, PreviewPanel>();
             Register<IView<User>, AuthorizationPanel>();
@@ -18,7 +18,7 @@ namespace CertificatesViews.Factories
 
             Register<ICreateNewView<byte[]>, NewCertificatePanel>();
             Register<IPreView<byte[]>, PreviewPanel>();
-            Register<ICreateNewTransferDocumentView<Certificates>, CreateActPanel>();
+            Register<ICreateNewActView<Certificates>, CreateActPanel>();
         }
     }
 }

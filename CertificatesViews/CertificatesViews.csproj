@@ -162,7 +162,8 @@
     </Compile>
     <Compile Include="Factories\AppLocator.cs" />
     <Compile Include="Factories\GuiFactory.cs" />
-    <Compile Include="Interfaces\ICreateNewTransferDocumentView.cs" />
+    <Compile Include="Interfaces\ICertificatePanelView.cs" />
+    <Compile Include="Interfaces\ICreateNewActView.cs" />
     <Compile Include="Interfaces\ICreateNewView.cs" />
     <Compile Include="Interfaces\IPreView.cs" />
     <Compile Include="Interfaces\IView.cs" />

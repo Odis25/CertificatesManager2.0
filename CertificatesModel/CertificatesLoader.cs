@@ -29,7 +29,7 @@ namespace CertificatesModel
             var checkedDeviceType = string.Join("-", certificate.DeviceType.Split(Path.GetInvalidFileNameChars()));
             var checkedDeviceName = string.Join("-", certificate.DeviceName.Split(Path.GetInvalidFileNameChars()));
 
-            var certificatePath = Path.Combine(Settings.Instance.CertificatesFolderPath, certificate.Year.ToString(), checkedContractNumber, "Свидетельства", $"{checkedDeviceType}_{checkedDeviceName}.pdf");
+            var certificatePath = Path.Combine(certificate.Year.ToString(), checkedContractNumber, "Свидетельства", $"{checkedDeviceType}_{checkedDeviceName}.pdf");
             // Проверяем есть ли такое свидетельство в базе
             if (CheckIfCertificateAllreadyExist(certificate))
                 return false;
@@ -46,28 +46,31 @@ namespace CertificatesModel
         // Изменить свидетельство согласно шаблону
         public Certificate EditCertificate(CertificateEventArgs pattern)
         {
-
-            var dir = Path.GetDirectoryName(pattern.CertificatePath);
+            var baseFolder = Settings.Instance.CertificatesFolderPath;
+            var certificateFolder = Path.GetDirectoryName(pattern.CertificatePath);
+            var fullFolderPath = Path.Combine(baseFolder, certificateFolder);
             var extension = Path.GetExtension(pattern.CertificatePath);
             var fileName = Path.GetFileNameWithoutExtension(pattern.CertificatePath);
 
             // Если директории с таким именем не существует, то создаем
-            if (!Directory.Exists(dir))
-                Directory.CreateDirectory(dir);
+            if (!Directory.Exists(fullFolderPath))
+                Directory.CreateDirectory(fullFolderPath);
 
+            var fullFileName = Path.Combine(fullFolderPath, fileName + extension);
             // Если файл с таким именем существует
             for (int i = 1; ; i++)
             {
-                if (!File.Exists(pattern.CertificatePath))
+                if (!File.Exists(fullFileName))
                 {
                     break;
                 }
-                pattern.CertificatePath = Path.Combine(dir, fileName + $"_({i})" + extension);
+                pattern.CertificatePath = Path.Combine(certificateFolder, fileName + $"_({i})" + extension);
+                fullFileName = Path.Combine(fullFolderPath, fileName + $"_({i})" + extension);
             }
             // записываем изменения в базу
             var unmodifiedCertificate = CertificatesRepository.EditCertificate(pattern);
             // Перемещаем файл свидетельства по новому пути
-            File.Move(unmodifiedCertificate.CertificatePath, pattern.CertificatePath);
+            File.Move(unmodifiedCertificate.FullCertificatePath, fullFileName);
 
             return unmodifiedCertificate;
         }
@@ -93,30 +96,33 @@ namespace CertificatesModel
         // Создаем файл с уникальным именем пути
         private void CreateFile(ref string certificatePath, byte[] byteArray)
         {
-            var dir = Path.GetDirectoryName(certificatePath);
+            var baseFolder = Settings.Instance.CertificatesFolderPath;
+            var certificateFolder = Path.GetDirectoryName(certificatePath);
+            var fullFolderPath = Path.Combine(baseFolder, certificateFolder);
             var extension = Path.GetExtension(certificatePath);
             var fileName = Path.GetFileNameWithoutExtension(certificatePath);
 
-            if (!Directory.Exists(dir))
-                Directory.CreateDirectory(dir);
+            if (!Directory.Exists(fullFolderPath))
+                Directory.CreateDirectory(fullFolderPath);
 
-            certificatePath = Path.Combine(dir, fileName + extension);
+            var fullCertificatePath = Path.Combine(fullFolderPath, fileName + extension);
             // Если файл с таким именем существует
             for (int i = 0; ; i++)
             {
-                if (!File.Exists(certificatePath))
+                if (!File.Exists(fullCertificatePath))
                 {
                     break;
                 }
 
-                if (byteArray.LongLength == new FileInfo(certificatePath).Length)
+                if (byteArray.LongLength == new FileInfo(fullCertificatePath).Length)
                     return;
 
-                certificatePath = Path.Combine(dir, fileName + $"_({i})" + extension);
+                certificatePath = Path.Combine(certificateFolder, fileName + $"_({i})" + extension);
+                fullCertificatePath = Path.Combine(fullFolderPath, fileName + $"_({i})" + extension);
             }
 
             // Записываем в созданный файл данные в бинарном формате
-            using (BinaryWriter writer = new BinaryWriter(File.Create(certificatePath)))
+            using (BinaryWriter writer = new BinaryWriter(File.Create(fullCertificatePath)))
             {
                 writer.Write(byteArray);
                 writer.Flush();

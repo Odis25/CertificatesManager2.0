@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace CertificatesViews.Interfaces
 {
-    interface ICreateNewTransferDocumentView<T>: IView<T>
+    interface ICreateNewActView<T>: IView<T>
     {
     }
 }

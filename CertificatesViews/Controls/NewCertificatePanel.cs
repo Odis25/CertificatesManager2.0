@@ -159,7 +159,7 @@ namespace CertificatesViews.Controls
             if (certificate.SerialNumber.Length > 0)
                 message.Append(new string(' ', 31)).Append($"Серийный номер: {certificate.SerialNumber}").AppendLine();
             if (certificate.CertificatePath.Length > 0)
-                message.Append(new string(' ', 31)).Append($"Путь к файлу: {certificate.CertificatePath}").AppendLine();                                                       
+                message.Append(new string(' ', 31)).Append($"Путь к файлу: {certificate.FullCertificatePath}").AppendLine();                                                       
             LoggingService.LogEvent(message.ToString());
             ClearTextBoxes();
         }

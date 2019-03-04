@@ -101,6 +101,7 @@ namespace CertificatesModel.Repositories
                 foreach (var id in idArray)
                 {
                     var certificate = _certificates.Where(x => x.ID == id).FirstOrDefault();
+
                     certificate.CertificatePath = newFilePath;
                     db.Entry(certificate).State = EntityState.Modified;
                 }

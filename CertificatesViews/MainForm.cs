@@ -101,12 +101,15 @@ namespace CertificatesViews
             // Устанавливаем текущего пользователя
             CurrentUser = Authorization.CurrentUser;
 
-            var view = AppLocator.GuiFactory.Create<IView<Certificates>>();
+            var view = AppLocator.GuiFactory.Create<ICertificatePanelView<Certificates>>();
             view.Changed += delegate
             {
                 _certificates = loader.GetAllCertificates();
                 view.Build(_certificates);
             };
+
+            view.ShowOrHidePreview += delegate { };
+
             CurrentControl = view as Control;
             view.Build(_certificates);
         }

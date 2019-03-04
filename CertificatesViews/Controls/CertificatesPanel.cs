@@ -19,7 +19,7 @@ using System.Windows.Forms;
 
 namespace CertificatesViews.Controls
 {
-    public partial class CertificatesPanel : UserControl, IView<Certificates>
+    public partial class CertificatesPanel : UserControl, ICertificatePanelView<Certificates>
     {
         Control _propertyControl;
         Control _previewControl;
@@ -31,6 +31,7 @@ namespace CertificatesViews.Controls
 
         // Событие на изменение
         public event EventHandler Changed = delegate { };
+        public event EventHandler ShowOrHidePreview;
 
         // Панель предпросмотра 
         public Control PreviewControl
@@ -74,6 +75,9 @@ namespace CertificatesViews.Controls
         public CertificatesPanel()
         {
             InitializeComponent();
+
+            if (Authorization.CurrentUser.UserRights.ToLower() == "user")
+                tsmChangeFilePath.Enabled = false;
 
             Authorization.UserChanged += delegate
             {
@@ -119,7 +123,7 @@ namespace CertificatesViews.Controls
         {
             var view = AppLocator.GuiFactory.Create<IDetailsView<Certificate, Certificates>>();
             view.Build(new Certificate(), _certificates);
-            view.Changed += CertificatesPanel_Changed;
+            view.Search += CertificatesPanel_Search;
             view.Deleted += CertificatesPanel_Deleted;
             view.Edited += CertificatesPanel_Edited;
             PropertyControl = view as Control;
@@ -220,7 +224,7 @@ namespace CertificatesViews.Controls
                 message.Append(new string(' ', 31)).Append($"Дата поверки: {cert.CalibrationDate}").AppendLine();
                 message.Append(new string(' ', 31)).Append($"Дата окончания срока поверки: {cert.CalibrationExpireDate}").AppendLine();
                 if (cert.CertificatePath?.Length > 0)
-                    message.Append(new string(' ', 31)).Append($"Путь к файлу: {cert.CertificatePath}").AppendLine();
+                    message.Append(new string(' ', 31)).Append($"Путь к файлу: {cert.FullCertificatePath}").AppendLine();
 
                 LoggingService.LogEvent(message.ToString());
             }
@@ -231,7 +235,7 @@ namespace CertificatesViews.Controls
         }
 
         // Поиск свидетельств по шаблону
-        private void CertificatesPanel_Changed(object sender, EventArgs e)
+        private void CertificatesPanel_Search(object sender, EventArgs e)
         {
             var model = AppLocator.ModelFactory.Create<ICertificatesLoader>();
             var searchPattern = e as CertificateEventArgs;
@@ -301,7 +305,7 @@ namespace CertificatesViews.Controls
 
             // Выводим страницы документа на панель предпросмотра
             if (Settings.Instance.AutoPreviewEnabled && certificate != null)
-                (PreviewControl as IPreView<string>).Build(certificate.CertificatePath);
+                (PreviewControl as IPreView<string>).Build(certificate.FullCertificatePath);
         }
 
         // Рекурсивное обновление дочерних узлов
@@ -389,7 +393,7 @@ namespace CertificatesViews.Controls
                  select cert);
         }
 
-        // Контекстное меню для заголовков DataGridView
+        // Вызов контекстного меню для заголовков DataGridView
         private void dgvCerts_ColumnHeaderMouseClick(object sender, DataGridViewCellMouseEventArgs e)
         {
             if (e.Button == MouseButtons.Right)
@@ -439,14 +443,11 @@ namespace CertificatesViews.Controls
             }
         }
 
-        // Контекстное меню для итемов DataGridView
+        // Вызов контекстного меню для итемов DataGridView
         private void dgvCerts_CellMouseClick(object sender, DataGridViewCellMouseEventArgs e)
         {
             if (e.Button == MouseButtons.Right && e.RowIndex != -1)
             {
-                if (ModifierKeys != Keys.Control)
-                    dgvCerts.ClearSelection();
-                dgvCerts.Rows[e.RowIndex].Selected = true;
                 dgvCerts.Focus();
                 dgvItemMenuStrip.Show(MousePosition);
             }
@@ -495,7 +496,7 @@ namespace CertificatesViews.Controls
                     break;
                 case "tsmTransferDocument":
                     dgvItemMenuStrip.Hide();
-                    BuildTransferDocument();
+                    BuildActDocument();
                     break;
             }
         }
@@ -613,7 +614,7 @@ namespace CertificatesViews.Controls
             }
 
             // Старый путь
-            var oldPath = _certificates.FirstOrDefault(x => x.ID == idList.FirstOrDefault()).CertificatePath;
+            var oldPath = _certificates.FirstOrDefault(x => x.ID == idList.FirstOrDefault()).FullCertificatePath;
             OpenFileDialog ofd = new OpenFileDialog();
             ofd.Title = "Укажите путь к новому файлу свидетельства";
             ofd.Filter = "Документы PDF|*.pdf";
@@ -621,12 +622,16 @@ namespace CertificatesViews.Controls
             if (ofd.ShowDialog() == DialogResult.OK)
             {
                 var model = AppLocator.ModelFactory.Create<ICertificatesLoader>();
-                model.ModifyFilePath(idList.ToArray(), ofd.FileName);
+
+                var path = Directory.GetParent(ofd.FileName).Parent.Parent.Parent.FullName;
+                var modifiedPath = ofd.FileName.Remove(0, path.Length+1);
+
+                model.ModifyFilePath(idList.ToArray(), modifiedPath);
 
                 MessageBox.Show("Путь к файлам был успешно изменен.", "Результат операции", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
             }
             // Новый путь
-            var newPath = _certificates.FirstOrDefault(x => x.ID == idList.FirstOrDefault()).CertificatePath;
+            var newPath = _certificates.FirstOrDefault(x => x.ID == idList.FirstOrDefault()).FullCertificatePath;
 
             // Логирование
             var message = new StringBuilder().AppendLine($"Пользователь {Authorization.CurrentUser.Login} ИЗМЕНИЛ ПУТЬ К ФАЙЛУ СВИДЕТЕЛЬСТВА для записи ID = {idList.FirstOrDefault()}:");
@@ -658,7 +663,7 @@ namespace CertificatesViews.Controls
         }
 
         // Сформировать акт передачи документов
-        private void BuildTransferDocument()
+        private void BuildActDocument()
         {
             var idList = new List<int>();
             foreach (DataGridViewRow row in dgvCerts.SelectedRows)
@@ -668,7 +673,7 @@ namespace CertificatesViews.Controls
 
             var selectedCertificates = new Certificates(_certificates.Where(x => idList.Contains(x.ID)).ToList());
 
-            var form = new ContainerForm<Certificates, ICreateNewTransferDocumentView<Certificates>>();
+            var form = new ContainerForm<Certificates, ICreateNewActView<Certificates>>();
             form.Build(selectedCertificates);
             form.Changed += delegate { form.DialogResult = DialogResult.OK; };
             form.ShowDialog();

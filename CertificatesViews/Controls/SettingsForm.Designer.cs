@@ -79,7 +79,7 @@
             this.btChangeVerificationMethodPath.Location = new System.Drawing.Point(537, 137);
             this.btChangeVerificationMethodPath.Name = "btChangeVerificationMethodPath";
             this.btChangeVerificationMethodPath.Size = new System.Drawing.Size(33, 23);
-            this.btChangeVerificationMethodPath.TabIndex = 2;
+            this.btChangeVerificationMethodPath.TabIndex = 14;
             this.btChangeVerificationMethodPath.UseVisualStyleBackColor = true;
             this.btChangeVerificationMethodPath.Click += new System.EventHandler(this.btChangeVerificationMethodPath_Click);
             // 
@@ -90,7 +90,7 @@
             this.btChangeCertificatesZipFolderPath.Location = new System.Drawing.Point(537, 109);
             this.btChangeCertificatesZipFolderPath.Name = "btChangeCertificatesZipFolderPath";
             this.btChangeCertificatesZipFolderPath.Size = new System.Drawing.Size(33, 23);
-            this.btChangeCertificatesZipFolderPath.TabIndex = 2;
+            this.btChangeCertificatesZipFolderPath.TabIndex = 13;
             this.btChangeCertificatesZipFolderPath.UseVisualStyleBackColor = true;
             this.btChangeCertificatesZipFolderPath.Click += new System.EventHandler(this.btChangeCertificatesZipFolderPath_Click);
             // 
@@ -101,7 +101,7 @@
             this.btChangeCertificatesFolderPath.Location = new System.Drawing.Point(537, 60);
             this.btChangeCertificatesFolderPath.Name = "btChangeCertificatesFolderPath";
             this.btChangeCertificatesFolderPath.Size = new System.Drawing.Size(33, 23);
-            this.btChangeCertificatesFolderPath.TabIndex = 2;
+            this.btChangeCertificatesFolderPath.TabIndex = 12;
             this.btChangeCertificatesFolderPath.UseVisualStyleBackColor = true;
             this.btChangeCertificatesFolderPath.Click += new System.EventHandler(this.btChangeCertificatesFolderPath_Click);
             // 
@@ -112,7 +112,7 @@
             this.btChangeDataBasePath.Location = new System.Drawing.Point(537, 32);
             this.btChangeDataBasePath.Name = "btChangeDataBasePath";
             this.btChangeDataBasePath.Size = new System.Drawing.Size(33, 23);
-            this.btChangeDataBasePath.TabIndex = 2;
+            this.btChangeDataBasePath.TabIndex = 10;
             this.btChangeDataBasePath.UseVisualStyleBackColor = true;
             this.btChangeDataBasePath.Click += new System.EventHandler(this.btChangeDataBasePath_Click);
             // 
@@ -121,7 +121,7 @@
             this.tbVerificationMethodFolderPath.Location = new System.Drawing.Point(252, 138);
             this.tbVerificationMethodFolderPath.Name = "tbVerificationMethodFolderPath";
             this.tbVerificationMethodFolderPath.Size = new System.Drawing.Size(287, 20);
-            this.tbVerificationMethodFolderPath.TabIndex = 1;
+            this.tbVerificationMethodFolderPath.TabIndex = 4;
             this.tbVerificationMethodFolderPath.TextChanged += new System.EventHandler(this.SettingsChanged);
             // 
             // tbCertificatesZipFolderPath
@@ -129,7 +129,7 @@
             this.tbCertificatesZipFolderPath.Location = new System.Drawing.Point(252, 110);
             this.tbCertificatesZipFolderPath.Name = "tbCertificatesZipFolderPath";
             this.tbCertificatesZipFolderPath.Size = new System.Drawing.Size(287, 20);
-            this.tbCertificatesZipFolderPath.TabIndex = 1;
+            this.tbCertificatesZipFolderPath.TabIndex = 3;
             this.tbCertificatesZipFolderPath.TextChanged += new System.EventHandler(this.SettingsChanged);
             // 
             // tbCertificatesFolderPath
@@ -137,7 +137,7 @@
             this.tbCertificatesFolderPath.Location = new System.Drawing.Point(252, 61);
             this.tbCertificatesFolderPath.Name = "tbCertificatesFolderPath";
             this.tbCertificatesFolderPath.Size = new System.Drawing.Size(287, 20);
-            this.tbCertificatesFolderPath.TabIndex = 1;
+            this.tbCertificatesFolderPath.TabIndex = 2;
             this.tbCertificatesFolderPath.TextChanged += new System.EventHandler(this.SettingsChanged);
             // 
             // tbDataBasePath
@@ -202,7 +202,7 @@
             this.chbSaveUserCredential.Location = new System.Drawing.Point(16, 53);
             this.chbSaveUserCredential.Name = "chbSaveUserCredential";
             this.chbSaveUserCredential.Size = new System.Drawing.Size(231, 17);
-            this.chbSaveUserCredential.TabIndex = 1;
+            this.chbSaveUserCredential.TabIndex = 6;
             this.chbSaveUserCredential.Text = "Автоматическая авторизация при входе";
             this.chbSaveUserCredential.UseVisualStyleBackColor = true;
             this.chbSaveUserCredential.CheckedChanged += new System.EventHandler(this.SettingsChanged);
@@ -214,7 +214,7 @@
             this.chbAutoPreviewEnabled.Location = new System.Drawing.Point(16, 30);
             this.chbAutoPreviewEnabled.Name = "chbAutoPreviewEnabled";
             this.chbAutoPreviewEnabled.Size = new System.Drawing.Size(262, 17);
-            this.chbAutoPreviewEnabled.TabIndex = 1;
+            this.chbAutoPreviewEnabled.TabIndex = 5;
             this.chbAutoPreviewEnabled.Text = "Автоматический предпросмотр свидетельств:";
             this.chbAutoPreviewEnabled.UseVisualStyleBackColor = true;
             this.chbAutoPreviewEnabled.CheckedChanged += new System.EventHandler(this.SettingsChanged);
@@ -225,7 +225,7 @@
             this.btCancel.Location = new System.Drawing.Point(362, 291);
             this.btCancel.Name = "btCancel";
             this.btCancel.Size = new System.Drawing.Size(77, 28);
-            this.btCancel.TabIndex = 2;
+            this.btCancel.TabIndex = 9;
             this.btCancel.Text = "Закрыть";
             this.btCancel.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btCancel.UseVisualStyleBackColor = true;
@@ -237,7 +237,7 @@
             this.btSaveChanges.Location = new System.Drawing.Point(258, 291);
             this.btSaveChanges.Name = "btSaveChanges";
             this.btSaveChanges.Size = new System.Drawing.Size(86, 28);
-            this.btSaveChanges.TabIndex = 1;
+            this.btSaveChanges.TabIndex = 8;
             this.btSaveChanges.Text = "Сохранить";
             this.btSaveChanges.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btSaveChanges.UseVisualStyleBackColor = true;
@@ -249,7 +249,7 @@
             this.btOk.Location = new System.Drawing.Point(154, 291);
             this.btOk.Name = "btOk";
             this.btOk.Size = new System.Drawing.Size(86, 28);
-            this.btOk.TabIndex = 1;
+            this.btOk.TabIndex = 7;
             this.btOk.Text = "ОК";
             this.btOk.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btOk.UseVisualStyleBackColor = true;

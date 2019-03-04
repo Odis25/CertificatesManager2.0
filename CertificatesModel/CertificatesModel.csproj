@@ -139,9 +139,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Authorization\Authorization.cs" />
-    <Compile Include="Authorization\NativeMethods.cs" />
-    <Compile Include="Authorization\Validate.cs" />
+    <Compile Include="Services\AuthorizationService\Authorization.cs" />
+    <Compile Include="Services\AuthorizationService\NativeMethods.cs" />
+    <Compile Include="Services\AuthorizationService\Validate.cs" />
     <Compile Include="Components\AdditionalData.cs" />
     <Compile Include="Components\Extensions.cs" />
     <Compile Include="Components\SortableBindingList.cs" />
@@ -154,8 +154,8 @@
     <Compile Include="Domain\CertificatesModel\Contract.cs" />
     <Compile Include="Domain\CertificatesModel\Year.cs" />
     <Compile Include="Domain\UsersModel\Users.cs" />
-    <Compile Include="ExcelService\Excel.cs" />
-    <Compile Include="ExcelService\FIO.cs" />
+    <Compile Include="Services\ExcelService\Excel.cs" />
+    <Compile Include="Services\ExcelService\FIO.cs" />
     <Compile Include="Factories\AppLocator.cs" />
     <Compile Include="Factories\BaseFactory.cs" />
     <Compile Include="Factories\ModelFactory.cs" />
@@ -163,8 +163,8 @@
     <Compile Include="CertificatesLoader.cs" />
     <Compile Include="Interfaces\IUsersLoader.cs" />
     <Compile Include="Interfaces\IScanner.cs" />
-    <Compile Include="LoggingService\LoggingService.cs" />
-    <Compile Include="MailService\MailService.cs" />
+    <Compile Include="Services\LoggingService\LoggingService.cs" />
+    <Compile Include="Services\MailService\MailService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -173,14 +173,14 @@
     </Compile>
     <Compile Include="Repositories\CertificatesRepository.cs" />
     <Compile Include="Repositories\UsersRepository.cs" />
-    <Compile Include="ScannerService\ScanHelper.cs" />
-    <Compile Include="ScannerService\Scanner.cs" />
-    <Compile Include="ScannerService\ScanSaver.cs" />
+    <Compile Include="Services\ScannerService\ScanHelper.cs" />
+    <Compile Include="Services\ScannerService\Scanner.cs" />
+    <Compile Include="Services\ScannerService\ScanSaver.cs" />
     <Compile Include="Settings.cs" />
     <Compile Include="UsersLoader.cs" />
     <Compile Include="Interfaces\IValidationModel.cs" />
-    <Compile Include="Validation\Attributes\DateLessOrEqualThanAttribute.cs" />
-    <Compile Include="Validation\ValidationModel.cs" />
+    <Compile Include="Services\ValidationService\Attributes\DateLessOrEqualThanAttribute.cs" />
+    <Compile Include="Services\ValidationService\ValidationModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

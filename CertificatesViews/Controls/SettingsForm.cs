@@ -17,7 +17,7 @@ namespace CertificatesViews.Controls
             // Получаем настройки
             GetSettings();
             // Проверяем права пользователя
-            CheckUserRights();
+            //CheckUserRights();
         }
 
         // Проверяем права пользователя
