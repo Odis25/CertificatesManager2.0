@@ -41,6 +41,6 @@ namespace CertificatesModel.Interfaces
         /// Добавление в базу нового свидетельства
         /// </summary>
         /// <param name="certificate">Новое свидетельство</param>
-        bool AddNewCertificate(Certificate certificate, byte[] byteArray);
+        bool AddNewCertificate(Certificate certificate, byte[] byteArray, FileType type);
     }
 }

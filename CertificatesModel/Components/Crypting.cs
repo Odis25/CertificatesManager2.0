@@ -36,7 +36,7 @@ namespace CertificatesModel
 
                 return Encoding.Unicode.GetString(decryptedData).ToSecureString();
             }
-            catch(Exception e)
+            catch
             {
                 return new SecureString();
             }

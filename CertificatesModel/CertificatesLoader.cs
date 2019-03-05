@@ -23,13 +23,13 @@ namespace CertificatesModel
         }
 
         // Добавить нового свидетельства
-        public bool AddNewCertificate(Certificate certificate, byte[] byteArray)
+        public bool AddNewCertificate(Certificate certificate, byte[] byteArray, FileType type)
         {
             var checkedContractNumber = string.Join("-", certificate.ContractNumber.Split(Path.GetInvalidFileNameChars()));
             var checkedDeviceType = string.Join("-", certificate.DeviceType.Split(Path.GetInvalidFileNameChars()));
             var checkedDeviceName = string.Join("-", certificate.DeviceName.Split(Path.GetInvalidFileNameChars()));
 
-            var certificatePath = Path.Combine(certificate.Year.ToString(), checkedContractNumber, "Свидетельства", $"{checkedDeviceType}_{checkedDeviceName}.pdf");
+            var certificatePath = Path.Combine(certificate.Year.ToString(), checkedContractNumber, "Свидетельства", $"{checkedDeviceType}_{checkedDeviceName}.{type}");
             // Проверяем есть ли такое свидетельство в базе
             if (CheckIfCertificateAllreadyExist(certificate))
                 return false;

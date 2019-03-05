@@ -17,7 +17,7 @@ namespace CertificatesViews.Controls
             InitializeComponent();
         }
 
-        public event EventHandler Changed;
+        public event EventHandler Changed = delegate { };
 
         public void Build(Users obj)
         {

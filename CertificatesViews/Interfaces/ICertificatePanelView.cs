@@ -8,6 +8,6 @@ namespace CertificatesViews.Interfaces
 {
     interface ICertificatePanelView<T>: IView<T>
     {
-        event EventHandler ShowOrHidePreview;
+        void ShowOrHidePreviewPanel();
     }
 }

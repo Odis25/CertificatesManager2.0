@@ -47,7 +47,7 @@ namespace CertificatesModel.Authorization
                 {
                     LogIn(CurrentUser);
                 }
-                catch (Exception e)
+                catch
                 { }
             }
             else

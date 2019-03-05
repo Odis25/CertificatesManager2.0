@@ -31,7 +31,7 @@ namespace CertificatesViews.Controls
 
         // Событие на изменение
         public event EventHandler Changed = delegate { };
-        public event EventHandler ShowOrHidePreview;
+        public event EventHandler ShowOrHidePreview = delegate { };
 
         // Панель предпросмотра 
         public Control PreviewControl
@@ -87,13 +87,11 @@ namespace CertificatesViews.Controls
                     tsmChangeFilePath.Enabled = true;
             };
         }
-        
+
         // Передача данных в форму
         public void Build(Certificates certificates)
         {
-            // TODO: Допилить загрузку формы
             _certificates = certificates;
-
             dgvCerts.DataSource = _certificates;
 
             // Заполняем узлами TreeView
@@ -323,7 +321,7 @@ namespace CertificatesViews.Controls
         }
 
         // Показать/скрыть панель предпросмотра
-        internal void ShowOrHidePreviewPanel()
+        public void ShowOrHidePreviewPanel()
         {
             if (Settings.Instance.AutoPreviewEnabled)
             {
@@ -399,6 +397,22 @@ namespace CertificatesViews.Controls
             if (e.Button == MouseButtons.Right)
             {
                 dgvHeaderMenuStrip.Show(MousePosition);
+            }
+        }
+
+        // Открытие файла свидетельства двойным кликом
+        private void dgvCerts_CellMouseDoubleClick(object sender, DataGridViewCellMouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left && e.RowIndex != -1)
+            {
+                dgvCerts.Rows[e.RowIndex].Selected = true;
+                var file = dgvCerts.SelectedRows[0].Cells["certificatePathDataGridViewTextBoxColumn"].Value.ToString();
+                if (File.Exists(file))
+                {
+                    Process.Start(file);
+                }
+                else
+                    MessageBox.Show("Файл по указанному пути не существует", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -624,7 +638,7 @@ namespace CertificatesViews.Controls
                 var model = AppLocator.ModelFactory.Create<ICertificatesLoader>();
 
                 var path = Directory.GetParent(ofd.FileName).Parent.Parent.Parent.FullName;
-                var modifiedPath = ofd.FileName.Remove(0, path.Length+1);
+                var modifiedPath = ofd.FileName.Remove(0, path.Length + 1);
 
                 model.ModifyFilePath(idList.ToArray(), modifiedPath);
 
@@ -680,6 +694,6 @@ namespace CertificatesViews.Controls
         }
 
         #endregion
-
+  
     }
 }

@@ -1,5 +1,6 @@
 ﻿using CertificatesModel;
 using CertificatesModel.Authorization;
+using CertificatesModel.Components;
 using CertificatesModel.Interfaces;
 using CertificatesModel.LoggingService;
 using CertificatesModel.ScannerService;
@@ -41,6 +42,7 @@ namespace CertificatesViews.Controls
 
         // Объект для хранения pdf документа
         object _byteArray;
+        FileType _type;
 
         object[] _verificationMethodsCollection;
 
@@ -66,13 +68,14 @@ namespace CertificatesViews.Controls
             preview.Build(path);
             PreviewPanel = preview as Control;
             _byteArray = null;
+            _type = FileType.pdf;
             CheckButtonState();
         }
 
         // Загрузка превью из массива байт(скана)
         public void Build(byte[] byteArray)
         {
-            ParentForm.Text = "Добавление новог свидетельства";
+            ParentForm.Text = "Добавление нового свидетельства";
             var preview = AppLocator.GuiFactory.Create<IPreView<byte[]>>();
             preview.Build(byteArray);
             PreviewPanel = preview as Control;
@@ -82,6 +85,7 @@ namespace CertificatesViews.Controls
         // Сканируем новый документ
         private void btScanNewDoc_Click(object sender, EventArgs e)
         {
+            _type = FileType.pdf;
             ScanHelper helper = new ScanHelper();
             var byteArray = helper.ScanNewCertificate(cbDuplex.Checked);
             _byteArray = byteArray;
@@ -95,12 +99,18 @@ namespace CertificatesViews.Controls
             OpenFileDialog ofd = new OpenFileDialog();
             ofd.Multiselect = false;
             ofd.Title = "Выберите файл свидетельства о поверке:";
-            ofd.Filter = "Документы PDF(*.pdf)|*.pdf";
+            ofd.Filter = "Документы PDF(*.pdf)|*.pdf|Изображения JPEG(*.jpg)|*.jpg";
             if (ofd.ShowDialog() == DialogResult.OK)
             {
                 labSourceFilePath.Text = ofd.FileName;
                 Build(ofd.FileName);
                 _byteArray = File.ReadAllBytes(ofd.FileName);
+
+                if (ofd.FileName.ToLower().EndsWith(".jpg"))
+                    _type = FileType.jpg;
+                else
+                    _type = FileType.pdf;
+                 
                 CheckButtonState();
             }
         }
@@ -108,6 +118,7 @@ namespace CertificatesViews.Controls
         // Добавление новых страниц к скану
         private void btAddNewPages_Click(object sender, EventArgs e)
         {
+            _type = FileType.pdf;
             ScanHelper helper = new ScanHelper();
             var result = helper.AddPagesToScannedCertificate((byte[])_byteArray, cbDuplex.Checked);
             _byteArray = result;
@@ -124,7 +135,7 @@ namespace CertificatesViews.Controls
 
             // Вносим свидетельство в базу
             var model = AppLocator.ModelFactory.Create<ICertificatesLoader>();
-            var result = model.AddNewCertificate(certificate, (byte[])_byteArray);
+            var result = model.AddNewCertificate(certificate, (byte[])_byteArray, _type);
 
             if (!result)
             {
@@ -138,7 +149,6 @@ namespace CertificatesViews.Controls
                     MessageBox.Show("Не удалось создать резервную копию файла", "Результат операции", MessageBoxButtons.OK, MessageBoxIcon.Error);
 
             MessageBox.Show("Свидетельство успешно добавлено в базу.", "Результат операции", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
 
             // Логирование
             var message = new StringBuilder().AppendLine($"Пользователь {Authorization.CurrentUser.Login} ДОБАВИЛ в БД запись:");
@@ -161,7 +171,7 @@ namespace CertificatesViews.Controls
             if (certificate.CertificatePath.Length > 0)
                 message.Append(new string(' ', 31)).Append($"Путь к файлу: {certificate.FullCertificatePath}").AppendLine();                                                       
             LoggingService.LogEvent(message.ToString());
-            ClearTextBoxes();
+            // ClearTextBoxes();
         }
 
         // очистка текстбоксов

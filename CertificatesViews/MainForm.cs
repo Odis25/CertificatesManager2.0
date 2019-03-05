@@ -2,6 +2,7 @@
 using CertificatesModel.Authorization;
 using CertificatesModel.Domain.UsersModel;
 using CertificatesModel.Interfaces;
+using CertificatesViews.Components;
 using CertificatesViews.Controls;
 using CertificatesViews.Factories;
 using CertificatesViews.Interfaces;
@@ -77,9 +78,12 @@ namespace CertificatesViews
         {
             InitializeComponent();
 
+            var waiting = new PleaseWait();
             Authorization.UserChanged += Authorization_UserChanged;
-            BuildTreeView();
+
+            BuildCertificatesPanel();
             Authorization_UserChanged(this, EventArgs.Empty);
+            waiting.Dispose();
         }
 
         // Событие смены пользователя
@@ -92,7 +96,7 @@ namespace CertificatesViews
         }
 
         // Дерево свидетельств
-        private void BuildTreeView()
+        private void BuildCertificatesPanel()
         {
             // Получаем список свидетельств
             var loader = AppLocator.ModelFactory.Create<ICertificatesLoader>();
@@ -108,27 +112,29 @@ namespace CertificatesViews
                 view.Build(_certificates);
             };
 
-            view.ShowOrHidePreview += delegate { };
-
             CurrentControl = view as Control;
             view.Build(_certificates);
         }
 
+        // Кнопка "добавить"
         private void btAdd_Click(object sender, EventArgs e)
         {
             OpenAddingNewCertificateForm();
         }
 
+        // Кнопка "настройки"
         private void btSettings_Click(object sender, EventArgs e)
         {
             OpenSettingsForm();
         }
 
+        // Кнопка "сменить пользователя"
         private void btChangeUser_Click(object sender, EventArgs e)
         {
             OpenUserChangingForm();
         }
 
+        // Кнопка "управление акаунтами"
         private void btUsersEdit_Click(object sender, EventArgs e)
         {
             OpenUserAccountsEditForm();
@@ -156,8 +162,7 @@ namespace CertificatesViews
 
         private void MainForm_Changed(object sender, EventArgs e)
         {
-            //TODO: Антипаттерн. Переделать
-            (CurrentControl as CertificatesPanel).ShowOrHidePreviewPanel();
+            (CurrentControl as ICertificatePanelView<Certificates>).ShowOrHidePreviewPanel();
         }
 
         // Смена пользователя

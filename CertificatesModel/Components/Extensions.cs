@@ -41,4 +41,10 @@ namespace CertificatesModel.Components
             }
         }
     }
+
+    public enum FileType
+    {
+        jpg,
+        pdf
+    }
 }
