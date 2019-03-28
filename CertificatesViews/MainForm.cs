@@ -186,5 +186,11 @@ namespace CertificatesViews
         }
 
         #endregion
+
+        private void btAbout_Click(object sender, EventArgs e)
+        {
+            var form = new AboutForm();
+            form.ShowDialog();
+        }
     }
 }

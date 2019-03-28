@@ -424,11 +424,11 @@ namespace CertificatesViews.Controls
                 {
                     cbObjectName.Items.Clear();
                     cbObjectName.Items.AddRange(certificates.Select(x => x.ObjectName).Distinct().Where(x => x != null).ToArray());
-                    cbObjectName.ResetText();
+                    //cbObjectName.ResetText();
 
                     cbClientName.Items.Clear();
                     cbClientName.Items.AddRange(certificates.Select(x => x.ClientName).Distinct().Where(x => x != null).ToArray());
-                    cbClientName.ResetText();
+                    //cbClientName.ResetText();
                 }
                 else if (objectCollection.Length == 1)
                 {

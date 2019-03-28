@@ -34,6 +34,7 @@
             this.btSettings = new System.Windows.Forms.ToolStripButton();
             this.btChangeUser = new System.Windows.Forms.ToolStripButton();
             this.btUsersEdit = new System.Windows.Forms.ToolStripButton();
+            this.btAbout = new System.Windows.Forms.ToolStripButton();
             this.stMain = new System.Windows.Forms.StatusStrip();
             this.tsUserRights = new System.Windows.Forms.ToolStripStatusLabel();
             this.tsCurrentUser = new System.Windows.Forms.ToolStripStatusLabel();
@@ -50,7 +51,8 @@
             this.btAdd,
             this.btSettings,
             this.btChangeUser,
-            this.btUsersEdit});
+            this.btUsersEdit,
+            this.btAbout});
             this.tsMain.Location = new System.Drawing.Point(0, 0);
             this.tsMain.Name = "tsMain";
             this.tsMain.Size = new System.Drawing.Size(1034, 25);
@@ -100,6 +102,17 @@
             this.btUsersEdit.Text = "UsersEdit";
             this.btUsersEdit.ToolTipText = "Управление правами доступа пользователей";
             this.btUsersEdit.Click += new System.EventHandler(this.btUsersEdit_Click);
+            // 
+            // btAbout
+            // 
+            this.btAbout.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btAbout.Image = global::CertificatesViews.Properties.Resources.information;
+            this.btAbout.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btAbout.Name = "btAbout";
+            this.btAbout.Size = new System.Drawing.Size(23, 22);
+            this.btAbout.Text = "toolStripButton1";
+            this.btAbout.ToolTipText = "О программе";
+            this.btAbout.Click += new System.EventHandler(this.btAbout_Click);
             // 
             // stMain
             // 
@@ -186,6 +199,7 @@
         private System.Windows.Forms.ToolStripStatusLabel tsUserRights;
         private System.Windows.Forms.ToolStripStatusLabel tsCertificatesQuantity;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel1;
+        private System.Windows.Forms.ToolStripButton btAbout;
     }
 }
 

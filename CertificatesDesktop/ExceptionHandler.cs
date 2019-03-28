@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CertificatesModel.LoggingService;
+using System;
 using System.Text;
 using System.Threading;
 using System.Windows.Forms;
@@ -45,6 +46,7 @@ namespace CertificatesDesktop
                 {
                     ex = ex.InnerException;
                 }
+                
 #if DEBUG
                 using (var exceptionDlg = new ThreadExceptionDialog(ex))
                 {
@@ -52,7 +54,8 @@ namespace CertificatesDesktop
                     if (res == DialogResult.Abort)
                         Application.Exit();
                 }
-#else
+#else       
+            LoggingService.LogError(ex.Message);     
             MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
 #endif
             }

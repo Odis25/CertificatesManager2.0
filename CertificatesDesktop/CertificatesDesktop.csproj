@@ -27,8 +27,8 @@
     <UpdateUrl>\\Fileserver.incomsystem.ru\pub\Кулаков Р.Р\Certificate Dispather\Deploy\</UpdateUrl>
     <ProductName>Certificate Manager</ProductName>
     <PublisherName>ЗАО НИЦ ИНКОМСИСТЕМ</PublisherName>
-    <MinimumRequiredVersion>1.0.1.1</MinimumRequiredVersion>
-    <ApplicationRevision>2</ApplicationRevision>
+    <MinimumRequiredVersion>1.0.1.5</MinimumRequiredVersion>
+    <ApplicationRevision>6</ApplicationRevision>
     <ApplicationVersion>1.0.1.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <CreateDesktopShortcut>true</CreateDesktopShortcut>
@@ -163,6 +163,9 @@
       <DesignTime>True</DesignTime>
     </Compile>
     <None Include="CertificatesDesktop_TemporaryKey.pfx" />
+    <Content Include="NLog.config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <None Include="packages.config" />
     <None Include="Properties\app.manifest" />
   </ItemGroup>
