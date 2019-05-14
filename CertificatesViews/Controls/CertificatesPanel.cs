@@ -547,12 +547,12 @@ namespace CertificatesViews.Controls
             var selectedRows = dgvCerts.SelectedRows;
             int j = 1;
 
-            for (int i = 1; i < 12; i++)
+            for (int i = 0; i < 12; i++)
             {
                 foreach (DataGridViewRow row in selectedRows)
                 {
-                    if (row.Cells[i].Value?.ToString().Length > maxLenghtArray[i])
-                        maxLenghtArray[i] = row.Cells[i].Value.ToString().Length;
+                    if (row.Cells[i+1].Value?.ToString().Length > maxLenghtArray[i])
+                        maxLenghtArray[i] = row.Cells[i+1].Value.ToString().Length;
                 }
             }
 
@@ -560,14 +560,14 @@ namespace CertificatesViews.Controls
             {
                 textArray.Add(j.ToString() + new string(' ', 3));
                 j++;
-                for (int i = 1; i < 12; i++)
+                for (int i = 0; i < 12; i++)
                 {
-                    if (row.Cells[i].Value?.ToString().Length < maxLenghtArray[i])
-                        textArray.Add(row.Cells[i].Value.ToString() + new string(' ', maxLenghtArray[i] - row.Cells[i].Value.ToString().Length + 3));
+                    if (row.Cells[i+1].Value?.ToString().Length < maxLenghtArray[i])
+                        textArray.Add(row.Cells[i+1].Value.ToString() + new string(' ', maxLenghtArray[i] - row.Cells[i+1].Value.ToString().Length + 3));
                     else if (maxLenghtArray[i] == 0)
                     { }
                     else
-                        textArray.Add(row.Cells[i].Value.ToString() + new string(' ', 3));
+                        textArray.Add(row.Cells[i+1].Value.ToString() + new string(' ', 3));
                 }
                 textArray.Add(Environment.NewLine);
             }

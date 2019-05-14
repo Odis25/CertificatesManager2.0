@@ -77,7 +77,8 @@ namespace CertificatesViews.Controls
         {
             _certificates = selectedCertificates;
             FillDataGridView(selectedCertificates);
-            cbDepType.SelectedIndex = 0;            
+            cbDepType.SelectedIndex = 0;
+            cbDepType.Enabled = false;            
         }
 
         // Заполняем DataGridView результатами
