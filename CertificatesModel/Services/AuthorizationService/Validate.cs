@@ -22,8 +22,7 @@ namespace CertificatesModel.Authorization
             if (token != IntPtr.Zero)
             {
                 WindowsIdentity identity = new WindowsIdentity(token);
-                _scontext = identity.Impersonate();
-                           
+                _scontext = identity.Impersonate();                 
             }
             
             return success;

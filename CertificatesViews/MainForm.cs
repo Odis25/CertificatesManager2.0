@@ -65,6 +65,10 @@ namespace CertificatesViews
                         tsUserRights.Text = "(Метролог)";
                         tsUserLabel.Image = Properties.Resources.user_gray;
                         break;
+                    case "specialist":
+                        tsUserRights.Text = "(Специалист)";
+                        tsUserLabel.Image = Properties.Resources.user;
+                        break;
                     default:
                         tsUserRights.Text = "(Пользователь)";
                         tsUserLabel.Image = Properties.Resources.user;

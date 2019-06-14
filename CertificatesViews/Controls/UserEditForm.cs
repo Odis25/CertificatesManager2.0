@@ -37,8 +37,10 @@ namespace CertificatesViews.Controls
                     case 0:
                         return "User";
                     case 1:
-                        return "Metrolog";
+                        return "Specialist";
                     case 2:
+                        return "Metrolog";
+                    case 3:
                         return "Administrator";
                     default:
                         return "User";
@@ -51,11 +53,14 @@ namespace CertificatesViews.Controls
                     case "user":
                         cbUserAccessRights.SelectedIndex = 0;
                         break;
-                    case "metrolog":
+                    case "specialist":
                         cbUserAccessRights.SelectedIndex = 1;
                         break;
-                    case "administrator":
+                    case "metrolog":
                         cbUserAccessRights.SelectedIndex = 2;
+                        break;
+                    case "administrator":
+                        cbUserAccessRights.SelectedIndex = 3;
                         break;
                     default:
                         break;

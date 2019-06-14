@@ -3,6 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
 using CertificatesModel.Validation.Attributes;
 using System.IO;
+using System.Linq;
 
 namespace CertificatesModel
 {
@@ -99,6 +100,26 @@ namespace CertificatesModel
                     return new FileInfo(FullCertificatePath).CreationTime.ToString();
                 else
                     return "---";
+            }
+        }
+
+        [NotMapped]
+        public string TechnicalJournal
+        {
+            get
+            {
+                var checkedContractNumber = string.Join("-", ContractNumber.Split(Path.GetInvalidFileNameChars()));
+                var checkedObjectname = string.Join("'", ObjectName.Split(Path.GetInvalidFileNameChars()));
+                var checkedDeviceName = string.Join("-", DeviceName.Split(Path.GetInvalidFileNameChars()));
+                var technicalJournalDirectory = Path.Combine(Settings.Instance.CertificatesFolderPath, Year.ToString(), checkedContractNumber, "Технический отчет", checkedObjectname);
+
+                if (Directory.Exists(technicalJournalDirectory))
+                    if (Directory.GetFiles(technicalJournalDirectory).Count() > 0)
+                        return "Есть";
+                    else
+                        return "Нет";
+                else
+                    return "Нет";
             }
         }
 

@@ -102,6 +102,7 @@
             this.cbUserAccessRights.FormattingEnabled = true;
             this.cbUserAccessRights.Items.AddRange(new object[] {
             "Пользователь",
+            "Специалист",
             "Метролог",
             "Администратор"});
             this.cbUserAccessRights.Location = new System.Drawing.Point(96, 65);

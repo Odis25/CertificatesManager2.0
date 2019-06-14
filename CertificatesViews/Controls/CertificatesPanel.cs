@@ -81,10 +81,22 @@ namespace CertificatesViews.Controls
 
             Authorization.UserChanged += delegate
             {
-                if (Authorization.CurrentUser.UserRights.ToLower() == "user")
-                    tsmChangeFilePath.Enabled = false;
-                else
-                    tsmChangeFilePath.Enabled = true;
+                switch (Authorization.CurrentUser.UserRights.ToLower())
+                {
+                    case "user":
+                        tsmChangeFilePath.Enabled = false;
+                        tsmCreateTechnicalJournal.Enabled = false;
+                        break;
+                    case "specialist":
+                        tsmChangeFilePath.Enabled = true;
+                        tsmCreateTechnicalJournal.Enabled = true;
+                        break;
+                    default:
+                        tsmChangeFilePath.Enabled = true;
+                        tsmCreateTechnicalJournal.Enabled = true;
+                        break;
+                }
+
             };
         }
 
@@ -512,6 +524,9 @@ namespace CertificatesViews.Controls
                     dgvItemMenuStrip.Hide();
                     BuildActDocument();
                     break;
+                case "tsmCreateTechnicalJournal":
+                    OpenTechnicalJournalForm();
+                    break;
             }
         }
 
@@ -551,8 +566,8 @@ namespace CertificatesViews.Controls
             {
                 foreach (DataGridViewRow row in selectedRows)
                 {
-                    if (row.Cells[i+1].Value?.ToString().Length > maxLenghtArray[i])
-                        maxLenghtArray[i] = row.Cells[i+1].Value.ToString().Length;
+                    if (row.Cells[i + 1].Value?.ToString().Length > maxLenghtArray[i])
+                        maxLenghtArray[i] = row.Cells[i + 1].Value.ToString().Length;
                 }
             }
 
@@ -562,12 +577,12 @@ namespace CertificatesViews.Controls
                 j++;
                 for (int i = 0; i < 12; i++)
                 {
-                    if (row.Cells[i+1].Value?.ToString().Length < maxLenghtArray[i])
-                        textArray.Add(row.Cells[i+1].Value.ToString() + new string(' ', maxLenghtArray[i] - row.Cells[i+1].Value.ToString().Length + 3));
+                    if (row.Cells[i + 1].Value?.ToString().Length < maxLenghtArray[i])
+                        textArray.Add(row.Cells[i + 1].Value.ToString() + new string(' ', maxLenghtArray[i] - row.Cells[i + 1].Value.ToString().Length + 3));
                     else if (maxLenghtArray[i] == 0)
                     { }
                     else
-                        textArray.Add(row.Cells[i+1].Value.ToString() + new string(' ', 3));
+                        textArray.Add(row.Cells[i + 1].Value.ToString() + new string(' ', 3));
                 }
                 textArray.Add(Environment.NewLine);
             }
@@ -693,7 +708,15 @@ namespace CertificatesViews.Controls
             form.ShowDialog();
         }
 
+        // Сформировать технический отчет
+        private void OpenTechnicalJournalForm()
+        {
+            var form = new ContainerForm<Certificate, IView<Certificate>>();
+            var cert = _certificates.Where(x => x.ID == (int)dgvCerts.SelectedRows[0].Cells["iDDataGridViewTextBoxColumn"].Value).Last();
+            form.Build(cert);
+            form.ShowDialog();
+        }
         #endregion
-  
+
     }
 }
