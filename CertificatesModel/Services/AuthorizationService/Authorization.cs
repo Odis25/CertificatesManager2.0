@@ -47,7 +47,7 @@ namespace CertificatesModel.Authorization
                 {
                     LogIn(CurrentUser);
                 }
-                catch
+                catch (Exception e)
                 { }
             }
             else
@@ -71,13 +71,14 @@ namespace CertificatesModel.Authorization
             {
                 UserLogined = false;
                 throw new Exception("Некорректный логин или пароль");
-            }
-            // Сохраняем учетные данные пользователя, если он того желает
-            if (Settings.Instance.SaveUserCredential)
-                SaveUserCredential(user);
+            }            
 
             // Имперсонация пользователя
             bool impersonationResult = Validate.ImpersonateUser(user.Login, user.Domain, user.Password);
+
+            // Сохраняем учетные данные пользователя, если он того желает
+            if (Settings.Instance.SaveUserCredential)
+                SaveUserCredential(user);
 
             // Получаем права пользователя
             var userList = AppLocator.ModelFactory.Create<IUsersLoader>();

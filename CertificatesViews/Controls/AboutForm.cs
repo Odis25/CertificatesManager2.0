@@ -16,7 +16,7 @@ namespace CertificatesViews.Controls
             this.labelCompanyName.Text = AssemblyCompany;
             this.textBoxDescription.Text = AssemblyDescription + Environment.NewLine + Environment.NewLine +
                 $"Что нового в версии {AssemblyVersion}: " + Environment.NewLine + Environment.NewLine +
-                @"- Исправлена ошибка с копированием информации о свидетельстве в буфер обмена, при которой в буфер не сохранялась дата истечения срока поверки. ";
+                @"- Исправлены небольшие ошибки с авторизацией и правами пользователя.";
         }
 
         #region Методы доступа к атрибутам сборки

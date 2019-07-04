@@ -76,28 +76,9 @@ namespace CertificatesViews.Controls
         {
             InitializeComponent();
 
-            if (Authorization.CurrentUser.UserRights.ToLower() == "user")
-                tsmChangeFilePath.Enabled = false;
+            SetUserRights();
 
-            Authorization.UserChanged += delegate
-            {
-                switch (Authorization.CurrentUser.UserRights.ToLower())
-                {
-                    case "user":
-                        tsmChangeFilePath.Enabled = false;
-                        tsmCreateTechnicalJournal.Enabled = false;
-                        break;
-                    case "specialist":
-                        tsmChangeFilePath.Enabled = true;
-                        tsmCreateTechnicalJournal.Enabled = true;
-                        break;
-                    default:
-                        tsmChangeFilePath.Enabled = true;
-                        tsmCreateTechnicalJournal.Enabled = true;
-                        break;
-                }
-
-            };
+            Authorization.UserChanged += (s, e) => SetUserRights();
         }
 
         // Передача данных в форму
@@ -343,6 +324,31 @@ namespace CertificatesViews.Controls
             else
             {
                 scPreviewSplitter.Panel2Collapsed = true;
+            }
+        }
+
+        // Определить права пользователя
+        private void SetUserRights()
+        {
+            switch (Authorization.CurrentUser.UserRights.ToLower())
+            {
+                case "user":
+                    tsmChangeFilePath.Enabled = false;
+                    tsmTransferDocument.Enabled = false;
+                    break;
+                case "specialist":
+                    tsmChangeFilePath.Enabled = false;
+                    tsmTransferDocument.Enabled = false;
+                    break;
+                case "metrolog":
+                case "metrologist":
+                case "administrator":
+                    tsmChangeFilePath.Enabled = true;
+                    tsmTransferDocument.Enabled = true;
+                    break;
+                default:
+                    tsmChangeFilePath.Enabled = true;
+                    break;
             }
         }
 

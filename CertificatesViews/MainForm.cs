@@ -93,10 +93,21 @@ namespace CertificatesViews
         // Событие смены пользователя
         private void Authorization_UserChanged(object sender, EventArgs e)
         {
-            if (Authorization.CurrentUser.UserRights.ToLower() == "administrator")
-                btUsersEdit.Enabled = true;
-            else
-                btUsersEdit.Enabled = false;
+            switch (Authorization.CurrentUser.UserRights.ToLower())
+            {
+                case "administrator":
+                    btUsersEdit.Enabled = true;
+                    btAdd.Enabled = true;
+                    break;
+                case "metrolog":
+                    btAdd.Enabled = true;
+                    btUsersEdit.Enabled = false;
+                    break;
+                default:
+                    btUsersEdit.Enabled = false;
+                    btAdd.Enabled = false;
+                    break;
+            }
         }
 
         // Дерево свидетельств
@@ -142,6 +153,13 @@ namespace CertificatesViews
         private void btUsersEdit_Click(object sender, EventArgs e)
         {
             OpenUserAccountsEditForm();
+        }
+
+        // Кнопка "О программе"
+        private void btAbout_Click(object sender, EventArgs e)
+        {
+            var form = new AboutForm();
+            form.ShowDialog();
         }
 
         #region Add, Remove, Settings, UserChanging, AccountsEdit
@@ -191,10 +209,6 @@ namespace CertificatesViews
 
         #endregion
 
-        private void btAbout_Click(object sender, EventArgs e)
-        {
-            var form = new AboutForm();
-            form.ShowDialog();
-        }
+        
     }
 }

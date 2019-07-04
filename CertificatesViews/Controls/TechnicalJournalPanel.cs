@@ -10,6 +10,8 @@ using System.Windows.Forms;
 using CertificatesViews.Interfaces;
 using CertificatesModel;
 using System.IO;
+using System.Diagnostics;
+using CertificatesModel.Authorization;
 
 namespace CertificatesViews.Controls
 {
@@ -27,6 +29,10 @@ namespace CertificatesViews.Controls
 
         public void Build(Certificate cert)
         {
+            ParentForm.Icon = Properties.Resources.Delicious;
+            ParentForm.Text = "Технические отчеты " + cert.ObjectName;
+            ParentForm.FormBorderStyle = FormBorderStyle.FixedSingle;
+
             var checkedContractNumber = string.Join("-", cert.ContractNumber.Split(Path.GetInvalidFileNameChars()));
             var checkedObjectname = string.Join("'", cert.ObjectName.Split(Path.GetInvalidFileNameChars()));
             var checkedDeviceName = string.Join("-", cert.DeviceName.Split(Path.GetInvalidFileNameChars()));
@@ -34,6 +40,21 @@ namespace CertificatesViews.Controls
 
             if (Directory.Exists(_technicalJournalDirectory))
                 lbFiles.Items.AddRange(Directory.GetFiles(_technicalJournalDirectory));
+
+            CheckUser();
+        }
+
+        private void CheckUser()
+        {
+            switch (Authorization.CurrentUser.UserRights.ToLower())
+            {
+                case "user":
+                    btAttachFile.Enabled = false;
+                    break;
+                default:
+                    btAttachFile.Enabled = true;
+                    break;
+            }
         }
 
         // Присоединяем файлы отчетов
@@ -50,8 +71,35 @@ namespace CertificatesViews.Controls
                 }
             }
         }
-       
+
+        // Применить изменения и закрыть окно формы
         private void btOk_Click(object sender, EventArgs e)
+        {
+            ApplyChanges();
+        }
+
+        // Открыть выбранный файл
+        private void btOpen_Click(object sender, EventArgs e)
+        {
+            var file = lbFiles.SelectedItem?.ToString();
+            if (file != null)
+                if (File.Exists(file))
+                    Process.Start(file);
+                else
+                    MessageBox.Show("Не удалось открыть выбранный файл.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            else
+                MessageBox.Show("Файл не выбран", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        }
+
+        // Открыть папку с тех.отчетами
+        private void btOpenFolder_Click(object sender, EventArgs e)
+        {
+            if (Directory.Exists(_technicalJournalDirectory))
+                Process.Start(_technicalJournalDirectory);
+        }
+
+        // Применить изменения
+        private void ApplyChanges()
         {
             // Если директории не существует - создаем
             if (!Directory.Exists(_technicalJournalDirectory))
@@ -64,6 +112,5 @@ namespace CertificatesViews.Controls
                     File.Copy(file.ToString(), Path.Combine(_technicalJournalDirectory, newFile));
             }
         }
-
     }
 }

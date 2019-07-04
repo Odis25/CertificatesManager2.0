@@ -502,7 +502,7 @@ namespace CertificatesViews.Controls
             this.tsmCreateTechnicalJournal.Image = global::CertificatesViews.Properties.Resources.attach;
             this.tsmCreateTechnicalJournal.Name = "tsmCreateTechnicalJournal";
             this.tsmCreateTechnicalJournal.Size = new System.Drawing.Size(301, 22);
-            this.tsmCreateTechnicalJournal.Text = "Сформировать технический отчет";
+            this.tsmCreateTechnicalJournal.Text = "Технические отчеты";
             // 
             // niCertificatesManager
             // 
