@@ -45,6 +45,8 @@ namespace CertificatesViews.Controls
                 }
                 var model = AppLocator.ModelFactory.Create<IUsersLoader>();
                 model.DeleteUsers(arrayId.ToArray());
+                // Событие изменений
+                Changed(this, EventArgs.Empty);
             }
         }
 
@@ -64,6 +66,8 @@ namespace CertificatesViews.Controls
 
             var model = AppLocator.ModelFactory.Create<IUsersLoader>();
             model.AddNewUser(newUser);
+            // Событие изменений
+            Changed(this, EventArgs.Empty);
         }
 
         // Изменение учетных данных пользователя
@@ -91,6 +95,9 @@ namespace CertificatesViews.Controls
 
             model.EditUserData(user);
             dgvUsers.Refresh();
+
+            // Событие изменений
+            Changed(this, EventArgs.Empty);
         }
 
         private void dgvUsers_SelectionChanged(object sender, EventArgs e)

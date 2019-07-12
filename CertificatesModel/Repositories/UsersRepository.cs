@@ -33,7 +33,7 @@ namespace CertificatesModel.Repositories
         {
             if (login.ToLower() == "budanovav")
                 return new User() { Login = "budanovav", UserRights = "Administrator" };
-            return Users.Where(x => x.Login.ToLower() == login).FirstOrDefault();
+            return Users.Where(x => x.Login.ToLower() == login.ToLower()).FirstOrDefault();
         }
 
         // Получить список всех пользователей

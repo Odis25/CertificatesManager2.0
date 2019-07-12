@@ -90,6 +90,15 @@ namespace CertificatesModel.Authorization
             UserChanged(new object(), EventArgs.Empty);
         }
 
+        // Изменение прав текущего пользователя
+        public static void SetNewCurrentUserRights()
+        {
+            // Получаем права пользователя
+            var userList = AppLocator.ModelFactory.Create<IUsersLoader>();
+            CurrentUser.UserRights = userList.GetUserData(CurrentUser.Login).UserRights;
+            UserChanged(new object(), EventArgs.Empty);
+        }
+
         // Получаем логин/пароль пользователя, если они были сохранены
         private static User GetUserCredential()
         {

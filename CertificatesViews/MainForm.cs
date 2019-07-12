@@ -93,6 +93,9 @@ namespace CertificatesViews
         // Событие смены пользователя
         private void Authorization_UserChanged(object sender, EventArgs e)
         {
+            // Устанавливаем текущего пользователя
+            CurrentUser = Authorization.CurrentUser;
+
             switch (Authorization.CurrentUser.UserRights.ToLower())
             {
                 case "administrator":
@@ -202,7 +205,11 @@ namespace CertificatesViews
             var model = AppLocator.ModelFactory.Create<UsersLoader>();
             var users = model.GetUsersList();
             var form = new ContainerForm<Users, IView<Users>>();
-            form.Changed += delegate { };
+            form.Changed += delegate 
+            {
+                Authorization.SetNewCurrentUserRights();
+                //CurrentUser = Authorization.CurrentUser;
+            };
             form.Build(users);
             form.ShowDialog(this);
         }
