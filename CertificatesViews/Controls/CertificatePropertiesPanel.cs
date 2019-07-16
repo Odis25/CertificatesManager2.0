@@ -10,7 +10,7 @@ using CertificatesModel.Authorization;
 
 namespace CertificatesViews.Controls
 {
-    public partial class CertificatePropertiesPanel : UserControl, IDetailsView<Certificate, Certificates>
+    public partial class CertificatePropertiesPanel : UserControl, ICertificatePropertiesPanelView<Certificate, Certificates>
     {
         // Свидетельство
         Certificate _certificate;
@@ -68,7 +68,7 @@ namespace CertificatesViews.Controls
         // Списки автозаполнения для textbox и combobox
         private void CreateAutoCompleteCollection()
         {
-            tbCertificateNumber.AutoCompleteCustomSource.AddRange(_certificates.Select(x => x.CertificateNumber).Distinct().Where(x=> x != null).ToArray());
+            tbCertificateNumber.AutoCompleteCustomSource.AddRange(_certificates.Select(x => x.CertificateNumber).Distinct().Where(x => x != null).ToArray());
             tbRegisterNumber.AutoCompleteCustomSource.AddRange(_certificates.Select(x => x.RegisterNumber).Distinct().Where(x => x != null).ToArray());
             tbContractNumber.AutoCompleteCustomSource.AddRange(_certificates.Select(x => x.ContractNumber).Distinct().Where(x => x != null).ToArray());
             tbClientName.AutoCompleteCustomSource.AddRange(_certificates.Select(x => x.ClientName).Distinct().Where(x => x != null).ToArray());
@@ -84,6 +84,7 @@ namespace CertificatesViews.Controls
         {
             numId.Value = certificate.ID;
             numYear.Value = certificate.Year;
+            cbDocumentType.SelectedIndex = (int)certificate.DocumentType;
             tbCertificateNumber.Text = certificate.CertificateNumber;
             tbRegisterNumber.Text = certificate.RegisterNumber;
             cbVerificationMethod.Text = certificate.VerificationMethod;
@@ -93,15 +94,42 @@ namespace CertificatesViews.Controls
             tbDeviceType.Text = certificate.DeviceType;
             tbDeviceName.Text = certificate.DeviceName;
             tbSerialNumber.Text = certificate.SerialNumber;
+
             try
             {
                 dpCalibrationDate.Value = certificate.CalibrationDate;
-                dpCalibrationExpireDate.Value = certificate.CalibrationExpireDate;
+
+                if (certificate.CalibrationExpireDate.HasValue)
+                {
+                    dpCalibrationExpireDate.Value = (DateTime)certificate.CalibrationExpireDate;                    
+                }
+                else
+                {
+                    dpCalibrationExpireDate.Value = dpCalibrationExpireDate.MinDate;                    
+                }
             }
             catch
             {
                 dpCalibrationDate.Value = dpCalibrationDate.MinDate;
                 dpCalibrationExpireDate.Value = dpCalibrationExpireDate.MinDate;
+            }
+
+            //Если документ не свидетельство, а извещение о непригодности скрываем лишние элементы
+            if (certificate.DocumentType == DocumentType.FaultNotification)
+            {
+                lbCertificateNumber.Text = "Номер извещения";
+                lbCalibrationDate.Text = "Дата оформления";
+                lbCalibrationExpireDate.Visible = false;
+                dpCalibrationExpireDate.Visible = false;
+                chbCalibrationExpireDate.Visible = false;
+            }
+            else
+            {
+                lbCertificateNumber.Text = "Номер свидетельства";
+                lbCalibrationDate.Text = "Дата поверки";
+                lbCalibrationExpireDate.Visible = true;
+                dpCalibrationExpireDate.Visible = true;
+                chbCalibrationExpireDate.Visible = true;
             }
         }
 
@@ -145,6 +173,7 @@ namespace CertificatesViews.Controls
             CertificateEventArgs pattern = new CertificateEventArgs();
             pattern.ID = chbId.Checked ? (int?)numId.Value : null;
             pattern.Year = chbYear.Checked ? (int?)numYear.Value : null;
+            pattern.DocumentType = chbDocumentType.Checked ? (DocumentType?)cbDocumentType.SelectedIndex : null;
             pattern.CertificateNumber = chbCertificateNumber.Checked ? tbCertificateNumber.Text : null;
             pattern.RegisterNumber = chbRegisterNumber.Checked ? tbRegisterNumber.Text : null;
             pattern.VerificationMethod = chbVerificationMethod.Checked ? cbVerificationMethod.Text : null;
@@ -170,6 +199,7 @@ namespace CertificatesViews.Controls
 
             // Модифицируемые параметры
             pattern.Year = (int)numYear.Value;
+            pattern.DocumentType = (DocumentType?)cbDocumentType.SelectedIndex;
             pattern.CertificateNumber = tbCertificateNumber.Text;
             pattern.RegisterNumber = tbRegisterNumber.Text;
             pattern.VerificationMethod = cbVerificationMethod.Text;
@@ -180,13 +210,14 @@ namespace CertificatesViews.Controls
             pattern.DeviceName = tbDeviceName.Text;
             pattern.SerialNumber = tbSerialNumber.Text;
             pattern.CalibrationDate = dpCalibrationDate.Value.Date;
-            pattern.CalibrationExpireDate = dpCalibrationExpireDate.Value.Date;
+            if (cbDocumentType.SelectedIndex != (int)DocumentType.FaultNotification)
+                pattern.CalibrationExpireDate = dpCalibrationExpireDate.Value.Date;
 
             // Автоматически формируемые параметры
             var checkedContractNumber = pattern.ContractNumber.Replace('/', '-').Replace('\\', '-');
-           
+            
             pattern.CertificatePath = Path.Combine(pattern.Year.ToString(), checkedContractNumber, "Свидетельства", $"{pattern.DeviceType}_{pattern.DeviceName}" + Path.GetExtension(_certificate.CertificatePath));
-
+            pattern.OldCertificatePath = _certificate.CertificatePath;
             // Возвращаем сформированный шаблон
             return pattern;
         }

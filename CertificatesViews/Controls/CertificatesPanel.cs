@@ -81,11 +81,15 @@ namespace CertificatesViews.Controls
             Authorization.UserChanged += (s, e) => SetUserRights();
         }
 
+        public void Refresh(Certificates certificates)
+        {
+            _certificates = certificates;
+        }
+
         // Передача данных в форму
         public void Build(Certificates certificates)
         {
-            _certificates = certificates;
-            dgvCerts.DataSource = _certificates;
+            Refresh(certificates);
 
             // Заполняем узлами TreeView
             BuildTreeView();
@@ -112,7 +116,7 @@ namespace CertificatesViews.Controls
         // Построение панели свойств свидетельства
         private void BuildProperty()
         {
-            var view = AppLocator.GuiFactory.Create<IDetailsView<Certificate, Certificates>>();
+            var view = AppLocator.GuiFactory.Create<ICertificatePropertiesPanelView<Certificate, Certificates>>();
             view.Build(new Certificate(), _certificates);
             view.Search += CertificatesPanel_Search;
             view.Deleted += CertificatesPanel_Deleted;
@@ -128,15 +132,18 @@ namespace CertificatesViews.Controls
         {
             var model = AppLocator.ModelFactory.Create<ICertificatesLoader>();
             var editPattern = e as CertificateEventArgs;
-            var unmodifiedCertificate = model.EditCertificate(editPattern);
+            var unmodifiedCertificate = model.Update(editPattern);
 
-            dgvCerts.Refresh();
             BuildTreeView();
+            Changed(this, EventArgs.Empty);
+            dgvCerts.Refresh();
 
             // Логирование
             var message = new StringBuilder().AppendLine($"Пользователь {Authorization.CurrentUser.Login} ВНЕС ИЗМЕНЕНИЯ в БД для записи ID = {editPattern.ID}:");
             if (editPattern.Year != unmodifiedCertificate.Year)
                 message.Append(new string(' ', 31)).Append($"Год был изменен с '{unmodifiedCertificate.Year}' на '{editPattern.Year}'").AppendLine();
+            if (editPattern.DocumentType != unmodifiedCertificate.DocumentType)
+                message.Append(new string(' ', 31)).Append($"Тип документа был изменен с '{unmodifiedCertificate.DocumentTypeString}' на '{editPattern.DocumentTypeString}'").AppendLine();
             if (editPattern.ContractNumber != unmodifiedCertificate.ContractNumber)
                 message.Append(new string(' ', 31)).Append($"Номер договора был изменен с '{unmodifiedCertificate.ContractNumber}' на '{editPattern.ContractNumber}'").AppendLine();
             if (editPattern.CertificateNumber != unmodifiedCertificate.CertificateNumber)
@@ -182,18 +189,18 @@ namespace CertificatesViews.Controls
 
             // Передаем массив Id в модель
             var model = AppLocator.ModelFactory.Create<ICertificatesLoader>();
-            model.DeleteCertificates(id.ToArray());
+            model.Delete(id.ToArray());
 
             // Убираем удаленные элементы из выборки
             for (int i = 0; i < id.Count; i++)
             {
                 var cert = _selectedCertificates.FirstOrDefault(x => x.ID == id[i]);
-                _selectedCertificates.Remove(cert);
-
+                _selectedCertificates.Remove(cert);                
                 // Логирование
                 var message = new StringBuilder().AppendLine($"Пользователь {Authorization.CurrentUser.Login} УДАЛИЛ из БД запись:");
                 message.Append(new string(' ', 31)).Append($"ID: {cert.ID}").AppendLine();
                 message.Append(new string(' ', 31)).Append($"Год: {cert.Year}").AppendLine();
+                message.Append(new string(' ', 31)).Append($"Тип документа: {cert.DocumentTypeString}").AppendLine();
                 if (cert.ContractNumber?.Length > 0)
                     message.Append(new string(' ', 31)).Append($"Номер договора: {cert.ContractNumber}").AppendLine();
                 if (cert.CertificateNumber?.Length > 0)
@@ -221,6 +228,7 @@ namespace CertificatesViews.Controls
             }
 
             BuildTreeView();
+            Changed(this, EventArgs.Empty);
 
             MessageBox.Show("Указанные свидетельства были успешно удалены из базы данных", "Операция удаления", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
@@ -230,8 +238,8 @@ namespace CertificatesViews.Controls
         {
             var model = AppLocator.ModelFactory.Create<ICertificatesLoader>();
             var searchPattern = e as CertificateEventArgs;
-            var result = model.GetCertificatesBySearchPattern(searchPattern);
-            FillDataGridView(result);
+            _selectedCertificates = model.Read(searchPattern);
+            FillDataGridView(_selectedCertificates);
         }
 
         // Выбираем узел в TreeView
@@ -296,7 +304,7 @@ namespace CertificatesViews.Controls
 
             // Выводим страницы документа на панель предпросмотра
             if (Settings.Instance.AutoPreviewEnabled && certificate != null)
-                (PreviewControl as IPreView<string>).Build(certificate.FullCertificatePath);
+                (PreviewControl as IPreviewPanel<string>).Build(certificate.FullCertificatePath);
         }
 
         // Рекурсивное обновление дочерних узлов
@@ -319,7 +327,7 @@ namespace CertificatesViews.Controls
             if (Settings.Instance.AutoPreviewEnabled)
             {
                 scPreviewSplitter.Panel2Collapsed = false;
-                PreviewControl = (Control)AppLocator.GuiFactory.Create<IPreView<string>>();
+                PreviewControl = (Control)AppLocator.GuiFactory.Create<IPreviewPanel<string>>();
             }
             else
             {
@@ -661,7 +669,7 @@ namespace CertificatesViews.Controls
                 var path = Directory.GetParent(ofd.FileName).Parent.Parent.Parent.FullName;
                 var modifiedPath = ofd.FileName.Remove(0, path.Length + 1);
 
-                model.ModifyFilePath(idList.ToArray(), modifiedPath);
+                model.UpdatePaths(idList.ToArray(), modifiedPath);
 
                 MessageBox.Show("Путь к файлам был успешно изменен.", "Результат операции", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
             }
@@ -717,11 +725,13 @@ namespace CertificatesViews.Controls
         // Сформировать технический отчет
         private void OpenTechnicalJournalForm()
         {
-            var form = new ContainerForm<Certificate, IView<Certificate>>();
+            var form = new ContainerForm<Certificate, ITechnicalJournalPanelView<Certificate>>();
             var cert = _certificates.Where(x => x.ID == (int)dgvCerts.SelectedRows[0].Cells["iDDataGridViewTextBoxColumn"].Value).Last();
             form.Build(cert);
             form.ShowDialog();
         }
+
+
         #endregion
 
     }

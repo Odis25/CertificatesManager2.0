@@ -24,7 +24,10 @@ namespace CertificatesViews
         // Список свидетельств
         private Certificates Certificates
         {
-            get { return _certificates; }
+            get
+            {
+                return _certificates;
+            }
             set
             {
                 _certificates = value;
@@ -118,7 +121,7 @@ namespace CertificatesViews
         {
             // Получаем список свидетельств
             var loader = AppLocator.ModelFactory.Create<ICertificatesLoader>();
-            Certificates = loader.GetAllCertificates();
+            Certificates = loader.Read();
 
             // Устанавливаем текущего пользователя
             CurrentUser = Authorization.CurrentUser;
@@ -126,12 +129,13 @@ namespace CertificatesViews
             var view = AppLocator.GuiFactory.Create<ICertificatePanelView<Certificates>>();
             view.Changed += delegate
             {
-                _certificates = loader.GetAllCertificates();
-                view.Build(_certificates);
+                //tsCertificatesQuantity.Text = _certificates.Count().ToString();
+                Certificates = loader.Read();
+                view.Refresh(Certificates);
             };
 
             CurrentControl = view as Control;
-            view.Build(_certificates);
+            view.Build(Certificates);
         }
 
         // Кнопка "добавить"
@@ -165,7 +169,7 @@ namespace CertificatesViews
             form.ShowDialog();
         }
 
-        #region Add, Remove, Settings, UserChanging, AccountsEdit
+        #region Add, Settings, UserChange, AccountsEdit
         // Добавление нового свидетельства
         private void OpenAddingNewCertificateForm()
         {
@@ -174,7 +178,7 @@ namespace CertificatesViews
             form.Changed += delegate { };
             form.ShowDialog();
 
-            (CurrentControl as IView<Certificates>).Build(_certificates);
+            (CurrentControl as ICertificatePanelView<Certificates>).Build(_certificates);
         }
 
         // Настройки
@@ -193,7 +197,7 @@ namespace CertificatesViews
         // Смена пользователя
         private void OpenUserChangingForm()
         {
-            var form = new ContainerForm<User, IView<User>>();
+            var form = new ContainerForm<User, IAuthorizationPanelView<User>>();
             form.Build(CurrentUser);
             form.Changed += delegate { form.DialogResult = DialogResult.OK; CurrentUser = Authorization.CurrentUser; };
             form.ShowDialog();
@@ -204,8 +208,8 @@ namespace CertificatesViews
         {
             var model = AppLocator.ModelFactory.Create<UsersLoader>();
             var users = model.GetUsersList();
-            var form = new ContainerForm<Users, IView<Users>>();
-            form.Changed += delegate 
+            var form = new ContainerForm<Users, IUsersAdministrationPanelView<Users>>();
+            form.Changed += delegate
             {
                 Authorization.SetNewCurrentUserRights();
                 //CurrentUser = Authorization.CurrentUser;
@@ -216,6 +220,6 @@ namespace CertificatesViews
 
         #endregion
 
-        
+
     }
 }

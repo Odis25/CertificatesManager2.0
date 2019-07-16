@@ -8,39 +8,39 @@ namespace CertificatesModel.Interfaces
         /// Получить список всех свидетельств из БД
         /// </summary>
         /// <returns></returns>
-        Certificates GetAllCertificates();
+        Certificates Read();
         
         /// <summary>
         /// Получить список свидетельств соответствующих шаблону
         /// </summary>
         /// <param name="pattern"></param>
         /// <returns></returns>
-        Certificates GetCertificatesBySearchPattern(CertificateEventArgs pattern);
+        Certificates Read(CertificateEventArgs pattern);
         
         /// <summary>
         /// Внести изменения в свидетельство
         /// </summary>
         /// <param name="pattern"></param>
         /// <returns></returns>
-        Certificate EditCertificate(CertificateEventArgs pattern);
+        Certificate Update(CertificateEventArgs pattern);
 
         /// <summary>
         /// Изменить путь к файлам
         /// </summary>
         /// <param name="idArray">Массив id изменяемых свидетельств</param>
         /// <param name="newPath">Новый путь к файлам</param>
-        void ModifyFilePath(int[] idArray, string newPath);
+        void UpdatePaths(int[] idArray, string newPath);
 
         /// <summary>
         /// Удаление свидетельств
         /// </summary>
         /// <param name=""></param>
-        void DeleteCertificates(params int[] idList);
+        void Delete(params int[] idList);
 
         /// <summary>
         /// Добавление в базу нового свидетельства
         /// </summary>
         /// <param name="certificate">Новое свидетельство</param>
-        bool AddNewCertificate(Certificate certificate, byte[] byteArray, FileType type);
+        bool Create(Certificate certificate, byte[] byteArray, FileType type);
     }
 }

@@ -2,7 +2,9 @@
 using System;
 using System.Data;
 using System.Data.Entity;
+using System.Data.Entity.Validation;
 using System.Data.SqlServerCe;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 
@@ -54,6 +56,8 @@ namespace CertificatesModel.Repositories
                     querry = querry.Where(x => x.ID == pattern.ID);
                 if (pattern.Year.HasValue)
                     querry = querry.Where(x => x.Year == pattern.Year);
+                if (pattern.DocumentType.HasValue)
+                    querry = querry.Where(x => x.DocumentType == pattern.DocumentType);
                 if (!string.IsNullOrEmpty(pattern.CertificateNumber))
                     querry = querry.Where(x => x.CertificateNumber.Contains(pattern.CertificateNumber));
                 if (!string.IsNullOrEmpty(pattern.RegisterNumber))
@@ -86,8 +90,10 @@ namespace CertificatesModel.Repositories
         public static void AddNewCertificate(Certificate newCertificate)
         {
             using (MetrologyDbContext db = new MetrologyDbContext())
-            {
+            {              
                 var result = db.Certificates.Add(newCertificate);
+                // Сохраняем изменения без валидации
+                db.Configuration.ValidateOnSaveEnabled = false;
                 db.SaveChanges();
                 _certificates.Add(result);
             }
@@ -106,7 +112,7 @@ namespace CertificatesModel.Repositories
                     db.Entry(certificate).State = EntityState.Modified;
                 }
                 // Сохраняем изменения без валидации
-                db.Configuration.ValidateOnSaveEnabled = false;               
+                db.Configuration.ValidateOnSaveEnabled = false;
                 db.SaveChanges();
             }
         }
@@ -120,6 +126,7 @@ namespace CertificatesModel.Repositories
                 var unmodifiedCertificate = (Certificate)certificate.Clone();
 
                 certificate.Year = (int)pattern.Year;
+                certificate.DocumentType = (DocumentType)pattern.DocumentType;
                 certificate.CertificateNumber = pattern.CertificateNumber;
                 certificate.RegisterNumber = pattern.RegisterNumber;
                 certificate.VerificationMethod = pattern.VerificationMethod;
@@ -130,14 +137,28 @@ namespace CertificatesModel.Repositories
                 certificate.DeviceType = pattern.DeviceType;
                 certificate.SerialNumber = pattern.SerialNumber;
                 certificate.CalibrationDate = pattern.CalibrationDate.Value;
-                certificate.CalibrationExpireDate = pattern.CalibrationExpireDate.Value;
+                certificate.CalibrationExpireDate = pattern.CalibrationExpireDate?.Date;
                 certificate.CertificatePath = pattern.CertificatePath;
+
                 // Сохраняем изменения без валидации
                 db.Configuration.ValidateOnSaveEnabled = false;
                 db.Entry(certificate).State = EntityState.Modified;
-
                 db.SaveChanges();
 
+                //-----------------------------------------------------
+                var modifiedCertificates = db.Certificates.Where(x => x.CertificatePath == pattern.OldCertificatePath).AsEnumerable();
+                                            //.Select(x => x.ID).AsEnumerable()
+                                            //.Select(id => new Certificate { ID = id, CertificatePath = pattern.CertificatePath });
+                foreach (var cert in modifiedCertificates)
+                {
+                    cert.CertificatePath = pattern.CertificatePath;
+                    //db.Certificates.Attach(cert);
+                    db.Entry(cert).Property(c => c.CertificatePath).IsModified = true;
+                }
+                db.SaveChanges();
+
+                _certificates = new Certificates(db.Certificates.ToList());
+                //Certificates = new Certificates(db.Certificates.ToList());
                 return unmodifiedCertificate;
             }
         }

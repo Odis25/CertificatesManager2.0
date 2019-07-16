@@ -2,7 +2,7 @@
 
 namespace CertificatesViews.Interfaces
 {
-    interface IPreView<T>: IView<T>
+    interface IPreviewPanel<T>: IView<T>
     {
         PdfViewer Viewer { get; }
     }

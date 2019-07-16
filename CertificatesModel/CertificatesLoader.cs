@@ -10,20 +10,20 @@ namespace CertificatesModel
     {
 
         // Получить весь список свидетельств
-        public Certificates GetAllCertificates()
+        public Certificates Read()
         {
             return CertificatesRepository.Certificates;
         }
 
         // Получить список свидетельств соответствующих шаблону
-        public Certificates GetCertificatesBySearchPattern(CertificateEventArgs pattern)
+        public Certificates Read(CertificateEventArgs pattern)
         {
             Certificates result = CertificatesRepository.GetSelectedCertificatesFromDB(pattern);
             return result;
         }
 
         // Добавить нового свидетельства
-        public bool AddNewCertificate(Certificate certificate, byte[] byteArray, FileType type)
+        public bool Create(Certificate certificate, byte[] byteArray, FileType type)
         {
             var checkedContractNumber = string.Join("-", certificate.ContractNumber.Split(Path.GetInvalidFileNameChars()));
             var checkedDeviceType = string.Join("-", certificate.DeviceType.Split(Path.GetInvalidFileNameChars()));
@@ -44,8 +44,9 @@ namespace CertificatesModel
         }
 
         // Изменить свидетельство согласно шаблону
-        public Certificate EditCertificate(CertificateEventArgs pattern)
+        public Certificate Update(CertificateEventArgs pattern)
         {
+            Certificate unmodifiedCertificate;
             var baseFolder = Settings.Instance.CertificatesFolderPath;
             var certificateFolder = Path.GetDirectoryName(pattern.CertificatePath);
             var fullFolderPath = Path.Combine(baseFolder, certificateFolder);
@@ -57,32 +58,44 @@ namespace CertificatesModel
                 Directory.CreateDirectory(fullFolderPath);
 
             var fullFileName = Path.Combine(fullFolderPath, fileName + extension);
+            //---------------------------------------------------------------------------
+            var oldFileFolder = Path.GetDirectoryName(Path.Combine(baseFolder, pattern.OldCertificatePath));
+            var oldFileName = Path.GetFileNameWithoutExtension(pattern.OldCertificatePath);
+
+            if (oldFileFolder == fullFolderPath)
+            {
+                if (Path.GetFileName(pattern.OldCertificatePath) == Path.GetFileName(pattern.CertificatePath))
+                {
+                    return CertificatesRepository.EditCertificate(pattern);
+                }
+            }
+
             // Если файл с таким именем существует
             for (int i = 1; ; i++)
             {
                 if (!File.Exists(fullFileName))
-                {
                     break;
-                }
+
                 pattern.CertificatePath = Path.Combine(certificateFolder, fileName + $"_({i})" + extension);
                 fullFileName = Path.Combine(fullFolderPath, fileName + $"_({i})" + extension);
             }
-            // записываем изменения в базу
-            var unmodifiedCertificate = CertificatesRepository.EditCertificate(pattern);
+            // Записываем изменения в базу
+            unmodifiedCertificate = CertificatesRepository.EditCertificate(pattern);
             // Перемещаем файл свидетельства по новому пути
-            File.Move(unmodifiedCertificate.FullCertificatePath, fullFileName);
+            if (File.Exists(Path.Combine(baseFolder, pattern.OldCertificatePath)))
+                File.Move(unmodifiedCertificate.FullCertificatePath, fullFileName);
 
             return unmodifiedCertificate;
         }
 
         // Изменить путь к файлам свидетельств
-        public void ModifyFilePath(int[] idArray, string newPath)
+        public void UpdatePaths(int[] idArray, string newPath)
         {
             CertificatesRepository.ModifyFilePath(idArray, newPath);
         }
 
         // Удалить выбранные свидетельства
-        public void DeleteCertificates(params int[] idList)
+        public void Delete(params int[] idList)
         {
             CertificatesRepository.DeleteCertificates(idList);
         }

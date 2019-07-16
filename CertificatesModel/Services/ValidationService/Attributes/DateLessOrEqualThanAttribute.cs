@@ -14,6 +14,9 @@ namespace CertificatesModel.Validation.Attributes
 
         protected override ValidationResult IsValid(object value, ValidationContext context)
         {
+            if (value == null)
+                return new ValidationResult("Дата не может быть пустой", new string[] { context.DisplayName });
+
             ErrorMessage = ErrorMessageString;
             var currentValue = (DateTime)value;
 
@@ -25,7 +28,7 @@ namespace CertificatesModel.Validation.Attributes
             var comparisonValue = (DateTime)property.GetValue(context.ObjectInstance);
 
             if (currentValue <= comparisonValue)
-                return new ValidationResult(ErrorMessage);
+                return new ValidationResult(ErrorMessage, new string[] { context.DisplayName });
 
             return ValidationResult.Success;
         }

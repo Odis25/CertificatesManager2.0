@@ -40,7 +40,7 @@ namespace CertificatesDesktop
             // Авторизация пользователя           
             if (!Authorization.UserLogined)
             {
-                var loginForm = new ContainerForm<User, IView<User>>();
+                var loginForm = new ContainerForm<User, IAuthorizationPanelView<User>>();
                 loginForm.Build(Authorization.CurrentUser);
 
                 loginForm.Changed += delegate { loginForm.DialogResult = DialogResult.OK; };

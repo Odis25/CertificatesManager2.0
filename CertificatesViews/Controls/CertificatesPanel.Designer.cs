@@ -71,6 +71,7 @@ namespace CertificatesViews.Controls
             this.tsmCreateTechnicalJournal = new System.Windows.Forms.ToolStripMenuItem();
             this.niCertificatesManager = new System.Windows.Forms.NotifyIcon(this.components);
             this.iDDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.DocumentType = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.yearDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.contractNumberDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.certificateNumberDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -159,6 +160,7 @@ namespace CertificatesViews.Controls
             this.dgvCerts.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvCerts.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.iDDataGridViewTextBoxColumn,
+            this.DocumentType,
             this.yearDataGridViewTextBoxColumn,
             this.contractNumberDataGridViewTextBoxColumn,
             this.certificateNumberDataGridViewTextBoxColumn,
@@ -519,6 +521,13 @@ namespace CertificatesViews.Controls
             this.iDDataGridViewTextBoxColumn.ReadOnly = true;
             this.iDDataGridViewTextBoxColumn.Width = 41;
             // 
+            // DocumentType
+            // 
+            this.DocumentType.DataPropertyName = "DocumentTypeString";
+            this.DocumentType.HeaderText = "Тип документа";
+            this.DocumentType.Name = "DocumentType";
+            this.DocumentType.ReadOnly = true;
+            // 
             // yearDataGridViewTextBoxColumn
             // 
             this.yearDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
@@ -704,6 +713,7 @@ namespace CertificatesViews.Controls
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripMenuItem tsmCreateTechnicalJournal;
         private System.Windows.Forms.DataGridViewTextBoxColumn iDDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn DocumentType;
         private System.Windows.Forms.DataGridViewTextBoxColumn yearDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn contractNumberDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn certificateNumberDataGridViewTextBoxColumn;

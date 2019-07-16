@@ -6,10 +6,7 @@ using System.Threading.Tasks;
 
 namespace CertificatesViews.Interfaces
 {
-    interface ICertificatePropertiesPanelView<T,V>: IView<T,V>
+    public interface IAuthorizationPanelView<T>: IView<T>
     {
-        event EventHandler Search;
-        event EventHandler Edited;
-        event EventHandler Deleted;
     }
 }

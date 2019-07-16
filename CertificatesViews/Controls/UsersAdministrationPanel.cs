@@ -8,7 +8,7 @@ using System.Windows.Forms;
 
 namespace CertificatesViews.Controls
 {
-    public partial class UsersAdministrationPanel : UserControl, IView<Users>
+    public partial class UsersAdministrationPanel : UserControl, IUsersAdministrationPanelView<Users>
     {
         Users _usersList;
 

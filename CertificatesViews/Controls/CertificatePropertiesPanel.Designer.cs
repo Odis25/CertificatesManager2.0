@@ -51,9 +51,9 @@
             this.dpCalibrationDate = new System.Windows.Forms.DateTimePicker();
             this.cbVerificationMethod = new System.Windows.Forms.ComboBox();
             this.tbSerialNumber = new System.Windows.Forms.TextBox();
-            this.label13 = new System.Windows.Forms.Label();
+            this.lbCalibrationExpireDate = new System.Windows.Forms.Label();
             this.tbDeviceName = new System.Windows.Forms.TextBox();
-            this.label12 = new System.Windows.Forms.Label();
+            this.lbCalibrationDate = new System.Windows.Forms.Label();
             this.tbDeviceType = new System.Windows.Forms.TextBox();
             this.label11 = new System.Windows.Forms.Label();
             this.tbObjectName = new System.Windows.Forms.TextBox();
@@ -70,10 +70,13 @@
             this.numYear = new System.Windows.Forms.NumericUpDown();
             this.label4 = new System.Windows.Forms.Label();
             this.numId = new System.Windows.Forms.NumericUpDown();
-            this.label3 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.label1 = new System.Windows.Forms.Label();
+            this.lbCertificateNumber = new System.Windows.Forms.Label();
+            this.lbYear = new System.Windows.Forms.Label();
+            this.lbId = new System.Windows.Forms.Label();
             this.tipVerificationMethodItems = new System.Windows.Forms.ToolTip(this.components);
+            this.cbDocumentType = new System.Windows.Forms.ComboBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.chbDocumentType = new System.Windows.Forms.CheckBox();
             this.groupBox2.SuspendLayout();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numYear)).BeginInit();
@@ -93,6 +96,7 @@
             this.groupBox2.Controls.Add(this.chbVerificationMethod);
             this.groupBox2.Controls.Add(this.chbRegisterNumber);
             this.groupBox2.Controls.Add(this.chbCertificateNumber);
+            this.groupBox2.Controls.Add(this.chbDocumentType);
             this.groupBox2.Controls.Add(this.chbYear);
             this.groupBox2.Controls.Add(this.chbId);
             this.groupBox2.Dock = System.Windows.Forms.DockStyle.Right;
@@ -109,7 +113,7 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.chbCalibrationExpireDate.AutoSize = true;
-            this.chbCalibrationExpireDate.Location = new System.Drawing.Point(20, 342);
+            this.chbCalibrationExpireDate.Location = new System.Drawing.Point(19, 338);
             this.chbCalibrationExpireDate.Name = "chbCalibrationExpireDate";
             this.chbCalibrationExpireDate.Size = new System.Drawing.Size(15, 14);
             this.chbCalibrationExpireDate.TabIndex = 0;
@@ -122,7 +126,7 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.chbCalibrationDate.AutoSize = true;
-            this.chbCalibrationDate.Location = new System.Drawing.Point(20, 316);
+            this.chbCalibrationDate.Location = new System.Drawing.Point(19, 314);
             this.chbCalibrationDate.Name = "chbCalibrationDate";
             this.chbCalibrationDate.Size = new System.Drawing.Size(15, 14);
             this.chbCalibrationDate.TabIndex = 0;
@@ -135,7 +139,7 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.chbSerialNumber.AutoSize = true;
-            this.chbSerialNumber.Location = new System.Drawing.Point(20, 290);
+            this.chbSerialNumber.Location = new System.Drawing.Point(19, 290);
             this.chbSerialNumber.Name = "chbSerialNumber";
             this.chbSerialNumber.Size = new System.Drawing.Size(15, 14);
             this.chbSerialNumber.TabIndex = 0;
@@ -148,7 +152,7 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.chbDeviceName.AutoSize = true;
-            this.chbDeviceName.Location = new System.Drawing.Point(20, 264);
+            this.chbDeviceName.Location = new System.Drawing.Point(19, 266);
             this.chbDeviceName.Name = "chbDeviceName";
             this.chbDeviceName.Size = new System.Drawing.Size(15, 14);
             this.chbDeviceName.TabIndex = 0;
@@ -161,7 +165,7 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.chbDeviceType.AutoSize = true;
-            this.chbDeviceType.Location = new System.Drawing.Point(20, 238);
+            this.chbDeviceType.Location = new System.Drawing.Point(19, 242);
             this.chbDeviceType.Name = "chbDeviceType";
             this.chbDeviceType.Size = new System.Drawing.Size(15, 14);
             this.chbDeviceType.TabIndex = 0;
@@ -174,7 +178,7 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.chbObjectName.AutoSize = true;
-            this.chbObjectName.Location = new System.Drawing.Point(20, 212);
+            this.chbObjectName.Location = new System.Drawing.Point(19, 218);
             this.chbObjectName.Name = "chbObjectName";
             this.chbObjectName.Size = new System.Drawing.Size(15, 14);
             this.chbObjectName.TabIndex = 0;
@@ -187,7 +191,7 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.chbClientName.AutoSize = true;
-            this.chbClientName.Location = new System.Drawing.Point(20, 186);
+            this.chbClientName.Location = new System.Drawing.Point(19, 194);
             this.chbClientName.Name = "chbClientName";
             this.chbClientName.Size = new System.Drawing.Size(15, 14);
             this.chbClientName.TabIndex = 0;
@@ -200,7 +204,7 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.chbContractNumber.AutoSize = true;
-            this.chbContractNumber.Location = new System.Drawing.Point(20, 160);
+            this.chbContractNumber.Location = new System.Drawing.Point(19, 170);
             this.chbContractNumber.Name = "chbContractNumber";
             this.chbContractNumber.Size = new System.Drawing.Size(15, 14);
             this.chbContractNumber.TabIndex = 0;
@@ -213,7 +217,7 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.chbVerificationMethod.AutoSize = true;
-            this.chbVerificationMethod.Location = new System.Drawing.Point(20, 133);
+            this.chbVerificationMethod.Location = new System.Drawing.Point(19, 146);
             this.chbVerificationMethod.Name = "chbVerificationMethod";
             this.chbVerificationMethod.Size = new System.Drawing.Size(15, 14);
             this.chbVerificationMethod.TabIndex = 0;
@@ -226,7 +230,7 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.chbRegisterNumber.AutoSize = true;
-            this.chbRegisterNumber.Location = new System.Drawing.Point(20, 108);
+            this.chbRegisterNumber.Location = new System.Drawing.Point(19, 122);
             this.chbRegisterNumber.Name = "chbRegisterNumber";
             this.chbRegisterNumber.Size = new System.Drawing.Size(15, 14);
             this.chbRegisterNumber.TabIndex = 0;
@@ -239,7 +243,7 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.chbCertificateNumber.AutoSize = true;
-            this.chbCertificateNumber.Location = new System.Drawing.Point(20, 82);
+            this.chbCertificateNumber.Location = new System.Drawing.Point(19, 98);
             this.chbCertificateNumber.Name = "chbCertificateNumber";
             this.chbCertificateNumber.Size = new System.Drawing.Size(15, 14);
             this.chbCertificateNumber.TabIndex = 0;
@@ -252,7 +256,7 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.chbYear.AutoSize = true;
-            this.chbYear.Location = new System.Drawing.Point(20, 53);
+            this.chbYear.Location = new System.Drawing.Point(19, 50);
             this.chbYear.Name = "chbYear";
             this.chbYear.Size = new System.Drawing.Size(15, 14);
             this.chbYear.TabIndex = 0;
@@ -265,7 +269,7 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.chbId.AutoSize = true;
-            this.chbId.Location = new System.Drawing.Point(20, 24);
+            this.chbId.Location = new System.Drawing.Point(19, 26);
             this.chbId.Name = "chbId";
             this.chbId.Size = new System.Drawing.Size(15, 14);
             this.chbId.TabIndex = 0;
@@ -274,6 +278,8 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.cbDocumentType);
+            this.groupBox1.Controls.Add(this.label1);
             this.groupBox1.Controls.Add(this.btDelete);
             this.groupBox1.Controls.Add(this.btEdit);
             this.groupBox1.Controls.Add(this.btSearch);
@@ -281,9 +287,9 @@
             this.groupBox1.Controls.Add(this.dpCalibrationDate);
             this.groupBox1.Controls.Add(this.cbVerificationMethod);
             this.groupBox1.Controls.Add(this.tbSerialNumber);
-            this.groupBox1.Controls.Add(this.label13);
+            this.groupBox1.Controls.Add(this.lbCalibrationExpireDate);
             this.groupBox1.Controls.Add(this.tbDeviceName);
-            this.groupBox1.Controls.Add(this.label12);
+            this.groupBox1.Controls.Add(this.lbCalibrationDate);
             this.groupBox1.Controls.Add(this.tbDeviceType);
             this.groupBox1.Controls.Add(this.label11);
             this.groupBox1.Controls.Add(this.tbObjectName);
@@ -300,9 +306,9 @@
             this.groupBox1.Controls.Add(this.numYear);
             this.groupBox1.Controls.Add(this.label4);
             this.groupBox1.Controls.Add(this.numId);
-            this.groupBox1.Controls.Add(this.label3);
-            this.groupBox1.Controls.Add(this.label2);
-            this.groupBox1.Controls.Add(this.label1);
+            this.groupBox1.Controls.Add(this.lbCertificateNumber);
+            this.groupBox1.Controls.Add(this.lbYear);
+            this.groupBox1.Controls.Add(this.lbId);
             this.groupBox1.Dock = System.Windows.Forms.DockStyle.Right;
             this.groupBox1.Location = new System.Drawing.Point(3, 0);
             this.groupBox1.Name = "groupBox1";
@@ -349,7 +355,7 @@
             // 
             // dpCalibrationExpireDate
             // 
-            this.dpCalibrationExpireDate.Location = new System.Drawing.Point(178, 339);
+            this.dpCalibrationExpireDate.Location = new System.Drawing.Point(178, 336);
             this.dpCalibrationExpireDate.MinDate = new System.DateTime(2000, 1, 1, 0, 0, 0, 0);
             this.dpCalibrationExpireDate.Name = "dpCalibrationExpireDate";
             this.dpCalibrationExpireDate.Size = new System.Drawing.Size(200, 20);
@@ -357,7 +363,7 @@
             // 
             // dpCalibrationDate
             // 
-            this.dpCalibrationDate.Location = new System.Drawing.Point(178, 313);
+            this.dpCalibrationDate.Location = new System.Drawing.Point(178, 312);
             this.dpCalibrationDate.MinDate = new System.DateTime(2000, 1, 1, 0, 0, 0, 0);
             this.dpCalibrationDate.Name = "dpCalibrationDate";
             this.dpCalibrationDate.Size = new System.Drawing.Size(200, 20);
@@ -369,7 +375,7 @@
             this.cbVerificationMethod.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.cbVerificationMethod.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
             this.cbVerificationMethod.FormattingEnabled = true;
-            this.cbVerificationMethod.Location = new System.Drawing.Point(178, 130);
+            this.cbVerificationMethod.Location = new System.Drawing.Point(178, 143);
             this.cbVerificationMethod.Name = "cbVerificationMethod";
             this.cbVerificationMethod.Size = new System.Drawing.Size(200, 21);
             this.cbVerificationMethod.Sorted = true;
@@ -381,43 +387,43 @@
             // 
             this.tbSerialNumber.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
             this.tbSerialNumber.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource;
-            this.tbSerialNumber.Location = new System.Drawing.Point(178, 287);
+            this.tbSerialNumber.Location = new System.Drawing.Point(178, 288);
             this.tbSerialNumber.Name = "tbSerialNumber";
             this.tbSerialNumber.Size = new System.Drawing.Size(200, 20);
             this.tbSerialNumber.TabIndex = 11;
             // 
-            // label13
+            // lbCalibrationExpireDate
             // 
-            this.label13.AutoSize = true;
-            this.label13.Location = new System.Drawing.Point(6, 342);
-            this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(167, 13);
-            this.label13.TabIndex = 0;
-            this.label13.Text = "Дата окончания срока поверки";
+            this.lbCalibrationExpireDate.AutoSize = true;
+            this.lbCalibrationExpireDate.Location = new System.Drawing.Point(6, 338);
+            this.lbCalibrationExpireDate.Name = "lbCalibrationExpireDate";
+            this.lbCalibrationExpireDate.Size = new System.Drawing.Size(167, 13);
+            this.lbCalibrationExpireDate.TabIndex = 0;
+            this.lbCalibrationExpireDate.Text = "Дата окончания срока поверки";
             // 
             // tbDeviceName
             // 
             this.tbDeviceName.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
             this.tbDeviceName.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource;
-            this.tbDeviceName.Location = new System.Drawing.Point(178, 261);
+            this.tbDeviceName.Location = new System.Drawing.Point(178, 264);
             this.tbDeviceName.Name = "tbDeviceName";
             this.tbDeviceName.Size = new System.Drawing.Size(200, 20);
             this.tbDeviceName.TabIndex = 10;
             // 
-            // label12
+            // lbCalibrationDate
             // 
-            this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(6, 316);
-            this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(78, 13);
-            this.label12.TabIndex = 0;
-            this.label12.Text = "Дата поверки";
+            this.lbCalibrationDate.AutoSize = true;
+            this.lbCalibrationDate.Location = new System.Drawing.Point(6, 314);
+            this.lbCalibrationDate.Name = "lbCalibrationDate";
+            this.lbCalibrationDate.Size = new System.Drawing.Size(78, 13);
+            this.lbCalibrationDate.TabIndex = 0;
+            this.lbCalibrationDate.Text = "Дата поверки";
             // 
             // tbDeviceType
             // 
             this.tbDeviceType.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
             this.tbDeviceType.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource;
-            this.tbDeviceType.Location = new System.Drawing.Point(178, 235);
+            this.tbDeviceType.Location = new System.Drawing.Point(178, 240);
             this.tbDeviceType.Name = "tbDeviceType";
             this.tbDeviceType.Size = new System.Drawing.Size(200, 20);
             this.tbDeviceType.TabIndex = 9;
@@ -435,7 +441,7 @@
             // 
             this.tbObjectName.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
             this.tbObjectName.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource;
-            this.tbObjectName.Location = new System.Drawing.Point(178, 209);
+            this.tbObjectName.Location = new System.Drawing.Point(178, 216);
             this.tbObjectName.Name = "tbObjectName";
             this.tbObjectName.Size = new System.Drawing.Size(200, 20);
             this.tbObjectName.TabIndex = 8;
@@ -443,7 +449,7 @@
             // label10
             // 
             this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(6, 264);
+            this.label10.Location = new System.Drawing.Point(6, 266);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(101, 13);
             this.label10.TabIndex = 0;
@@ -453,7 +459,7 @@
             // 
             this.tbClientName.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
             this.tbClientName.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource;
-            this.tbClientName.Location = new System.Drawing.Point(178, 183);
+            this.tbClientName.Location = new System.Drawing.Point(178, 192);
             this.tbClientName.Name = "tbClientName";
             this.tbClientName.Size = new System.Drawing.Size(200, 20);
             this.tbClientName.TabIndex = 7;
@@ -461,7 +467,7 @@
             // label9
             // 
             this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(6, 238);
+            this.label9.Location = new System.Drawing.Point(6, 242);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(60, 13);
             this.label9.TabIndex = 0;
@@ -471,7 +477,7 @@
             // 
             this.tbContractNumber.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
             this.tbContractNumber.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource;
-            this.tbContractNumber.Location = new System.Drawing.Point(178, 157);
+            this.tbContractNumber.Location = new System.Drawing.Point(178, 168);
             this.tbContractNumber.Name = "tbContractNumber";
             this.tbContractNumber.Size = new System.Drawing.Size(200, 20);
             this.tbContractNumber.TabIndex = 6;
@@ -479,7 +485,7 @@
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(6, 212);
+            this.label8.Location = new System.Drawing.Point(6, 218);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(118, 13);
             this.label8.TabIndex = 0;
@@ -488,7 +494,7 @@
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(6, 186);
+            this.label7.Location = new System.Drawing.Point(6, 194);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(55, 13);
             this.label7.TabIndex = 0;
@@ -498,7 +504,7 @@
             // 
             this.tbRegisterNumber.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
             this.tbRegisterNumber.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource;
-            this.tbRegisterNumber.Location = new System.Drawing.Point(178, 105);
+            this.tbRegisterNumber.Location = new System.Drawing.Point(178, 119);
             this.tbRegisterNumber.Name = "tbRegisterNumber";
             this.tbRegisterNumber.Size = new System.Drawing.Size(200, 20);
             this.tbRegisterNumber.TabIndex = 4;
@@ -506,7 +512,7 @@
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(6, 160);
+            this.label6.Location = new System.Drawing.Point(6, 170);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(91, 13);
             this.label6.TabIndex = 0;
@@ -516,7 +522,7 @@
             // 
             this.tbCertificateNumber.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
             this.tbCertificateNumber.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource;
-            this.tbCertificateNumber.Location = new System.Drawing.Point(178, 79);
+            this.tbCertificateNumber.Location = new System.Drawing.Point(178, 95);
             this.tbCertificateNumber.Name = "tbCertificateNumber";
             this.tbCertificateNumber.Size = new System.Drawing.Size(200, 20);
             this.tbCertificateNumber.TabIndex = 3;
@@ -524,7 +530,7 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(6, 134);
+            this.label5.Location = new System.Drawing.Point(6, 146);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(102, 13);
             this.label5.TabIndex = 0;
@@ -532,7 +538,7 @@
             // 
             // numYear
             // 
-            this.numYear.Location = new System.Drawing.Point(178, 51);
+            this.numYear.Location = new System.Drawing.Point(178, 46);
             this.numYear.Maximum = new decimal(new int[] {
             2100,
             0,
@@ -550,7 +556,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(6, 108);
+            this.label4.Location = new System.Drawing.Point(6, 122);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(119, 13);
             this.label4.TabIndex = 0;
@@ -568,32 +574,69 @@
             this.numId.Size = new System.Drawing.Size(200, 20);
             this.numId.TabIndex = 1;
             // 
-            // label3
+            // lbCertificateNumber
             // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(6, 82);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(120, 13);
-            this.label3.TabIndex = 0;
-            this.label3.Text = "Номер свидетельства";
+            this.lbCertificateNumber.AutoSize = true;
+            this.lbCertificateNumber.Location = new System.Drawing.Point(6, 98);
+            this.lbCertificateNumber.Name = "lbCertificateNumber";
+            this.lbCertificateNumber.Size = new System.Drawing.Size(120, 13);
+            this.lbCertificateNumber.TabIndex = 0;
+            this.lbCertificateNumber.Text = "Номер свидетельства";
             // 
-            // label2
+            // lbYear
             // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(6, 53);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(25, 13);
-            this.label2.TabIndex = 0;
-            this.label2.Text = "Год";
+            this.lbYear.AutoSize = true;
+            this.lbYear.Location = new System.Drawing.Point(6, 50);
+            this.lbYear.Name = "lbYear";
+            this.lbYear.Size = new System.Drawing.Size(25, 13);
+            this.lbYear.TabIndex = 0;
+            this.lbYear.Text = "Год";
+            // 
+            // lbId
+            // 
+            this.lbId.AutoSize = true;
+            this.lbId.Location = new System.Drawing.Point(6, 26);
+            this.lbId.Name = "lbId";
+            this.lbId.Size = new System.Drawing.Size(18, 13);
+            this.lbId.TabIndex = 0;
+            this.lbId.Text = "ID";
+            // 
+            // cbDocumentType
+            // 
+            this.cbDocumentType.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.cbDocumentType.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
+            this.cbDocumentType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbDocumentType.FormattingEnabled = true;
+            this.cbDocumentType.Items.AddRange(new object[] {
+            "Свидетельство",
+            "Свидетельство+Протокол",
+            "Извещение о непригодности"});
+            this.cbDocumentType.Location = new System.Drawing.Point(178, 70);
+            this.cbDocumentType.Name = "cbDocumentType";
+            this.cbDocumentType.Size = new System.Drawing.Size(200, 21);
+            this.cbDocumentType.TabIndex = 16;
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(6, 24);
+            this.label1.Location = new System.Drawing.Point(6, 74);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(18, 13);
-            this.label1.TabIndex = 0;
-            this.label1.Text = "ID";
+            this.label1.Size = new System.Drawing.Size(83, 13);
+            this.label1.TabIndex = 15;
+            this.label1.Text = "Тип документа";
+            // 
+            // chbDocumentType
+            // 
+            this.chbDocumentType.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.chbDocumentType.AutoSize = true;
+            this.chbDocumentType.Location = new System.Drawing.Point(19, 74);
+            this.chbDocumentType.Name = "chbDocumentType";
+            this.chbDocumentType.Size = new System.Drawing.Size(15, 14);
+            this.chbDocumentType.TabIndex = 0;
+            this.chbDocumentType.UseVisualStyleBackColor = true;
+            this.chbDocumentType.CheckedChanged += new System.EventHandler(this.CheckBoxes_CheckedChanged);
             // 
             // CertificatePropertiesPanel
             // 
@@ -636,9 +679,9 @@
         private System.Windows.Forms.DateTimePicker dpCalibrationDate;
         private System.Windows.Forms.ComboBox cbVerificationMethod;
         private System.Windows.Forms.TextBox tbSerialNumber;
-        private System.Windows.Forms.Label label13;
+        private System.Windows.Forms.Label lbCalibrationExpireDate;
         private System.Windows.Forms.TextBox tbDeviceName;
-        private System.Windows.Forms.Label label12;
+        private System.Windows.Forms.Label lbCalibrationDate;
         private System.Windows.Forms.TextBox tbDeviceType;
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.TextBox tbObjectName;
@@ -655,11 +698,14 @@
         private System.Windows.Forms.NumericUpDown numYear;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.NumericUpDown numId;
-        private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label lbCertificateNumber;
+        private System.Windows.Forms.Label lbYear;
+        private System.Windows.Forms.Label lbId;
         private System.Windows.Forms.Button btEdit;
         private System.Windows.Forms.Button btDelete;
         private System.Windows.Forms.ToolTip tipVerificationMethodItems;
+        private System.Windows.Forms.CheckBox chbDocumentType;
+        private System.Windows.Forms.ComboBox cbDocumentType;
+        private System.Windows.Forms.Label label1;
     }
 }

@@ -17,6 +17,10 @@ namespace CertificatesModel.Components
         /// </summary>
         public int? Year { get; set; }
         /// <summary>
+        /// Тип документа
+        /// </summary>
+        public DocumentType? DocumentType { get; set; }
+        /// <summary>
         /// Номер договора
         /// </summary>
         public string ContractNumber { get; set; }
@@ -64,5 +68,29 @@ namespace CertificatesModel.Components
         /// Путь к файлу свидетельства
         /// </summary>
         public string CertificatePath { get; set; }
+        /// <summary>
+        /// Актуальный путь к файлу свидетельства
+        /// </summary>
+        public string OldCertificatePath { get; set; }
+        /// <summary>
+        /// Тип документа для отображения
+        /// </summary>
+        public string DocumentTypeString
+        {
+            get
+            {
+                switch (DocumentType)
+                {
+                    case CertificatesModel.DocumentType.Certificate:
+                        return "Свидетельство";
+                    case CertificatesModel.DocumentType.CertificateWithProtocol:
+                        return "Свидетельство с протоколом";
+                    case CertificatesModel.DocumentType.FaultNotification:
+                        return "Извещение о непригодности";
+                    default:
+                        return "----";
+                }
+            }
+        }
     }
 }

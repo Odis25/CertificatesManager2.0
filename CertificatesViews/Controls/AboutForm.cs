@@ -16,7 +16,8 @@ namespace CertificatesViews.Controls
             this.labelCompanyName.Text = AssemblyCompany;
             this.textBoxDescription.Text = AssemblyDescription + Environment.NewLine + Environment.NewLine +
                 $"Что нового в версии {AssemblyVersion}: " + Environment.NewLine + Environment.NewLine +
-                @"- Исправлены небольшие ошибки с авторизацией и правами пользователя.";
+                @"- Добавлена возможность добавлять свидетельства о непригодности." + Environment.NewLine + Environment.NewLine +
+                @"- Исправлены ошибки с внесением изменений в существующие свидетельства.";
         }
 
         #region Методы доступа к атрибутам сборки

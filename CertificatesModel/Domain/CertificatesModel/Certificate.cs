@@ -26,7 +26,7 @@ namespace CertificatesModel
         /// <summary>
         /// Серийный номер свидетельства
         /// </summary>
-        [Required(ErrorMessage = "Необходимо указать номер свидетельства.")]
+        [Required(ErrorMessage = "Необходимо указать номер свидетельства о поверке или извещения о непригодности.")]
         public string CertificateNumber { get; set; }
         /// <summary>
         /// Номер свидетельства в Гос.Реестра
@@ -57,6 +57,7 @@ namespace CertificatesModel
         /// <summary>
         /// Заводской номер средства измерения
         /// </summary>
+        [Required(ErrorMessage = "Необходимо указать заводской номер СИ.")]
         public string SerialNumber { get; set; }
         /// <summary>
         /// Дата поверки средства измерения
@@ -65,13 +66,15 @@ namespace CertificatesModel
         /// <summary>
         /// Дата истечения срока поверки средства измерения
         /// </summary>
-        [DateLessOrEqualThan("CalibrationDate", ErrorMessage = "Дата истечения срока поверки должна быть больше даты поверки")]
-        public DateTime CalibrationExpireDate { get; set; }
+        [DateLessOrEqualThan("CalibrationDate", ErrorMessage = "Дата истечения срока поверки должна быть больше даты поверки.")]
+        public DateTime? CalibrationExpireDate { get; set; }
 
         /// <summary>
         /// Путь к файлу свидетельства
         /// </summary>
         public string CertificatePath { get; set; }
+
+        public DocumentType DocumentType { get; set; }
 
         [NotMapped]
         public string FullCertificatePath
@@ -123,9 +126,36 @@ namespace CertificatesModel
             }
         }
 
+        [NotMapped]
+        public string DocumentTypeString
+        {
+            get
+            {
+                switch (DocumentType)
+                {
+                    case DocumentType.Certificate:
+                        return "Свидетельство";
+                    case DocumentType.CertificateWithProtocol:
+                        return "Свидетельство с протоколом";
+                    case DocumentType.FaultNotification:
+                        return "Извещение о непригодности";
+                    default:
+                        return "----";
+                }
+            }
+        }
+
         public object Clone()
         {
             return MemberwiseClone();
         }
+
     }
+
+    public enum DocumentType
+    {
+        Certificate,
+        CertificateWithProtocol,
+        FaultNotification
+    }   
 }

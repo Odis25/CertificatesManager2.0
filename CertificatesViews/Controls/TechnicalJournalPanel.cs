@@ -15,7 +15,7 @@ using CertificatesModel.Authorization;
 
 namespace CertificatesViews.Controls
 {
-    public partial class TechnicalJournalPanel : UserControl, IView<Certificate>
+    public partial class TechnicalJournalPanel : UserControl, ITechnicalJournalPanelView<Certificate>
     {
         Certificate _certificate;
         string _technicalJournalDirectory;

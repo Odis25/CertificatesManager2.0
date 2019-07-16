@@ -42,6 +42,7 @@ namespace CertificatesViews.Controls
 
         // Объект для хранения pdf документа
         object _byteArray;
+        // Тип файла
         FileType _type;
 
         object[] _verificationMethodsCollection;
@@ -53,7 +54,6 @@ namespace CertificatesViews.Controls
         {
             InitializeComponent();
 
-            cbDocumentType.Enabled = false;
             cbVerifierName.Enabled = false;
             cbDocumentType.SelectedIndex = 0;
             cbVerifierName.SelectedIndex = 0;
@@ -64,7 +64,7 @@ namespace CertificatesViews.Controls
         // Загрузка превью из файла
         public void Build(string path)
         {
-            var preview = AppLocator.GuiFactory.Create<IPreView<string>>();
+            var preview = AppLocator.GuiFactory.Create<IPreviewPanel<string>>();
             preview.Build(path);
             PreviewPanel = preview as Control;
             _byteArray = null;
@@ -76,7 +76,7 @@ namespace CertificatesViews.Controls
         public void Build(byte[] byteArray)
         {
             ParentForm.Text = "Добавление нового свидетельства";
-            var preview = AppLocator.GuiFactory.Create<IPreView<byte[]>>();
+            var preview = AppLocator.GuiFactory.Create<IPreviewPanel<byte[]>>();
             preview.Build(byteArray);
             PreviewPanel = preview as Control;
             CheckButtonState();
@@ -110,7 +110,7 @@ namespace CertificatesViews.Controls
                     _type = FileType.jpg;
                 else
                     _type = FileType.pdf;
-                 
+
                 CheckButtonState();
             }
         }
@@ -129,13 +129,20 @@ namespace CertificatesViews.Controls
         private void btAdd_Click(object sender, EventArgs e)
         {
             // Формируем свидетельство
-            var certificate = BuildNewCertificate();
-            if (certificate == null)
+            var document = BuildNewDocument();
+
+            if (document == null)
                 return;
 
+            // Проверяем выбран ли документ
+            if (_byteArray == null)
+            {
+                MessageBox.Show("Отсканируйте новый документ, или выберите существующий.", "Некорректные входные данные", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+                return;
+            }
             // Вносим свидетельство в базу
             var model = AppLocator.ModelFactory.Create<ICertificatesLoader>();
-            var result = model.AddNewCertificate(certificate, (byte[])_byteArray, _type);
+            var result = model.Create(document, (byte[])_byteArray, _type);
 
             if (!result)
             {
@@ -152,24 +159,24 @@ namespace CertificatesViews.Controls
 
             // Логирование
             var message = new StringBuilder().AppendLine($"Пользователь {Authorization.CurrentUser.Login} ДОБАВИЛ в БД запись:");
-            if (certificate.ContractNumber.Length > 0)
-                message.Append(new string(' ', 31)).Append($"Номер договора: {certificate.ContractNumber}").AppendLine();
-            if (certificate.RegisterNumber.Length > 0)
-                message.Append(new string(' ', 31)).Append($"Номер в гос.реестре: {certificate.RegisterNumber}").AppendLine();
-            if (certificate.VerificationMethod.Length > 0)
-                message.Append(new string(' ', 31)).Append($"Методика поверки: {certificate.VerificationMethod}").AppendLine();
-            if (certificate.ClientName.Length > 0)
-                message.Append(new string(' ', 31)).Append($"Наименование заказчика: {certificate.ClientName}").AppendLine();
-            if (certificate.ObjectName.Length > 0)
-                message.Append(new string(' ', 31)).Append($"Наименование объекта эксплуатации: {certificate.ObjectName}").AppendLine();
-            if (certificate.DeviceType.Length > 0)
-                message.Append(new string(' ', 31)).Append($"Тип средства измерения: {certificate.DeviceType}").AppendLine();
-            if (certificate.DeviceName.Length > 0)
-                message.Append(new string(' ', 31)).Append($"Наименование средства измерения: {certificate.DeviceName}").AppendLine();
-            if (certificate.SerialNumber.Length > 0)
-                message.Append(new string(' ', 31)).Append($"Серийный номер: {certificate.SerialNumber}").AppendLine();
-            if (certificate.CertificatePath.Length > 0)
-                message.Append(new string(' ', 31)).Append($"Путь к файлу: {certificate.FullCertificatePath}").AppendLine();                                                       
+            if (document.ContractNumber.Length > 0)
+                message.Append(new string(' ', 31)).Append($"Номер договора: {document.ContractNumber}").AppendLine();
+            if (document.RegisterNumber.Length > 0)
+                message.Append(new string(' ', 31)).Append($"Номер в гос.реестре: {document.RegisterNumber}").AppendLine();
+            if (document.VerificationMethod.Length > 0)
+                message.Append(new string(' ', 31)).Append($"Методика поверки: {document.VerificationMethod}").AppendLine();
+            if (document.ClientName.Length > 0)
+                message.Append(new string(' ', 31)).Append($"Наименование заказчика: {document.ClientName}").AppendLine();
+            if (document.ObjectName.Length > 0)
+                message.Append(new string(' ', 31)).Append($"Наименование объекта эксплуатации: {document.ObjectName}").AppendLine();
+            if (document.DeviceType.Length > 0)
+                message.Append(new string(' ', 31)).Append($"Тип средства измерения: {document.DeviceType}").AppendLine();
+            if (document.DeviceName.Length > 0)
+                message.Append(new string(' ', 31)).Append($"Наименование средства измерения: {document.DeviceName}").AppendLine();
+            if (document.SerialNumber.Length > 0)
+                message.Append(new string(' ', 31)).Append($"Серийный номер: {document.SerialNumber}").AppendLine();
+            if (document.CertificatePath.Length > 0)
+                message.Append(new string(' ', 31)).Append($"Путь к файлу: {document.FullCertificatePath}").AppendLine();
             LoggingService.LogEvent(message.ToString());
             // ClearTextBoxes();
         }
@@ -191,30 +198,32 @@ namespace CertificatesViews.Controls
         }
 
         // Создать свидетельство и проверить корректность введенных данных
-        private Certificate BuildNewCertificate()
+        private Certificate BuildNewDocument()
         {
-            Certificate certificate = new Certificate();
-            certificate.Year = (int)numYear.Value;
-            certificate.CertificateNumber = tbCertificateNumber.Text.Trim();
-            certificate.RegisterNumber = tbRegisterNumber.Text.Trim();
-            certificate.VerificationMethod = cbVerificationMethod.Text.Trim();
-            certificate.ContractNumber = tbContractNumber.Text.Trim();
-            certificate.ClientName = cbClientName.Text.Trim();
-            certificate.ObjectName = cbObjectName.Text.Trim();
-            certificate.SerialNumber = tbSerialNumber.Text.Trim();
-            certificate.DeviceType = cbDeviceType.Text.Trim();
-            certificate.DeviceName = cbDeviceName.Text.Trim();
-            certificate.CalibrationDate = dpCalibrationDate.Value.Date;
-            certificate.CalibrationExpireDate = dpCalibrationExpireDate.Value.Date;
+            Certificate document = new Certificate();
+            document.Year = (int)numYear.Value;
+            document.DocumentType = (DocumentType)cbDocumentType.SelectedIndex;
+            document.CertificateNumber = tbCertificateNumber.Text.Trim();
+            document.RegisterNumber = tbRegisterNumber.Text.Trim();
+            document.VerificationMethod = cbVerificationMethod.Text.Trim();
+            document.ContractNumber = tbContractNumber.Text.Trim();
+            document.ClientName = cbClientName.Text.Trim();
+            document.ObjectName = cbObjectName.Text.Trim();
+            document.SerialNumber = tbSerialNumber.Text.Trim();
+            document.DeviceType = cbDeviceType.Text.Trim();
+            document.DeviceName = cbDeviceName.Text.Trim();
+            document.CalibrationDate = dpCalibrationDate.Value.Date;
+            if (cbDocumentType.SelectedIndex != 2)
+                document.CalibrationExpireDate = dpCalibrationExpireDate.Value.Date;
 
             var validator = AppLocator.ModelFactory.Create<IValidationModel>();
 
             string result;
 
-            if (cbZipCopyEnabled.Checked)
-                result = validator.ValidateDataModelForZip(certificate);
+            if (cbDocumentType.SelectedIndex != 2)
+                result = validator.ValidateDataModel(document);
             else
-                result = validator.ValidateDataModel(certificate);
+                result = validator.ValidateDataModelForFaultNotification(document);
 
             if (!string.IsNullOrEmpty(result))
             {
@@ -222,7 +231,7 @@ namespace CertificatesViews.Controls
                 return null;
             }
 
-            return certificate;
+            return document;
         }
 
         // Создать резервную копию
@@ -263,12 +272,12 @@ namespace CertificatesViews.Controls
         {
             if (cbZipCopyEnabled.Checked)
             {
-                cbDocumentType.Enabled = true;
+                //cbDocumentType.Enabled = true;
                 cbVerifierName.Enabled = true;
             }
             else
             {
-                cbDocumentType.Enabled = false;
+                //cbDocumentType.Enabled = false;
                 cbVerifierName.Enabled = false;
             }
         }
@@ -290,7 +299,7 @@ namespace CertificatesViews.Controls
         private void CreateAutoCompleteCollection()
         {
             var model = AppLocator.ModelFactory.Create<ICertificatesLoader>();
-            var certificates = model.GetAllCertificates();
+            var certificates = model.Read();
             // textboxes
             tbCertificateNumber.AutoCompleteCustomSource.AddRange(certificates.Select(x => x.CertificateNumber).Distinct().Where(x => x != null).ToArray());
             tbRegisterNumber.AutoCompleteCustomSource.AddRange(certificates.Select(x => x.RegisterNumber).Distinct().Where(x => x != null).ToArray());
@@ -324,7 +333,7 @@ namespace CertificatesViews.Controls
             var text = ((TextBox)sender).Text;
 
             var model = AppLocator.ModelFactory.Create<ICertificatesLoader>();
-            var certificates = model.GetAllCertificates();
+            var certificates = model.Read();
 
             if (!string.IsNullOrWhiteSpace(text))
             {
@@ -356,7 +365,7 @@ namespace CertificatesViews.Controls
                 if (verificationMethodCollection.Length == 0)
                 {
                     cbVerificationMethod.Items.Clear();
-                    cbVerificationMethod.Items.AddRange(_verificationMethodsCollection);
+                    cbVerificationMethod.Items.AddRange(verificationMethodCollection);
                     cbVerificationMethod.ResetText();
                 }
                 else if (verificationMethodCollection.Length == 1)
@@ -411,7 +420,7 @@ namespace CertificatesViews.Controls
             var text = ((TextBox)sender).Text;
 
             var model = AppLocator.ModelFactory.Create<ICertificatesLoader>();
-            var certificates = model.GetAllCertificates();
+            var certificates = model.Read();
 
             if (!string.IsNullOrWhiteSpace(text))
             {
@@ -489,6 +498,29 @@ namespace CertificatesViews.Controls
         private void combobox_DropDownClosed(object sender, EventArgs e)
         {
             tipVerificationMethodItems.Hide(cbVerificationMethod);
+        }
+
+        // Выбор типа документа
+        private void cbDocumentType_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            switch (cbDocumentType.SelectedIndex)
+            {         
+                case 2:
+                    lbCalibrationExpireDate.Visible = false;
+                    dpCalibrationExpireDate.Visible = false;
+                    lbCertificateNumber.Text = "Номер извещения";
+                    lbCalibrationDate.Text = "Дата оформления";
+                    break;
+                case 0:
+                case 1:
+                    lbCalibrationExpireDate.Visible = true;
+                    dpCalibrationExpireDate.Visible = true;
+                    lbCertificateNumber.Text = "Номер свидетельства";
+                    lbCalibrationDate.Text = "Дата поверки";
+                    break;
+                default:
+                    break;
+            }
         }
     }
 }

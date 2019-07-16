@@ -53,6 +53,8 @@ namespace CertificatesModel.Authorization
             else
             {
                 CurrentUser = new User();
+                CurrentUser.Login = "Локальный пользователь";
+                CurrentUser.UserRights = "Administrator";
                 UserLogined = true;
             }
         }

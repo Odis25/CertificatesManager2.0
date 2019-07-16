@@ -11,16 +11,14 @@ namespace CertificatesViews.Factories
         public GuiFactory()
         {
             Register<ICertificatePanelView<Certificates>, CertificatesPanel>();
-            Register<IDetailsView<Certificate, Certificates>, CertificatePropertiesPanel>();
-            Register<IPreView<string>, PreviewPanel>();
-            Register<IView<User>, AuthorizationPanel>();
-            Register<IView<Users>, UsersAdministrationPanel>();
-
+            Register<ICertificatePropertiesPanelView<Certificate, Certificates>, CertificatePropertiesPanel>();
+            Register<IPreviewPanel<string>, PreviewPanel>();
+            Register<IPreviewPanel<byte[]>, PreviewPanel>();
+            Register<IAuthorizationPanelView<User>, AuthorizationPanel>();
+            Register<IUsersAdministrationPanelView<Users>, UsersAdministrationPanel>();
             Register<ICreateNewView<byte[]>, NewCertificatePanel>();
-            Register<IPreView<byte[]>, PreviewPanel>();
             Register<ICreateNewActView<Certificates>, CreateActPanel>();
-
-            Register<IView<Certificate>, TechnicalJournalPanel>();
+            Register<ITechnicalJournalPanelView<Certificate>, TechnicalJournalPanel>();
         }
     }
 }
