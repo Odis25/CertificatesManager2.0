@@ -16,7 +16,7 @@ namespace CertificatesViews.Controls
 
         public void Build(T obj)
         {
-            Icon = Properties.Resources.Delicious;
+            Icon = Properties.Resources.Delicious1;
             //create control to show server
             var ctrl = AppLocator.GuiFactory.Create<V>();
             (ctrl as Control).Dock = DockStyle.None;

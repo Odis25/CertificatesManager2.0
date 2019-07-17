@@ -25,7 +25,7 @@ namespace CertificatesModel.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("\\\\fileserver.incomsystem.ru\\pub\\Кулаков Р.Р\\База\\MetrologyDB.sdf")]
+        [global::System.Configuration.DefaultSettingValueAttribute("D:\\MetrologyDB.sdf")]
         public string DataBasePath {
             get {
                 return ((string)(this["DataBasePath"]));
@@ -37,7 +37,7 @@ namespace CertificatesModel.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("\\\\fileserver.incomsystem.ru\\pub\\Кулаков Р.Р\\Метрология")]
+        [global::System.Configuration.DefaultSettingValueAttribute("D:\\Метрология")]
         public string CertificatesFolderPath {
             get {
                 return ((string)(this["CertificatesFolderPath"]));
@@ -49,7 +49,7 @@ namespace CertificatesModel.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("\\\\fileserver.incomsystem.ru\\pub\\Кулаков Р.Р\\Служба главного метролога\\Метрология")]
+        [global::System.Configuration.DefaultSettingValueAttribute("D:\\Служба главного метролога\\Метрология")]
         public string CertificatesZipFolderPath {
             get {
                 return ((string)(this["CertificatesZipFolderPath"]));
@@ -109,7 +109,7 @@ namespace CertificatesModel.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("\\\\fileserver.incomsystem.ru\\pub\\Кулаков Р.Р\\Метрология\\Методики поверки")]
+        [global::System.Configuration.DefaultSettingValueAttribute("D:\\Метрология\\Методики поверки")]
         public string VerificationMethodFolder {
             get {
                 return ((string)(this["VerificationMethodFolder"]));

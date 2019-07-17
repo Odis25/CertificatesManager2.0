@@ -21,7 +21,7 @@ namespace CertificatesViews.Controls
 
         public void Build(Users obj)
         {
-            ParentForm.Icon = Properties.Resources.Delicious;
+            ParentForm.Icon = Properties.Resources.Delicious1;
             ParentForm.Text = "Администрирование пользователей";
             ParentForm.FormBorderStyle = FormBorderStyle.FixedSingle;
 

@@ -29,7 +29,7 @@ namespace CertificatesViews.Controls
 
         public void Build(Certificate cert)
         {
-            ParentForm.Icon = Properties.Resources.Delicious;
+            ParentForm.Icon = Properties.Resources.Delicious1;
             ParentForm.Text = "Технические отчеты " + cert.ObjectName;
             ParentForm.FormBorderStyle = FormBorderStyle.FixedSingle;
 
