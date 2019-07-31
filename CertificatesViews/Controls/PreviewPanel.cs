@@ -10,7 +10,7 @@ using System.Windows.Forms;
 namespace CertificatesViews.Controls
 {
 
-    public partial class PreviewPanel : UserControl, IPreviewPanel<string>, IPreviewPanel<byte[]>
+    public partial class PreviewPanel : UserControl, IPreviewView<string>, IPreviewView<byte[]>
     {
         PdfViewer _viewer;
 

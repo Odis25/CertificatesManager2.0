@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace CertificatesViews.Interfaces
 {
-    interface ICertificatePanelView<T>: IView<T>
+    interface ICertificatesView<T>: IView<T>
     {
         void ShowOrHidePreviewPanel();
         void Refresh(Certificates certificates);

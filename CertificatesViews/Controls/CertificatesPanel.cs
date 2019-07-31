@@ -19,7 +19,7 @@ using System.Windows.Forms;
 
 namespace CertificatesViews.Controls
 {
-    public partial class CertificatesPanel : UserControl, ICertificatePanelView<Certificates>
+    public partial class CertificatesPanel : UserControl, ICertificatesView<Certificates>
     {
         Control _propertyControl;
         Control _previewControl;
@@ -116,7 +116,7 @@ namespace CertificatesViews.Controls
         // Построение панели свойств свидетельства
         private void BuildProperty()
         {
-            var view = AppLocator.GuiFactory.Create<ICertificatePropertiesPanelView<Certificate, Certificates>>();
+            var view = AppLocator.GuiFactory.Create<ICertificatePropertiesView<Certificate, Certificates>>();
             view.Build(new Certificate(), _certificates);
             view.Search += CertificatesPanel_Search;
             view.Deleted += CertificatesPanel_Deleted;
@@ -304,7 +304,7 @@ namespace CertificatesViews.Controls
 
             // Выводим страницы документа на панель предпросмотра
             if (Settings.Instance.AutoPreviewEnabled && certificate != null)
-                (PreviewControl as IPreviewPanel<string>).Build(certificate.FullCertificatePath);
+                (PreviewControl as IPreviewView<string>).Build(certificate.FullCertificatePath);
         }
 
         // Рекурсивное обновление дочерних узлов
@@ -327,7 +327,7 @@ namespace CertificatesViews.Controls
             if (Settings.Instance.AutoPreviewEnabled)
             {
                 scPreviewSplitter.Panel2Collapsed = false;
-                PreviewControl = (Control)AppLocator.GuiFactory.Create<IPreviewPanel<string>>();
+                PreviewControl = (Control)AppLocator.GuiFactory.Create<IPreviewView<string>>();
             }
             else
             {
@@ -475,11 +475,17 @@ namespace CertificatesViews.Controls
             {
                 verificationMethods.Add(Path.GetFileNameWithoutExtension(filePath).ToLower(), filePath.ToLower());
             }
-
-            if (dgvCerts.Rows[e.RowIndex].Cells[e.ColumnIndex] is DataGridViewLinkCell)
+            try
             {
-                var file = verificationMethods[dgvCerts.Rows[e.RowIndex].Cells[e.ColumnIndex].Value?.ToString().ToLower()];
-                Process.Start(file);
+                if (dgvCerts.Rows[e.RowIndex].Cells[e.ColumnIndex] is DataGridViewLinkCell)
+                {
+                    var file = verificationMethods[dgvCerts.Rows[e.RowIndex].Cells[e.ColumnIndex].Value?.ToString().ToLower()];
+                    Process.Start(file);
+                }
+            }
+            catch (KeyNotFoundException)
+            {
+                MessageBox.Show("Файл данной методики не обнаружен.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
             }
         }
 
@@ -716,7 +722,7 @@ namespace CertificatesViews.Controls
 
             var selectedCertificates = new Certificates(_certificates.Where(x => idList.Contains(x.ID)).ToList());
 
-            var form = new ContainerForm<Certificates, ICreateNewActView<Certificates>>();
+            var form = new ContainerForm<Certificates, ICreateActView<Certificates>>();
             form.Build(selectedCertificates);
             form.Changed += delegate { form.DialogResult = DialogResult.OK; };
             form.ShowDialog();
@@ -725,7 +731,7 @@ namespace CertificatesViews.Controls
         // Сформировать технический отчет
         private void OpenTechnicalJournalForm()
         {
-            var form = new ContainerForm<Certificate, ITechnicalJournalPanelView<Certificate>>();
+            var form = new ContainerForm<Certificate, ITechnicalJournalView<Certificate>>();
             var cert = _certificates.Where(x => x.ID == (int)dgvCerts.SelectedRows[0].Cells["iDDataGridViewTextBoxColumn"].Value).Last();
             form.Build(cert);
             form.ShowDialog();

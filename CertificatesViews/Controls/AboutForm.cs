@@ -17,7 +17,9 @@ namespace CertificatesViews.Controls
             this.textBoxDescription.Text = AssemblyDescription + Environment.NewLine + Environment.NewLine +
                 $"Что нового в версии {AssemblyVersion}: " + Environment.NewLine + Environment.NewLine +
                 @"- Добавлена возможность добавлять свидетельства о непригодности." + Environment.NewLine + Environment.NewLine +
-                @"- Исправлены ошибки с внесением изменений в существующие свидетельства.";
+                @"- Исправлены ошибки с внесением изменений в существующие свидетельства." + Environment.NewLine + Environment.NewLine +
+                @"- Изменены пути по-умолчанию." + Environment.NewLine + Environment.NewLine +
+                @"- Исправлены мелкие ошибки связанные с добавлением методик поверки.";
         }
 
         #region Методы доступа к атрибутам сборки

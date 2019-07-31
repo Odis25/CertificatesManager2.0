@@ -24,7 +24,7 @@
       <Value Profile="(Default)" />
     </Setting>
     <Setting Name="VerificationMethodFolder" Type="System.String" Scope="User">
-      <Value Profile="(Default)">D:\Метрология\Методики поверки</Value>
+      <Value Profile="(Default)">D:\Метрология\Методики Поверки</Value>
     </Setting>
   </Settings>
 </SettingsFile>

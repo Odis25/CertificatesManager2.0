@@ -19,7 +19,7 @@ using CertificatesModel.ExcelService;
 namespace CertificatesViews.Controls
 {
 
-    public partial class CreateActPanel : UserControl, ICreateNewActView<Certificates>
+    public partial class CreateActPanel : UserControl, ICreateActView<Certificates>
     {
         // Свидетельства по которым формируется акт
         private Certificates _certificates;

@@ -16,7 +16,7 @@ using System.Windows.Forms;
 
 namespace CertificatesViews.Controls
 {
-    public partial class NewCertificatePanel : UserControl, ICreateNewView<byte[]>
+    public partial class NewCertificatePanel : UserControl, INewCertificateView<byte[]>
     {
         Control _previewPanel;
         Control PreviewPanel
@@ -64,7 +64,7 @@ namespace CertificatesViews.Controls
         // Загрузка превью из файла
         public void Build(string path)
         {
-            var preview = AppLocator.GuiFactory.Create<IPreviewPanel<string>>();
+            var preview = AppLocator.GuiFactory.Create<IPreviewView<string>>();
             preview.Build(path);
             PreviewPanel = preview as Control;
             _byteArray = null;
@@ -76,7 +76,7 @@ namespace CertificatesViews.Controls
         public void Build(byte[] byteArray)
         {
             ParentForm.Text = "Добавление нового свидетельства";
-            var preview = AppLocator.GuiFactory.Create<IPreviewPanel<byte[]>>();
+            var preview = AppLocator.GuiFactory.Create<IPreviewView<byte[]>>();
             preview.Build(byteArray);
             PreviewPanel = preview as Control;
             CheckButtonState();
@@ -316,6 +316,7 @@ namespace CertificatesViews.Controls
 
             var filePaths = Directory.GetFiles(Settings.Instance.VerificateionMethodFolderPath);
             var verificationMethods = new List<string>();
+            verificationMethods.Add("");
 
             foreach (var filePath in filePaths)
             {
@@ -365,19 +366,21 @@ namespace CertificatesViews.Controls
                 if (verificationMethodCollection.Length == 0)
                 {
                     cbVerificationMethod.Items.Clear();
-                    cbVerificationMethod.Items.AddRange(verificationMethodCollection);
+                    cbVerificationMethod.Items.AddRange(_verificationMethodsCollection);
                     cbVerificationMethod.ResetText();
                 }
                 else if (verificationMethodCollection.Length == 1)
                 {
                     cbVerificationMethod.Items.Clear();
+                    cbVerificationMethod.Items.Add("");
                     cbVerificationMethod.Items.AddRange(verificationMethodCollection);
-                    cbVerificationMethod.SelectedIndex = 0;
+                    cbVerificationMethod.SelectedIndex = 1;
                 }
                 else
                 {
                     cbVerificationMethod.ResetText();
                     cbVerificationMethod.Items.Clear();
+                    cbVerificationMethod.Items.Add("");
                     cbVerificationMethod.Items.AddRange(verificationMethodCollection);
                 }
 
@@ -471,17 +474,19 @@ namespace CertificatesViews.Controls
 
         // Отрисовка подсказки для Items в комбобоксе
         private void combobox_DrawItem(object sender, DrawItemEventArgs e)
-        {
+        {           
             ComboBox currentBox = (ComboBox)sender;
 
             if (e.Index == -1)
                 return;
-
+            
             string text = currentBox.GetItemText(currentBox.Items[e.Index]);
+            
             e.DrawBackground();
             using (SolidBrush br = new SolidBrush(e.ForeColor))
             {
                 e.Graphics.DrawString(text, e.Font, br, e.Bounds);
+                
             }
 
             if ((e.State & DrawItemState.Selected) == DrawItemState.Selected)

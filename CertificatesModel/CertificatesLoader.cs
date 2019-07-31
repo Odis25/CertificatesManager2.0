@@ -45,7 +45,7 @@ namespace CertificatesModel
 
         // Изменить свидетельство согласно шаблону
         public Certificate Update(CertificateEventArgs pattern)
-        {
+        {            
             Certificate unmodifiedCertificate;
             var baseFolder = Settings.Instance.CertificatesFolderPath;
             var certificateFolder = Path.GetDirectoryName(pattern.CertificatePath);

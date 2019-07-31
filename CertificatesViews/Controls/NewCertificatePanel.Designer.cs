@@ -34,7 +34,6 @@
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.label16 = new System.Windows.Forms.Label();
             this.cbVerifierName = new System.Windows.Forms.ComboBox();
-            this.cbDocumentType = new System.Windows.Forms.ComboBox();
             this.cbZipCopyEnabled = new System.Windows.Forms.CheckBox();
             this.tcFileSource = new System.Windows.Forms.TabControl();
             this.tabFile = new System.Windows.Forms.TabPage();
@@ -49,6 +48,7 @@
             this.dpCalibrationExpireDate = new System.Windows.Forms.DateTimePicker();
             this.dpCalibrationDate = new System.Windows.Forms.DateTimePicker();
             this.cbClientName = new System.Windows.Forms.ComboBox();
+            this.cbDocumentType = new System.Windows.Forms.ComboBox();
             this.cbObjectName = new System.Windows.Forms.ComboBox();
             this.cbDeviceType = new System.Windows.Forms.ComboBox();
             this.cbDeviceName = new System.Windows.Forms.ComboBox();
@@ -143,20 +143,6 @@
             this.cbVerifierName.Name = "cbVerifierName";
             this.cbVerifierName.Size = new System.Drawing.Size(228, 21);
             this.cbVerifierName.TabIndex = 2;
-            // 
-            // cbDocumentType
-            // 
-            this.cbDocumentType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbDocumentType.FormattingEnabled = true;
-            this.cbDocumentType.Items.AddRange(new object[] {
-            "Свидетельство",
-            "Свидетельство+протокол",
-            "Извещение о непригодности"});
-            this.cbDocumentType.Location = new System.Drawing.Point(213, 24);
-            this.cbDocumentType.Name = "cbDocumentType";
-            this.cbDocumentType.Size = new System.Drawing.Size(200, 21);
-            this.cbDocumentType.TabIndex = 1;
-            this.cbDocumentType.SelectedIndexChanged += new System.EventHandler(this.cbDocumentType_SelectedIndexChanged);
             // 
             // cbZipCopyEnabled
             // 
@@ -334,6 +320,20 @@
             this.cbClientName.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.combobox_DrawItem);
             this.cbClientName.DropDownClosed += new System.EventHandler(this.combobox_DropDownClosed);
             // 
+            // cbDocumentType
+            // 
+            this.cbDocumentType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbDocumentType.FormattingEnabled = true;
+            this.cbDocumentType.Items.AddRange(new object[] {
+            "Свидетельство",
+            "Свидетельство+протокол",
+            "Извещение о непригодности"});
+            this.cbDocumentType.Location = new System.Drawing.Point(213, 24);
+            this.cbDocumentType.Name = "cbDocumentType";
+            this.cbDocumentType.Size = new System.Drawing.Size(200, 21);
+            this.cbDocumentType.TabIndex = 1;
+            this.cbDocumentType.SelectedIndexChanged += new System.EventHandler(this.cbDocumentType_SelectedIndexChanged);
+            // 
             // cbObjectName
             // 
             this.cbObjectName.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
@@ -380,7 +380,9 @@
             // 
             this.cbVerificationMethod.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
             this.cbVerificationMethod.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
+            this.cbVerificationMethod.BackColor = System.Drawing.SystemColors.Window;
             this.cbVerificationMethod.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
+            this.cbVerificationMethod.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbVerificationMethod.FormattingEnabled = true;
             this.cbVerificationMethod.Location = new System.Drawing.Point(213, 175);
             this.cbVerificationMethod.Name = "cbVerificationMethod";

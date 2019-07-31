@@ -7,10 +7,11 @@ using System.Linq;
 using System.IO;
 using System.Drawing;
 using CertificatesModel.Authorization;
+using System.Collections.Generic;
 
 namespace CertificatesViews.Controls
 {
-    public partial class CertificatePropertiesPanel : UserControl, ICertificatePropertiesPanelView<Certificate, Certificates>
+    public partial class CertificatePropertiesPanel : UserControl, ICertificatePropertiesView<Certificate, Certificates>
     {
         // Свидетельство
         Certificate _certificate;
@@ -76,7 +77,22 @@ namespace CertificatesViews.Controls
             tbDeviceType.AutoCompleteCustomSource.AddRange(_certificates.Select(x => x.DeviceType).Distinct().Where(x => x != null).ToArray());
             tbDeviceName.AutoCompleteCustomSource.AddRange(_certificates.Select(x => x.DeviceName).Distinct().Where(x => x != null).ToArray());
             tbSerialNumber.AutoCompleteCustomSource.AddRange(_certificates.Select(x => x.SerialNumber).Distinct().Where(x => x != null).ToArray());
-            cbVerificationMethod.Items.AddRange(_certificates.Select(x => x.VerificationMethod).Distinct().Where(x => x != null).ToArray());
+
+            if (!Directory.Exists(Settings.Instance.VerificateionMethodFolderPath))
+                return;
+
+            var filePaths = Directory.GetFiles(Settings.Instance.VerificateionMethodFolderPath);
+            var verificationMethods = new List<string>();
+
+            foreach (var filePath in filePaths)
+            {
+                verificationMethods.Add(Path.GetFileNameWithoutExtension(filePath).ToLower());
+            }
+
+            cbVerificationMethod.Items.Clear();
+            cbVerificationMethod.Items.Add("");
+            cbVerificationMethod.Items.AddRange(verificationMethods.ToArray());
+
         }
 
         // Заполняем форму данными
@@ -101,11 +117,11 @@ namespace CertificatesViews.Controls
 
                 if (certificate.CalibrationExpireDate.HasValue)
                 {
-                    dpCalibrationExpireDate.Value = (DateTime)certificate.CalibrationExpireDate;                    
+                    dpCalibrationExpireDate.Value = (DateTime)certificate.CalibrationExpireDate;
                 }
                 else
                 {
-                    dpCalibrationExpireDate.Value = dpCalibrationExpireDate.MinDate;                    
+                    dpCalibrationExpireDate.Value = dpCalibrationExpireDate.MinDate;
                 }
             }
             catch
@@ -214,9 +230,15 @@ namespace CertificatesViews.Controls
                 pattern.CalibrationExpireDate = dpCalibrationExpireDate.Value.Date;
 
             // Автоматически формируемые параметры
-            var checkedContractNumber = pattern.ContractNumber.Replace('/', '-').Replace('\\', '-');
-            
-            pattern.CertificatePath = Path.Combine(pattern.Year.ToString(), checkedContractNumber, "Свидетельства", $"{pattern.DeviceType}_{pattern.DeviceName}" + Path.GetExtension(_certificate.CertificatePath));
+            //var checkedContractNumber = pattern.ContractNumber.Replace('/', '-').Replace('\\', '-');
+
+            var checkedContractNumber = string.Join("-", pattern.ContractNumber.Split(Path.GetInvalidFileNameChars()));
+            var checkedDeviceType = string.Join("-", pattern.DeviceType.Split(Path.GetInvalidFileNameChars()));
+            var checkedDeviceName = string.Join("-", pattern.DeviceName.Split(Path.GetInvalidFileNameChars()));
+
+            pattern.CertificatePath = Path.Combine(pattern.Year.ToString(), checkedContractNumber, "Свидетельства", $"{checkedDeviceType}_{checkedDeviceName}" + Path.GetExtension(_certificate.CertificatePath));
+
+            //pattern.CertificatePath = Path.Combine(pattern.Year.ToString(), checkedContractNumber, "Свидетельства", $"{pattern.DeviceType}_{pattern.DeviceName}" + Path.GetExtension(_certificate.CertificatePath));
             pattern.OldCertificatePath = _certificate.CertificatePath;
             // Возвращаем сформированный шаблон
             return pattern;
@@ -249,5 +271,7 @@ namespace CertificatesViews.Controls
         {
             tipVerificationMethodItems.Hide(cbVerificationMethod);
         }
+
+
     }
 }

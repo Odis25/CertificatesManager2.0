@@ -10,15 +10,15 @@ namespace CertificatesViews.Factories
     {
         public GuiFactory()
         {
-            Register<ICertificatePanelView<Certificates>, CertificatesPanel>();
-            Register<ICertificatePropertiesPanelView<Certificate, Certificates>, CertificatePropertiesPanel>();
-            Register<IPreviewPanel<string>, PreviewPanel>();
-            Register<IPreviewPanel<byte[]>, PreviewPanel>();
-            Register<IAuthorizationPanelView<User>, AuthorizationPanel>();
-            Register<IUsersAdministrationPanelView<Users>, UsersAdministrationPanel>();
-            Register<ICreateNewView<byte[]>, NewCertificatePanel>();
-            Register<ICreateNewActView<Certificates>, CreateActPanel>();
-            Register<ITechnicalJournalPanelView<Certificate>, TechnicalJournalPanel>();
+            Register<ICertificatesView<Certificates>, CertificatesPanel>();
+            Register<ICertificatePropertiesView<Certificate, Certificates>, CertificatePropertiesPanel>();
+            Register<IPreviewView<string>, PreviewPanel>();
+            Register<IPreviewView<byte[]>, PreviewPanel>();
+            Register<IAuthorizationView<User>, AuthorizationPanel>();
+            Register<IUsersManagementView<Users>, UsersManagementPanel>();
+            Register<INewCertificateView<byte[]>, NewCertificatePanel>();
+            Register<ICreateActView<Certificates>, CreateActPanel>();
+            Register<ITechnicalJournalView<Certificate>, TechnicalJournalPanel>();
         }
     }
 }

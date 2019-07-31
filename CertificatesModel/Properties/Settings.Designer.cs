@@ -109,7 +109,7 @@ namespace CertificatesModel.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("D:\\Метрология\\Методики поверки")]
+        [global::System.Configuration.DefaultSettingValueAttribute("D:\\Метрология\\Методики Поверки")]
         public string VerificationMethodFolder {
             get {
                 return ((string)(this["VerificationMethodFolder"]));

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace CertificatesViews.Interfaces
 {
-    interface ICertificatePropertiesPanelView<T,V>: IView<T,V>
+    interface ICertificatePropertiesView<T,V>: IView<T,V>
     {
         event EventHandler Search;
         event EventHandler Edited;

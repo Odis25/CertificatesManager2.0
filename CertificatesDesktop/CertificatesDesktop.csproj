@@ -27,9 +27,9 @@
     <UpdateUrl>\\Fileserver.incomsystem.ru\pub\Кулаков Р.Р\Certificate Dispather\Deploy\</UpdateUrl>
     <ProductName>Certificate Manager</ProductName>
     <PublisherName>ЗАО НИЦ ИНКОМСИСТЕМ</PublisherName>
-    <MinimumRequiredVersion>1.0.1.12</MinimumRequiredVersion>
-    <ApplicationRevision>13</ApplicationRevision>
-    <ApplicationVersion>1.0.1.%2a</ApplicationVersion>
+    <MinimumRequiredVersion>1.0.2.4</MinimumRequiredVersion>
+    <ApplicationRevision>5</ApplicationRevision>
+    <ApplicationVersion>1.0.2.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <CreateDesktopShortcut>true</CreateDesktopShortcut>
     <PublishWizardCompleted>true</PublishWizardCompleted>

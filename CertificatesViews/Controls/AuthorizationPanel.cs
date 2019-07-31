@@ -7,7 +7,7 @@ using System.Windows.Forms;
 
 namespace CertificatesViews.Controls
 {
-    public partial class AuthorizationPanel : UserControl, IAuthorizationPanelView<User>
+    public partial class AuthorizationPanel : UserControl, IAuthorizationView<User>
     {
         public AuthorizationPanel()
         {

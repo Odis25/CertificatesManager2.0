@@ -126,7 +126,7 @@ namespace CertificatesViews
             // Устанавливаем текущего пользователя
             CurrentUser = Authorization.CurrentUser;
 
-            var view = AppLocator.GuiFactory.Create<ICertificatePanelView<Certificates>>();
+            var view = AppLocator.GuiFactory.Create<ICertificatesView<Certificates>>();
             view.Changed += delegate
             {
                 //tsCertificatesQuantity.Text = _certificates.Count().ToString();
@@ -173,12 +173,12 @@ namespace CertificatesViews
         // Добавление нового свидетельства
         private void OpenAddingNewCertificateForm()
         {
-            var form = new ContainerForm<byte[], ICreateNewView<byte[]>>();
+            var form = new ContainerForm<byte[], INewCertificateView<byte[]>>();
             form.Build(null);
             form.Changed += delegate { };
             form.ShowDialog();
 
-            (CurrentControl as ICertificatePanelView<Certificates>).Build(_certificates);
+            (CurrentControl as ICertificatesView<Certificates>).Build(_certificates);
         }
 
         // Настройки
@@ -191,13 +191,13 @@ namespace CertificatesViews
 
         private void MainForm_Changed(object sender, EventArgs e)
         {
-            (CurrentControl as ICertificatePanelView<Certificates>).ShowOrHidePreviewPanel();
+            (CurrentControl as ICertificatesView<Certificates>).ShowOrHidePreviewPanel();
         }
 
         // Смена пользователя
         private void OpenUserChangingForm()
         {
-            var form = new ContainerForm<User, IAuthorizationPanelView<User>>();
+            var form = new ContainerForm<User, IAuthorizationView<User>>();
             form.Build(CurrentUser);
             form.Changed += delegate { form.DialogResult = DialogResult.OK; CurrentUser = Authorization.CurrentUser; };
             form.ShowDialog();
@@ -208,7 +208,7 @@ namespace CertificatesViews
         {
             var model = AppLocator.ModelFactory.Create<UsersLoader>();
             var users = model.GetUsersList();
-            var form = new ContainerForm<Users, IUsersAdministrationPanelView<Users>>();
+            var form = new ContainerForm<Users, IUsersManagementView<Users>>();
             form.Changed += delegate
             {
                 Authorization.SetNewCurrentUserRights();

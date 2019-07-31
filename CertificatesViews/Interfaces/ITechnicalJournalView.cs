@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace CertificatesViews.Interfaces
 {
-    interface IUsersAdministrationPanelView<T>:IView<T>
+    interface ITechnicalJournalView<T>: IView<T>
     {
     }
 }

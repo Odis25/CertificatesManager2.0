@@ -1,6 +1,6 @@
 ﻿namespace CertificatesViews.Controls
 {
-    partial class UsersAdministrationPanel
+    partial class UsersManagementPanel
     {
         /// <summary> 
         /// Обязательная переменная конструктора.
