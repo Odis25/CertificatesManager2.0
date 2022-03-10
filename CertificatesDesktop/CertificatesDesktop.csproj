@@ -23,12 +23,12 @@
     <UpdatePeriodically>false</UpdatePeriodically>
     <UpdateRequired>true</UpdateRequired>
     <MapFileExtensions>true</MapFileExtensions>
-    <InstallUrl>\\Fileserver.incomsystem.ru\pub\Кулаков Р.Р\Certificate Dispather\Deploy\</InstallUrl>
-    <UpdateUrl>\\Fileserver.incomsystem.ru\pub\Кулаков Р.Р\Certificate Dispather\Deploy\</UpdateUrl>
+    <InstallUrl>\\Alfa\06 - метрологическая служба\Метрология\Certificate Dispather\Deploy\</InstallUrl>
+    <UpdateUrl>\\Alfa\06 - метрологическая служба\Метрология\Certificate Dispather\Deploy\</UpdateUrl>
     <ProductName>Certificate Manager</ProductName>
     <PublisherName>ЗАО НИЦ ИНКОМСИСТЕМ</PublisherName>
-    <MinimumRequiredVersion>1.0.2.4</MinimumRequiredVersion>
-    <ApplicationRevision>5</ApplicationRevision>
+    <MinimumRequiredVersion>1.0.2.5</MinimumRequiredVersion>
+    <ApplicationRevision>6</ApplicationRevision>
     <ApplicationVersion>1.0.2.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <CreateDesktopShortcut>true</CreateDesktopShortcut>
@@ -105,7 +105,7 @@
     <GenerateManifests>true</GenerateManifests>
   </PropertyGroup>
   <PropertyGroup>
-    <SignManifests>true</SignManifests>
+    <SignManifests>false</SignManifests>
   </PropertyGroup>
   <PropertyGroup>
     <ApplicationIcon>Delicious.ico</ApplicationIcon>
@@ -117,8 +117,13 @@
   <PropertyGroup />
   <PropertyGroup />
   <PropertyGroup />
+  <PropertyGroup />
   <PropertyGroup>
     <NoWin32Manifest>true</NoWin32Manifest>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject>
+    </StartupObject>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">

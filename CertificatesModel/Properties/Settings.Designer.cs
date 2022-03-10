@@ -12,7 +12,7 @@ namespace CertificatesModel.Properties {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "14.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "16.10.0.0")]
     internal sealed partial class Settings : global::System.Configuration.ApplicationSettingsBase {
         
         private static Settings defaultInstance = ((Settings)(global::System.Configuration.ApplicationSettingsBase.Synchronized(new Settings())));
@@ -25,7 +25,7 @@ namespace CertificatesModel.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("D:\\MetrologyDB.sdf")]
+        [global::System.Configuration.DefaultSettingValueAttribute("\\\\Alfa\\06 - метрологическая служба\\Метрология\\База\\MetrologyDB.sdf")]
         public string DataBasePath {
             get {
                 return ((string)(this["DataBasePath"]));
@@ -37,7 +37,7 @@ namespace CertificatesModel.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("D:\\Метрология")]
+        [global::System.Configuration.DefaultSettingValueAttribute("\\\\Alfa\\06 - метрологическая служба\\Метрология\\Метрология")]
         public string CertificatesFolderPath {
             get {
                 return ((string)(this["CertificatesFolderPath"]));
@@ -49,7 +49,8 @@ namespace CertificatesModel.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("D:\\Служба главного метролога\\Метрология")]
+        [global::System.Configuration.DefaultSettingValueAttribute("\\\\Alfa\\06 - метрологическая служба\\Метрология\\Служба главного метролога\\Метрологи" +
+            "я")]
         public string CertificatesZipFolderPath {
             get {
                 return ((string)(this["CertificatesZipFolderPath"]));
@@ -109,7 +110,7 @@ namespace CertificatesModel.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("D:\\Метрология\\Методики Поверки")]
+        [global::System.Configuration.DefaultSettingValueAttribute("\\\\Alfa\\06 - метрологическая служба\\Метрология\\Метрология\\Методики Поверки")]
         public string VerificationMethodFolder {
             get {
                 return ((string)(this["VerificationMethodFolder"]));

@@ -3,13 +3,13 @@
   <Profiles />
   <Settings>
     <Setting Name="DataBasePath" Type="System.String" Scope="User">
-      <Value Profile="(Default)">D:\MetrologyDB.sdf</Value>
+      <Value Profile="(Default)">\\Alfa\06 - метрологическая служба\Метрология\База\MetrologyDB.sdf</Value>
     </Setting>
     <Setting Name="CertificatesFolderPath" Type="System.String" Scope="User">
-      <Value Profile="(Default)">D:\Метрология</Value>
+      <Value Profile="(Default)">\\Alfa\06 - метрологическая служба\Метрология\Метрология</Value>
     </Setting>
     <Setting Name="CertificatesZipFolderPath" Type="System.String" Scope="User">
-      <Value Profile="(Default)">D:\Служба главного метролога\Метрология</Value>
+      <Value Profile="(Default)">\\Alfa\06 - метрологическая служба\Метрология\Служба главного метролога\Метрология</Value>
     </Setting>
     <Setting Name="AutoPreviewEnabled" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
@@ -24,7 +24,7 @@
       <Value Profile="(Default)" />
     </Setting>
     <Setting Name="VerificationMethodFolder" Type="System.String" Scope="User">
-      <Value Profile="(Default)">D:\Метрология\Методики Поверки</Value>
+      <Value Profile="(Default)">\\Alfa\06 - метрологическая служба\Метрология\Метрология\Методики Поверки</Value>
     </Setting>
   </Settings>
 </SettingsFile>
